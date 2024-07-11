@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.login-card{
+    @apply bg-white lg:col-span-3  rounded-xl grid grid-cols-2 shadow-2xl;
+    
+}
+
+.login-page{
+   @apply pt-20 pb-40 flex   justify-center lg:grid grid-cols-5;
+   height: 100vh;
+}
+
+.list-card-post{
+    @apply  shadow-2xl p-0 bg-gray-50 m-3;
+    /* box-shadow:  28px 28px 56px #b4b4b4,
+                -28px -28px 56px #ffffff;  */
+}
+
+.img-card{
+    width: 100% !important;
+    height: 50% !important;
+    border-radius: 10% 10% 0% 0%;
+}
+
+.dashed-card{
+    @apply flex justify-center cursor-pointer rounded-xl border-blue-100 border-2 border-dashed 
+}
+
+.group-item{
+    @apply px-4 py-2 my-2 cursor-pointer rounded-xl  hover:bg-blue-200;
+}
+
+.group-list{
+    @apply  border-r-4 border-solid border-indigo-700 px-2
+}
