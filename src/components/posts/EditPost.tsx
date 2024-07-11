@@ -14,7 +14,7 @@ interface editprops{
 export default function EditPost(props:editprops) {
   return (
     <div className='py-10 xl:px-40 lg:px-40 md:px-20 sm:px-10'>
-    <p className='py-10 text-center text-xl'>افزودن پست جدید</p>
+    <p className='py-10 text-center text-xl'>ویرایش پست</p>
     <Formik
        initialValues={{
         title:"",

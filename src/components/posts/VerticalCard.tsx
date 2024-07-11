@@ -11,18 +11,15 @@ export default function VerticalCard() {
         <p className='text-2xl text-blue-600 pb-10'>عنوان پست!!!</p>
         <div className='static px-4'>
             <div className="flex justify-between gap-4 py-3 text-gray-600 bottom-0">
-                <div className='flex text-sm'>
+                <div className='flex text-md items-center'>
                 <PiClock fontSize={18}/>
                 <span>سه روز پیش</span>
                 </div>
-                <div className='flex'>
+                <div className='flex items-center'>
                 <PiEye fontSize={17}/>
                 <span>12</span>
                 </div>
-                <div className='flex'>
-                <PiChat fontSize={15}/>
-                <span>12</span>
-                </div>
+               
             </div>
         </div>
         </div>

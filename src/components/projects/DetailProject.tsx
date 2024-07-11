@@ -1,17 +1,15 @@
-import React, { useState } from 'react'
-import imgs from '../../assets/bgs.jpg'
+import React from 'react'
 import { ListGroup } from 'react-bootstrap'
-import VerticalCard from './VerticalCard'
-import { PiSubtitles, PiTextAlignRight,PiNewspaperClipping, PiPen, PiTrash, PiClock, PiEye, PiShareNetwork } from 'react-icons/pi'
-
-import Swal from 'sweetalert2'
+import { PiClock, PiEye, PiNewspaperClipping, PiPen, PiShareNetwork, PiSubtitles, PiTextAlignRight, PiTrash } from 'react-icons/pi'
 import { useNavigate } from 'react-router-dom'
-import { MenuProps } from 'antd'
-export default function Detail() {
-  let navigate=useNavigate();
+import Swal from 'sweetalert2'
+import imgs from '../../assets/bgs.jpg'
+import ProjectCard from './ProjectCard'
 
 
-  const DeletePost=()=>{
+export default function DetailP() {
+  let navigate=useNavigate()
+  const DeleteProject=()=>{
     Swal.fire({
       title: "برای حذف پست گذرواژه را وارد کنید:",
       input: "password",
@@ -23,38 +21,11 @@ export default function Detail() {
       confirmButtonText: "تایید",
       showLoaderOnConfirm: true,
     });
-    //   preConfirm: async (login) => {
-    //     try {
-    //       const githubUrl = `
-    //         https://api.github.com/users/${login}
-    //       `;
-    //       const response = await fetch(githubUrl);
-    //       if (!response.ok) {
-    //         return Swal.showValidationMessage(`
-    //           ${JSON.stringify(await response.json())}
-    //         `);
-    //       }
-    //       return response.json();
-    //     } catch (error) {
-    //       Swal.showValidationMessage(`
-    //         Request failed: ${error}
-    //       `);
-    //     }
-    //   },
-    //   allowOutsideClick: () => !Swal.isLoading()
-    // }).then((result) => {
-    //   if (result.isConfirmed) {
-    //     Swal.fire({
-    //       title: `${result.value.login}'s avatar`,
-    //       imageUrl: result.value.avatar_url
-    //     });
-    //   }
-    //});
   }
-
- 
   return (
-    <div className='py-10 px-20 grid grid-cols-4 gap-6 relative'>
+    <div>
+
+       <div className='py-10 px-20 grid grid-cols-4 gap-6 relative'>
       <div>
         <div className="sticky top-10">
         <div className="py-10">
@@ -67,13 +38,13 @@ export default function Detail() {
           <ListGroup.Item as="li" className='group-item'>
           <a href="#texts" className='text-lg flex gap-3'>
             <PiTextAlignRight fontSize={25}/>
-            متن پست</a>
+            متن پروژه</a>
           </ListGroup.Item>
        
           <ListGroup.Item as="li" className='group-item'>
             <a href="#others" className='text-lg flex gap-3'>
             <PiNewspaperClipping fontSize={25}/>
-            پست‌های مشابه
+            پروژه‌های مشابه
             </a>
           </ListGroup.Item>
           <ListGroup.Item as="li" className='group-item flex gap-3'>
@@ -84,11 +55,11 @@ export default function Detail() {
         </div>
         <div className="py-10">
             <ListGroup as="ul" className='group-list'>
-                <ListGroup.Item as='li' className='group-item flex gap-3' onClick={()=>navigate('/posts/edit/1234')}>
+                <ListGroup.Item as='li' className='group-item flex gap-3' onClick={()=>navigate('/projects/edit/1234')}>
                     <PiPen fontSize={25}/>
                     ویرایش
                 </ListGroup.Item>
-                <ListGroup.Item as='li' className='group-item flex gap-3' onClick={DeletePost}>
+                <ListGroup.Item as='li' className='group-item flex gap-3' onClick={DeleteProject}>
                     <PiTrash fontSize={25}/>
                     حذف
                 </ListGroup.Item>
@@ -117,7 +88,7 @@ export default function Detail() {
           </div>
 
           <div className="pb-5">
-              <p className='text-3xl'>عنوان پست!!!</p>
+              <p className='text-3xl'>عنوان پروژه!!!</p>
              
              <div className="py-10" id="texts">
              <p className='py-10'>jjjjjjjjjjjjjjjjjjjjjjjjj</p>
@@ -134,17 +105,21 @@ export default function Detail() {
           </div>
      
           <div className="py-10">
-                <p className='text-xl'>پست‌های مشابه</p>
+                <p className='text-xl'>پروژه‌های مشابه</p>
                 <div className='grid grid-cols-3 gap-5  py-10' id='others'>
-                  <VerticalCard/>
-                  <VerticalCard/>
-                  <VerticalCard/>
-                  
+                  <ProjectCard/>
+                  <ProjectCard/>
+                  <ProjectCard/>
+                  <ProjectCard/>
+                  <ProjectCard/>
+                  <ProjectCard/>
+
                 </div>
           </div>
 
 
       </div>
+    </div>
     </div>
   )
 }

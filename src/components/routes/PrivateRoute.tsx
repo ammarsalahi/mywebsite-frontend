@@ -8,8 +8,10 @@ export default function PrivateRoute({children}:props) {
    const auth=true; 
   return (
     <>
-        {auth?
+        {auth==true?
+          <div>
           {children}
+          </div>
          :
          <div>
             <Navigate to='/login'/> 

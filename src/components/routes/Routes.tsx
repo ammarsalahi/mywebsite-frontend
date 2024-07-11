@@ -7,6 +7,8 @@ import AddEditPost from '../pages/AddEditPost'
 import AddEditProject from '../pages/AddEditProject'
 import PrivateRoute from './PrivateRoute'
 import PostDetail from '../pages/PostDetail'
+import ProjectDetail from '../pages/ProjectDetail'
+
 export default function Routes() {
     const pages=createBrowserRouter([
         {
@@ -44,6 +46,10 @@ export default function Routes() {
         {
           path:'/posts/:id',
           element:<PostDetail/>
+        },
+        {
+          path:'/projects/:id',
+          element:<ProjectDetail/>
         }
 
     ])
