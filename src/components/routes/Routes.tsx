@@ -8,6 +8,7 @@ import AddEditProject from '../pages/AddEditProject'
 import PrivateRoute from './PrivateRoute'
 import PostDetail from '../pages/PostDetail'
 import ProjectDetail from '../pages/ProjectDetail'
+import AboutMe from '../pages/AboutMe'
 
 export default function Routes() {
     const pages=createBrowserRouter([
@@ -15,10 +16,10 @@ export default function Routes() {
             path:'/',
             element:<Home/>
         },
-        {
-            path:'/login',
-            element:<Login/>
-        },
+        // {
+        //     path:'/login',
+        //     element:<Login/>
+        // },
         {
           path:'/posts',
           element:<Posts/>
@@ -27,22 +28,22 @@ export default function Routes() {
           path:'/projects',
           element:<Projects/>
         },
-        {
-          path:'/posts/add',
-          element:<PrivateRoute><AddEditPost/></PrivateRoute>
-        },
-        {
-          path:'/projects/add',
-          element:<PrivateRoute><AddEditProject/></PrivateRoute>
-        },
-        {
-          path:'/posts/edit/:id',
-          element:<PrivateRoute><AddEditPost/></PrivateRoute>
-        },
-        {
-          path:'/projects/edit/:id',
-          element:<PrivateRoute><AddEditProject/></PrivateRoute>
-        },
+        // {
+        //   path:'/posts/add',
+        //   element:<PrivateRoute><AddEditPost/></PrivateRoute>
+        // },
+        // {
+        //   path:'/projects/add',
+        //   element:<PrivateRoute><AddEditProject/></PrivateRoute>
+        // },
+        // {
+        //   path:'/posts/edit/:id',
+        //   element:<PrivateRoute><AddEditPost/></PrivateRoute>
+        // },
+        // {
+        //   path:'/projects/edit/:id',
+        //   element:<PrivateRoute><AddEditProject/></PrivateRoute>
+        // },
         {
           path:'/posts/:id',
           element:<PostDetail/>
@@ -50,6 +51,10 @@ export default function Routes() {
         {
           path:'/projects/:id',
           element:<ProjectDetail/>
+        },
+        {
+          path:'/about',
+          element:<AboutMe/>
         }
 
     ])

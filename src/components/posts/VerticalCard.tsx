@@ -2,13 +2,16 @@ import React from 'react'
 import imgs from '../../assets/bgs.jpg'
 import { PiChat, PiClock, PiEye } from 'react-icons/pi'
 
-export default function VerticalCard() {
+interface postProps{
+  post:any
+}
+export default function VerticalCard(props:postProps) {
   return (
     <div className='px-3 pb-3 shadow-md'>
-      <img src={imgs} className='rounded-xl' />
+      <img src={props.post?.header_img.url} className='rounded-xl' />
       <div className='p-4'>
-        <p className='text-md text-gray-400 my-3'>دسته بندی</p>
-        <p className='text-2xl text-blue-600 pb-10'>عنوان پست!!!</p>
+        <p className='text-md text-gray-400 my-3'>{props.post?.category}</p>
+        <p className='text-2xl text-blue-600 pb-10'>{props.post?.title}</p>
         <div className='static px-4'>
             <div className="flex justify-between gap-4 py-3 text-gray-600 bottom-0">
                 <div className='flex text-md items-center'>
@@ -17,7 +20,7 @@ export default function VerticalCard() {
                 </div>
                 <div className='flex items-center'>
                 <PiEye fontSize={17}/>
-                <span>12</span>
+                <span>{props.post?.view_count}</span>
                 </div>
                
             </div>

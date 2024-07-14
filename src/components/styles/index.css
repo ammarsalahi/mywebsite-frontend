@@ -36,3 +36,7 @@
 .group-list{
     @apply  border-r-4 border-solid border-indigo-700 px-2
 }
+
+.post-card{
+    @apply grid gap-5 lg:grid-cols-4 xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 md: py-10
+}
