@@ -3,10 +3,26 @@ import { atom } from "recoil";
 const filterAtom=atom({
     key:'filters',
     default:{
-        sort:'ascend',
-        list:'card',
+        assort:true,
+        list:true,
         news:false,
     }
 })
 
-export {filterAtom}
+const projfilterAtom=atom({
+    key:'proj-filters',
+    default:{
+        assort:true,
+        list:true,
+    }
+})
+const postSearchAtom=atom({
+    key:'post-search',
+    default:""
+})
+
+const projectSearchAtom=atom({
+    key:'post-search',
+    default:""
+})
+export {filterAtom,projectSearchAtom,postSearchAtom,projfilterAtom}

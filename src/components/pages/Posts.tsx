@@ -20,6 +20,8 @@ export default function Posts() {
   const [posts,setPosts]=useState<any>([])
   const [categories,setCategories]=useState<any>([])
 
+
+
   const filters=useRecoilValue(filterSelector);
   
   const getPosts=async()=>{
@@ -60,7 +62,7 @@ export default function Posts() {
           {posts.length>0?
           
             <>
-            {filters.list=='card'? <div className='post-card'>
+            {filters.list==false? <div className='post-card'>
               {posts?.map((item:any,idx:number)=>(
                   <VerticalCard post={item} key={idx}/>
               ))}
@@ -70,22 +72,21 @@ export default function Posts() {
               {posts?.map((item:any,idx:number)=>(
                 <HorizontalCard  post={item} key={idx}/>
              ))}
+                <div className="flex justify-center py-10">
+                <Button size='large' type='primary' className=' text-lg rounded-full' iconPosition='end'>بیشتر</Button>
+                </div>
              </div>
             }
             </>
             :
-              <div className='py-40 items-center'>
+              <div className='py-20 px-40 items-center'>
                 <div className="p-5 bg-red-300">
                   <p className='text-xl text-red-700'>هیچ پستی وجود ندارد!!!</p>
                 </div>
               </div>
         
             }
-           
-
-            <div className="flex justify-center py-10">
-              <Button size='large' type='primary' className=' text-lg rounded-full' iconPosition='end'>بیشتر</Button>
-            </div>
+          
         </div>
         <Footer/>
     </div>

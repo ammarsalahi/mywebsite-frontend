@@ -8,16 +8,33 @@ import { SiDjango, SiFastapi, SiHtml5, SiPython, SiReact, SiTypescript } from 'r
 import { PiNewspaperClipping, PiFireFill } from "react-icons/pi";
 import { BsEmojiSunglasses } from "react-icons/bs";
 import { useRecoilState } from 'recoil'
-import { filterAtom } from '../states/Atoms'
+import { filterAtom, postSearchAtom, projectSearchAtom, projfilterAtom } from '../states/Atoms'
+import { AiOutlineMenu } from "react-icons/ai";
 
 export default function Navbar() {
   const location=useLocation()
   let navigate=useNavigate()
   const [isSearch,setisSearch]=useState(false)
+  const [postSearch,setPostSearch]=useState<any>(postSearchAtom)
+  const [projSearch,setProjSearch]=useState(projectSearchAtom)
 
 
   const [filters,setFilters]=useRecoilState(filterAtom)
+  const [projfilters,setprojFilters]=useRecoilState(projfilterAtom)
 
+
+  const handleFilters=(name:string,status:boolean)=>(e:React.MouseEvent<HTMLElement>)=>{
+      setFilters({...filters,[name]:!status})
+  }
+
+  const handleProjectFilters=(name:string,status:boolean)=>(e:React.MouseEvent<HTMLElement>)=>{
+    setprojFilters({...projfilters,[name]:!status})
+  }
+
+  const handlePostSearch=(e:React.ChangeEvent<HTMLInputElement>)=>{
+    setPostSearch(e.target.value)
+  }
+  
 
   return (
     <nav className={location.pathname=='/'?'pb-4 px-10 bg-blue-500':' sticky top-0 pb-2 px-10 bg-white border-b-2  border-gray-100'}>
@@ -25,18 +42,18 @@ export default function Navbar() {
         
         <Link to='/' className='pt-5'>logo</Link>
 
-        <ul className='list-none flex pt-5'>
-          <li className='px-5 text-md hover:border-b-2'>
+        <ul className='hidden list-none gap-5 pt-5 lg:flex xl:flex md:flex  2xl:flex  '>
+          <li className='text-md hover:border-b-2'>
             <Link to="/posts" className='flex items-center gap-2'>
             <PiNewspaperClipping />
             پست‌ها</Link>
           </li>
-          <li className='px-5 text-md hover:border-b-2'>
+          <li className=' text-md hover:border-b-2'>
             <Link to="/projects" className='flex items-center gap-2'>
             <AiOutlineFundProjectionScreen />
             پروژه‌ها</Link>
           </li>
-          <li className='px-5 text-md hover:border-b-2'>
+          <li className='text-md hover:border-b-2'>
           <Link to="/about" className='flex items-center gap-2'>
             <BsEmojiSunglasses />
             درباره‌ی من </Link>
@@ -47,7 +64,11 @@ export default function Navbar() {
             درخواست همکاری </Link>
           </li> */}
         </ul>
-        <div className="flex gap-5 pt-5">
+        <div className="pt-5 lg:hidden md:hidden xl:hidden 2xl:hidden sm:block">
+          <Button type='text' icon={<AiOutlineMenu fontSize={30} color='white'/>}></Button>
+        </div>
+       
+       <div className="hidden md:flex lg:flex xl:flex 2xl:flex gap-5 pt-5">
        {location.pathname=='/' && 
        <>
        {isSearch==false?
@@ -66,7 +87,6 @@ export default function Navbar() {
         <Button  icon={<AiFillSun fontSize={20} color={location.pathname=='/'?'white':'black'}/>} type='text'/>
         </div>
        
-   
 
       </div>
       {location.pathname=='/' &&
@@ -98,61 +118,66 @@ export default function Navbar() {
       }
 
       {location.pathname=='/posts' &&
-        <div className="flex justify-center mb-2 px-20 pt-3 sticky bg-white">
+        <div className="flex justify-center mb-2 px-20 pt-3 sticky bg-white  ">
                    <Button 
                       size='large' icon={<AiOutlineSortAscending fontSize={20}/>} 
-                      className={filters.sort=='ascend'?'text-green-600':''} 
-                      type='text'
-                    >صعودی</Button>
+                      className={filters.assort==true?'text-green-600':''} 
+                      onClick={handleFilters('assort',filters.assort)}
+                      type='text'>صعودی</Button>
     
                    <Button 
                       size='large' icon={<AiOutlineSortDescending fontSize={20}/>} 
-                      className={filters.sort=='descend'?'text-red-600':''}
+                      className={filters.assort==false?'text-red-600':''}
+                      onClick={handleFilters('assort',filters.assort)}
                       type='text'>نزولی</Button>
                    <Button 
                       size='large' icon={<AiOutlineAppstore fontSize={20}/>} 
-                      className={filters.list=='card'?'text-blue-600':''} 
+                      className={filters.list==false?'text-blue-600':''} 
+                      onClick={handleFilters('list',filters.list)}
                       type='text'>جدولی</Button>
                    <Button 
                       size='large' icon={<AiOutlineUnorderedList fontSize={20}/>} 
-                      className={filters.list=='list'?'text-purple-600':''} 
+                      className={filters.list==true?'text-purple-600':''} 
+                      onClick={handleFilters('list',filters.list)}
                       type='text'>لیستی</Button>
                    <Button 
                       size='large' icon={<PiFireFill fontSize={20}/>} 
                       className={filters.news?'text-orange-600':''} 
+                      onClick={handleFilters('news',filters.news)}
                       type='text'>تازه‌ها</Button>
-                   <Input allowClear size='large' placeholder="جستجو..." variant='borderless' prefix={<AiOutlineSearch fontSize={20}/>}/> 
-                </div> 
-      
-      
+                   <Input 
+                      allowClear size='large' 
+                      placeholder="جستجو..." 
+                      variant='borderless' 
+                      prefix={<AiOutlineSearch fontSize={20}/>}/> 
+        </div> 
       }
 
-      {/* {location.pathname=='/projects' && 
+      {location.pathname=='/projects' && 
           <div className="flex justify-start mb-3">
-            <Button 
+                    <Button 
                        size='large' icon={<AiOutlineSortAscending fontSize={20}/>} 
-                       className={filters.ascend==true?'text-green-600':''} 
+                       className={projfilters.assort==true?'text-green-600':''} 
+                       onClick={handleProjectFilters('assort',projfilters.assort)}
                        type='text'
                      >صعودی</Button>
      
                     <Button 
                        size='large' icon={<AiOutlineSortDescending fontSize={20}/>} 
-                       className={filters.ascend==false?'text-red-600':''}
-                       onClick={handleChange('ascend',filters.ascend)}
+                       className={projfilters.assort==false?'text-red-600':''}
+                       onClick={handleProjectFilters('assort',projfilters.assort)}
                        type='text'>نزولی</Button>
                  
                     <Button 
                        size='large' icon={<PiFireFill fontSize={20}/>} 
                        className={filters.news?'text-orange-600':''} 
-                       onClick={handleChange('news',filters.news)}
+                       onClick={handleProjectFilters('news',filters.news)}
                        type='text'>تازه‌ها</Button>
                     
                     <Input allowClear size='large' placeholder="جستجو..." variant='borderless' prefix={<AiOutlineSearch fontSize={20}/>}/> 
                  
-                 </div>
-      } */}
-   
-
+          </div>
+      } 
    
     </nav>
   )
