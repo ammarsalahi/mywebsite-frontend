@@ -7,7 +7,12 @@ import { PiSubtitles, PiTextAlignRight,PiNewspaperClipping, PiPen, PiTrash, PiCl
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import { MenuProps } from 'antd'
-export default function Detail() {
+
+
+interface detailprops{
+  post:any;
+}
+export default function Detail(props:detailprops) {
   let navigate=useNavigate();
 
 
@@ -100,33 +105,25 @@ export default function Detail() {
 
       </div>
       <div className='col-span-3' id="titles">
-          <img src={imgs} alt="" className='w-full h-96 rounded-2xl' />
+          <img src={props.post?.header_image.url} alt="" className='w-full h-96 rounded-2xl' />
           <div className="flex justify-between pt-3 pb-5 px-4">
-              <p className=' text-gray-700 text-lg'>دسته بندی</p>
-              <div className="flex gap-5 text-gray-600">
-                  <div className='flex gap-1 items-center'>
+              <p className=' text-gray-700 text-lg'>{props.post?.category.name}</p>
+                  <div className='flex items-center'>
                     <PiClock fontSize={20}/>
                     <span>سه روز پیش</span>
                   </div>
 
-                  <div className='flex gap-1 items-center'>
+                  {/* <div className='flex gap-1 items-center'>
                     <PiEye fontSize={20}/>
                     <span>12</span>
-                  </div>
-              </div>
+                  </div> */}
           </div>
 
           <div className="pb-5">
-              <p className='text-3xl'>عنوان پست!!!</p>
+              <p className='text-3xl'>{props.post?.title}</p>
              
              <div className="py-10" id="texts">
-             <p className='py-10'>jjjjjjjjjjjjjjjjjjjjjjjjj</p>
-              <p className='py-10'>jjjjjjjjjjjjjjjjjjjjjjjjj</p>
-              <p className='py-10'>jjjjjjjjjjjjjjjjjjjjjjjjj</p>
-              <p className='py-10'>jjjjjjjjjjjjjjjjjjjjjjjjj</p>
-              <p className='py-10'>jjjjjjjjjjjjjjjjjjjjjjjjj</p>
-              <p className='py-10'>jjjjjjjjjjjjjjjjjjjjjjjjj</p>
-              <p className='py-10'>jjjjjjjjjjjjjjjjjjjjjjjjj</p>
+                <p className='text-md'>{props.post?.header}</p>
              </div>
            
               
@@ -135,12 +132,12 @@ export default function Detail() {
      
           <div className="py-10">
                 <p className='text-xl'>پست‌های مشابه</p>
-                <div className='grid grid-cols-3 gap-5  py-10' id='others'>
+                {/* <div className='grid grid-cols-3 gap-5  py-10' id='others'>
                   <VerticalCard/>
                   <VerticalCard/>
                   <VerticalCard/>
                   
-                </div>
+                </div> */}
           </div>
 
 

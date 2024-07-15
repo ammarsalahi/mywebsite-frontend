@@ -79,8 +79,8 @@ export default function Posts() {
             }
             </>
             :
-              <div className='py-20 px-40 items-center'>
-                <div className="p-5 bg-red-300">
+              <div className='py-40 px-40 items-center'>
+                <div className="p-4 bg-red-300 text-center rounded-lg">
                   <p className='text-xl text-red-700'>هیچ پستی وجود ندارد!!!</p>
                 </div>
               </div>
