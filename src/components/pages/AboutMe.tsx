@@ -1,18 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../global/Navbar'
 import userimg from '../../assets/Remove-bg.ai_1717403474388.png'
 import { FaUniversity } from "react-icons/fa";
+import { Api } from '../api/Index';
+import { ABOUTS_ID } from '../api/Endpoints';
 
 export default function AboutMe() {
+  const [about,setABout]=useState<any>([]);
+  const getAbout=()=>{
+    Api.get(ABOUTS_ID('ammar')).then((res)=>{
+      setABout(res.data)
+    })
+  }
+  useEffect(() => {
+    getAbout()
+  }, [])
+  
   return (
     <div>
-        <Navbar/>
-
-        <div className="px-20 py-10">
-          <div className="grid grid-cols-3 h-full">
-              <div className='items-center'>
-                 <img src={userimg} width={300} alt="" />
-                 <p className='text-5xl  pt-6'>عمار صلاحی</p>
+        <div className="about">
+          <div className=" md:grid lg:grid grid-cols-3 h-full">
+              <div className='items-center '>
+                 <img src={about.user_img} width={300} alt="" />
+                 <p className='text-5xl  pt-6'>{about.fullname}</p>
               </div>
               <div className="col-span-2 text-start lg:pt-10">
                  <p className='text-2xl text-gray-700'>توضیح کوتاه درباره من</p>

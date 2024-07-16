@@ -5,7 +5,6 @@ import DetailP from '../projects/DetailProject'
 export default function ProjectDetail() {
   return (
     <div>
-        <Navbar/>
         <DetailP/>
     </div>
   )

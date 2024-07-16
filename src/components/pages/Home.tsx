@@ -18,7 +18,6 @@ export default function Home() {
   }
   return (
     <div >
-      <Navbar/>
       <LastPosts posts={posts}/>
       <LastProjects projects={projects}/>
       <Footer/> 

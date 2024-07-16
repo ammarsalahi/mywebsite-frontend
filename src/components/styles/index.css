@@ -40,3 +40,47 @@
 .post-card{
     @apply grid gap-5 lg:grid-cols-4 xl:grid-cols-4 md:grid-cols-2 py-10 sm:grid-cols-1
 }
+
+.menu-light{
+   @apply text-xl mb-3 hover:bg-blue-200 p-3 rounded-xl
+}
+
+.menu-blue{
+    @apply text-xl mb-3 text-white hover:bg-blue-800 p-3 rounded-xl
+ }
+
+.menu-dark{
+    @apply text-xl mb-3 text-white hover:bg-blue-700 p-3 rounded-xl
+ } 
+
+.nav-light{
+   @apply sticky top-0 pb-2 px-4 lg:px-10 md:px-10 xl:px-10 2xl:px-10 bg-white border-b-2 border-gray-100
+ }
+
+.nav-blue{
+    @apply sticky top-0 pb-2 px-4 lg:px-10 md:px-10 xl:px-10 2xl:px-10 bg-blue-500
+}
+
+.post-filter{
+    @apply hidden  md:flex  lg:flex xl:flex 2xl:flex justify-center mb-2 px-20 pt-3 sticky bg-white  
+}
+
+.project-filter{
+    @apply hidden  md:flex lg:flex xl:flex 2xl:flex justify-start  mb-2 px-20 pt-3 sticky bg-white
+}
+
+.post-filter-sm{
+    @apply flex  md:hidden  lg:hidden xl:hidden 2xl:hidden justify-between pt-4  px-2  sticky bg-white  
+}
+
+.project-filter-sm{
+    @apply flex  md:hidden lg:hidden xl:hidden 2xl:hidden justify-center gap-5 pt-4  px-2  bg-white
+}
+
+.no-list{
+    @apply py-20 px-10 md:px-20 md:py-20 xl:px-40 xl:py-40  2xl:py-40 2xl:px-40 lg:py-40 lg:px-40  items-center
+}
+
+.about{
+  @apply  px-7 md:px-20 lg:px-20 xl:px-20 2xl:px-20 lg:py-10 md:py-10 xl:py-10 2xl:py-10
+}

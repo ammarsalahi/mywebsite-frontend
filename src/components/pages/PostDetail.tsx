@@ -20,7 +20,6 @@ export default function PostDetail() {
   
   return (
     <div>
-        <Navbar/>
         <Detail post={post}/>
     </div>
   )

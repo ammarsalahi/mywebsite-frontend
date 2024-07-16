@@ -27,20 +27,18 @@ export default function Projects() {
     
   return (
     <div>
-        <Navbar/>
-        <div className='px-20 pt-5'>
-
+        <div className='px-5 lg:px-20 xl:px-20 2xl:px-20 md:px-10 pt-4'>
             {projects.length>0 ? <div className='grid grid-cols-4 gap-5 py-10'>
                {projects?.map((item:any,idx:number)=>{
                    <ProjectCard project={item} key={idx}/>
                })}
             </div>
             :
-               <div className='py-40 items-center'>
-                  <div className="p-5 bg-red-300">
-                  <p className='text-xl text-red-700'>هیچ پروژه‌ای وجود ندارد!!!</p>
-                  </div>
-               </div>
+            <div className='no-list'>
+            <div className=" p-2 lg:p-4 bg-red-300 text-center rounded-lg">
+              <p className='text-xl text-red-700'>هیچ پروژه‌ای وجود ندارد!!!</p>
+            </div>
+          </div>
             }
         </div>
     </div>

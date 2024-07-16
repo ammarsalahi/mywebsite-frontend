@@ -25,4 +25,9 @@ const projectSearchAtom=atom({
     key:'post-search',
     default:""
 })
-export {filterAtom,projectSearchAtom,postSearchAtom,projfilterAtom}
+
+const menuAtom=atom({
+    key:'menu',
+    default:false
+})
+export {filterAtom,projectSearchAtom,postSearchAtom,projfilterAtom,menuAtom}

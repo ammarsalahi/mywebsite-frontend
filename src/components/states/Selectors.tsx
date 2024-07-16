@@ -1,5 +1,5 @@
 import { selector } from "recoil";
-import { filterAtom, postSearchAtom, projectSearchAtom } from "./Atoms";
+import { filterAtom, menuAtom, postSearchAtom, projectSearchAtom } from "./Atoms";
 
 
 const filterSelector=selector({
@@ -44,5 +44,15 @@ const projectSearchSelector=selector({
     }
 })
 
+const menuSelector=selector({
+    key:'menu-selector',
+    get:({get})=>{
+        const value=get(menuAtom)
+        return value
+    },
+    set:({set},newValue)=>{
+        set(menuAtom,newValue)
+    }
+})
 
-export {filterSelector,postSearchSelector,projectSearchSelector}
+export {filterSelector,postSearchSelector,projectSearchSelector,menuSelector}

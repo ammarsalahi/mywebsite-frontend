@@ -9,24 +9,29 @@ import { Modal } from 'react-bootstrap'
 import AddCategory from '../posts/AddCategory'
 import Footer from '../global/Footer'
 import { Api } from '../api/Index'
-import { CATEGORIES, POSTS } from '../api/Endpoints'
+import { CATEGORIES, POST_SEARCH_FILTER, POSTS } from '../api/Endpoints'
 import Item from 'antd/es/list/Item'
 import { useRecoilValue } from 'recoil'
-import { filterSelector } from '../states/Selectors'
+import { filterSelector, postSearchSelector } from '../states/Selectors'
 import HorizontalCard from '../posts/HorizontalCard'
 
 export default function Posts() {
   let navigate=useNavigate()
   const [posts,setPosts]=useState<any>([])
   const [categories,setCategories]=useState<any>([])
-
-
+  const postsearch=useRecoilValue(postSearchSelector)
+  const [selectedCategory,setSelectedCategory]=useState("")
 
   const filters=useRecoilValue(filterSelector);
   
   const getPosts=async()=>{
     await Api.get(POSTS).then((res)=>{
       setPosts(res.data)
+    })
+  }
+  const getFilters=async()=>{
+    await Api.get(POST_SEARCH_FILTER(postsearch,filters.assort,selectedCategory)).then((res)=>{
+       setPosts(res.data)
     })
   }
   const getCategory=async()=>{
@@ -43,18 +48,18 @@ export default function Posts() {
       setCategories([])
       setPosts([])
     }
-  }, [])
+  }, [filters])
   
  
 
   return (
     <div>
-        <Navbar/>
-        <div className='px-20 pt-4'>
+        <div className='px-5 lg:px-20 xl:px-20 2xl:px-20 md:px-10 pt-4'>
 
             <div className="flex justify-center gap-3 pt-5 ">
               {categories?.map((item:any,idx:number)=>{
-                <button  className='p-2 border-0  rounded-xl hover:bg-gray-200' key={idx}>{item.name}</button>
+                <button  className='p-2 border-0  rounded-xl hover:bg-gray-200' key={idx} 
+                onClick={()=>setSelectedCategory(item.name)}>{item.name}</button>
               })}
             </div>
             
@@ -79,8 +84,8 @@ export default function Posts() {
             }
             </>
             :
-              <div className='py-40 px-40 items-center'>
-                <div className="p-4 bg-red-300 text-center rounded-lg">
+              <div className=' py-20 px-10 md:px-20 md:py-20 xl:px-40 xl:py-40  2xl:py-40 2xl:px-40 lg:py-40 lg:px-40  items-center'>
+                <div className=" p-2 lg:p-4  bg-red-300 text-center rounded-lg">
                   <p className='text-xl text-red-700'>هیچ پستی وجود ندارد!!!</p>
                 </div>
               </div>
@@ -88,7 +93,7 @@ export default function Posts() {
             }
           
         </div>
-        <Footer/>
+        {/* <Footer/> */}
     </div>
   )
 }

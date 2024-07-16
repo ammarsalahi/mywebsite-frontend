@@ -1,60 +1,38 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from '../pages/Home'
-import Login from '../pages/Login'
 import Posts from '../pages/Posts'
 import Projects from '../pages/Projects'
-import AddEditPost from '../pages/AddEditPost'
-import AddEditProject from '../pages/AddEditProject'
-import PrivateRoute from './PrivateRoute'
 import PostDetail from '../pages/PostDetail'
 import ProjectDetail from '../pages/ProjectDetail'
 import AboutMe from '../pages/AboutMe'
+import RouteContainer from './RouteContainer'
 
 export default function Routes() {
     const pages=createBrowserRouter([
         {
             path:'/',
-            element:<Home/>
+            element:<RouteContainer><Home/></RouteContainer>
         },
-        // {
-        //     path:'/login',
-        //     element:<Login/>
-        // },
+  
         {
           path:'/posts',
-          element:<Posts/>
+          element:<RouteContainer> <Posts/></RouteContainer>
         },
         {
           path:'/projects',
-          element:<Projects/>
+          element:<RouteContainer> <Projects/></RouteContainer>
         },
-        // {
-        //   path:'/posts/add',
-        //   element:<PrivateRoute><AddEditPost/></PrivateRoute>
-        // },
-        // {
-        //   path:'/projects/add',
-        //   element:<PrivateRoute><AddEditProject/></PrivateRoute>
-        // },
-        // {
-        //   path:'/posts/edit/:id',
-        //   element:<PrivateRoute><AddEditPost/></PrivateRoute>
-        // },
-        // {
-        //   path:'/projects/edit/:id',
-        //   element:<PrivateRoute><AddEditProject/></PrivateRoute>
-        // },
         {
           path:'/posts/:id',
-          element:<PostDetail/>
+          element:<RouteContainer><PostDetail/></RouteContainer>
         },
         {
           path:'/projects/:id',
-          element:<ProjectDetail/>
+          element:<RouteContainer><ProjectDetail/></RouteContainer>
         },
         {
           path:'/about',
-          element:<AboutMe/>
+          element:<RouteContainer><AboutMe/></RouteContainer>
         }
 
     ])
