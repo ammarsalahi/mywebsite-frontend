@@ -1,9 +1,9 @@
 import { selector } from "recoil";
-import { filterAtom, menuAtom, postSearchAtom, projectSearchAtom } from "./Atoms";
+import { filterAtom, imgurlAtom, menuAtom, postSearchAtom, projectSearchAtom, projfilterAtom } from "./Atoms";
 
 
 const filterSelector=selector({
-    key:'filterselector',
+    key:'filter-selector',
     get:({get})=>{
         const value=get(filterAtom)
         return value
@@ -16,11 +16,11 @@ const filterSelector=selector({
 const projfilterSelector=selector({
     key:'proj-filterselector',
     get:({get})=>{
-        const value=get(filterAtom)
+        const value=get(projfilterAtom)
         return value
     },
     set:({set},newvalue)=>{
-        set(filterAtom,newvalue)
+        set(projfilterAtom,newvalue)
     }
 })
 const postSearchSelector=selector({
@@ -55,4 +55,14 @@ const menuSelector=selector({
     }
 })
 
-export {filterSelector,postSearchSelector,projectSearchSelector,menuSelector}
+const imgurlSelector=selector({
+    key:'img-selector',
+    get:({get})=>{
+        const value=get(imgurlAtom)
+        return value
+    },
+    set:({set},newValue)=>{
+        set(imgurlAtom,newValue)
+    }
+})
+export {filterSelector,postSearchSelector,projectSearchSelector,menuSelector,imgurlSelector,projfilterSelector}

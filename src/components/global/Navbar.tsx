@@ -7,12 +7,13 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { SiDjango, SiFastapi, SiHtml5, SiPython, SiReact, SiTypescript } from 'react-icons/si'
 import { PiNewspaperClipping, PiFireFill } from "react-icons/pi";
 import { BsEmojiSunglasses } from "react-icons/bs";
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { filterAtom, menuAtom, postSearchAtom, projectSearchAtom, projfilterAtom } from '../states/Atoms'
 import { AiOutlineMenu } from "react-icons/ai";
 import MenuModal from './MenuModal';
 import PostFIlter from '../posts/PostFIlter';
 import ProjectFilters from '../projects/ProjectFilters';
+import { imgurlSelector } from '../states/Selectors';
 
 export default function Navbar() {
   const location=useLocation()
@@ -21,7 +22,7 @@ export default function Navbar() {
   const [postSearch,setPostSearch]=useState<any>(postSearchAtom)
   const [projSearch,setProjSearch]=useState<any>(projectSearchAtom)
   const [ismenu,setismenu]=useRecoilState(menuAtom)
-
+  const imgurl=useRecoilValue(imgurlSelector)
 
 
   const handlePostSearch=(e:React.ChangeEvent<HTMLInputElement>)=>{
@@ -92,11 +93,11 @@ export default function Navbar() {
       </div>
       {location.pathname=='/'  && ismenu==false &&
       <>
-      <div className="grid lg:grid-cols-2 ">
+      {imgurl!=='' && <div className="grid lg:grid-cols-2 ">
         <div className='flex justify-center'>
-          <img src={users} alt="" width={550} />
+          <img src={imgurl} className='rounded-full border-2 border-blue-500 shadow-2xl mt-10' alt="" width={400} />
         </div>
-        <div className="text-center text-white lg:pt-40 xl:pt-40 md:pt-20">
+        <div className="text-center text-white lg:pt-40 xl:pt-40 md:pt-20 ">
           <p className='text-6xl'>عمار صلاحی هستم</p>
           <p className='text-6xl mt-10'> توسعه دهنده فول‌استک</p>
           <div className="flex justify-center gap-5 pt-10">
@@ -111,9 +112,9 @@ export default function Navbar() {
         </div>
         </div>
         
-      </div>
-      <div className="hidden md:flex lg:flex xl:flex 2xl:flex justify-center pb-3">
-        <Button type="text" icon={<GrDown fontSize={30} color='white'/>} />
+      </div>}
+      <div className="hidden md:flex lg:flex xl:flex 2xl:flex justify-center lg:pt-40 md:pt-20 xl:pt-40 2xl:pt-40">
+        {/* <Button type="text" icon={<GrDown fontSize={30} color='white'/>} /> */}
       </div>
       </>
       }

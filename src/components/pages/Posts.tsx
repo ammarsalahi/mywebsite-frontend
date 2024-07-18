@@ -77,14 +77,14 @@ export default function Posts() {
               {posts?.map((item:any,idx:number)=>(
                 <HorizontalCard  post={item} key={idx}/>
              ))}
-                <div className="flex justify-center py-10">
+                {posts?.length > 4 &&  <div className="flex justify-center py-10">
                 <Button size='large' type='primary' className=' text-lg rounded-full' iconPosition='end'>بیشتر</Button>
-                </div>
+                </div>}
              </div>
             }
             </>
             :
-              <div className=' py-20 px-10 md:px-20 md:py-20 xl:px-40 xl:py-40  2xl:py-40 2xl:px-40 lg:py-40 lg:px-40  items-center'>
+              <div className=' no-list'>
                 <div className=" p-2 lg:p-4  bg-red-300 text-center rounded-lg">
                   <p className='text-xl text-red-700'>هیچ پستی وجود ندارد!!!</p>
                 </div>

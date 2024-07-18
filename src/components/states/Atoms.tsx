@@ -1,4 +1,12 @@
 import { atom } from "recoil";
+import { recoilPersist } from "recoil-persist";
+
+const { persistAtom } = recoilPersist({
+    key:'recoil-persist',
+    storage:localStorage,
+    converter:JSON
+})
+
 
 const filterAtom=atom({
     key:'filters',
@@ -22,7 +30,7 @@ const postSearchAtom=atom({
 })
 
 const projectSearchAtom=atom({
-    key:'post-search',
+    key:'proj-search',
     default:""
 })
 
@@ -30,4 +38,11 @@ const menuAtom=atom({
     key:'menu',
     default:false
 })
-export {filterAtom,projectSearchAtom,postSearchAtom,projfilterAtom,menuAtom}
+
+const imgurlAtom=atom({
+    key:'imgurl',
+    default:'',
+    effects_UNSTABLE: [persistAtom],
+
+})
+export {filterAtom,projectSearchAtom,postSearchAtom,projfilterAtom,menuAtom,imgurlAtom}

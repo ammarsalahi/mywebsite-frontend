@@ -1,19 +1,22 @@
 import { Button, Input } from 'antd'
 import React, { useState } from 'react'
 import { AiOutlineAppstore, AiOutlineClose, AiOutlineSearch, AiOutlineSortAscending, AiOutlineSortDescending, AiOutlineUnorderedList } from 'react-icons/ai'
-import { filterAtom } from '../states/Atoms'
+import { filterSelector } from '../states/Selectors'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { PiFireFill } from 'react-icons/pi'
 import { menuSelector } from '../states/Selectors'
 
 export default function PostFIlter() {
     
-    const [filters,setFilters]=useRecoilState(filterAtom);
+    const [filters,setFilters]=useRecoilState(filterSelector);
+    
     const ismenu=useRecoilValue(menuSelector)
     const [isSearch,setisSearch]=useState(false)
 
     const handleFilters=(name:string,status:boolean)=>(e:React.MouseEvent<HTMLElement>)=>{
-        setFilters({...filters,[name]:status})
+        setFilters({list:false,assort:false,news:true})
+        console.log(filters)
+
     }
   return (
     <div>

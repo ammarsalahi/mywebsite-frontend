@@ -5,23 +5,15 @@ import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import imgs from '../../assets/bgs.jpg'
 import ProjectCard from './ProjectCard'
+import { Carousel } from 'antd'
 
-
-export default function DetailP() {
+interface detailprops{
+  projects:any;
+  others:any;
+}
+export default function DetailP(props:detailprops) {
   let navigate=useNavigate()
-  const DeleteProject=()=>{
-    Swal.fire({
-      title: "برای حذف پست گذرواژه را وارد کنید:",
-      input: "password",
-      inputAttributes: {
-        autocapitalize: "off"
-      },
-      showCancelButton: true,
-      cancelButtonText:"بی‌خیال",
-      confirmButtonText: "تایید",
-      showLoaderOnConfirm: true,
-    });
-  }
+
   return (
     <div>
 
@@ -44,7 +36,7 @@ export default function DetailP() {
           <ListGroup.Item as="li" className='group-item'>
             <a href="#others" className='text-lg flex gap-3'>
             <PiNewspaperClipping fontSize={25}/>
-            پروژه‌های مشابه
+            پروژه‌های دیگر
             </a>
           </ListGroup.Item>
           <ListGroup.Item as="li" className='group-item flex gap-3'>
@@ -53,18 +45,7 @@ export default function DetailP() {
           </ListGroup.Item>
         </ListGroup>
         </div>
-        <div className="py-10">
-            <ListGroup as="ul" className='group-list'>
-                <ListGroup.Item as='li' className='group-item flex gap-3' onClick={()=>navigate('/projects/edit/1234')}>
-                    <PiPen fontSize={25}/>
-                    ویرایش
-                </ListGroup.Item>
-                <ListGroup.Item as='li' className='group-item flex gap-3' onClick={DeleteProject}>
-                    <PiTrash fontSize={25}/>
-                    حذف
-                </ListGroup.Item>
-            </ListGroup>
-        </div>
+      
         </div>
 
       
@@ -72,8 +53,7 @@ export default function DetailP() {
       </div>
       <div className='col-span-3' id="titles">
           <img src={imgs} alt="" className='w-full h-96 rounded-2xl' />
-          <div className="flex justify-between pt-3 pb-5 px-4">
-              <p className=' text-gray-700 text-lg'>دسته بندی</p>
+          <div className="flex justify-end pt-3 pb-5 px-4">
               <div className="flex gap-5 text-gray-600">
                   <div className='flex gap-1 items-center'>
                     <PiClock fontSize={20}/>
@@ -88,25 +68,25 @@ export default function DetailP() {
           </div>
 
           <div className="pb-5">
-              <p className='text-3xl'>عنوان پروژه!!!</p>
+              <p className='text-3xl'>{props.projects?.title}</p>
              
              <div className="py-10" id="texts">
-             <p className='py-10'>jjjjjjjjjjjjjjjjjjjjjjjjj</p>
-              <p className='py-10'>jjjjjjjjjjjjjjjjjjjjjjjjj</p>
-              <p className='py-10'>jjjjjjjjjjjjjjjjjjjjjjjjj</p>
-              <p className='py-10'>jjjjjjjjjjjjjjjjjjjjjjjjj</p>
-              <p className='py-10'>jjjjjjjjjjjjjjjjjjjjjjjjj</p>
-              <p className='py-10'>jjjjjjjjjjjjjjjjjjjjjjjjj</p>
-              <p className='py-10'>jjjjjjjjjjjjjjjjjjjjjjjjj</p>
+                <p className='text-md'>{props.projects?.text}</p>
              </div>
-           
+             <div className="py-5">
+                <Carousel arrows infinite className='w-80 h-80'>
+                  {props.projects.images?.map((item:any,idx:number)=>(
+                      <img src={item.img} alt={`${idx}`} className='rounded-xl' width={400} />
+                  ))}
+                </Carousel>
+             </div>
               
 
           </div>
      
           <div className="py-10">
-                <p className='text-xl'>پروژه‌های مشابه</p>
-                <div className='grid grid-cols-3 gap-5  py-10' id='others'>
+                <p className='text-xl'>پروژه‌های دیگر</p>
+                {/* <div className='grid grid-cols-3 gap-5  py-10' id='others'>
                   <ProjectCard/>
                   <ProjectCard/>
                   <ProjectCard/>
@@ -114,7 +94,7 @@ export default function DetailP() {
                   <ProjectCard/>
                   <ProjectCard/>
 
-                </div>
+                </div> */}
           </div>
 
 
