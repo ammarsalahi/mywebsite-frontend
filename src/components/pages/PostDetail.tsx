@@ -4,6 +4,10 @@ import Detail from '../posts/Detail'
 import { useParams } from 'react-router-dom'
 import { Api } from '../api/Index';
 import { POSTS_DETAIL_ID, POSTS_ID } from '../api/Endpoints';
+import Footer from '../global/Footer';
+import { Spin } from 'antd';
+
+
 export default function PostDetail() {
   const {id}=useParams();
   const [post,setPost]=useState();
@@ -23,8 +27,18 @@ export default function PostDetail() {
   }, [])
   
   return (
-    <div>
-        {isLoad && <Detail post={post} others={others}/>}
-    </div>
+    <>
+       {isLoad ? <><div className='paddingtop'>
+        <Detail post={post} others={others}/>
+       </div>
+       <Footer/>
+       </> :
+        <div className="h-screen w-screen grid place-items-center">
+          <Spin size='large'/>
+        </div>
+   
+       }
+    </>
+ 
   )
 }

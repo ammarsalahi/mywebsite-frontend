@@ -20,7 +20,7 @@ export default function Detail(props:detailprops) {
 
  
   return (
-    <div className='py-10 px-20 grid grid-cols-4 gap-6 relative'>
+    <div className='py-10 px-20 grid grid-cols-4 gap-6'>
       <div>
         <div className="sticky top-10">
         <div className="py-10">

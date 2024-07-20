@@ -1,22 +1,26 @@
 
-import { Button, Card } from 'antd'
+import { Button, Card, Spin } from 'antd'
 import React from 'react'
 import VerticalCard from './VerticalCard'
 import { AiOutlineArrowDown, AiOutlineArrowLeft } from 'react-icons/ai'
 import HorizontalCard from './HorizontalCard'
 
 interface listprops{
-  posts:[]|any
+  posts:[]|any;
+  isload:boolean
 }
 export default function LastPosts(props:listprops) {
   return (
-    <div className='py-7 px-20'>
-        <div className='flex justify-start py-4 px-5'>
+    <div className='pt-20 pb-40 px-20'>
+        <div className='flex justify-start py-4 px-5 border-r-4 my-3 border-blue-500 '>
             <p className='text-4xl text-gray-500'>پست‌های اخیر</p>
         </div>
-   {props.posts?.length>0 ?
+    <div>
+      
+    {props.isload?
+     <>
+        {props.posts?.length>0 ?
       <> 
-      <p>{props.posts?.length}</p>
           <div className='grid grid-cols-4 gap-5  py-5'>
           {props.posts?.map((item:any,idx:number)=>(
             <div key={idx}>
@@ -36,6 +40,15 @@ export default function LastPosts(props:listprops) {
           </div>
         </div>
      }
+     </>
+     :
+     <div className="py-10 grid place-items-center">
+        <Spin size='large' />
+      </div>
+     
+     }  
+
+      </div>    
 
 
    

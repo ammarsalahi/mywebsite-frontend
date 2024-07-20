@@ -17,7 +17,8 @@ interface postProps{
 export default function VerticalCard(props:postProps) {
  
   return (
-    <Link className='px-3 pb-3 shadow-md'  to={`/posts/${props.post?.post_id}`}>
+  <div className='px-3 py-3 shadow-xl rounded-lg bg-white'>
+    <Link  to={`/posts/${props.post?.post_id}`}>
       <img src={showImage(props.post?.header_img)} className='rounded-xl' />
       <div className='p-4'>
         <p className='text-md text-gray-400 my-3'>{props.post?.category.name}</p>
@@ -37,5 +38,6 @@ export default function VerticalCard(props:postProps) {
         </div>
         </div>
     </Link>
+    </div>
   )
 }

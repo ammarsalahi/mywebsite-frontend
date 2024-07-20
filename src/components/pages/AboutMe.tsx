@@ -9,7 +9,8 @@ import { FaTelegram,FaLinkedin ,FaInstagramSquare,FaGithub} from "react-icons/fa
 import { SiGmail } from "react-icons/si";
 import { TbWorldWww } from "react-icons/tb";
 import { FaComputer,FaUsers } from "react-icons/fa6";
-
+import Footer from '../global/Footer'
+import { Spin } from 'antd';
 
 export default function AboutMe() {
   const [about,setAbout]=useState<any>(null);
@@ -56,9 +57,11 @@ export default function AboutMe() {
   }, [])
   
   return (
-    <div>
+  <div>
+    {isLoad?
+    <>
+    <div className='paddingtop ps-20'>
         <div className="about">
-          {isLoad&&
           <div className=" md:grid lg:grid grid-cols-3 h-full">
               <div className='items-center pt-10'>
                  <img src={showImage(about?.user_img)} className='rounded-full border-2 border-blue-500 shadow-2xl' width={300} alt="" />
@@ -102,9 +105,17 @@ export default function AboutMe() {
                 </div>
 
               </div>
-          </div>}
+          </div>
         </div>
     
+       </div>
+      <Footer/>
+      </>
+      :
+        <div className="h-screen w-screen grid place-items-center">
+          <Spin size='large'/>
+        </div>
+      }
     </div>
   )
 }

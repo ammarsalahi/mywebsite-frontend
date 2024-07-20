@@ -14,6 +14,7 @@ import Item from 'antd/es/list/Item'
 import { useRecoilValue } from 'recoil'
 import { filterSelector, postSearchSelector } from '../states/Selectors'
 import HorizontalCard from '../posts/HorizontalCard'
+import { Spin } from 'antd';
 
 export default function Posts() {
   let navigate=useNavigate()
@@ -23,11 +24,14 @@ export default function Posts() {
   const [selectedCategory,setSelectedCategory]=useState("")
 
   const filters=useRecoilValue(filterSelector);
-  
+  const [isLoad,setisLoad]=useState(false);
+
   const getPosts=async()=>{
     await Api.get(POSTS).then((res)=>{
       setPosts(res.data)
-    })
+    }).finally(()=>{
+         setisLoad(true)
+      })
   }
   const getFilters=async()=>{
     await Api.get(POST_SEARCH_FILTER(postsearch,filters.assort,selectedCategory)).then((res)=>{
@@ -53,7 +57,9 @@ export default function Posts() {
  
 
   return (
-    <div>
+  <div>
+    {isLoad ? <>
+     <div className='paddingtop-xl'>
         <div className='px-5 lg:px-20 xl:px-20 2xl:px-20 md:px-10 pt-4'>
 
             <div className="flex justify-center gap-3 pt-5 ">
@@ -93,7 +99,13 @@ export default function Posts() {
             }
           
         </div>
-        {/* <Footer/> */}
+     </div>
+    <Footer/> 
+    </>:
+     <div className="h-screen w-screen grid place-items-center">
+          <Spin size='large'/>
+        </div>
+    }
     </div>
   )
 }

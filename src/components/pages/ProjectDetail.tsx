@@ -3,7 +3,7 @@ import DetailP from '../projects/DetailProject'
 import { Api } from '../api/Index'
 import { useParams } from 'react-router-dom';
 import { PROJECT_DETAIL_ID } from '../api/Endpoints';
-
+import Footer from '../global/Footer'
 export default function ProjectDetail() {
   const {id}=useParams();
   const [projects,setProjects]=useState<any>([]);
@@ -19,7 +19,10 @@ export default function ProjectDetail() {
   }
   return (
     <div>
+    <div className='paddingtop'>
        {isLoad && <DetailP projects={projects} others={others}/>}
+    </div>
+     <Footer/>
     </div>
   )
 }

@@ -7,32 +7,77 @@ import { Api } from '../api/Index'
 import { HOME } from '../api/Endpoints'
 import { useRecoilState } from 'recoil'
 import { imgurlAtom } from '../states/Atoms'
-import { message } from 'antd'
+import { message, Spin } from 'antd'
 
 export default function Home() {
   const [posts,setPosts]=useState<any>([])
   const [projects,setProjects]=useState<any>([]);
   const [imgs,setimgs]=useRecoilState(imgurlAtom)
+  const [socls,setsocls]=useState(0)
+  const [loads,setLoads]=useState({
+    imgs:false,
+    posts:false,
+    projects:false
+  })
 
-  const getHome=()=>{
+  const getHome=(types:string)=>{
     Api.get(HOME).then((res)=>{
-      setPosts(res.data.posts)
-      setProjects(res.data.projects)
-      setimgs(res.data.userimg)
+      if (types=='imgs'){
+        setimgs(res.data.userimg)
+        setLoads({...loads,imgs:true})
+      }else if(types=='posts'){
+        setPosts(res.data.posts)
+        setLoads({...loads,posts:true})
+
+      }else{
+        setProjects(res.data.projects)
+        setLoads({...loads,projects:true})
+
+      }
     }).catch((err)=>{
       message.error("متاسفانه مشکلی پیش آمده است!")
     })
   }
+  const onPost=()=>{
+    if(loads.posts==false){
+      getHome('posts')
+    }
+  }
+  const onProject=()=>{
+    if(loads.projects==false){
+      getHome('projects')
+    }
+  }
   useEffect(() => {
-    getHome()
+    getHome('imgs')
+    // window.addEventListener('scroll', () => {
+    //   setsocls(window.scrollY);
+     
+    // });
+
    
   }, [])
   
   return (
-    <div >
-      <LastPosts posts={posts}/>
-      <LastProjects projects={projects}/>
-      <Footer/> 
+    <div>
+      
+      {loads.imgs ?
+      <>
+      <div className="bg-gray-100">
+      <div  tabIndex={0} onFocus={onPost} onScroll={onPost} onMouseEnter={onPost}>
+        <LastPosts posts={posts} isload={loads.posts}/>
+      </div>
+      <div  tabIndex={1} onFocus={onProject} onScroll={onProject} onMouseEnter={onProject}>
+          <LastProjects projects={projects} isload={loads.projects}/>
+      </div>
+      <Footer/>
     </div>
+    </>:
+        <div className="h-screen w-screen grid place-items-center">
+        <Spin size='large' />
+      </div>}
+
+    </div>
+   
   )
 }

@@ -11,16 +11,15 @@ type props={
 export default function RouteContainer({children}:props) {
   const menu=useRecoilValue(menuSelector)
   return (
-    <>
+    <div className="relative" style={{height:'100vh'}}>
        <Navbar/>
        {menu==true?
         <MenuList/>
         :
         <>
         {children}
-        <Footer/>
-        </> 
+        </>
       }
-    </>
+    </div>
   )
 }

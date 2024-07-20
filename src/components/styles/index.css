@@ -54,7 +54,7 @@
  } 
 
 .nav-light{
-   @apply sticky top-0 pb-2 px-4 lg:px-10 md:px-10 xl:px-10 2xl:px-10 bg-white border-b-2 border-gray-100
+   @apply  fixed top-0 left-0 w-full pb-2 px-4 lg:px-10 md:px-10 xl:px-10 2xl:px-10 bg-white border-b-2 border-gray-100
  }
 
 .nav-blue{
@@ -84,3 +84,10 @@
 .about{
   @apply  px-7 md:px-20 lg:px-20 xl:px-20 2xl:px-20 lg:py-10 md:py-10 xl:py-10 2xl:py-10
 }
+
+.paddingtop{
+   @apply py-10 lg:pt-20 md:pt-20 xl:pt-20 2xl:pt-20 bg-gray-100
+}
+.paddingtop-xl{
+    @apply  py-40 lg:pt-40 md:pt-40 xl:pt-40 2xl:pt-40 bg-gray-100
+ }
