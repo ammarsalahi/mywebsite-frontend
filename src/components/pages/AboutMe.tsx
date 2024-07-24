@@ -63,7 +63,7 @@ export default function AboutMe() {
     <div className='paddingtop ps-20'>
         <div className="about">
           <div className=" md:grid lg:grid grid-cols-3 h-full">
-              <div className='items-center pt-10'>
+             <div className='items-center pt-10'>
                  <img src={showImage(about?.user_img)} className='rounded-full border-2 border-blue-500 shadow-2xl' width={300} alt="" />
                  <p className='text-5xl px-5  pt-6'>{about?.fullname}</p>
               </div>

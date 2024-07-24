@@ -4,19 +4,18 @@ import { AiOutlineAppstore, AiOutlineClose, AiOutlineSearch, AiOutlineSortAscend
 import { filterSelector } from '../states/Selectors'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { PiFireFill } from 'react-icons/pi'
-import { menuSelector } from '../states/Selectors'
+import { menuSelector ,islodingselector} from '../states/Selectors'
 
 export default function PostFIlter() {
     
     const [filters,setFilters]=useRecoilState(filterSelector);
-    
+    const [isload,setisload]=useRecoilState(islodingselector)
     const ismenu=useRecoilValue(menuSelector)
     const [isSearch,setisSearch]=useState(false)
 
     const handleFilters=(name:string,status:boolean)=>(e:React.MouseEvent<HTMLElement>)=>{
-        setFilters({list:false,assort:false,news:true})
-        console.log(filters)
-
+        setisload(false)
+        setFilters({...filters,[name]:status})
     }
   return (
     <div>
@@ -25,28 +24,28 @@ export default function PostFIlter() {
                    <Button
                       size='large' icon={<AiOutlineSortAscending fontSize={20}/>} 
                       className={filters.assort==true?'text-green-600':''} 
-                      onClick={handleFilters('assort',filters.assort)}
+                      onClick={handleFilters('assort',true)}
                       type='text'>صعودی</Button>
     
                    <Button 
                       size='large' icon={<AiOutlineSortDescending fontSize={20}/>} 
                       className={filters.assort==false?'text-red-600':''}
-                      onClick={handleFilters('assort',filters.assort)}
+                      onClick={handleFilters('assort',false)}
                       type='text'>نزولی</Button>
                    <Button 
                       size='large' icon={<AiOutlineAppstore fontSize={20}/>} 
                       className={filters.list==false?'text-blue-600':''} 
-                      onClick={handleFilters('list',filters.list)}
+                      onClick={handleFilters('list',false)}
                       type='text'>جدولی</Button>
                    <Button 
                       size='large' icon={<AiOutlineUnorderedList fontSize={20}/>} 
                       className={filters.list==true?'text-purple-600':''} 
-                      onClick={handleFilters('list',filters.list)}
+                      onClick={handleFilters('list',true)}
                       type='text'>لیستی</Button>
                    <Button 
                       size='large' icon={<PiFireFill fontSize={20}/>} 
                       className={filters.news?'text-orange-600':''} 
-                      onClick={handleFilters('news',filters.news)}
+                      onClick={handleFilters('news',!filters.news)}
                       type='text'>تازه‌ها</Button>
                    <Input
                       allowClear size='large' 
@@ -71,34 +70,25 @@ export default function PostFIlter() {
             />          
           </div>
         :<div className='post-filter-sm'>
-            <Button 
-             size='large' icon={<AiOutlineSortAscending fontSize={24}/>} 
-             className={filters.assort==true?'text-green-600':''}
-             onClick={handleFilters('assort',true)}
-             type='text'
-            />
+                  <Button 
+                   size='large' icon={<AiOutlineSortAscending fontSize={28}/>} 
+                   className={filters.assort==true?'text-green-600':''}
+                   onClick={handleFilters('assort',true)}
+                   type='text'
+                  />
                  <Button 
-                      size='large' icon={<AiOutlineSortDescending fontSize={24}/>} 
+                      size='large' icon={<AiOutlineSortDescending fontSize={28}/>} 
                       className={filters.assort==false?'text-red-600':''}
                       onClick={handleFilters('assort',false)}
                       type='text'/>
+                  
                    <Button 
-                      size='large' icon={<AiOutlineAppstore fontSize={24}/>} 
-                      className={filters.list==false?'text-blue-600':''} 
-                      onClick={handleFilters('list',false)}
-                      type='text'/>
-                   <Button 
-                      size='large' icon={<AiOutlineUnorderedList fontSize={24}/>} 
-                      className={filters.list==true?'text-purple-600':''} 
-                      onClick={handleFilters('list',true)}
-                      type='text'/>
-                   <Button 
-                      size='large' icon={<PiFireFill fontSize={24}/>} 
+                      size='large' icon={<PiFireFill fontSize={28}/>} 
                       className={filters.news?'text-orange-600':''} 
                       onClick={handleFilters('news',filters.news==true?false:true)}
                       type='text'/>
                        <Button 
-                      size='large' icon={<AiOutlineSearch fontSize={24}/>} 
+                      size='large' icon={<AiOutlineSearch fontSize={28}/>} 
                      
                       onClick={()=>setisSearch(true)}
                       type='text'/>

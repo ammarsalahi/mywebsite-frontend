@@ -6,6 +6,7 @@ import PostDetail from '../pages/PostDetail'
 import ProjectDetail from '../pages/ProjectDetail'
 import AboutMe from '../pages/AboutMe'
 import RouteContainer from './RouteContainer'
+import Cooperation from '../pages/Cooperation'
 
 export default function Routes() {
     const pages=createBrowserRouter([
@@ -33,6 +34,10 @@ export default function Routes() {
         {
           path:'/about',
           element:<RouteContainer><AboutMe/></RouteContainer>
+        },
+        {
+          path:'/cooperations',
+          element:<RouteContainer><Cooperation/></RouteContainer>
         }
 
     ])

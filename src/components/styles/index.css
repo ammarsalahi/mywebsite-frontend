@@ -3,44 +3,6 @@
 @tailwind utilities;
 
 
-.login-card{
-    @apply bg-white lg:col-span-3  rounded-xl grid grid-cols-2 shadow-2xl;
-    
-}
-
-.login-page{
-   @apply pt-20 pb-40 flex   justify-center lg:grid grid-cols-5;
-   height: 100vh;
-}
-
-.list-card-post{
-    @apply  shadow-2xl p-0 bg-gray-50 m-3;
-    /* box-shadow:  28px 28px 56px #b4b4b4,
-                -28px -28px 56px #ffffff;  */
-}
-
-.img-card{
-    width: 100% !important;
-    height: 50% !important;
-    border-radius: 10% 10% 0% 0%;
-}
-
-.dashed-card{
-    @apply flex justify-center cursor-pointer rounded-xl border-blue-100 border-2 border-dashed 
-}
-
-.group-item{
-    @apply px-4 py-2 my-2 cursor-pointer rounded-xl  hover:bg-blue-200;
-}
-
-.group-list{
-    @apply  border-r-4 border-solid border-indigo-700 px-2
-}
-
-.post-card{
-    @apply grid gap-5 lg:grid-cols-4 xl:grid-cols-4 md:grid-cols-2 py-10 sm:grid-cols-1
-}
-
 .menu-light{
    @apply text-xl mb-3 hover:bg-blue-200 p-3 rounded-xl
 }
@@ -53,41 +15,36 @@
     @apply text-xl mb-3 text-white hover:bg-blue-700 p-3 rounded-xl
  } 
 
-.nav-light{
+.nav-light-fixed{
    @apply  fixed top-0 left-0 w-full pb-2 px-4 lg:px-10 md:px-10 xl:px-10 2xl:px-10 bg-white border-b-2 border-gray-100
  }
-
+.nav-light{
+   @apply  w-full pb-2 px-4 lg:px-10 md:px-10 xl:px-10 2xl:px-10 bg-white border-b-2 border-gray-100
+ }
 .nav-blue{
     @apply   pb-2 px-4 lg:px-10 md:px-10 xl:px-10 2xl:px-10 bg-blue-500
 }
 
-.post-filter{
-    @apply hidden  md:flex  lg:flex xl:flex 2xl:flex justify-center mb-2 px-20 pt-3 sticky bg-white  
+.lasts{
+  @apply p-5 xs:px-5 sm:p-10 xs:md:p-20;
 }
 
-.project-filter{
-    @apply hidden  md:flex lg:flex xl:flex 2xl:flex justify-start  mb-2 px-20 pt-3 sticky bg-white
-}
-
-.post-filter-sm{
-    @apply flex  md:hidden  lg:hidden xl:hidden 2xl:hidden justify-between pt-4  px-2  sticky bg-white  
-}
-
-.project-filter-sm{
-    @apply flex  md:hidden lg:hidden xl:hidden 2xl:hidden justify-center gap-5 pt-4  px-2  bg-white
+.last-list{
+  @apply py-10 ;
+  @apply xs:items-center xs:md:sm:grid sm:grid-cols-2 md:grid-cols-2 xs:md:sm:gap-3  lg:grid-cols-3 xs:xl:grid-cols-4 xs:lg:gap-5;
 }
 
 .no-list{
-    @apply py-20 px-10 md:px-20 md:py-20 xl:px-40 xl:py-40  2xl:py-40 2xl:px-40 lg:py-40 lg:px-40  items-center
-}
-
-.about{
-  @apply  px-7 md:px-20 lg:px-20 xl:px-20 2xl:px-20 lg:py-10 md:py-10 xl:py-10 2xl:py-10
+    @apply py-20 px-5 items-center md:px-20 md:py-20 xs:lg:p-40
 }
 
 .paddingtop{
-   @apply py-10 lg:pt-20 md:pt-20 xl:pt-20 2xl:pt-20 bg-gray-100
+   @apply py-16 px-5
 }
 .paddingtop-xl{
-    @apply  py-40 lg:pt-40 md:pt-40 xl:pt-40 2xl:pt-40 bg-gray-100
+    @apply  py-40 lg:pt-40 md:pt-40 xl:pt-40 2xl:pt-40 
  }
+
+ .about{
+  @apply  px-7 md:px-20 lg:px-20 xl:px-20 2xl:px-20 lg:py-10 md:py-10 xl:py-10 2xl:py-10
+}

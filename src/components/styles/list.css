@@ -1,0 +1,60 @@
+/*.login-card{
+    @apply bg-white lg:col-span-3  rounded-xl grid grid-cols-2 shadow-2xl;
+    
+}
+
+.login-page{
+   @apply pt-20 pb-40 flex   justify-center lg:grid grid-cols-5;
+   height: 100vh;
+}*/
+
+/*.list-card-post{
+    @apply  shadow-2xl p-0 bg-gray-50 m-3;
+     box-shadow:  28px 28px 56px #b4b4b4,
+                -28px -28px 56px #ffffff;  
+}
+
+.img-card{
+    width: 100% !important;
+    height: 50% !important;
+    border-radius: 10% 10% 0% 0%;
+}*/
+
+
+/*.dashed-card{
+    @apply flex justify-center cursor-pointer rounded-xl border-blue-100 border-2 border-dashed 
+}*/
+
+
+
+
+.category-show{
+    @apply px-5 xs:md:sm:px-10 xs:lg:px-20;
+}
+
+.post-card{
+  @apply xs:py-7 grid gap-5 xs:px-2 xs:md:sm:py-7 xs:md:sm:px-7  md:grid-cols-2 lg:grid-cols-3 xs:xl:grid-cols-4;
+}
+
+
+
+.post-filter{
+    @apply hidden xs:md:sm:flex justify-center mb-2 px-20 pt-3 sticky bg-white  
+}
+
+.project-filter{
+    @apply hidden  xs:md:sm:flex justify-start  mb-2 px-20 pt-3 sticky bg-white
+}
+
+.post-filter-sm{
+    @apply flex  xs:md:sm:hidden justify-between pt-4  px-2  sticky bg-white  
+}
+
+.project-filter-sm{
+    @apply flex  xs:md:sm:hidden justify-center gap-5 pt-4  px-2  bg-white
+}
+
+
+
+
+

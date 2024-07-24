@@ -1,8 +1,11 @@
-import React from 'react'
+import React,{useEffect} from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 export default function Footer() {
+  const location=useLocation()
+
   return (
-    <div className=' bg-blue-500 fixd left-0 bottom-0  w-full'>
+    <div className={location.pathname=='/'?'bg-blue-500  w-full':'bg-gray-50 border-t w-full'}>
       <div className="py-20">
         
       </div>

@@ -27,7 +27,7 @@ export default function VerticalCard(props:postProps) {
             <div className="flex justify-between gap-4 py-3 text-gray-600 bottom-0">
                 <div className='flex text-md items-center'>
                 <PiClock fontSize={18}/>
-                <span>سه روز پیش</span>
+                <span>{props.post?.persian_date}</span>
                 </div>
                 <div className='flex items-center'>
                 <PiEye fontSize={17}/>

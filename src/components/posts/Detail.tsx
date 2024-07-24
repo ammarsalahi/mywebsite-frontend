@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 import { Link, useNavigate } from 'react-router-dom'
 import { MenuProps } from 'antd'
 import { showImage } from '../api/Index'
+import { Anchor } from 'antd';
 
 
 interface detailprops{
@@ -20,11 +21,50 @@ export default function Detail(props:detailprops) {
 
  
   return (
-    <div className='py-10 px-20 grid grid-cols-4 gap-6'>
+    <div className='detail-show'>
       <div>
-        <div className="sticky top-10">
+        <div className="ancher-show">
         <div className="py-10">
-        <ListGroup as="ul" className='group-list'>
+        <Anchor
+        className="text-3xl"
+        items={[
+          {
+            key: 'titles',
+            href: '#titles',
+            title: <div className="flex gap-4 text-lg items-center">
+              <PiSubtitles fontSize={25}/>
+              <p>عنوان</p>
+            </div>,
+          },
+           {
+            key: 'texts',
+            href: '#texts',
+            title: <div className="flex gap-4 text-lg items-center">
+            <PiTextAlignRight fontSize={25}/>
+              <p>متن پست</p>
+            </div>,
+          },
+            {
+            key: 'others',
+            href: '#others',
+            title: <div className="flex gap-4 text-lg items-center">
+            <PiNewspaperClipping fontSize={25}/>
+              <p>پست‌های مشابه</p>
+            </div>,
+          },
+          {
+            key: 'sharing',
+            href: '#sharing',
+            title: <div className="flex gap-4 text-lg items-center">
+              <PiShareNetwork fontSize={25}/>
+              <p>اشتراک گذاری</p>
+            </div>,
+          },
+
+        
+        ]}
+      />
+        {/* <ListGroup as="ul" className='group-list'>
           <ListGroup.Item as="li" className='group-item'>
             <a href="#titles" className='text-lg flex gap-3'>
               <PiSubtitles fontSize={25}/>
@@ -47,14 +87,15 @@ export default function Detail(props:detailprops) {
              اشتراک گذاری 
           </ListGroup.Item>
         </ListGroup>
+        </div> */}
         </div>
- 
-        </div>
+      </div>
+        
 
       
 
       </div>
-      <div className='col-span-3' id="titles">
+      <div className='grid-col' id="titles">
           <img src={showImage(props.post?.header_img)} alt="" className='w-full h-96 rounded-2xl' />
           <div className="flex justify-between pt-3 pb-5 px-4">
               <p className=' text-gray-700 text-lg'>{props.post?.category.name}</p>

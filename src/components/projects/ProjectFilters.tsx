@@ -11,7 +11,7 @@ export default function ProjectFilters() {
     const ismenu=useRecoilValue(menuSelector)
     const [isSearch,setisSearch]=useState(false)
     const handleProjectFilters=(name:string,status:boolean)=>(e:React.MouseEvent<HTMLElement>)=>{
-        setprojFilters({...projfilters,[name]:!status})
+        setprojFilters({...projfilters,[name]:status})
     }
   return (
     <div>

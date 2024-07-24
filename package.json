@@ -24,7 +24,8 @@
     "react-router-dom": "^6.24.1",
     "recoil": "^0.7.7",
     "recoil-persist": "^5.1.0",
-    "sweetalert2": "^11.12.2"
+    "sweetalert2": "^11.12.2",
+    "swiper": "^11.1.6"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

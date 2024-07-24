@@ -1,12 +1,13 @@
 import { Input } from 'antd'
 import React from 'react'
 import { AiOutlineFundProjectionScreen, AiOutlineSearch } from 'react-icons/ai'
-import { BsEmojiSunglasses } from 'react-icons/bs'
+import { BsEmojiSunglassesFill } from 'react-icons/bs'
 import { PiNewspaperClipping } from 'react-icons/pi'
 import { Link, useLocation } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { menuAtom } from '../states/Atoms'
-
+import {FaHammer,FaHandshake} from 'react-icons/fa'
+import { PiNewspaperFill } from "react-icons/pi";
 export default function MenuList() {
   const location=useLocation()
   const [ismenu,setismenu]=useRecoilState(menuAtom);
@@ -27,19 +28,25 @@ export default function MenuList() {
       <ul className='list-none'>
           <li className={location.pathname=='/'?'menu-blue':'menu-light'} onClick={handleMenu}>
             <Link to="/posts" className='flex items-center gap-2' >
-            <PiNewspaperClipping fontSize={30}/>
+            <PiNewspaperFill fontSize={30}/>
             پست‌ها</Link>
           </li>
           <li className={location.pathname=='/'?'menu-blue':'menu-light'}  onClick={handleMenu}>
             <Link to="/projects" className='flex items-center gap-2'>
-            <AiOutlineFundProjectionScreen fontSize={30}/>
+            <FaHammer fontSize={30}/>
             پروژه‌ها</Link>
           </li>
           <li className={location.pathname=='/'?'menu-blue':'menu-light'}  onClick={handleMenu}>
           <Link to="/about" className='flex items-center gap-2'>
-            <BsEmojiSunglasses fontSize={30}/>
+            <BsEmojiSunglassesFill fontSize={30}/>
             درباره‌ی من </Link>
           </li>
+           <li className={location.pathname=='/'?'menu-blue':'menu-light'}  onClick={handleMenu}>
+          <Link to="/cooperations" className='flex items-center gap-2'>
+            <FaHandshake fontSize={30}/>
+            درخواست همکاری </Link>
+          </li>
+         
         </ul>
     </div>
   )

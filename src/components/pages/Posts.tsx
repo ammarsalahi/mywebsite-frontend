@@ -11,8 +11,8 @@ import Footer from '../global/Footer'
 import { Api } from '../api/Index'
 import { CATEGORIES, POST_SEARCH_FILTER, POSTS } from '../api/Endpoints'
 import Item from 'antd/es/list/Item'
-import { useRecoilValue } from 'recoil'
-import { filterSelector, postSearchSelector } from '../states/Selectors'
+import { useRecoilValue,useRecoilState } from 'recoil'
+import { filterSelector, postSearchSelector,islodingselector } from '../states/Selectors'
 import HorizontalCard from '../posts/HorizontalCard'
 import { Spin } from 'antd';
 
@@ -24,7 +24,7 @@ export default function Posts() {
   const [selectedCategory,setSelectedCategory]=useState("")
 
   const filters=useRecoilValue(filterSelector);
-  const [isLoad,setisLoad]=useState(false);
+  const [isLoad,setisLoad]=useRecoilState(islodingselector);
 
   const getPosts=async()=>{
     await Api.get(POSTS).then((res)=>{
@@ -36,41 +36,44 @@ export default function Posts() {
   const getFilters=async()=>{
     await Api.get(POST_SEARCH_FILTER(postsearch,filters.assort,selectedCategory)).then((res)=>{
        setPosts(res.data)
-    })
+    }).finally(()=>{
+         setisLoad(true)
+      })
   }
   const getCategory=async()=>{
     await Api.get(CATEGORIES).then((res)=>{
       setCategories(res.data)
+      console.log(res.data)
     })
   }
 
   useEffect(() => {
-    getPosts()
+    getFilters()
     getCategory()
   
     return () => {
       setCategories([])
       setPosts([])
     }
-  }, [filters])
+  }, [filters,isLoad,selectedCategory])
   
  
 
   return (
   <div>
     {isLoad ? <>
-     <div className='paddingtop-xl'>
-        <div className='px-5 lg:px-20 xl:px-20 2xl:px-20 md:px-10 pt-4'>
+     <div className='paddingtop'>
+        <div className='category-show pt-14'>
 
-            <div className="flex justify-center gap-3 pt-5 ">
-              {categories?.map((item:any,idx:number)=>{
-                <button  className='p-2 border-0  rounded-xl hover:bg-gray-200' key={idx} 
-                onClick={()=>setSelectedCategory(item.name)}>{item.name}</button>
-              })}
-            </div>
-            
-           
-          {posts.length>0?
+            {categories.length>0 &&<div className="flex justify-start gap-3 pt-5 ">
+              {categories?.map((item:any,idx:number)=>(
+                <button  className='py-2 px-10 bg-blue-50  rounded-full hover:bg-blue-500 hover:text-white' key={idx} 
+                onClick={()=>setSelectedCategory(item.id)}>{item.name}</button>
+              ))}
+            </div>}
+        </div>    
+        <div className="xs:lg:px-10">   
+           {posts.length>0?
           
             <>
             {filters.list==false? <div className='post-card'>
@@ -79,7 +82,7 @@ export default function Posts() {
               ))}
             </div>
             :
-            <div>
+            <div className="py-10">
               {posts?.map((item:any,idx:number)=>(
                 <HorizontalCard  post={item} key={idx}/>
              ))}

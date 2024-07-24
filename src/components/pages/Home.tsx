@@ -63,7 +63,7 @@ export default function Home() {
       
       {loads.imgs ?
       <>
-      <div className="bg-gray-100">
+      <div >
       <div  tabIndex={0} onFocus={onPost} onScroll={onPost} onMouseEnter={onPost}>
         <LastPosts posts={posts} isload={loads.posts}/>
       </div>

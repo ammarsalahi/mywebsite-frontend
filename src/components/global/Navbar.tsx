@@ -1,15 +1,17 @@
 import { Button, Input } from 'antd'
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { AiFillSun, AiOutlineSearch ,AiOutlineFundProjectionScreen, AiOutlineClose, } from 'react-icons/ai'
 import users from '../../assets/Remove-bg.ai_1717403474388.png'
 import { GrDown } from "react-icons/gr";
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { SiDjango, SiFastapi, SiHtml5, SiPython, SiReact, SiTypescript } from 'react-icons/si'
 import { PiNewspaperClipping, PiFireFill } from "react-icons/pi";
-import { BsEmojiSunglasses } from "react-icons/bs";
+import { BsEmojiSunglassesFill } from "react-icons/bs";
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { filterAtom, menuAtom, postSearchAtom, projectSearchAtom, projfilterAtom } from '../states/Atoms'
 import { AiOutlineMenu } from "react-icons/ai";
+import {FaHammer,FaHandshake} from 'react-icons/fa'
+import { PiNewspaperFill } from "react-icons/pi";
 import MenuModal from './MenuModal';
 import PostFIlter from '../posts/PostFIlter';
 import ProjectFilters from '../projects/ProjectFilters';
@@ -19,6 +21,7 @@ export default function Navbar() {
   const location=useLocation()
   let navigate=useNavigate()
   const [isSearch,setisSearch]=useState(false)
+  const [nav,setNav]=useState('nav-blue')
   const [postSearch,setPostSearch]=useState<any>(postSearchAtom)
   const [projSearch,setProjSearch]=useState<any>(projectSearchAtom)
   const [ismenu,setismenu]=useRecoilState(menuAtom)
@@ -33,9 +36,18 @@ export default function Navbar() {
       setismenu(!ismenu)
   }
   
+    useEffect(() => {
+   if(location.pathname=='/'){
+      setNav('nav-blue')
+   }else if(location.pathname=='/posts'|| location.pathname=='/projects' || location.pathname=='/cooperations'){
+      setNav('nav-light-fixed')
+   }else{
+    setNav('nav-light')
+   }
+  }, [location.pathname])
 
   return (    
-    <nav className={location.pathname=='/'?'nav-blue':'nav-light'}>
+    <nav className={nav}>
       <div className={location.pathname=='/'?'flex justify-between text-white':' flex justify-between text-dark-100'}>
         
         <Link to='/' className='pt-3 lg:pt-5 xl:pt-5 2xl:pt-5 md:pt-4 '>logo</Link>
@@ -43,24 +55,24 @@ export default function Navbar() {
         <ul className='hidden list-none gap-5 pt-5 lg:flex xl:flex md:flex  2xl:flex  '>
           <li className='text-md hover:border-b-2'>
             <Link to="/posts" className='flex items-center gap-2'>
-            <PiNewspaperClipping />
+            <PiNewspaperFill fontSize={22} />
             پست‌ها</Link>
           </li>
           <li className=' text-md hover:border-b-2'>
             <Link to="/projects" className='flex items-center gap-2'>
-            <AiOutlineFundProjectionScreen />
+            <FaHammer fontSize={22} />
             پروژه‌ها</Link>
           </li>
           <li className='text-md hover:border-b-2'>
           <Link to="/about" className='flex items-center gap-2'>
-            <BsEmojiSunglasses />
+            <BsEmojiSunglassesFill fontSize={22}  />
             درباره‌ی من </Link>
           </li>
-          {/* <li className='px-5 text-md hover:border-b-2'>
-             <Link to="/projects" className='flex items-center gap-2'>
-            <PiHandshakeLight />
+           <li className='text-md hover:border-b-2'>
+             <Link to="/cooperations" className='flex items-center gap-2'>
+            <FaHandshake fontSize={23}/>
             درخواست همکاری </Link>
-          </li> */}
+          </li> 
         </ul>
         <div className="pt-3 lg:hidden md:hidden xl:hidden 2xl:hidden sm:block">
           <Button 

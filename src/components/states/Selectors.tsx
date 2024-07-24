@@ -1,5 +1,5 @@
 import { selector } from "recoil";
-import { filterAtom, imgurlAtom, menuAtom, postSearchAtom, projectSearchAtom, projfilterAtom } from "./Atoms";
+import { filterAtom, imgurlAtom, menuAtom, postSearchAtom, projectSearchAtom, projfilterAtom, typeAtom, userAtom,isloadingAtom } from "./Atoms";
 
 
 const filterSelector=selector({
@@ -65,4 +65,41 @@ const imgurlSelector=selector({
         set(imgurlAtom,newValue)
     }
 })
-export {filterSelector,postSearchSelector,projectSearchSelector,menuSelector,imgurlSelector,projfilterSelector}
+
+const typeSelector=selector({
+    key:'types-select',
+    get:({get})=>{
+        const value=get(typeAtom)
+        return value
+    },
+    set:({set},newValue)=>{
+        set(typeAtom,newValue)
+    }
+})
+const userSelector=selector({
+    key:'user-select',
+    get:({get})=>{
+        const value=get(userAtom)
+        return value
+    },
+    set:({set},newValue)=>{
+        set(userAtom,newValue)
+    }
+})
+
+const islodingselector=selector({
+    key:'load-select',
+    get:({get})=>{
+        const value=get(isloadingAtom)
+        return value
+    },
+    set:({set},newValue)=>{
+        set(isloadingAtom,newValue)
+    }
+})
+
+export {
+    filterSelector,postSearchSelector,projectSearchSelector,
+    menuSelector,imgurlSelector,projfilterSelector,
+    typeSelector,userSelector,islodingselector
+}

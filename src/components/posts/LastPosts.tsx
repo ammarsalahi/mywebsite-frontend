@@ -11,9 +11,9 @@ interface listprops{
 }
 export default function LastPosts(props:listprops) {
   return (
-    <div className='pt-20 pb-40 px-20'>
-        <div className='flex justify-start py-4 px-5 border-r-4 my-3 border-blue-500 '>
-            <p className='text-4xl text-gray-500'>پست‌های اخیر</p>
+    <div className='lasts'>
+        <div className='flex justify-start py-3 px-3 border-r-4 my-3 border-blue-500 '>
+            <p className='text-3xl text-gray-500'>پست‌های اخیر</p>
         </div>
     <div>
       
@@ -21,7 +21,7 @@ export default function LastPosts(props:listprops) {
      <>
         {props.posts?.length>0 ?
       <> 
-          <div className='grid grid-cols-4 gap-5  py-5'>
+          <div className='last-list'>
           {props.posts?.map((item:any,idx:number)=>(
             <div key={idx}>
             <VerticalCard post={item}/>

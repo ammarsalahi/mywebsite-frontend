@@ -10,7 +10,7 @@ interface postProps{
 
 export default function HorizontalCard(props:postProps) {
   return (
-  <div className='py-4 rounded-md shadow-lg my-5 px-6 bg-white'>
+  <div className='py-4 rounded-xl  my-5 px-6 border-b-1 bg-white '>
     <Link to={`/posts/${props.post?.post_id}`}>
         <div className="grid grid-cols-3 gap-4 ">
         <div className="col-span-2 ">
@@ -22,7 +22,7 @@ export default function HorizontalCard(props:postProps) {
                 <div className="flex justify-start gap-4 py-3 text-gray-500 bottom-0 mt-3">
                 <div className='flex items-center'>
                 <PiClock fontSize={18}/>
-                <span>سه روز پیش</span>
+                <span>{props.post?.persian_date}</span>
                 </div>
                 <div className='flex items-center'>
                 <PiEye fontSize={17}/>
