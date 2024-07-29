@@ -4,20 +4,26 @@
 
 
 .detail-show{
-  @apply  grid xs:sm:px-2 xs:md:grid-cols-3 xs:lg:grid-cols-4
+  @apply  grid xs:sm:px-2 xs:md:grid-cols-3 xs:lg:grid-cols-7
 }
 .ancher-show{
-  @apply hidden sticky top-10 lg:block   md:block sticky top-10 xl:block sticky top-10;
+  @apply hidden sticky top-5 lg:block   md:block  xl:block;
 }
 
 .grid-col{
-  @apply py-10 xs:lg:col-span-3 md:col-span-2
+  @apply py-2 xs:lg:px-7 xs:lg:col-span-5 md:col-span-2 xs:lg:border-r;
 }
-
+.minicol{
+  @apply px-5 xs:lg:col-span-2 xs:md:col-span-1
+}
 .group-item{
     @apply px-4 py-2 my-2 cursor-pointer rounded-xl  hover:bg-blue-200;
 }
 
 .group-list{
     @apply  border-r-4 border-solid border-indigo-700 px-2
+}
+
+.detail-padding{
+
 }

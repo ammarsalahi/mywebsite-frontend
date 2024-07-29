@@ -5,6 +5,9 @@ import './components/styles/index.css';
 import './components/styles/cooperation.css';
 import './components/styles/list.css';
 import './components/styles/detail.css'
+import './components/styles/about.css'
+import './components/styles/carousel.css'
+
 
 import { RecoilRoot } from 'recoil'
 ReactDOM.createRoot(document.getElementById('root')!).render(

@@ -21,9 +21,9 @@
 }*/
 
 
-/*.dashed-card{
+.dashed-card{
     @apply flex justify-center cursor-pointer rounded-xl border-blue-100 border-2 border-dashed 
-}*/
+}
 
 
 

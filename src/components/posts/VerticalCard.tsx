@@ -23,17 +23,12 @@ export default function VerticalCard(props:postProps) {
       <div className='p-4'>
         <p className='text-md text-gray-400 my-3'>{props.post?.category.name}</p>
         <p className='text-2xl text-blue-600 pb-10'>{props.post?.title}</p>
-        <div className='static px-4'>
+        <div className='static ps-2'>
             <div className="flex justify-between gap-4 py-3 text-gray-600 bottom-0">
                 <div className='flex text-md items-center'>
                 <PiClock fontSize={18}/>
                 <span>{props.post?.persian_date}</span>
                 </div>
-                <div className='flex items-center'>
-                <PiEye fontSize={17}/>
-                <span>{props.post?.view_count}</span>
-                </div>
-               
             </div>
         </div>
         </div>

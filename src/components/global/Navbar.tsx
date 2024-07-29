@@ -1,21 +1,20 @@
 import { Button, Input } from 'antd'
 import React, { useState,useEffect } from 'react'
-import { AiFillSun, AiOutlineSearch ,AiOutlineFundProjectionScreen, AiOutlineClose, } from 'react-icons/ai'
-import users from '../../assets/Remove-bg.ai_1717403474388.png'
-import { GrDown } from "react-icons/gr";
+import { AiFillSun, AiOutlineSearch , AiOutlineClose, } from 'react-icons/ai'
+
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { SiDjango, SiFastapi, SiHtml5, SiPython, SiReact, SiTypescript } from 'react-icons/si'
-import { PiNewspaperClipping, PiFireFill } from "react-icons/pi";
 import { BsEmojiSunglassesFill } from "react-icons/bs";
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { filterAtom, menuAtom, postSearchAtom, projectSearchAtom, projfilterAtom } from '../states/Atoms'
+import { menuAtom, postSearchAtom, projectSearchAtom } from '../states/Atoms'
 import { AiOutlineMenu } from "react-icons/ai";
 import {FaHammer,FaHandshake} from 'react-icons/fa'
 import { PiNewspaperFill } from "react-icons/pi";
-import MenuModal from './MenuModal';
 import PostFIlter from '../posts/PostFIlter';
 import ProjectFilters from '../projects/ProjectFilters';
 import { imgurlSelector } from '../states/Selectors';
+import logoblue from '../../assets/logo-blue.png'
+import logolight from '../../assets/logo-light.png'
 
 export default function Navbar() {
   const location=useLocation()
@@ -50,7 +49,9 @@ export default function Navbar() {
     <nav className={nav}>
       <div className={location.pathname=='/'?'flex justify-between text-white':' flex justify-between text-dark-100'}>
         
-        <Link to='/' className='pt-3 lg:pt-5 xl:pt-5 2xl:pt-5 md:pt-4 '>logo</Link>
+        <Link to='/' className='pt-3 lg:pt-5 xl:pt-5 2xl:pt-5 md:pt-4 '>
+         <img src={location.pathname=='/'?logolight:logoblue} width={170} />
+        </Link>
 
         <ul className='hidden list-none gap-5 pt-5 lg:flex xl:flex md:flex  2xl:flex  '>
           <li className='text-md hover:border-b-2'>

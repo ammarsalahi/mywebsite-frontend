@@ -24,7 +24,11 @@ export const KEYWORDS=_('/contents/keywords')
 
 export const KEYWORDS_ID=(id:any)=>_(`/contents/keywords/${id}`)
 
-export const ABOUTS=_('/contents/abouts')
+export const TECHNOLOGIES=_('/contents/technologies')
+
+export const TECHNOLOGIES_ID=(id:any)=>_(`/contents/technologies/${id}`)
+
+export const ABOUTS=_('/accounts/abouts')
 
 export const ABOUTS_ID=(username:any)=>_(`/accounts/abouts/${username}`)
 
@@ -34,10 +38,12 @@ export const SOCIALS=_('/accounts/socials')
 
 export const SOCIALS_ID=(username:any)=>_(`/accounts/socials/${username}`)
 
+
+
 export const HOME=_('/contents/home')
 
 export const POST_SEARCH_FILTER=(search:string,sort:boolean,cate:string)=>_(`/contents/posts/?q=${search}&sort=${sort}&cate=${cate}`)
 
 export const PROJECT_SEARCH_FILTER=(search:string,sort:boolean,cate:string)=>_(`/contents/projects/?q=${search}&sort=${sort}`)
 
-
+export const NEW_POSTS=_('/contents/new-posts');

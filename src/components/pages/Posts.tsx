@@ -24,7 +24,7 @@ export default function Posts() {
   const [selectedCategory,setSelectedCategory]=useState("")
 
   const filters=useRecoilValue(filterSelector);
-  const [isLoad,setisLoad]=useRecoilState(islodingselector);
+  const [isLoad,setisLoad]=useState(false);
 
   const getPosts=async()=>{
     await Api.get(POSTS).then((res)=>{
@@ -34,6 +34,7 @@ export default function Posts() {
       })
   }
   const getFilters=async()=>{
+    setisLoad(false)
     await Api.get(POST_SEARCH_FILTER(postsearch,filters.assort,selectedCategory)).then((res)=>{
        setPosts(res.data)
     }).finally(()=>{
@@ -55,7 +56,7 @@ export default function Posts() {
       setCategories([])
       setPosts([])
     }
-  }, [filters,isLoad,selectedCategory])
+  }, [filters])
   
  
 
@@ -63,7 +64,7 @@ export default function Posts() {
   <div>
     {isLoad ? <>
      <div className='paddingtop'>
-        <div className='category-show pt-14'>
+        <div className='category-show pt-16'>
 
             {categories.length>0 &&<div className="flex justify-start gap-3 pt-5 ">
               {categories?.map((item:any,idx:number)=>(
@@ -72,7 +73,7 @@ export default function Posts() {
               ))}
             </div>}
         </div>    
-        <div className="xs:lg:px-10">   
+        <div>   
            {posts.length>0?
           
             <>

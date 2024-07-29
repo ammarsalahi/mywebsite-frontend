@@ -39,12 +39,20 @@
 }
 
 .paddingtop{
-   @apply py-16 px-5
+   @apply py-14 px-5 xs:lg:px-10 xl:px-20;
 }
 .paddingtop-xl{
-    @apply  py-40 lg:pt-40 md:pt-40 xl:pt-40 2xl:pt-40 
+    @apply py-2 xs:py-10 xs:md:sm:py-16 xs:lg:py-32;
  }
 
- .about{
-  @apply  px-7 md:px-20 lg:px-20 xl:px-20 2xl:px-20 lg:py-10 md:py-10 xl:py-10 2xl:py-10
-}
+ .footer-category{
+    @apply  xs:md:sm:grid xs:md:sm:grid-cols-2;
+ }
+
+ .footer-cols{
+  @apply p-8 xs:border-b mx-5 xs:border-gray-300 xs:md:sm:border-0;
+ }
+
+ .footer-list{
+    @apply grid grid-cols-2 gap-5 list-none
+ }

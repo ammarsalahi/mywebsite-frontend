@@ -7,24 +7,32 @@ import VerticalCard from '../posts/VerticalCard'
 import ProjectCard from '../projects/ProjectCard'
 import { useNavigate } from 'react-router-dom'
 import { Api } from '../api/Index'
-import { PROJECTS } from '../api/Endpoints'
+import { PROJECTS ,PROJECT_SEARCH_FILTER ,TECHNOLOGIES} from '../api/Endpoints'
 import { Spin } from 'antd';
 import Footer from '../global/Footer'
+
+
 export default function Projects() {
    const [projects,setProjects]=useState<any>([]);
+    const [teches,setTeches]=useState<any>([]);
    const [isLoad,setisLoad]=useState(false)
 
    const getProjects=async()=>{
       await Api.get(PROJECTS).then((res)=>{
         setProjects(res.data)
-        console.log(res.data)
       }).finally(()=>{
          setisLoad(true)
       })
     }
-   
+   const getTeches=async()=>{
+    await Api.get(TECHNOLOGIES).then((res)=>{
+        setTeches(res.data)
+    });
+
+   }
     useEffect(() => {
       getProjects()
+      getTeches()
       return () => {
         setProjects([])
       }
@@ -34,8 +42,16 @@ export default function Projects() {
    <div>
    {isLoad?<>
     <div className='paddingtop'>
+        <div className='category-show pt-16'>
 
-        <div className='px-5 lg:px-20 xl:px-20 2xl:px-20 md:px-10 pt-4'>
+            {teches.length>0 &&<div className="flex justify-start gap-3 pt-5 ">
+              {teches?.map((item:any,idx:number)=>(
+                <button  className='py-2 px-10 bg-blue-50  rounded-full hover:bg-blue-500 hover:text-white' key={idx} 
+                onClick={()=>setSelectedCategory(item.id)}>{item.name}</button>
+              ))}
+            </div>}
+        </div> 
+        <div>
             {projects.length>0 ? <div className='post-card'>
                {projects?.map((item:any,idx:number)=>(
                    <ProjectCard project={item} key={idx}/>

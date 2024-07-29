@@ -9,7 +9,8 @@ import { FaTelegram,FaLinkedin ,FaInstagramSquare,FaGithub} from "react-icons/fa
 import { SiGmail } from "react-icons/si";
 import { TbWorldWww } from "react-icons/tb";
 import { FaComputer,FaUsers } from "react-icons/fa6";
-import Footer from '../global/Footer'
+import Footer from '../global/Footer';
+import { FaUser } from "react-icons/fa6";
 import { Spin } from 'antd';
 
 export default function AboutMe() {
@@ -25,30 +26,30 @@ export default function AboutMe() {
   const getIcon=(name:string)=>{
    if(name=='telegram'){
       return (
-        <FaTelegram fontSize={50} color={'#30b3f0'} className="shadow-xl rounded-full"/>
+        <FaTelegram fontSize={45} color={'#30b3f0'} className="shadow-xl rounded-full"/>
       )
    }else if(name=='github'){
       return (
-      <FaGithub fontSize={50} color={'black'} className="shadow-xl rounded-full"/>
+      <FaGithub fontSize={45} color={'black'} className="shadow-xl rounded-full"/>
       )
    }
    else if(name=='linkedin'){
          return (
-          <FaLinkedin fontSize={50} color={'black'} className="shadow-xl rounded-full"/>
+          <FaLinkedin fontSize={45} color={'black'} className="shadow-xl rounded-full"/>
         )
    }else if(name=='instagram'){
          return (
-      <FaInstagramSquare fontSize={50} color={'purple'} className="shadow-xl"/>
+      <FaInstagramSquare fontSize={45} color={'purple'} className="shadow-xl"/>
       )
    }
    else if(name=='email' || name=='gmail'){
          return (
-      <SiGmail fontSize={50} color={'#000'} className="shadow-xl rounded-full"/>
+      <SiGmail fontSize={45} color={'#000'} className="shadow-xl rounded-full"/>
       )
    }
    else{
          return (
-          <TbWorldWww fontSize={50} color={'#000'} className="shadow-xl rounded-full"/>
+          <TbWorldWww fontSize={45} color={'#000'} className="shadow-xl rounded-full"/>
           )
    }
   }
@@ -60,30 +61,39 @@ export default function AboutMe() {
   <div>
     {isLoad?
     <>
-    <div className='paddingtop ps-20'>
-        <div className="about">
-          <div className=" md:grid lg:grid grid-cols-3 h-full">
-             <div className='items-center pt-10'>
+    <div>
+        <div className="about py-5">
+          <div className="about-grid">
+             <div className='flex justify-center ps-2 pt-4'>
+             <div>
                  <img src={showImage(about?.user_img)} className='rounded-full border-2 border-blue-500 shadow-2xl' width={300} alt="" />
-                 <p className='text-5xl px-5  pt-6'>{about?.fullname}</p>
+                 <p className='xs:text-3xl xs:md:sm:text-4xl xs:xl:text-5xl py-5 text-center'>{about?.fullname}</p>
               </div>
-              <div className="col-span-2 text-start">
-                 <p className='text-2xl text-gray-700'>توضیح کوتاه درباره من</p>
-                  <p className='py-5  text-md'>{about.description}</p>
+              </div>
 
+
+              <div className="about-cols">
+                <div>
+                  <div className="py-5 rounded-xl">
+                      <div className="flex gap-2">
+                        <FaUser fontSize={27} color='gray'/>
+                        <p className='text-xl text-gray-700'>توضیح کوتاه درباره من</p>
+                      </div>
+                      <p className='py-7  text-md'>{about.description}</p>
+                  </div>
                   <div className="flex gap-2 items-center">
                     <FaComputer fontSize={30} color='gray' />
-                    <p className='text-2xl text-gray-500'>مهارت و تخصص</p>
+                    <p className='text-xl text-gray-500'>مهارت و تخصص</p>
                   </div>
-                 <p className='text-2xl text-gray-700 pb-10 pt-5' > {about.skill}</p>
+                 <p className='text-xl text-gray-700 pb-10 pt-5' > {about.skill}</p>
                   <p className='text-lg'></p>
                 <div className="flex items-center gap-2">
                   <FaUniversity fontSize={30} color='gray'/>
-                  <p className='text-2xl text-gray-700'>دانشگاه</p>
+                  <p className='text-xl text-gray-700'>دانشگاه</p>
                 </div>
-                <div className="flex gap-6 pt-5 pb-10">
-                  <p className='text-lg'>نام دانشگاه: {about.university_name}</p>
-                  <div className="flex gap-3 items-center">
+                <div className=" pb-10 pt-5 university-flex">
+                  <p className='text-lg pb-3'>نام دانشگاه: {about.university_name}</p>
+                  <div className="flex gap-3 items-center pb-3">
                   <p className='text-lg'>سایت دانشگاه: </p>
                   <Link to={about.university_web} dir='ltr'>{about.university_web}</Link>
                   </div>
@@ -99,12 +109,11 @@ export default function AboutMe() {
                         <div>
                             {getIcon(item.name)}
                         </div>
-                       {/* <Button size="large" type="text" icon={<PiTelegramLogo fontSize={30} color='white'/>} className='p-4 rounded-full bg-blue-600' /> */}
                     </Link>
                  ))}
                 </div>
-
-              </div>
+                </div>
+              </div> 
           </div>
         </div>
     

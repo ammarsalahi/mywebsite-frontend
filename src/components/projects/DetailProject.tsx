@@ -7,27 +7,20 @@ import ProjectCard from './ProjectCard'
 import { Anchor, Carousel } from 'antd'
 import { showImage } from '../api/Index'
 import { FaHammer } from 'react-icons/fa6'
+import NewPosts from '../posts/newPosts';
+import ImageCarousel from './ImageCarousel'
 
 interface detailprops{
   project:any;
   others:any;
 }
 export default function DetailP(props:detailprops) {
-  let navigate=useNavigate()
-
-  return (
- <div className='detail-show'>
-      <div>
-        <div className="ancher-show">
-        <div className="py-10">
-        <Anchor
-        className="text-3xl"
-        items={[
+  const items=[
           {
             key: 'titles',
             href: '#titles',
-            title: <div className="flex gap-4 text-lg items-center">
-              <PiSubtitles fontSize={25}/>
+            title: <div className="flex gap-4 text-xl items-center">
+              <PiSubtitles fontSize={30}/>
               <p>عنوان</p>
             </div>
           },
@@ -35,32 +28,43 @@ export default function DetailP(props:detailprops) {
            {
             key: 'texts',
             href: '#texts',
-            title: <div className="flex gap-4 text-lg items-center">
-            <PiImage fontSize={25}/>
+            title: <div className="flex gap-4 text-xl items-center">
+            <PiImage fontSize={30}/>
               <p>تصاویر پروژه</p>
             </div>,
           },
             {
             key: 'others',
             href: '#others',
-            title: <div className="flex gap-4 text-lg items-center">
-            <FaHammer fontSize={25}/>
+            title: <div className="flex gap-4 text-xl items-center">
+            <FaHammer fontSize={30}/>
               <p>پروژه‌های دیگر</p>
             </div>,
           },
           {
             key: 'sharing',
             href: '#sharing',
-            title: <div className="flex gap-4 text-lg items-center">
-              <PiShareNetwork fontSize={25}/>
+            title: <div className="flex gap-4 text-xl items-center">
+              <PiShareNetwork fontSize={30}/>
               <p>اشتراک گذاری</p>
             </div>,
-          },
+          }]
+  let navigate=useNavigate()
 
-        
-        ]}
-      />
-      </div>
+  return (
+ <div className='detail-show'>
+      <div className="minicol">
+        <div className="ancher-show">
+          <div>
+              <Anchor
+              className="text-3xl"
+              items={items}
+            />
+          </div>
+          <div>
+          <NewPosts />
+
+          </div>
       </div>
       </div>
 
@@ -82,31 +86,32 @@ export default function DetailP(props:detailprops) {
                   <p className='text-md'>{props.project?.text}</p>
                 </div>
              </div>
-             <div className="xs:md:sm:px-10 xs:lg:px-20 items-center">
-               <Carousel arrows draggable>
-                  {props.project.images?.map((item:any,idx:number)=>(
-                           <div key={idx}>
-                            <img src={showImage(item.img)} width={'100%'} height={200}/>
+                <div>
+                         <ImageCarousel interval={1000}>
+                            {props.project.images?.map((item:any,idx:number)=>(
+                            <div key={idx}>
+                              <img src={showImage(item.img)} className="w-full h-80 rounded-xl shadow-xl" />
                             </div>
-                        ))}
-               </Carousel>
-                  </div>
-               <div className="py-10">
-                <p className="text-xl py-5">تنکولوژی‌های استفاده‌شده</p>
-              {props.project?.technologies.length > 0 &&<div className="p-2 grid xs:grid-cols-4 xs:lg:md:grid-cols-8 gap-10">
-                  {props.project.technologies?.map((item:any,idx:number)=>(
+                            ))}
+                          </ImageCarousel>
+               </div>
+                     {props.project?.technologies.length > 0 &&
+                  <div className="pb-20 mt-40 pt-5 border-t">
+                      <p className="text-xl">تنکولوژی‌های استفاده‌شده</p>
+                 <div className="px-2 py-5 grid xs:grid-cols-4 xs:lg:md:grid-cols-6 gap-10">
+                        {props.project.technologies?.map((item:any,idx:number)=>(
 
-                      <Link to="/" key={idx}>
-                      <div className="bg-blue-200 hover:bg-blue-500 py-1 rounded-full text-lg text-center">
-                        {item.name}
-                       </div> 
-                      </Link>
-                  ))}
+                            <Link to="/" key={idx}>
+                            <div className="bg-blue-200 hover:text-white hover:bg-blue-500 py-1  rounded-full text-lg text-center">
+                              {item.name}
+                             </div> 
+                            </Link>
+                        ))}
+                    </div>
               </div>}
-              </div>
           </div>
      
-          {props.others.length>0 && <div className="py-10" id="others">
+          {props.others.length>0 && <div className="pb-16 pt-5 border-t " id="others">
                 <p className='text-xl'>پروژه‌های دیگر</p>
                 
                 <div className='grid grid-cols-3 gap-5  py-10' id='others'>
