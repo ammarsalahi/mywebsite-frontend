@@ -47,3 +47,7 @@ export const POST_SEARCH_FILTER=(search:string,sort:boolean,cate:string)=>_(`/co
 export const PROJECT_SEARCH_FILTER=(search:string,sort:boolean,cate:string)=>_(`/contents/projects/?q=${search}&sort=${sort}`)
 
 export const NEW_POSTS=_('/contents/new-posts');
+
+export const COOPERATIONS=_('/accounts/cooperations');
+
+export const FOOTER=_('/contents/footer/');

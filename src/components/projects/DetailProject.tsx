@@ -55,8 +55,9 @@ export default function DetailP(props:detailprops) {
  <div className='detail-show'>
       <div className="minicol">
         <div className="ancher-show">
-          <div>
+          <div className="py-5">
               <Anchor
+                affix={false}
               className="text-3xl"
               items={items}
             />
@@ -86,14 +87,23 @@ export default function DetailP(props:detailprops) {
                   <p className='text-md'>{props.project?.text}</p>
                 </div>
              </div>
-                <div>
+                <div className="hidden">
                          <ImageCarousel interval={1000}>
                             {props.project.images?.map((item:any,idx:number)=>(
                             <div key={idx}>
-                              <img src={showImage(item.img)} className="w-full h-80 rounded-xl shadow-xl" />
+                              <img src={showImage(item.img)} className="w-96 h-96 rounded-xl shadow-xl" />
                             </div>
                             ))}
                           </ImageCarousel>
+               </div>
+               <div>
+                  <Carousel arrows draggable infinite autoplay>
+                  {props.project.images?.map((item:any,idx:number)=>(
+                            <div key={idx}>
+                              <img src={showImage(item.img)} className="w-full h-96 rounded-xl shadow-xl" />
+                            </div>
+                            ))}
+                  </Carousel>
                </div>
                      {props.project?.technologies.length > 0 &&
                   <div className="pb-20 mt-40 pt-5 border-t">
@@ -114,7 +124,7 @@ export default function DetailP(props:detailprops) {
           {props.others.length>0 && <div className="pb-16 pt-5 border-t " id="others">
                 <p className='text-xl'>پروژه‌های دیگر</p>
                 
-                <div className='grid grid-cols-3 gap-5  py-10' id='others'>
+                <div className='grid lg:xl:grid-cols-3 gap-2  py-10' id='others'>
                     {props.others?.map((item:any,idx:number)=>(
                       <>{item.project_id!==props.project.project_id && 
                         <ProjectCard project={item} key={idx}/>

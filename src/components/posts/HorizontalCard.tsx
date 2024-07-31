@@ -3,6 +3,7 @@ import imgs from '../../assets/bgs.jpg'
 import { PiChat, PiClock, PiEye } from 'react-icons/pi'
 import { Link } from 'react-router-dom'
 import { BASE_URL ,showImage} from '../api/Index'
+import { BiBookReader } from "react-icons/bi";
 
 interface postProps{
   post:any
@@ -10,7 +11,7 @@ interface postProps{
 
 export default function HorizontalCard(props:postProps) {
   return (
-  <div className='py-4 rounded-xl  my-5 px-6 border-b-1 bg-white '>
+  <div className='relative py-4  my-5 px-6 border-y border-gray-100 bg-white '>
     <Link to={`/posts/${props.post?.post_id}`}>
         <div className="grid grid-cols-3 gap-4 ">
         <div className="col-span-2 ">
@@ -19,14 +20,14 @@ export default function HorizontalCard(props:postProps) {
             <p className='text-2xl text-blue-600'>{props.post?.title}</p>
             <p className='text-lg text-gray-500 mt-3'>{props.post?.header}</p>
             <div className='static'>
-                <div className="flex justify-start gap-4 py-3 text-gray-500 bottom-0 mt-3">
+                <div className="flex justify-start gap-10 text-gray-500 absolute bottom-5 right-5 mt-3">
                 <div className='flex items-center'>
                 <PiClock fontSize={18}/>
                 <span>{props.post?.persian_date}</span>
                 </div>
                 <div className='flex items-center'>
-                <PiEye fontSize={17}/>
-                <span>{props.post?.view_count}</span>
+                    <BiBookReader fontSize={18}/>
+                     <span>خواندن ۲ دقیقه</span>
                 </div>
                
                 </div>
@@ -34,7 +35,7 @@ export default function HorizontalCard(props:postProps) {
          
         </div>
         <div className=''>
-          <img src={showImage(props.post?.header_img)} className='w-full h-40 rounded-2xl'  />
+          <img src={showImage(props.post?.header_img)} className='w-full h-48 rounded-2xl'  />
         </div>
       </div>
     </Link>

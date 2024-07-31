@@ -61,7 +61,7 @@ export default function AboutMe() {
   <div>
     {isLoad?
     <>
-    <div>
+    <div className="pt-16 pb-5">
         <div className="about py-5">
           <div className="about-grid">
              <div className='flex justify-center ps-2 pt-4'>
@@ -75,21 +75,21 @@ export default function AboutMe() {
               <div className="about-cols">
                 <div>
                   <div className="py-5 rounded-xl">
-                      <div className="flex gap-2">
-                        <FaUser fontSize={27} color='gray'/>
-                        <p className='text-xl text-gray-700'>توضیح کوتاه درباره من</p>
+                      <div className="flex gap-2 text-gray-500">
+                        <FaUser fontSize={27}/>
+                        <p className='text-xl '>توضیح کوتاه درباره من</p>
                       </div>
                       <p className='py-7  text-md'>{about.description}</p>
                   </div>
-                  <div className="flex gap-2 items-center">
-                    <FaComputer fontSize={30} color='gray' />
-                    <p className='text-xl text-gray-500'>مهارت و تخصص</p>
+                  <div className="flex gap-2 items-center text-gray-500">
+                    <FaComputer fontSize={30} />
+                    <p className='text-xl'>مهارت و تخصص</p>
                   </div>
-                 <p className='text-xl text-gray-700 pb-10 pt-5' > {about.skill}</p>
+                 <p className='text-xl pb-10 pt-5' > {about.skill}</p>
                   <p className='text-lg'></p>
-                <div className="flex items-center gap-2">
-                  <FaUniversity fontSize={30} color='gray'/>
-                  <p className='text-xl text-gray-700'>دانشگاه</p>
+                <div className="flex items-center gap-2 text-gray-500">
+                  <FaUniversity fontSize={30}/>
+                  <p className='text-xl'>دانشگاه</p>
                 </div>
                 <div className=" pb-10 pt-5 university-flex">
                   <p className='text-lg pb-3'>نام دانشگاه: {about.university_name}</p>
@@ -99,17 +99,15 @@ export default function AboutMe() {
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-2">
-                  <FaUsers fontSize={30} color='gray'/>
-                  <p className='text-2xl text-gray-700'>راه‌های ارتباطی</p>
+                <div className="flex items-center gap-2 text-gray-500">
+                  <FaUsers fontSize={30}/>
+                  <p className='text-xl'>راه‌های ارتباطی</p>
                   </div>
                 <div className="flex gap-5 py-5">
                  {about.socials?.map((item:any,idx:number)=>(
-                    <Link to={item.link} key={idx}>
-                        <div>
-                            {getIcon(item.name)}
-                        </div>
-                    </Link>
+                    <div key={idx} onClick={()=>window.open(item.link, '_self')}>
+                      {getIcon(item.name)}
+                    </div>
                  ))}
                 </div>
                 </div>

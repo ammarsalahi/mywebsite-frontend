@@ -35,18 +35,10 @@ export default function Navbar() {
       setismenu(!ismenu)
   }
   
-    useEffect(() => {
-   if(location.pathname=='/'){
-      setNav('nav-blue')
-   }else if(location.pathname=='/posts'|| location.pathname=='/projects' || location.pathname=='/cooperations'){
-      setNav('nav-light-fixed')
-   }else{
-    setNav('nav-light')
-   }
-  }, [location.pathname])
+ 
 
   return (    
-    <nav className={nav}>
+    <nav className={location.pathname=='/'?"nav-blue":'nav-light-fixed'} style={{zIndex:1}}>
       <div className={location.pathname=='/'?'flex justify-between text-white':' flex justify-between text-dark-100'}>
         
         <Link to='/' className='pt-3 lg:pt-5 xl:pt-5 2xl:pt-5 md:pt-4 '>
@@ -59,7 +51,7 @@ export default function Navbar() {
             <PiNewspaperFill fontSize={22} />
             پست‌ها</Link>
           </li>
-          <li className=' text-md hover:border-b-2'>
+          <li className='text-md hover:border-b-2'>
             <Link to="/projects" className='flex items-center gap-2'>
             <FaHammer fontSize={22} />
             پروژه‌ها</Link>

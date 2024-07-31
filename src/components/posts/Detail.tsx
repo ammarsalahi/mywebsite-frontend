@@ -64,16 +64,15 @@ export default function Detail(props:detailprops) {
         <div className="ancher-show">
             <div className="py-5">
               <Anchor
+              affix={false}
               className="text-3xl"
               items={items}
                 />
- 
+              </div>
+              <div>
+              <NewPosts />     
               </div>
         
-           <div>
-             <NewPosts />
-           </div>
-     
         </div>
       </div>
       <div className='grid-col' id="titles">

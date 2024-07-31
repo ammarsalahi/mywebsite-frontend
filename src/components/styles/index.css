@@ -31,7 +31,7 @@
 
 .last-list{
   @apply py-10 ;
-  @apply xs:items-center xs:md:sm:grid sm:grid-cols-2 md:grid-cols-2 xs:md:sm:gap-3  lg:grid-cols-3 xs:xl:grid-cols-4 xs:lg:gap-5;
+  @apply xs:items-center xs:md:sm:grid sm:md:grid-cols-2 xs:md:sm:gap-3  xs:lg:grid-cols-4 xs:lg:gap-5;
 }
 
 .no-list{
@@ -39,7 +39,7 @@
 }
 
 .paddingtop{
-   @apply py-14 px-5 xs:lg:px-10 xl:px-20;
+   @apply py-20 px-5 xs:lg:px-10 xl:px-20;
 }
 .paddingtop-xl{
     @apply py-2 xs:py-10 xs:md:sm:py-16 xs:lg:py-32;

@@ -3,6 +3,7 @@ import StepOne from '../cooperations/StepOne'
 import StepTwo from '../cooperations/StepTwo'
 import StepThree from '../cooperations/StepThree'
 import { Steps } from 'antd';
+import Footer from '../global/Footer';
 
 export default function Cooperation() {
   const [current, setCurrent] = useState(0);
@@ -32,7 +33,8 @@ export default function Cooperation() {
     },
   ]
   return (
-    <div className='py-10 bg-gray-100'>
+   <div>
+    <div className='py-10'>
       <div className="cooper">
       <div className="step-show">
       <Steps
@@ -43,13 +45,14 @@ export default function Cooperation() {
         className='h-full rounded-xl border border-dashed border-gray-200 p-5 '
       />
       </div>
-      <div className="steps-space">
+      <div className="steps-space ps-10">
          <div className="content-show">
             {steps[current].content}
          </div>
       </div>
       </div>
-  
+    </div>
+    <Footer/>
     </div>
   )
 }

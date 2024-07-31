@@ -1,15 +1,8 @@
 import React from 'react'
-import imgs from '../../assets/bgs.jpg'
 import { PiChat, PiClock, PiEye } from 'react-icons/pi'
 import { BASE_URL ,showImage} from '../api/Index'
 import { Link } from 'react-router-dom'
-
-// type post={
-//   title:string,
-//   category:any,
-//   view_count:number,
-//   header_img:any
-// }
+import { BiBookReader } from "react-icons/bi";
 
 interface postProps{
   post:any
@@ -17,22 +10,28 @@ interface postProps{
 export default function VerticalCard(props:postProps) {
  
   return (
-  <div className='px-3 py-3 shadow-xl rounded-lg bg-white'>
-    <Link  to={`/posts/${props.post?.post_id}`}>
-      <img src={showImage(props.post?.header_img)} className='rounded-xl' />
-      <div className='p-4'>
-        <p className='text-md text-gray-400 my-3'>{props.post?.category.name}</p>
-        <p className='text-2xl text-blue-600 pb-10'>{props.post?.title}</p>
-        <div className='static ps-2'>
-            <div className="flex justify-between gap-4 py-3 text-gray-600 bottom-0">
-                <div className='flex text-md items-center'>
+    <Link to={`/posts/${props.post?.post_id}`}>
+     <div className="card card-compact bg-base-100 w-76 shadow-xl">
+        <figure>
+          <img
+            src={showImage(props.post?.header_img)}
+            alt="projects" className="h-44"/>
+        </figure>
+        <div className="card-body">
+          <span className="text-gray-500">{props.post?.category.name}</span>
+          <h2 className="card-title py-3 text-blue-600">{props.post?.title}</h2>
+            <div className="flex justify-between py-3 ">
+            <div className="flex gap-1 items-center text-gray-600">
                 <PiClock fontSize={18}/>
                 <span>{props.post?.persian_date}</span>
-                </div>
+            </div>
+            <div className="flex gap-1 items-center text-gray-600">
+                <BiBookReader fontSize={18}/>
+              <span>خواندن ۲ دقیقه</span>
+            </div>
             </div>
         </div>
-        </div>
-    </Link>
-    </div>
+      </div>
+      </Link>
   )
 }
