@@ -27,5 +27,5 @@
     @apply md:col-span-2 xs:lg:col-span-2;
 }
 .content-show{
-  @apply p-5 border shadow-md rounded-xl bg-white xs:sm:p-10 xs:sm:border;
+  @apply p-5 border shadow-md rounded-xl xs:sm:p-10 xs:sm:border;
 }

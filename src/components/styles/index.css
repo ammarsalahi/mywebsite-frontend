@@ -12,17 +12,20 @@
  }
 
 .menu-dark{
-    @apply text-xl mb-3 text-white hover:bg-blue-700 p-3 rounded-xl
+    @apply text-xl mb-3 text-white hover:bg-blue-800 p-3 rounded-xl
  } 
 
 .nav-light-fixed{
-   @apply  fixed top-0 left-0 w-full pb-2 px-4 lg:px-10 md:px-10 xl:px-10 2xl:px-10 bg-white border-b-2 border-gray-100
+   @apply  fixed top-0 left-0 w-full pb-2 px-4 lg:px-10 md:px-10 xl:px-10 2xl:px-10 bg-white border-b 
  }
-.nav-light{
-   @apply  w-full pb-2 px-4 lg:px-10 md:px-10 xl:px-10 2xl:px-10 bg-white border-b-2 border-gray-100
+.nav-dark-fixed{
+   @apply  fixed top-0 left-0 w-full pb-2 px-4 lg:px-10 md:px-10 xl:px-10 2xl:px-10 bg-gray-800 border-b-2 border-gray-700 
+ } 
+.nav-dark{
+    @apply   pb-2 px-4 lg:px-10 md:px-10 xl:px-10 2xl:px-10 bg-gray-800 border-b border-gray-700
  }
 .nav-blue{
-    @apply   pb-2 px-4 lg:px-10 md:px-10 xl:px-10 2xl:px-10 bg-blue-500
+    @apply   pb-2 px-4 lg:px-10 md:px-10 xl:px-10 2xl:px-10 bg-blue-600
 }
 
 .lasts{
@@ -55,4 +58,11 @@
 
  .footer-list{
     @apply grid grid-cols-2 gap-5 list-none
+ }
+
+ .mini-logo{
+   @apply hidden xs:block sm:block md:block;
+ }
+ .logo-menu{
+  @apply hidden xs:lg:flex justify-between ;
  }

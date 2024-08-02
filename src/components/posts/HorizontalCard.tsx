@@ -27,7 +27,7 @@ export default function HorizontalCard(props:postProps) {
                 </div>
                 <div className='flex items-center'>
                     <BiBookReader fontSize={18}/>
-                     <span>خواندن ۲ دقیقه</span>
+                     <span>{props.post?.reading_time}</span>
                 </div>
                
                 </div>

@@ -1,5 +1,5 @@
 import { selector } from "recoil";
-import { filterAtom, imgurlAtom, menuAtom, postSearchAtom, projectSearchAtom, projfilterAtom, typeAtom, userAtom,isloadingAtom } from "./Atoms";
+import { filterAtom, imgurlAtom, menuAtom, postSearchAtom, projectSearchAtom, projfilterAtom, typeAtom, userAtom,isloadingAtom,themeAtom } from "./Atoms";
 
 
 const filterSelector=selector({
@@ -98,8 +98,19 @@ const islodingselector=selector({
     }
 })
 
+const themeSelector=selector({
+    key:'theme-select',
+    get:({get})=>{
+        const value=get(themeAtom)
+        return value
+    },
+    set:({set},newValue)=>{
+        set(themeAtom,newValue)
+        sessionStorage.setItem('themes', newValue);
+    }
+})
 export {
     filterSelector,postSearchSelector,projectSearchSelector,
     menuSelector,imgurlSelector,projfilterSelector,
-    typeSelector,userSelector,islodingselector
+    typeSelector,userSelector,islodingselector,themeSelector
 }

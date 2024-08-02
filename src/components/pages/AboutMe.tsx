@@ -105,7 +105,7 @@ export default function AboutMe() {
                   </div>
                 <div className="flex gap-5 py-5">
                  {about.socials?.map((item:any,idx:number)=>(
-                    <div key={idx} onClick={()=>window.open(item.link, '_self')}>
+                    <div key={idx} onClick={()=>window.open(item.link, '_blank')}>
                       {getIcon(item.name)}
                     </div>
                  ))}

@@ -15,7 +15,7 @@ export default function VerticalCard(props:postProps) {
         <figure>
           <img
             src={showImage(props.post?.header_img)}
-            alt="projects" className="h-44"/>
+            alt="projects" className="h-44 w-full"/>
         </figure>
         <div className="card-body">
           <span className="text-gray-500">{props.post?.category.name}</span>
@@ -27,7 +27,7 @@ export default function VerticalCard(props:postProps) {
             </div>
             <div className="flex gap-1 items-center text-gray-600">
                 <BiBookReader fontSize={18}/>
-              <span>خواندن ۲ دقیقه</span>
+                <span>{props.post?.reading_time}</span>
             </div>
             </div>
         </div>

@@ -39,19 +39,19 @@
 
 
 .post-filter{
-    @apply hidden xs:md:sm:flex justify-center mb-2 px-20 pt-3 sticky bg-white  
+    @apply hidden xs:md:sm:flex justify-center mb-2 px-20 pt-3 sticky
 }
 
 .project-filter{
-    @apply hidden  xs:md:sm:flex justify-start  mb-2 px-20 pt-3 sticky bg-white
+    @apply hidden  xs:md:sm:flex justify-start  mb-2 px-20 pt-3 sticky 
 }
 
 .post-filter-sm{
-    @apply flex  xs:md:sm:hidden justify-between pt-4  px-2  sticky bg-white  
+    @apply flex  xs:md:sm:hidden justify-between pt-4  px-2  sticky  
 }
 
 .project-filter-sm{
-    @apply flex  xs:md:sm:hidden justify-center gap-5 pt-4  px-2  bg-white
+    @apply flex  xs:md:sm:hidden justify-center gap-5 pt-4  px-2
 }
 
 

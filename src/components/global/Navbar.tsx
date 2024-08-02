@@ -1,6 +1,6 @@
 import { Button, Input } from 'antd'
 import React, { useState,useEffect } from 'react'
-import { AiFillSun, AiOutlineSearch , AiOutlineClose, } from 'react-icons/ai'
+import { AiFillSun,AiFillMoon, AiOutlineSearch , AiOutlineClose, } from 'react-icons/ai'
 
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { SiDjango, SiFastapi, SiHtml5, SiPython, SiReact, SiTypescript } from 'react-icons/si'
@@ -15,6 +15,9 @@ import ProjectFilters from '../projects/ProjectFilters';
 import { imgurlSelector } from '../states/Selectors';
 import logoblue from '../../assets/logo-blue.png'
 import logolight from '../../assets/logo-light.png'
+import { themeSelector } from '../states/Selectors';
+import { LiaSearchSolid } from "react-icons/lia";
+
 
 export default function Navbar() {
   const location=useLocation()
@@ -25,7 +28,7 @@ export default function Navbar() {
   const [projSearch,setProjSearch]=useState<any>(projectSearchAtom)
   const [ismenu,setismenu]=useRecoilState(menuAtom)
   const imgurl=useRecoilValue(imgurlSelector)
-
+  const [theme,setTheme]=useRecoilState(themeSelector)
 
   const handlePostSearch=(e:React.ChangeEvent<HTMLInputElement>)=>{
     setPostSearch(e.target.value)
@@ -34,18 +37,32 @@ export default function Navbar() {
   const handleMenu=(e:React.MouseEvent<HTMLElement>)=>{
       setismenu(!ismenu)
   }
-  
+  const handleTheme=()=>{
+    if(theme=='light'){
+       setTheme('dark')
+    }else{
+       setTheme('light')
+    }
+  }
+  useEffect(()=>{
+    document.documentElement.setAttribute('data-theme',theme)
+  },[theme])
  
 
   return (    
-    <nav className={location.pathname=='/'?"nav-blue":'nav-light-fixed'} style={{zIndex:1}}>
+    <nav className={
+        theme=='light'?
+        location.pathname=='/'?"nav-blue":'nav-light-fixed'
+        :
+        location.pathname=='/'?"nav-dark":'nav-dark-fixed'
+      } style={{zIndex:1}}>
       <div className={location.pathname=='/'?'flex justify-between text-white':' flex justify-between text-dark-100'}>
-        
+        <div className="logo-menu">
         <Link to='/' className='pt-3 lg:pt-5 xl:pt-5 2xl:pt-5 md:pt-4 '>
          <img src={location.pathname=='/'?logolight:logoblue} width={170} />
         </Link>
 
-        <ul className='hidden list-none gap-5 pt-5 lg:flex xl:flex md:flex  2xl:flex  '>
+        <ul className='list-none gap-5 pt-5 flex ms-32'>
           <li className='text-md hover:border-b-2'>
             <Link to="/posts" className='flex items-center gap-2'>
             <PiNewspaperFill fontSize={22} />
@@ -66,7 +83,8 @@ export default function Navbar() {
             <FaHandshake fontSize={23}/>
             درخواست همکاری </Link>
           </li> 
-        </ul>
+        </ul> 
+        </div>
         <div className="pt-3 lg:hidden md:hidden xl:hidden 2xl:hidden sm:block">
           <Button 
           type='text' 
@@ -78,20 +96,17 @@ export default function Navbar() {
        <div className="hidden md:flex lg:flex xl:flex 2xl:flex gap-5 pt-5">
        {location.pathname=='/' && 
        <>
-       {isSearch==false?
-               <Button  
-               icon={<AiOutlineSearch fontSize={20} color={'white'}/>} type='text'
-               onClick={()=>setisSearch(true)}
-               />
-        :
-        <Input placeholder='جستجو......' 
-        suffix={<AiOutlineClose onClick={()=>setisSearch(false)} className='cursor-pointer' color='red' fontSize={23}/>} 
-        prefix={<AiOutlineSearch fontSize={20}  />} />
-       }
+        <label class="input input-sm input-ghost max-w-xs flex items-center gap-5">
+          <input type="text" class="grow" placeholder="کلمه کوردنظر را جستجو کنید..." />
+          <AiOutlineSearch fontSize={20}/>
+        </label>
        </>
        
        }
-        <Button  icon={<AiFillSun fontSize={20} color={location.pathname=='/'?'white':'black'}/>} type='text'/>
+        <Button  
+            icon={theme=='light'?
+              <AiFillSun fontSize={20} color={location.pathname=='/'?'white':'black'}/>
+              :<AiFillMoon fontSize={20} color='white'/>} type='text' onClick={handleTheme}/>
         </div>
        
 

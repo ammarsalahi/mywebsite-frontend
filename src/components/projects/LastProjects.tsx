@@ -9,7 +9,7 @@ export default function LastProjects(props:listprops) {
   return (
     <div className='lasts'>
         <div className='flex justify-start py-4 px-5 border-r-4 my-3 border-blue-500 '>
-            <p className='text-4xl text-gray-500'>پروژه‌های اخیر</p>
+            <p className='text-4xl'>پروژه‌های اخیر</p>
         </div>
           
     {props.isload?

@@ -48,7 +48,6 @@ const imgurlAtom=atom({
 const typeAtom=atom({
     key:'project-type',
     default:'',
-    effects_UNSTABLE: [persistAtom],
 
 });
 
@@ -60,12 +59,17 @@ const userAtom=atom({
         phone:"",
         email:""
     },
-    effects_UNSTABLE: [persistAtom],
 
 });
 
 const isloadingAtom=atom({
     key:'is-loading-atom',
     default:false
-})
-export {filterAtom,projectSearchAtom,postSearchAtom,projfilterAtom,menuAtom,imgurlAtom,typeAtom,userAtom,isloadingAtom}
+});
+
+const themeAtom=atom({
+    key:'theme-atom',
+    default: sessionStorage.getItem('themes') ? sessionStorage.getItem('themes') : "light",
+});
+
+export {filterAtom,projectSearchAtom,postSearchAtom,projfilterAtom,menuAtom,imgurlAtom,typeAtom,userAtom,isloadingAtom,themeAtom}

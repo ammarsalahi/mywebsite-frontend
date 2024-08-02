@@ -13,7 +13,7 @@ export default function LastPosts(props:listprops) {
   return (
     <div className='lasts'>
         <div className='flex justify-start py-3 px-3 border-r-4 my-3 border-blue-500 '>
-            <p className='text-3xl text-gray-500'>پست‌های اخیر</p>
+            <p className='text-3xl'>پست‌های اخیر</p>
         </div>
     <div>
       

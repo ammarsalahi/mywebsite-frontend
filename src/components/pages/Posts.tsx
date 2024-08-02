@@ -68,7 +68,7 @@ export default function Posts() {
 
             {categories.length>0 &&<div className="flex justify-start gap-3 pt-5 ">
               {categories?.map((item:any,idx:number)=>(
-                <button  className='py-2 px-10 bg-blue-50  rounded-full hover:bg-blue-500 hover:text-white' key={idx} 
+                <button  className='py-2 px-10 bg-blue-50 text-blue-800 font-bold  rounded-full hover:bg-blue-500 hover:text-white' key={idx} 
                 onClick={()=>setSelectedCategory(item.id)}>{item.name}</button>
               ))}
             </div>}
