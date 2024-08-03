@@ -18,14 +18,14 @@ export default function VerticalCard(props:postProps) {
             alt="projects" className="h-44 w-full"/>
         </figure>
         <div className="card-body">
-          <span className="text-gray-500">{props.post?.category.name}</span>
+          <span>{props.post?.category.name}</span>
           <h2 className="card-title py-3 text-blue-600">{props.post?.title}</h2>
             <div className="flex justify-between py-3 ">
-            <div className="flex gap-1 items-center text-gray-600">
+            <div className="flex gap-1 items-center">
                 <PiClock fontSize={18}/>
                 <span>{props.post?.persian_date}</span>
             </div>
-            <div className="flex gap-1 items-center text-gray-600">
+            <div className="flex gap-1 items-center">
                 <BiBookReader fontSize={18}/>
                 <span>{props.post?.reading_time}</span>
             </div>

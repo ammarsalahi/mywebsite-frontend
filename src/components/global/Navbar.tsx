@@ -16,7 +16,6 @@ import { imgurlSelector } from '../states/Selectors';
 import logoblue from '../../assets/logo-blue.png'
 import logolight from '../../assets/logo-light.png'
 import { themeSelector } from '../states/Selectors';
-import { LiaSearchSolid } from "react-icons/lia";
 
 
 export default function Navbar() {
@@ -28,7 +27,7 @@ export default function Navbar() {
   const [projSearch,setProjSearch]=useState<any>(projectSearchAtom)
   const [ismenu,setismenu]=useRecoilState(menuAtom)
   const imgurl=useRecoilValue(imgurlSelector)
-  const [theme,setTheme]=useRecoilState(themeSelector)
+  const [theme,setTheme]=useRecoilState<any>(themeSelector)
 
   const handlePostSearch=(e:React.ChangeEvent<HTMLInputElement>)=>{
     setPostSearch(e.target.value)
@@ -85,21 +84,27 @@ export default function Navbar() {
           </li> 
         </ul> 
         </div>
-        <div className="pt-3 lg:hidden md:hidden xl:hidden 2xl:hidden sm:block">
-          <Button 
-          type='text' 
-          icon={ismenu==false?<AiOutlineMenu fontSize={30} color={location.pathname=='/'?'white':'black'}/>:<AiOutlineClose fontSize={30} color={location.pathname=='/'?'white':'black'}/>}
-          onClick={handleMenu}
-          ></Button>
+        <div className="pt-3 lg:hidden  xl:hidden 2xl:hidden sm:block md:block">
+          <button 
+            className="btn btn-ghost"
+            onClick={handleMenu}>
+            {ismenu?<AiOutlineClose fontSize={30}/>:<AiOutlineMenu fontSize={30}/>}
+          </button>
         </div>
        
        <div className="hidden md:flex lg:flex xl:flex 2xl:flex gap-5 pt-5">
        {location.pathname=='/' && 
        <>
-        <label class="input input-sm input-ghost max-w-xs flex items-center gap-5">
-          <input type="text" class="grow" placeholder="کلمه کوردنظر را جستجو کنید..." />
+         <Input
+           variant='borderless'
+           prefix={<AiOutlineSearch fontSize={20} color={theme=='dark'?'white':'gray'}/>}
+           placeholder='جستجو...'
+           
+         />
+         {/* <label className="input input-sm input-ghost max-w-xs flex items-center gap-5">
+          <input type="text" className="grow" placeholder="کلمه کوردنظر را جستجو کنید..." />
           <AiOutlineSearch fontSize={20}/>
-        </label>
+        </label> */}
        </>
        
        }

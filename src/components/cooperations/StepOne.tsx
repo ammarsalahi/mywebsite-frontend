@@ -61,10 +61,14 @@ export default function StepOne(props:stepprops) {
             </div>
           </ListGroup.Item>
       </ListGroup>
+        <button 
+          className='btn btn-wide w-full bg-blue-600 text-white hover:bg-blue-600 border border-blue-600 rounded-full'
+          onClick={props.next}
+            >
+          ادامه
+          <FaChevronLeft/>
+        </button>
       
-        <Button size='large' type='primary' block className='my-5 rounded-full' iconPosition="end" icon={<FaChevronLeft/>}
-        onClick={props.next}
-        >ادامه</Button>
       
     </div>
   )

@@ -20,7 +20,11 @@ export default function StepTwo(props:stepprops) {
   return (
     <div>
       <div className='flex justify-start gap-10'>
-        <Button  icon={<FaChevronRight/>} onClick={props.prev} type="primary" danger/>
+        <button 
+          className="btn btn-sm rounded-full btn-error text-white" 
+          onClick={props.prev}>
+        <FaChevronRight fontSize={20}/>
+        </button>
         <p className='text-2xl pb-10 ps-5 text-center'>اطلاعات موردنظر را وارد کنید</p>
       </div>
       <Formik
@@ -42,42 +46,55 @@ export default function StepTwo(props:stepprops) {
       >         
       {({handleSubmit,values,handleChange,errors,touched})=>(
           <form onSubmit={handleSubmit}>
-          <Input 
-              size='large' className='mb-5 p-2 rounded-full' 
-              prefix={<FaUser color={'gray'}/>} placeholder='نام و نام‌خانوادگی'
-              value={values.name}
-              name="name"
-              onChange={handleChange}
+            <label className="input input-bordered mb-5 w-full flex items-center gap-5 rounded-full">
+               <FaUser/>
+                <input 
+                    type="text" className="grow" 
+                    placeholder='نام و نام‌خانوادگی' 
+                    value={values.name}
+                    name="name"
+                    onChange={handleChange}
+                  />
+            </label>
+            <label className="input input-bordered mb-5 w-full flex items-center gap-5 rounded-full">
+                 <FaPhone/>
+                <input 
+                    type="text" className="grow" 
+                    placeholder='شماره موبایل'
+                    value={values.phone}
+                    name="phone"
+                    onChange={handleChange}
+                  />
+            </label>
+            <label className="input input-bordered mb-5 w-full flex items-center gap-5 rounded-full">
+                 <MdEmail/>
+                <input 
+                    type="text" className="grow" 
+                    placeholder='ایمیل(اختیاری)'
+                    value={values.email}
+                    name="email"
+                    onChange={handleChange}
+                  />
+            </label>
+            <label className="input input-bordered mb-5 w-full flex items-center gap-5 rounded-full">
+               <FaHammer/>
+                <input 
+                    type="text" className="grow" 
+                    placeholder='نام پروژه'
+                    value={values.project}
+                    name="project"
+                    onChange={handleChange}
+                  />
+            </label>
 
-          />
-          <Input 
-              size='large' className='mb-5 p-2 rounded-full' 
-              prefix={<FaPhone color={'gray'}/>} placeholder='شماره موبایل'
-              value={values.phone}
-              name="phone"
-              onChange={handleChange}
-          />
-          <Input 
-            size='large' className='mb-5 p-2 rounded-full' 
-            prefix={<MdEmail color={'gray'}/>} placeholder='ایمیل(اختیاری)'
-            value={values.email}
-            name="email"
-            onChange={handleChange}
-
-          />
-          <Input 
-            size='large' className='mb-5 p-2 rounded-full' 
-            prefix={<FaHammer color={'gray'}/>} placeholder='نام پروژه'
-            value={values.project}
-            name='project'
-            onChange={handleChange}
-
-          />
-          <Button 
-              size='large' type='primary' block className='my-5 rounded-full' 
-              iconPosition="end" icon={<FaChevronLeft/>}
+            <button 
+              className='btn btn-wide w-full bg-blue-600 text-white hover:bg-blue-600 border border-blue-600 rounded-full'
               onClick={()=>handleSubmit()}
-          >ادامه</Button>
+            >
+            ادامه
+            <FaChevronLeft/>
+          </button>
+          
           </form>
       )}
       </Formik>

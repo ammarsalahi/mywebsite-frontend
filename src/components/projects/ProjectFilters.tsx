@@ -17,22 +17,25 @@ export default function ProjectFilters() {
     <div>
 
         <div className="project-filter">
-                    <Button
-                       size='large' icon={<AiOutlineSortAscending fontSize={20}/>} 
-                       className={projfilters.assort==true?'text-green-600':''} 
+                    <button className={projfilters.assort?'btn btn-ghost text-green-600':'btn btn-ghost'}
                        onClick={handleProjectFilters('assort',true)}
-                       type='text'
-                     >صعودی</Button>
-     
-                    <Button 
-                       size='large' icon={<AiOutlineSortDescending fontSize={20}/>} 
-                       className={projfilters.assort==false?'text-red-600':''}
-                       onClick={handleProjectFilters('assort',false)}
-                       type='text'>نزولی</Button>
-                    
-                    <Input allowClear size='large' placeholder="جستجو..." variant='borderless' 
-                    prefix={<AiOutlineSearch fontSize={20}/>}/> 
+                     >
+                       <AiOutlineSortAscending fontSize={20}/>
+                        صعودی
+                     </button>
+                     
+                     <button 
+                     className={projfilters.assort==false?'btn btn-ghost text-red-600':'btn btn-ghost'}
+                      onClick={handleProjectFilters('assort',false)}
+                     >
+                        <AiOutlineSortDescending fontSize={20}/>
+                        نزولی
+                     </button>
                  
+                     <label class="input input-sm mt-2 input-ghost border-0 max-w-xs w-full flex items-center gap-5">
+                        <AiOutlineSearch fontSize={20}/>
+                        <input type="text" class="grow" placeholder="جستجو..." />
+                      </label> 
           </div>  
           {ismenu==false &&
             <div>
@@ -42,32 +45,35 @@ export default function ProjectFilters() {
                       allowClear size='large' 
                       placeholder="جستجو..." 
                       variant='borderless' 
-                      className='bg-gray-50'
-                      prefix={<AiOutlineSearch fontSize={22}/>}/> 
-                    <Button 
-                        type='text'
-                        icon={<AiOutlineClose fontSize={25}/>}
-                        onClick={()=>setisSearch(false)}
-                     />          
+                    
+                    prefix={<AiOutlineSearch fontSize={22} className="text-gray-500"/>}/> 
+                     <button
+                    className="btn btn-sm btn-ghost"
+                     onClick={()=>setisSearch(false)}
+                    >
+                    <AiOutlineClose fontSize={25}/>
+                    </button>         
           </div>
         : <div className='project-filter-sm'>
-                <Button
-                       size='large' icon={<AiOutlineSortAscending fontSize={30}/>} 
-                       className={projfilters.assort==true?'text-green-600':''} 
-                       onClick={handleProjectFilters('assort',projfilters.assort)}
-                       type='text'
-                     />
-     
-                    <Button 
-                       size='large' icon={<AiOutlineSortDescending fontSize={30}/>} 
-                       className={projfilters.assort==false?'text-red-600':''}
-                       onClick={handleProjectFilters('assort',projfilters.assort)}
-                       type='text'/>
-                     <Button 
-                      size='large' icon={<AiOutlineSearch fontSize={22}/>} 
+                 <button className={projfilters.assort?'btn btn-ghost text-green-600':'btn btn-ghost'}
+                       onClick={handleProjectFilters('assort',true)}
+                     >
+                       <AiOutlineSortAscending fontSize={32}/>
+                     </button>
                      
+                     <button 
+                     className={projfilters.assort==false?'btn btn-ghost text-red-600':'btn btn-ghost'}
+                      onClick={handleProjectFilters('assort',false)}
+                     >
+                        <AiOutlineSortDescending fontSize={32}/>
+                     </button>
+                    <button 
+                     className='btn btn-ghost'
                       onClick={()=>setisSearch(true)}
-                      type='text'/>   
+                     >
+                        <AiOutlineSearch fontSize={32}/>
+                     </button>
+                      
           </div>
         }
         </div>

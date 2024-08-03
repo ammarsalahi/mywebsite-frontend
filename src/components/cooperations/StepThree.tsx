@@ -35,8 +35,11 @@ export default function StepThree(props:stepprops) {
   return (
     <div>
       <div className='flex justify-start gap-5'>
-        <Button  icon={<FaChevronRight/>} onClick={props.prev} type="primary" danger/>
-         <p className='text-2xl pb-10 text-center'>جزئیات بیشتری را در مورد پروژه اضافه کنید</p>
+          <button 
+          className="btn btn-sm rounded-full btn-error text-white" 
+          onClick={props.prev}>
+        <FaChevronRight fontSize={20}/>
+        </button>         <p className='text-xl pb-10 text-center'>جزئیات بیشتری را در مورد پروژه اضافه کنید</p>
       </div>
       <Formik
         initialValues={{
@@ -72,18 +75,20 @@ export default function StepThree(props:stepprops) {
         {({handleSubmit,values,handleChange,errors,touched})=>(
 
         <form onSubmit={handleSubmit}>
-          <Input.TextArea
-            size='large'
-            placeholder='در مورد پروژه بیشتر توضیح بدید...'
-            rows={4}
-            className='mb-5 rounded-xl'
-            value={values.text}
-            name='text'
-            onChange={handleChange}
-          />
-            {imgshow==""?<div className='dashed-card p-7 mb-5'>
+        <textarea 
+          class="textarea textarea-bordered w-full mb-5" 
+          placeholder='در مورد پروژه بیشتر توضیح بدید...'
+          value={values.text}
+          name='text'
+          onChange={handleChange}
+          rows={4}
+        />
+            {imgshow==""?<div className='dashed-card p-6 mb-5'>
               <input type='file' hidden ref={fileInput} onChange={handleFileChange} accept="image/png, image/jpg, image/jpeg"/>
-              <Button type='text' className='text-lg' onClick={openFile} icon={<PiCameraPlus/>}>افزودن نمونه تصویر</Button>
+              <button className='btn btn-ghost text-lg' onClick={openFile}>
+              <PiCameraPlus/>
+              افزودن نمونه تصویر
+              </button>
             </div>:
             <div className="grid grid-cols-10">
                <div className="pt-5">
@@ -95,13 +100,13 @@ export default function StepThree(props:stepprops) {
                 </div>
                </div>
                <img src={imgshow} className='col-span-9 w-full h-36 border-2 border-gray-300 rounded-lg'/> 
-            </div>}
-           <Button 
-              size='large' type='primary' block 
-              className='mb-5 mt-3 text-xl rounded-full'
+            </div>}             
+            <button 
+              className='btn btn-wide w-full bg-blue-600 text-white hover:bg-blue-600 border border-blue-600 rounded-full'
               onClick={()=>handleSubmit()}
-              >تایید</Button>
-
+            >
+            تایید
+            </button>
         </form>
         )}
       </Formik>
