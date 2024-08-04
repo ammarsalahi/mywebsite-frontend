@@ -10,19 +10,25 @@ import { Api } from '../api/Index'
 import { PROJECTS ,PROJECT_SEARCH_FILTER ,TECHNOLOGIES} from '../api/Endpoints'
 import { Spin } from 'antd';
 import Footer from '../global/Footer'
+import { useRecoilValue } from 'recoil'
+import { projectSearchSelector, projfilterSelector } from '../states/Selectors'
 
 
 export default function Projects() {
-   const [projects,setProjects]=useState<any>([]);
+    const [projects,setProjects]=useState<any>([]);
     const [teches,setTeches]=useState<any>([]);
-   const [isLoad,setisLoad]=useState(false)
+    const [isLoad,setisLoad]=useState(false)
+    const projectsearch=useRecoilValue(projectSearchSelector)
+    const filters=useRecoilValue(projfilterSelector)
 
-   const getProjects=async()=>{
-      await Api.get(PROJECTS).then((res)=>{
-        setProjects(res.data)
+   
+    const getFilters=async()=>{
+      setisLoad(false)
+      await Api.get(PROJECT_SEARCH_FILTER(projectsearch,filters.assort)).then((res)=>{
+         setProjects(res.data)
       }).finally(()=>{
-         setisLoad(true)
-      })
+           setisLoad(true)
+        })
     }
    const getTeches=async()=>{
     await Api.get(TECHNOLOGIES).then((res)=>{
@@ -31,12 +37,12 @@ export default function Projects() {
 
    }
     useEffect(() => {
-      getProjects()
+      getFilters()
       getTeches()
       return () => {
         setProjects([])
       }
-    }, [])
+    }, [projectsearch,filters.assort])
     
   return (
    <div>
@@ -47,7 +53,7 @@ export default function Projects() {
             {teches.length>0 &&<div className="flex justify-start gap-3 pt-5 ">
               {teches?.map((item:any,idx:number)=>(
                 <button  className='py-2 px-10 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-500 hover:text-white' key={idx} 
-                onClick={()=>setSelectedCategory(item.id)}>{item.name}</button>
+              >{item.name}</button>
               ))}
             </div>}
         </div> 

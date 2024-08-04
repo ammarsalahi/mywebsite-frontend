@@ -39,11 +39,11 @@
 
 
 .post-filter{
-    @apply hidden xs:md:sm:flex justify-center mb-2 px-20 pt-3 sticky
+    @apply hidden xs:md:sm:flex justify-center mb-2 px-20 pt-4 gap-3
 }
 
 .project-filter{
-    @apply hidden  xs:md:sm:flex justify-start  mb-2 px-20 pt-3 sticky 
+    @apply hidden  xs:md:sm:flex justify-center  mb-2 px-20 pt-4 gap-4  
 }
 
 .post-filter-sm{

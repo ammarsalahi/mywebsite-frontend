@@ -1,15 +1,18 @@
-import { Button, Input } from 'antd'
+import { Input } from 'antd'
 import React, { useState } from 'react'
 import { AiOutlineSearch, AiOutlineSortAscending, AiOutlineSortDescending,AiOutlineClose } from 'react-icons/ai'
-import { projfilterAtom } from '../states/Atoms'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { PiFireFill } from 'react-icons/pi'
-import { menuSelector } from '../states/Selectors'
+import { menuSelector, projectSearchSelector, projfilterSelector } from '../states/Selectors'
 
 export default function ProjectFilters() {
-    const [projfilters,setprojFilters]=useRecoilState(projfilterAtom)
+    const [projfilters,setprojFilters]=useRecoilState(projfilterSelector)
     const ismenu=useRecoilValue(menuSelector)
     const [isSearch,setisSearch]=useState(false)
+    const [search,setSearch]=useRecoilState(projectSearchSelector)
+
+    const handleSearch=(e:React.ChangeEvent<HTMLInputElement>)=>{
+      setSearch(e.target.value)
+    }
     const handleProjectFilters=(name:string,status:boolean)=>(e:React.MouseEvent<HTMLElement>)=>{
         setprojFilters({...projfilters,[name]:status})
     }
@@ -32,10 +35,15 @@ export default function ProjectFilters() {
                         نزولی
                      </button>
                  
-                     <label class="input input-sm mt-2 input-ghost border-0 max-w-xs w-full flex items-center gap-5">
+                    <label className="input input-sm input-primary p-2 w-96 rounded-full  mt-2 input-bordered flex items-center gap-2">
                         <AiOutlineSearch fontSize={20}/>
-                        <input type="text" class="grow" placeholder="جستجو..." />
-                      </label> 
+                        <input 
+                          type="text" className="grow" 
+                          placeholder="جستجو..." 
+                          value={search}
+                          onChange={handleSearch}
+                        />
+                      </label>
           </div>  
           {ismenu==false &&
             <div>
@@ -45,7 +53,8 @@ export default function ProjectFilters() {
                       allowClear size='large' 
                       placeholder="جستجو..." 
                       variant='borderless' 
-                    
+                      value={search}
+                      onChange={handleSearch}
                     prefix={<AiOutlineSearch fontSize={22} className="text-gray-500"/>}/> 
                      <button
                     className="btn btn-sm btn-ghost"

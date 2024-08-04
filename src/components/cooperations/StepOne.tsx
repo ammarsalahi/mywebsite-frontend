@@ -62,8 +62,9 @@ export default function StepOne(props:stepprops) {
           </ListGroup.Item>
       </ListGroup>
         <button 
-          className='btn btn-wide w-full bg-blue-600 text-white hover:bg-blue-600 border border-blue-600 rounded-full'
+          className='btn  w-full bg-blue-600 text-white hover:bg-blue-600 border border-blue-600 rounded-full'
           onClick={props.next}
+          disabled={types==""&&true}
             >
           ادامه
           <FaChevronLeft/>

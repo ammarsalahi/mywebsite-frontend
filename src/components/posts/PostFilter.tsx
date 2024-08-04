@@ -1,18 +1,22 @@
 import { Button, Input } from 'antd'
 import React, { useState } from 'react'
 import { AiOutlineAppstore, AiOutlineClose, AiOutlineSearch, AiOutlineSortAscending, AiOutlineSortDescending, AiOutlineUnorderedList } from 'react-icons/ai'
-import { filterSelector } from '../states/Selectors'
+import { filterSelector, postSearchSelector } from '../states/Selectors'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { PiFireFill } from 'react-icons/pi'
 import { menuSelector ,islodingselector} from '../states/Selectors'
 
-export default function PostFIlter() {
+export default function PostFilter() {
     
     const [filters,setFilters]=useRecoilState(filterSelector);
     const [isload,setisload]=useRecoilState(islodingselector)
     const ismenu=useRecoilValue(menuSelector)
-    const [isSearch,setisSearch]=useState(false)
+    const [isSearch,setisSearch]=useState(false);
+    const [search,setSearch]=useRecoilState(postSearchSelector);
 
+    const handleSearch=(e:React.ChangeEvent<HTMLInputElement>)=>{
+        setSearch(e.target.value)
+    }
     const handleFilters=(name:string,status:boolean)=>(e:React.MouseEvent<HTMLElement>)=>{
         setisload(false)
         setFilters({...filters,[name]:status})
@@ -57,10 +61,16 @@ export default function PostFIlter() {
                         <PiFireFill fontSize={20}/>
                         تازه‌ها
                      </button>
-                      <label class="input input-sm mt-2 input-ghost border-0 max-w-xs w-full flex items-center gap-5">
+                       <label className="input input-sm input-primary p-2 w-96 rounded-full  mt-2 input-bordered flex items-center gap-2">
                         <AiOutlineSearch fontSize={20}/>
-                        <input type="text" class="grow" placeholder="جستجو..." />
+                        <input 
+                          type="text" className="grow" 
+                          placeholder="جستجو..."
+                          value={search}
+                          onChange={handleSearch}                             
+                        />
                       </label>
+                     
         </div>
         {ismenu==false &&
         <div>
@@ -70,6 +80,8 @@ export default function PostFIlter() {
               allowClear size='large' 
               placeholder="جستجو..." 
               variant='borderless' 
+              value={search}
+              onChange={handleSearch}    
               prefix={<AiOutlineSearch fontSize={22} className="text-gray-500"/>}/> 
             <button
             className="btn btn-sm btn-ghost"

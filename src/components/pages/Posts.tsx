@@ -24,15 +24,9 @@ export default function Posts() {
   const [selectedCategory,setSelectedCategory]=useState("")
 
   const filters=useRecoilValue(filterSelector);
+  
   const [isLoad,setisLoad]=useState(false);
 
-  const getPosts=async()=>{
-    await Api.get(POSTS).then((res)=>{
-      setPosts(res.data)
-    }).finally(()=>{
-         setisLoad(true)
-      })
-  }
   const getFilters=async()=>{
     setisLoad(false)
     await Api.get(POST_SEARCH_FILTER(postsearch,filters.assort,selectedCategory)).then((res)=>{
@@ -56,7 +50,7 @@ export default function Posts() {
       setCategories([])
       setPosts([])
     }
-  }, [filters])
+  }, [filters,postsearch])
   
  
 

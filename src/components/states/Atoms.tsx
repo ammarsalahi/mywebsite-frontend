@@ -21,7 +21,6 @@ const projfilterAtom=atom({
     key:'proj-filters',
     default:{
         assort:true,
-        list:true,
     }
 })
 const postSearchAtom=atom({

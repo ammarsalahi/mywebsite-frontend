@@ -10,7 +10,7 @@ import { menuAtom, postSearchAtom, projectSearchAtom } from '../states/Atoms'
 import { AiOutlineMenu } from "react-icons/ai";
 import {FaHammer,FaHandshake} from 'react-icons/fa'
 import { PiNewspaperFill } from "react-icons/pi";
-import PostFIlter from '../posts/PostFIlter';
+import PostFilter from '../posts/PostFilter';
 import ProjectFilters from '../projects/ProjectFilters';
 import { imgurlSelector } from '../states/Selectors';
 import logoblue from '../../assets/logo-blue.png'
@@ -54,7 +54,7 @@ export default function Navbar() {
         location.pathname=='/'?"nav-blue":'nav-light-fixed'
         :
         location.pathname=='/'?"nav-dark":'nav-dark-fixed'
-      } style={{zIndex:1}}>
+      } style={{zIndex:2}}>
       <div className={location.pathname=='/'?'flex justify-between text-white':' flex justify-between text-dark-100'}>
         <div className="logo-menu">
         <Link to='/' className='pt-3 lg:pt-5 xl:pt-5 2xl:pt-5 md:pt-4 '>
@@ -95,23 +95,22 @@ export default function Navbar() {
        <div className="hidden md:flex lg:flex xl:flex 2xl:flex gap-5 pt-5">
        {location.pathname=='/' && 
        <>
-         <Input
-           variant='borderless'
-           prefix={<AiOutlineSearch fontSize={20} color={theme=='dark'?'white':'gray'}/>}
-           placeholder='جستجو...'
-           
-         />
-         {/* <label className="input input-sm input-ghost max-w-xs flex items-center gap-5">
-          <input type="text" className="grow" placeholder="کلمه کوردنظر را جستجو کنید..." />
-          <AiOutlineSearch fontSize={20}/>
-        </label> */}
+
+     <label className="input input-sm bg-transparent focus:border-white hover:border-white border-white rounded-full input-bordered flex items-center gap-2">
+        <AiOutlineSearch fontSize={20} color="white"/>
+        <input type="text" className="grow text-white" placeholder="جستجو..." />
+      </label>
+          
        </>
        
        }
-        <Button  
-            icon={theme=='light'?
-              <AiFillSun fontSize={20} color={location.pathname=='/'?'white':'black'}/>
-              :<AiFillMoon fontSize={20} color='white'/>} type='text' onClick={handleTheme}/>
+         <button
+          className="btn btn-ghost btn-sm"
+          onClick={handleTheme}
+         >
+            {theme=="light"?<AiFillSun fontSize={20}/>: <AiFillMoon fontSize={20}/>}
+         </button>
+       
         </div>
        
 
@@ -145,7 +144,7 @@ export default function Navbar() {
       }
 
       {location.pathname=='/posts' &&
-          <PostFIlter/>
+          <PostFilter/>
       }
 
       {location.pathname=='/projects' && 

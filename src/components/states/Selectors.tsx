@@ -104,7 +104,7 @@ const themeSelector=selector({
         const value=get(themeAtom)
         return value
     },
-    set:({set},newValue)=>{
+    set:({set},newValue:any)=>{
         set(themeAtom,newValue)
         sessionStorage.setItem('themes', newValue);
     }

@@ -44,7 +44,7 @@ export const HOME=_('/contents/home')
 
 export const POST_SEARCH_FILTER=(search:string,sort:boolean,cate:string)=>_(`/contents/posts/?q=${search}&sort=${sort}&cate=${cate}`)
 
-export const PROJECT_SEARCH_FILTER=(search:string,sort:boolean,cate:string)=>_(`/contents/projects/?q=${search}&sort=${sort}`)
+export const PROJECT_SEARCH_FILTER=(search:string,sort:boolean)=>_(`/contents/projects/?q=${search}&sort=${sort}`)
 
 export const NEW_POSTS=_('/contents/new-posts');
 

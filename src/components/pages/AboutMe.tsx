@@ -5,17 +5,20 @@ import { FaUniversity } from "react-icons/fa";
 import { Api ,showImage} from '../api/Index';
 import { ABOUT_ME, ABOUTS_ID } from '../api/Endpoints';
 import { Link } from 'react-router-dom';
-import { FaTelegram,FaLinkedin ,FaInstagramSquare,FaGithub} from "react-icons/fa";
+import { FaTelegram,FaLinkedin ,FaInstagram,FaGithub} from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
 import { TbWorldWww } from "react-icons/tb";
 import { FaComputer,FaUsers } from "react-icons/fa6";
 import Footer from '../global/Footer';
 import { FaUser } from "react-icons/fa6";
 import { Spin } from 'antd';
+import { themeSelector } from '../states/Selectors';
+import { useRecoilState, useRecoilValue } from 'recoil'
 
 export default function AboutMe() {
   const [about,setAbout]=useState<any>(null);
   const [isLoad,setisLoad]=useState(false);
+  const [theme,setTheme]=useRecoilState<any>(themeSelector)
   const getAbout=async()=>{
     await Api.get(ABOUT_ME).then((res)=>{
       setAbout(res.data)
@@ -26,30 +29,30 @@ export default function AboutMe() {
   const getIcon=(name:string)=>{
    if(name=='telegram'){
       return (
-        <FaTelegram fontSize={45} color={'#30b3f0'} className="shadow-xl rounded-full"/>
+        <FaTelegram fontSize={45} color={theme=='dark'?'white':'#30b3f0'} className="shadow-xl rounded-full"/>
       )
    }else if(name=='github'){
       return (
-      <FaGithub fontSize={45} color={'black'} className="shadow-xl rounded-full"/>
+      <FaGithub fontSize={45} color={theme=='dark'?'white':'black'} className="shadow-xl rounded-full"/>
       )
    }
    else if(name=='linkedin'){
          return (
-          <FaLinkedin fontSize={45} color={'black'} className="shadow-xl rounded-full"/>
+          <FaLinkedin fontSize={45} color={theme=='dark'?'white':'black'} className="shadow-xl rounded-full"/>
         )
    }else if(name=='instagram'){
          return (
-      <FaInstagramSquare fontSize={45} color={'purple'} className="shadow-xl"/>
+      <FaInstagram fontSize={45} color={theme=='dark'?'white':'purple'} className="shadow-xl"/>
       )
    }
    else if(name=='email' || name=='gmail'){
          return (
-      <SiGmail fontSize={45} color={'#000'} className="shadow-xl rounded-full"/>
+      <SiGmail fontSize={45} color={theme=='dark'?'white':'black'} className="shadow-xl rounded-full"/>
       )
    }
    else{
          return (
-          <TbWorldWww fontSize={45} color={'#000'} className="shadow-xl rounded-full"/>
+          <TbWorldWww fontSize={45} color={theme=='dark'?'white':'black'} className="shadow-xl rounded-full"/>
           )
    }
   }

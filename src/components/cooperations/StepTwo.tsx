@@ -43,6 +43,18 @@ export default function StepTwo(props:stepprops) {
             })
             props.next()
         }}
+        validate={(values)=>{
+          let errors:any={}
+          if(!values.name){
+              errors.name="این فیلد نمی‌تواند خالی باشد!"
+          }
+          if(!values.phone){
+            errors.phone="این فیلد نمی‌تواند خالی باشد!"
+          }
+          if(!values.project){
+            errors.project="این فیلد نمی‌تواند خالی باشد!"
+          }
+        }}
       >         
       {({handleSubmit,values,handleChange,errors,touched})=>(
           <form onSubmit={handleSubmit}>
@@ -88,7 +100,7 @@ export default function StepTwo(props:stepprops) {
             </label>
 
             <button 
-              className='btn btn-wide w-full bg-blue-600 text-white hover:bg-blue-600 border border-blue-600 rounded-full'
+              className='btn w-full bg-blue-600 text-white hover:bg-blue-600 border border-blue-600 rounded-full'
               onClick={()=>handleSubmit()}
             >
             ادامه

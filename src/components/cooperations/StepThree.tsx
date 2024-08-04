@@ -66,17 +66,12 @@ export default function StepThree(props:stepprops) {
           })
         }}
       >
-{/* 
-<Button className='btn rounded-circle bg-light' 
-                                            style={{position:'absolute',zIndex:2,top:'70%',cursor:'pointer'}} 
-                                            icon={<PiCameraPlus className='text-lg'/>} 
-                                            onClick={openFile}
-                                            /> */}
+
         {({handleSubmit,values,handleChange,errors,touched})=>(
 
         <form onSubmit={handleSubmit}>
         <textarea 
-          class="textarea textarea-bordered w-full mb-5" 
+          className="textarea textarea-bordered w-full mb-5" 
           placeholder='در مورد پروژه بیشتر توضیح بدید...'
           value={values.text}
           name='text'
@@ -102,7 +97,7 @@ export default function StepThree(props:stepprops) {
                <img src={imgshow} className='col-span-9 w-full h-36 border-2 border-gray-300 rounded-lg'/> 
             </div>}             
             <button 
-              className='btn btn-wide w-full bg-blue-600 text-white hover:bg-blue-600 border border-blue-600 rounded-full'
+              className='btn  w-full bg-blue-600 text-white hover:bg-blue-600 border border-blue-600 rounded-full'
               onClick={()=>handleSubmit()}
             >
             تایید
