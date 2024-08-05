@@ -44,7 +44,14 @@ export const HOME=_('/contents/home')
 
 export const POST_SEARCH_FILTER=(search:string,sort:boolean,cate:string)=>_(`/contents/posts/?q=${search}&sort=${sort}&cate=${cate}`)
 
+export const POST_CATEGORY=(name:string)=>_(`/contents/category-posts/${name}`)
+
+export const POST_KEYWORDS=(name:string)=>_(`/contents/keyword-posts/${name}`)
+
+
 export const PROJECT_SEARCH_FILTER=(search:string,sort:boolean)=>_(`/contents/projects/?q=${search}&sort=${sort}`)
+
+export const PROJECT_TECHNOLOGIES=(name:string)=>(`/contents/technology-projects/${name}`)
 
 export const NEW_POSTS=_('/contents/new-posts');
 

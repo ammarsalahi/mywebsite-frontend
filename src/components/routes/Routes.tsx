@@ -7,6 +7,9 @@ import ProjectDetail from '../pages/ProjectDetail'
 import AboutMe from '../pages/AboutMe'
 import RouteContainer from './RouteContainer'
 import Cooperation from '../pages/Cooperation'
+import Categories from '../pages/Categories'
+import Technologies from '../pages/Technologies'
+import Keywords from '../pages/Keywords'
 
 export default function Routes() {
     const pages=createBrowserRouter([
@@ -38,6 +41,18 @@ export default function Routes() {
         {
           path:'/cooperations',
           element:<RouteContainer><Cooperation/></RouteContainer>
+        },
+        {
+          path:'/categories/:name',
+          element:<RouteContainer><Categories/></RouteContainer>
+        },
+        {
+          path:'/technologies/:name',
+          element:<RouteContainer><Technologies/></RouteContainer>
+        },
+        {
+          path:'/keywords/:name',
+          element:<RouteContainer><Keywords/></RouteContainer>
         }
 
     ])

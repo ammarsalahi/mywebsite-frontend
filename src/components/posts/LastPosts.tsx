@@ -4,6 +4,7 @@ import React from 'react'
 import VerticalCard from './VerticalCard'
 import { AiOutlineArrowDown, AiOutlineArrowLeft } from 'react-icons/ai'
 import HorizontalCard from './HorizontalCard'
+import PorjectEmpty from '../global/PorjectEmpty'
 
 interface listprops{
   posts:[]|any;
@@ -40,6 +41,7 @@ export default function LastPosts(props:listprops) {
           </div>
         </div>
      }
+
      </>
      :
      <div className="py-10 grid place-items-center">

@@ -78,7 +78,9 @@ export default function Detail(props:detailprops) {
       <div className='grid-col' id="titles">
           <img src={showImage(props.post?.header_img)} alt="" className='w-full h-96 rounded-2xl' />
           <div className="flex justify-between py-3 px-4">
-              <p className=' text-gray-700 text-lg'>{props.post?.category.name}</p>
+                <Link to={`/categories/${props.post?.category.english_name}`} >
+                <p className=' text-gray-700 text-lg'>{props.post?.category.name}</p>
+                </Link>
                   <div className='flex items-center text-md'>
                     <PiClock />
                     <span>{props.post?.persian_date}</span>
@@ -103,7 +105,7 @@ export default function Detail(props:detailprops) {
               <p className="text-xl">#کلمات کلیدی</p>
               <div className="py-6 grid lg:grid-cols-8 gap-5">
                   {props.post.keywords?.map((item:any,idx:number)=>(
-                      <Link to="/" className='p-4 rounded-lg' key={idx}>    
+                      <Link to={`/keywords/${item.english_name}`} className='p-4 rounded-lg' key={idx}>    
                           <button  className='py-2 px-10 bg-blue-50  rounded-full hover:bg-blue-500 hover:text-white'>{item.name}</button>
                       </Link>
                   ))}

@@ -7,6 +7,7 @@ import { ABOUT_ME, FOOTER } from '../api/Endpoints';
 import { TbWorldWww } from 'react-icons/tb';
 import { useRecoilValue } from 'recoil'
 import { themeSelector } from '../states/Selectors';
+import { SiGmail } from 'react-icons/si';
 
 export default function Footer() {
   const location=useLocation()
@@ -27,34 +28,32 @@ export default function Footer() {
     })
   }
   const getIcon=(name:string)=>{
-	if(name=='telegram'){
-	   	return (
-		 	<FaTelegram fontSize={40}/>
-	   	)
-	}else if(name=='github'){
-	   return (
-	   		<FaGithub fontSize={40}/>
-	   )
+	let result:any;
+	switch(name){
+		case "telegram":
+			result=<FaTelegram fontSize={40}/>
+			break
+		case "github":
+			result=<FaGithub fontSize={40}/>
+			break
+		case "linkedin":
+			result=<FaLinkedin fontSize={40}/>
+			break
+		case "instagram":
+			result=<FaInstagram fontSize={40}/>
+			break
+		case "email":
+			result=<MdEmail fontSize={40}/>
+			break
+		case "gmail":
+			result=<SiGmail fontSize={40}/>
+			break
+		default:
+			result= <TbWorldWww fontSize={40}/>
+			break			
 	}
-	else if(name=='linkedin'){
-		return (
-		   	<FaLinkedin fontSize={40}/>
-		)
-	}else if(name=='instagram'){
-		return (
-	   		<FaInstagram fontSize={40}/>
-	  	)
-	}
-	else if(name=='email' || name=='gmail'){
-		return (
-	   		<MdEmail fontSize={40}/>
-	   	)
-	}
-	else{
-		return (
-		   <TbWorldWww fontSize={40}/>
-		)
-	}
+
+	return result
    }
    useEffect(()=>{
      getData();

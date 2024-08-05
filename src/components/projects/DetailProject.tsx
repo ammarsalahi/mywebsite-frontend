@@ -111,7 +111,7 @@ export default function DetailP(props:detailprops) {
                  <div className="px-2 py-5 grid xs:grid-cols-4 xs:lg:md:grid-cols-6 gap-10">
                         {props.project.technologies?.map((item:any,idx:number)=>(
 
-                            <Link to="/" key={idx}>
+                            <Link to={`/technologies/${item.english_name}`} key={idx}>
                             <div className="bg-blue-200 hover:text-white hover:bg-blue-500 py-1  rounded-full text-lg text-center">
                               {item.name}
                              </div> 

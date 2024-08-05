@@ -34,7 +34,7 @@
 
 .last-list{
   @apply py-10 ;
-  @apply xs:items-center xs:md:sm:grid sm:md:grid-cols-2 xs:md:sm:gap-3  xs:lg:grid-cols-4 xs:lg:gap-5;
+  @apply xs:items-center xs:md:sm:grid sm:md:grid-cols-2 xs:md:sm:gap-3  lg:grid-cols-3 xs:xl:grid-cols-4 xs:lg:gap-5;
 }
 
 .no-list{
@@ -64,5 +64,22 @@
    @apply hidden xs:block sm:block md:block;
  }
  .logo-menu{
-  @apply hidden xs:lg:flex justify-between ;
+  @apply hidden xs:md:flex justify-between ;
  }
+ .list-menus{
+  @apply hidden xs:xl:flex justify-between ;
+ }
+ .logo-mobile{
+   @apply block pt-3 xs:md:hidden 
+ }
+
+ .menu-mobile{
+   @apply block pt-3 xs:md:hidden 
+ }
+
+ .drop-items{
+  @apply dropdown-content menu rounded-box z-[1] w-52 p-2 shadow;
+ }
+.drop-menus{
+  @apply block xs:sm:hidden md:block lg:block xs:xl:hidden;
+}

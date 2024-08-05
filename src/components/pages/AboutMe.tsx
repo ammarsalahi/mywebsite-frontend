@@ -14,6 +14,7 @@ import { FaUser } from "react-icons/fa6";
 import { Spin } from 'antd';
 import { themeSelector } from '../states/Selectors';
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { MdEmail } from 'react-icons/md';
 
 export default function AboutMe() {
   const [about,setAbout]=useState<any>(null);
@@ -27,35 +28,33 @@ export default function AboutMe() {
   }
 
   const getIcon=(name:string)=>{
-   if(name=='telegram'){
-      return (
-        <FaTelegram fontSize={45} color={theme=='dark'?'white':'#30b3f0'} className="shadow-xl rounded-full"/>
-      )
-   }else if(name=='github'){
-      return (
-      <FaGithub fontSize={45} color={theme=='dark'?'white':'black'} className="shadow-xl rounded-full"/>
-      )
-   }
-   else if(name=='linkedin'){
-         return (
-          <FaLinkedin fontSize={45} color={theme=='dark'?'white':'black'} className="shadow-xl rounded-full"/>
-        )
-   }else if(name=='instagram'){
-         return (
-      <FaInstagram fontSize={45} color={theme=='dark'?'white':'purple'} className="shadow-xl"/>
-      )
-   }
-   else if(name=='email' || name=='gmail'){
-         return (
-      <SiGmail fontSize={45} color={theme=='dark'?'white':'black'} className="shadow-xl rounded-full"/>
-      )
-   }
-   else{
-         return (
-          <TbWorldWww fontSize={45} color={theme=='dark'?'white':'black'} className="shadow-xl rounded-full"/>
-          )
-   }
-  }
+    let result:any;
+    switch(name){
+      case "telegram":
+        result=<FaTelegram fontSize={40}/>
+        break
+      case "github":
+        result=<FaGithub fontSize={40}/>
+        break
+      case "linkedin":
+        result=<FaLinkedin fontSize={40}/>
+        break
+      case "instagram":
+        result=<FaInstagram fontSize={40}/>
+        break
+      case "email":
+        result=<MdEmail fontSize={40}/>
+        break
+      case "gmail":
+        result=<SiGmail fontSize={40}/>
+        break
+      default:
+        result= <TbWorldWww fontSize={40}/>
+        break			
+    }
+  
+    return result
+     }
   useEffect(() => {
     getAbout()
   }, [])
