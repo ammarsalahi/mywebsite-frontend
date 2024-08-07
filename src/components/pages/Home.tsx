@@ -14,61 +14,34 @@ export default function Home() {
   const [projects,setProjects]=useState<any>([]);
   const [imgs,setimgs]=useRecoilState(imgurlAtom)
   const [socls,setsocls]=useState(0)
-  const [loads,setLoads]=useState({
-    imgs:false,
-    posts:false,
-    projects:false
-  })
+  const [loads,setLoads]=useState(false)
 
-  const getHome=(types:string)=>{
+  const getHome=()=>{
     Api.get(HOME).then((res)=>{
-      if (types=='imgs'){
         setimgs(res.data.userimg)
-        setLoads({...loads,imgs:true})
-      }else if(types=='posts'){
         setPosts(res.data.posts)
-        setLoads({...loads,posts:true})
-
-      }else{
         setProjects(res.data.projects)
-        setLoads({...loads,projects:true})
+        setLoads(true)
 
-      }
     }).catch((err)=>{
       message.error("متاسفانه مشکلی پیش آمده است!")
     })
   }
-  const onPost=()=>{
-    if(loads.posts==false){
-      getHome('posts')
-    }
-  }
-  const onProject=()=>{
-    if(loads.projects==false){
-      getHome('projects')
-    }
-  }
   useEffect(() => {
-    getHome('imgs')
-    // window.addEventListener('scroll', () => {
-    //   setsocls(window.scrollY);
-     
-    // });
-
-   
+    getHome()
   }, [])
   
   return (
     <div>
       
-      {loads.imgs ?
+      {loads?
       <>
       <div >
-      <div  tabIndex={0} onFocus={onPost} onScroll={onPost} onMouseEnter={onPost}>
-        <LastPosts posts={posts} isload={loads.posts}/>
+      <div>
+        <LastPosts posts={posts}/>
       </div>
-      <div  tabIndex={1} onFocus={onProject} onScroll={onProject} onMouseEnter={onProject}>
-          <LastProjects projects={projects} isload={loads.projects}/>
+      <div>
+          <LastProjects projects={projects}/>
       </div>
       <Footer/>
     </div>

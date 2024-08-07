@@ -1,14 +1,9 @@
 
-import { Button, Card, Spin } from 'antd'
-import React from 'react'
+import { Button } from 'antd'
 import VerticalCard from './VerticalCard'
-import { AiOutlineArrowDown, AiOutlineArrowLeft } from 'react-icons/ai'
-import HorizontalCard from './HorizontalCard'
-import PorjectEmpty from '../global/PorjectEmpty'
 
 interface listprops{
   posts:[]|any;
-  isload:boolean
 }
 export default function LastPosts(props:listprops) {
   return (
@@ -18,10 +13,8 @@ export default function LastPosts(props:listprops) {
         </div>
     <div>
       
-    {props.isload?
-     <>
-        {props.posts?.length>0 ?
-      <> 
+    {props.posts?.length>0 ?
+        <> 
           <div className='last-list'>
           {props.posts?.map((item:any,idx:number)=>(
             <div key={idx}>
@@ -33,25 +26,15 @@ export default function LastPosts(props:listprops) {
             <Button size='large' type='primary' className=' text-xl  rounded-full' iconPosition='end'>بیشتر</Button>
           </div>}
       </>
-
-     :
+    :
         <div className=' no-list'>
           <div className=" p-2 lg:p-4  bg-red-300 text-center rounded-lg">
             <p className='text-xl text-red-700'>هیچ پستی وجود ندارد!!!</p>
           </div>
         </div>
-     }
-
-     </>
-     :
-     <div className="py-10 grid place-items-center">
-        <Spin size='large' />
-      </div>
-     
-     }  
+    }
 
       </div>    
-
 
    
      </div>

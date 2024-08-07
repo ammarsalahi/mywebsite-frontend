@@ -1,9 +1,8 @@
-import { Button, Card, Spin } from 'antd'
-import React from 'react'
+import { Button} from 'antd'
 import ProjectCard from './ProjectCard'
+
 interface listprops{
   projects:[]|any;
-  isload:boolean
 }
 export default function LastProjects(props:listprops) {
   return (
@@ -12,8 +11,7 @@ export default function LastProjects(props:listprops) {
             <p className='text-4xl'>پروژه‌های اخیر</p>
         </div>
           
-    {props.isload?
-     <>
+    
        {props.projects?.length>0?
         <>
             <div className="last-list">
@@ -32,13 +30,7 @@ export default function LastProjects(props:listprops) {
             </div>
           </div>
        }
-      </>
-      :
-      <div className="py-10 grid place-items-center">
-      <Spin size='large' />
-    </div>
-    }
-     
+          
     </div>
   )
 }

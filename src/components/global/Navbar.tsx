@@ -27,6 +27,7 @@ export default function Navbar() {
   const [ismenu,setismenu]=useRecoilState(menuAtom)
   const imgurl=useRecoilValue(imgurlSelector)
   const [theme,setTheme]=useRecoilState<any>(themeSelector)
+  const [search,setSearch]=useState("");
 
 
   const handleMenu=(e:React.MouseEvent<HTMLElement>)=>{
@@ -87,7 +88,15 @@ export default function Navbar() {
 
      <label className="input input-sm bg-transparent focus:border-white hover:border-white border-white rounded-full input-bordered flex items-center gap-2">
         <AiOutlineSearch fontSize={20} color="white"/>
-        <input type="text" className="grow text-white" placeholder="جستجو..." />
+        <input 
+            type="text" 
+            className="grow text-white" 
+            placeholder="جستجو..."
+            value={search}
+            onChange={
+              (e:React.ChangeEvent<HTMLInputElement>)=>setSearch(e.target.value)
+            }
+       />
       </label>
           
        </>
