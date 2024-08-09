@@ -16,16 +16,16 @@
  } 
 
 .nav-light-fixed{
-   @apply  fixed top-0 left-0 w-full pb-2 px-4 lg:px-10 md:px-10 xl:px-10 2xl:px-10 bg-white border-b 
+   @apply  fixed top-0 w-full pb-2 px-2 lg:px-7 bg-white border-b 
  }
 .nav-dark-fixed{
-   @apply  fixed top-0 left-0 w-full pb-2 px-4 lg:px-10 md:px-10 xl:px-10 2xl:px-10 bg-gray-800 border-b-2 border-gray-700 
+   @apply  fixed top-0 pb-2 px-4 w-full lg:px-7   bg-gray-800 border-b-2 border-gray-700 
  } 
 .nav-dark{
-    @apply   pb-2 px-4 lg:px-10 md:px-10 xl:px-10 2xl:px-10 bg-gray-800 border-b border-gray-700
+    @apply   pb-2 px-2 lg:px-7 bg-gray-800 border-b border-gray-700
  }
 .nav-blue{
-    @apply   pb-2 px-4 lg:px-10 md:px-10 xl:px-10 2xl:px-10 bg-blue-600
+    @apply  w-full pb-2 px-2 lg:px-7 bg-blue-600
 }
 
 .lasts{
@@ -42,7 +42,7 @@
 }
 
 .paddingtop{
-   @apply py-20 px-5 xs:lg:px-10 xl:px-20;
+   @apply py-28 px-5 xs:lg:px-10 xl:px-20;
 }
 .paddingtop-xl{
     @apply py-2 xs:py-10 xs:md:sm:py-16 xs:lg:py-32;

@@ -11,7 +11,7 @@ interface postProps{
 
 export default function HorizontalCard(props:postProps) {
   return (
-  <div className='relative py-4  my-5 px-6 border-y border-gray-100 bg-white '>
+  <div className='relative my-5 p-6 rounded-xl shadow-xl'>
     <Link to={`/posts/${props.post?.post_id}`}>
         <div className="grid grid-cols-3 gap-4 ">
         <div className="col-span-2 ">

@@ -9,12 +9,15 @@ import { showImage } from '../api/Index'
 import { FaHammer } from 'react-icons/fa6'
 import NewPosts from '../posts/newPosts';
 import ImageCarousel from './ImageCarousel'
+import { useRecoilValue } from 'recoil'
+import { themeSelector } from '../states/Selectors'
 
 interface detailprops{
   project:any;
   others:any;
 }
 export default function DetailP(props:detailprops) {
+  const theme=useRecoilValue(themeSelector)
   const items=[
           {
             key: 'titles',
@@ -87,7 +90,7 @@ export default function DetailP(props:detailprops) {
                   <p className='text-md'>{props.project?.text}</p>
                 </div>
              </div>
-                <div className="hidden">
+                <div className="block md:hidden">
                          <ImageCarousel interval={1000}>
                             {props.project.images?.map((item:any,idx:number)=>(
                             <div key={idx}>
@@ -96,7 +99,7 @@ export default function DetailP(props:detailprops) {
                             ))}
                           </ImageCarousel>
                </div>
-               <div>
+               <div className='hidden md:blcok'>
                   <Carousel arrows draggable infinite autoplay>
                   {props.project.images?.map((item:any,idx:number)=>(
                             <div key={idx}>
@@ -106,7 +109,7 @@ export default function DetailP(props:detailprops) {
                   </Carousel>
                </div>
                      {props.project?.technologies.length > 0 &&
-                  <div className="pb-20 mt-40 pt-5 border-t">
+                  <div className={theme=="light"?"pb-20 mt-40 pt-5 border-t":"pb-20 mt-40 pt-5 border-t border-gray-600"}>
                       <p className="text-xl">تنکولوژی‌های استفاده‌شده</p>
                  <div className="px-2 py-5 grid xs:grid-cols-4 xs:lg:md:grid-cols-6 gap-10">
                         {props.project.technologies?.map((item:any,idx:number)=>(
@@ -121,7 +124,7 @@ export default function DetailP(props:detailprops) {
               </div>}
           </div>
      
-          {props.others.length>0 && <div className="pb-16 pt-5 border-t " id="others">
+          {props.others.length>0 && <div className={theme=="dark"?"pb-16 pt-5 border-t ":"pb-16 pt-5 border-t border-gray-600"} id="others">
                 <p className='text-xl'>پروژه‌های دیگر</p>
                 
                 <div className='grid lg:xl:grid-cols-3 gap-2  py-10' id='others'>

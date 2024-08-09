@@ -15,12 +15,12 @@ export default function NavDropDownMenu(props:navprops) {
   return (
     <div>
     <div className="dropdown dropdown-end">
-        <div tabIndex={0} role="button" className="btn btn-ghost btn-sm text-lg">
+        <div tabIndex={0} role="button" className="btn btn-ghost btn-sm">
          <FaAngleDown/>
              منو
         </div>
         <ul tabIndex={0} className={props.theme=="dark"?"drop-items bg-gray-800 text-white":
-            props.path=="/"? "drop-items bg-white text-black":"drop-items bg-blue-500 text-white"}>
+            props.path!=="/"?"drop-items bg-white text-black":"drop-items bg-blue text-white"}>
             <li>
             <Link to="/posts" className='flex items-center gap-2'>
             <PiNewspaperFill fontSize={22} />

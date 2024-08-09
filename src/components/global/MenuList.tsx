@@ -34,12 +34,17 @@ export default function MenuList() {
         location.pathname=='/'? 'bg-blue-600 px-3 h-full':'pt-20 px-3 h-full'
         :
         location.pathname=="/"?'bg-gray-800 px-3 h-full':'bg-gray-800 pt-20 px-3 h-full'}>
-        <div className="py-5 flex justify-center">
+        <div className="py-5 flex justify-center gap-16">
             <button
           className="btn btn-ghost"
           onClick={handleTheme}
          >
-            {theme=="light"?<AiFillSun fontSize={35} color={location.pathname=="/"?"white":"black"}/>: <AiFillMoon fontSize={35} color="white"/>}
+            {theme=="light"?<AiFillSun fontSize={35}/>: <AiFillMoon fontSize={35}/>}
+         </button>
+          <button
+          className="btn btn-ghost text-2xl"
+         >
+            Fa
          </button>
         </div>
      {location.pathname=='/' && 

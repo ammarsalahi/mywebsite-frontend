@@ -16,18 +16,9 @@ export default {
       '2xl': '1536px',
 
     },
-    // darkMode: 'class',
-    // colors: {
-    //   dark: {
-    //     bg: '#1F2937',
-    //   },
-
-    // },
+ 
     extend: {},
   },
-  //   variants: {
-  //   backgroundColor: ['dark'],
-  // },
   plugins: [
     require('daisyui'),
   ],

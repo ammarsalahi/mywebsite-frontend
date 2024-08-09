@@ -14,11 +14,14 @@ import {  PiFireFill } from 'react-icons/pi'
 import { Api } from '../api/Index'
 import { NEW_POSTS } from '../api/Endpoints'
 import NewPosts from './newPosts'
+import { useRecoilValue } from 'recoil'
+import { themeSelector } from '../states/Selectors'
 interface detailprops{
   post:any;
   others:any;
 }
 export default function Detail(props:detailprops) {
+  const theme=useRecoilValue(themeSelector)
   const items=[
       {
         key: 'titles',
@@ -75,7 +78,7 @@ export default function Detail(props:detailprops) {
         
         </div>
       </div>
-      <div className='grid-col' id="titles">
+      <div className={theme=="dark"?'grid-col border-gray-600':'grid-col'} id="titles">
           <img src={showImage(props.post?.header_img)} alt="" className='w-full h-96 rounded-2xl' />
           <div className="flex justify-between py-3 px-4">
                 <Link to={`/categories/${props.post?.category.english_name}`} >
@@ -101,7 +104,7 @@ export default function Detail(props:detailprops) {
               
 
               {props.post?.keywords.length > 0 &&
-            <div className="pb-20 mt-20 pt-5 border-t">
+            <div className={theme=="light"?"pb-20 mt-20 pt-5 border-t":"pb-20 mt-20 pt-5 border-t border-gray-600 "}>
               <p className="text-xl">#کلمات کلیدی</p>
               <div className="py-6 grid lg:grid-cols-8 gap-5">
                   {props.post.keywords?.map((item:any,idx:number)=>(
@@ -113,7 +116,7 @@ export default function Detail(props:detailprops) {
               </div>}
           </div>
           
-          {props.others.length>0 && <div className="pb-16 pt-5 border-t " id="others">
+          {props.others.length>0 && <div className={theme=="light"?"pb-16 pt-5 border-t":"pb-16 pt-5 border-t border-gray-600"} id="others">
                 <p className='text-xl'>پست‌های مشابه</p>
                 
                 <div className='grid lg:grid-cols-3 gap-5  py-10' id='others'>

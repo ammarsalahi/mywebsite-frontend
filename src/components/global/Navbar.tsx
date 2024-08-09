@@ -46,47 +46,49 @@ export default function Navbar() {
  
 
   return (    
-    <nav className={
+    <div className={
         theme=='light'?
-        location.pathname=='/'?"nav-blue":'nav-light-fixed'
+        location.pathname=='/'?"nav-blue text-white":'nav-light-fixed'
         :
         location.pathname=='/'?"nav-dark":'nav-dark-fixed'
-      } style={{zIndex:2}}>
-      <div className={location.pathname=='/'?'flex justify-between text-white':' flex justify-between text-dark-100'}>
-        <div className="logo-menu">
-        <Link to='/' className='pt-4 lg:pt-6 xl:pt-6 2xl:pt-6 md:pt-5 '>
-         <img src={location.pathname=='/'||theme=="dark"?logolight:logoblue} width={170} />
-        </Link>
+      }  style={{zIndex:2}}>
+      <nav className="navbar items-center pb-3">
+        <div className='navbar-start'>
+
+            <div className="logo-menu pt-4">
+                  <Link to='/'>
+                  <img src={location.pathname=='/'||theme=="dark"?logolight:logoblue} width={170} />
+                  </Link>
+            </div>
+            <div className='logo-mobile'>
+                <Link to='/'>
+                    <button className="btn btn-ghost">
+                    <img src={location.pathname=='/'||theme=="dark"?iconlight:iconblack} width={30} />
+                    </button>
+                </Link>
+            </div>
         </div>
-        <div className='list-menus'>
-           <NavMenu/>
+        <div className={theme=="dark"||location.pathname=="/"?"hidden lg:block navbar-center text-white":"hidden lg:block navbar-center text-black"}>
+            <div className='list-menus'>
+              <NavMenu/>
+            </div>
         </div>
-        <div className='logo-mobile'>
-        <Link to='/'>
-         <button className="btn btn-ghost">
-         <img src={location.pathname=='/'||theme=="dark"?iconlight:iconblack} width={30} />
-        </button>
-        </Link>
-        </div>
-        <div className="menu-mobile">
-          <button 
-            className="btn btn-ghost"
-            onClick={handleMenu}>
-            {ismenu?<AiOutlineClose fontSize={30}/>:<AiOutlineMenu fontSize={30}/>}
-          </button>
-        </div>
-       
-       <div className="hidden md:flex lg:flex xl:flex 2xl:flex gap-5 pt-5">
+        <div className={theme=="dark"||location.pathname=="/"?"navbar-end text-white":"navbar-end text-black"}>
+         <div className="menu-mobile">
+              <button 
+                className="btn btn-ghost"
+                onClick={handleMenu}>
+                {ismenu?<AiOutlineClose fontSize={30}/>:<AiOutlineMenu fontSize={30}/>}
+              </button>
+         </div>
+      <div className="hidden md:flex gap-1 pt-5">
         <div className='drop-menus'>
             <NavDropDownMenu path={location.pathname} theme={theme}/>
         </div>
        {location.pathname=='/' && 
        <>
-       <div>
 
-       </div>
-
-     <label className="input input-sm bg-transparent focus:border-white hover:border-white border-white rounded-full input-bordered flex items-center gap-2">
+     <label className="input input-sm bg-transparent  hover:border-white border-white rounded-full input-bordered flex items-center gap-2">
         <AiOutlineSearch fontSize={20} color="white"/>
         <input 
             type="text" 
@@ -105,15 +107,23 @@ export default function Navbar() {
          <button
           className="btn btn-ghost btn-sm"
           onClick={handleTheme}
-         >
-            {theme=="light"?<AiFillSun fontSize={25}/>: <AiFillMoon fontSize={25}/>}
+          >
+            {theme=="light"?<AiFillSun fontSize={20}/>: <AiFillMoon fontSize={20} color="white"/>}
          </button>
-       
-        </div>
-       
 
-      </div>
-      {location.pathname=='/'  && ismenu==false &&
+        <button
+          className="btn btn-ghost btn-sm"
+          onClick={handleTheme}
+         >
+           Fa
+         </button>
+        </div>
+        </div>
+      </nav>
+
+
+      <div>
+       {location.pathname=='/'  && ismenu==false &&
       <div className="py-16 xl:py-28">
       {imgurl!=='' && <div className="grid lg:grid-cols-2 ">
         <div className='flex justify-center'>
@@ -136,7 +146,6 @@ export default function Navbar() {
       
       </div>
       }
-
       {location.pathname=='/posts' &&
           <PostFilter/>
       }
@@ -144,8 +153,8 @@ export default function Navbar() {
       {location.pathname=='/projects' && 
           <ProjectFilters/>
       } 
-   
-    </nav>
+      </div>
+    </div>
     
   )
 }

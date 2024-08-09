@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 
 export default function NavMenu() {
   return (
+      <div>
         <ul className='list-none gap-5 pt-5 flex'>
           <li className='text-md hover:border-b-2'>
             <Link to="/posts" className='flex items-center gap-2'>
@@ -28,5 +29,6 @@ export default function NavMenu() {
             درخواست همکاری </Link>
           </li> 
         </ul> 
+      </div>
   )
 }
