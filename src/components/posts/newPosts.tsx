@@ -4,12 +4,15 @@ import { Api } from '../api/Index'
 import { NEW_POSTS } from '../api/Endpoints'
 import { Link,useNavigate} from 'react-router-dom'
 import { Spin } from 'antd';
+import { useRecoilValue } from 'recoil'
+import { themeSelector } from '../states/Selectors'
 
 
 export default function NewPosts() {
   let navigate=useNavigate()
   const [posts,setPosts]=useState<any>([])
   const [isLoad,setisLoad]=useState(false)
+  const theme=useRecoilValue(themeSelector)
   const getNewPosts=async()=>{
     setisLoad(false)
     await Api.get(NEW_POSTS).then((res)=>{
@@ -24,7 +27,7 @@ export default function NewPosts() {
   return (
     <div>
    
-      {posts.length&&<div className="p-4 mt-10  rounded-lg border-2 border-gray-100">
+      {posts.length&&<div className={theme=="dark"?"fresh":"fresh border-gray-600"}>
         <div className="flex items-center gap-3">
             <PiFireFill fontSize={25} className="text-orange-600"/>
             <p className="text-lg">تازه‌ترین پست ها</p>
@@ -34,6 +37,7 @@ export default function NewPosts() {
          {isLoad?
           <>
          {posts?.map((item:any,idx:number)=>(
+              
                 <div className={'cursor-pointer p-2 border-t'} key={idx} onClick={()=>navigate(`/posts/${item.post_id}`)}>
                 <p className='text-lg'>{item.title}</p>
                 <div className='flex text-sm text-gray-600 items-center'>

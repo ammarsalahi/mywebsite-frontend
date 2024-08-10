@@ -110,13 +110,6 @@ export default function Navbar() {
           >
             {theme=="light"?<AiFillSun fontSize={20}/>: <AiFillMoon fontSize={20} color="white"/>}
          </button>
-
-        <button
-          className="btn btn-ghost btn-sm"
-          onClick={handleTheme}
-         >
-           Fa
-         </button>
         </div>
         </div>
       </nav>

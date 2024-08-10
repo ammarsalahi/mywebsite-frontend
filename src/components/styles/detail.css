@@ -24,3 +24,6 @@
     @apply  border-r-4 border-solid border-indigo-700 px-2
 }
 
+.fresh{
+  @apply p-4 mt-10 rounded-lg border-2 
+}
