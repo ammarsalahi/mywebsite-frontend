@@ -33,7 +33,7 @@ export default function Technologies() {
   return (
     <div>
    {isLoad?<>
-    <div className='paddingtop'>
+    <div className='py-14'>
         <div>
             {projects.length>0 ? <div className='post-card'>
                {projects?.map((item:any,idx:number)=>(

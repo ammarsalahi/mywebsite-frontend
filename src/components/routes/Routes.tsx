@@ -10,6 +10,7 @@ import Cooperation from '../pages/Cooperation'
 import Categories from '../pages/Categories'
 import Technologies from '../pages/Technologies'
 import Keywords from '../pages/Keywords'
+import Search from '../pages/Search'
 
 export default function Routes() {
     const pages=createBrowserRouter([
@@ -53,6 +54,10 @@ export default function Routes() {
         {
           path:'/keywords/:name',
           element:<RouteContainer><Keywords/></RouteContainer>
+        },
+        {
+          path:'/search/:query',
+          element:<RouteContainer><Search/></RouteContainer>
         }
 
     ])

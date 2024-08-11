@@ -4,7 +4,7 @@ import nolist from '../../assets/lotties/box-empty.json'
 
 export default function PostEmpty() {
   return (
-    <div className=' no-list'>
+    <div className='no-list'>
      <div className='py-2 flex justify-center'>
           <Lottie
             animationData={nolist}
@@ -13,9 +13,11 @@ export default function PostEmpty() {
             style={{height:300,width:300}}
           />
       </div>
-        <div className=" p-2 lg:p-4  bg-red-300 text-center rounded-lg">
-        <p className='text-xl text-red-700'>هیچ پستی وجود ندارد!!!</p>
-        </div>
+      <div className="flex justify-center">
+          <div className=" p-2 lg:p-4  bg-red-300 text-center rounded-lg w-96">
+            <p className='text-xl text-red-700'>هیچ پستی وجود ندارد!!!</p>
+          </div>
+      </div>
     </div>
   )
 }

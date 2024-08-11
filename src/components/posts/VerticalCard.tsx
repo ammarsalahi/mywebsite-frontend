@@ -14,7 +14,7 @@ export default function VerticalCard(props:postProps) {
      <div className="card card-compact bg-base-100 w-76 shadow-xl">
         <figure>
           <img
-            src={showImage(props.post?.header_img)}
+            src={showImage(props.post?.header_image)}
             alt="projects" className="h-44 w-full"/>
         </figure>
         <div className="card-body">

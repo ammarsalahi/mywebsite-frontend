@@ -99,7 +99,7 @@ export default function DetailP(props:detailprops) {
                             ))}
                           </ImageCarousel>
                </div>
-               <div className='hidden md:blcok'>
+               <div className='hidden md:block'>
                   <Carousel arrows draggable infinite autoplay>
                   {props.project.images?.map((item:any,idx:number)=>(
                             <div key={idx}>

@@ -18,7 +18,9 @@ import { themeSelector } from '../states/Selectors';
 import iconlight from '../../assets/icon-light.png'
 import iconblack from '../../assets/newicon.png'
 import NavMenu from './NavMenu'
-import NavDropDownMenu from './NavDropDownMenu'
+import NavDropDownMenu from './NavDropDownMenu';
+import SearchBar from './SearchBar';
+
 
 export default function Navbar() {
 
@@ -146,6 +148,9 @@ export default function Navbar() {
       {location.pathname=='/projects' && 
           <ProjectFilters/>
       } 
+      {location.pathname.startsWith('/search') &&
+          <SearchBar/>
+      }
       </div>
     </div>
     

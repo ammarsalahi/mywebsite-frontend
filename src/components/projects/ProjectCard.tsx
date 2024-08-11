@@ -31,12 +31,10 @@ export default function ProjectCard(props:projectProps) {
             </div>
             <div className="flex gap-1 items-center text-gray-600">
                 <BiBookReader fontSize={18}/>
-              <span>خواندن ۲ دقیقه</span>
+              <span>{props.project?.reading_time}</span>
             </div>
             </div>
-            <div className="card-actions justify-end">
-              <Button block size="large"  type="primary" className="rounded-xl">نمایش</Button>
-            </div>
+         
         </div>
       </div>
       </Link>

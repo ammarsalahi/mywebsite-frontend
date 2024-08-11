@@ -34,7 +34,7 @@ export default function Cooperation() {
   ]
   return (
    <div>
-    <div className='py-10'>
+    <div className='py-10 lg:py-20'>
       <div className="cooper">
       <div className="step-show">
       {/*<Steps

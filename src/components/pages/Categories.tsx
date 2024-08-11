@@ -33,7 +33,7 @@ export default function Categories() {
     return (
         <div>
         {isLoad ? <>
-         <div className='paddingtop'>   
+         <div className='py-14'>   
                {posts.length>0?
               
                 <>

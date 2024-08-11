@@ -13,9 +13,12 @@ export default function PorjectEmpty() {
             style={{height:300,width:300}}
           />
       </div>
-    <div className=" p-2 lg:p-4 bg-red-300 text-center rounded-lg">
-      <p className='text-xl text-red-700'>هیچ پروژه‌ای وجود ندارد!!!</p>
-    </div>
+      <div className="flex justify-center">
+          <div className=" p-2 lg:p-4 bg-red-300 text-center rounded-lg w-96">
+            <p className='text-xl text-red-700'>هیچ پروژه‌ای وجود ندارد!!!</p>
+          </div>
+      </div>
+    
   </div>
   )
 }

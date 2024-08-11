@@ -6,11 +6,11 @@
  
 
 .unselected_step{
-    @apply mb-5 border py-2 px-5 rounded-full border text-lg items-center cursor-pointer text-gray-600
+    @apply mb-5 border py-2 px-5 rounded-full border text-lg items-center cursor-pointer
 }
 
 .selected_step{
-    @apply mb-5 border py-2 px-5 rounded-full border-2 text-lg items-center bg-blue-500 text-white cursor-pointer
+    @apply mb-5 border py-2 px-5 rounded-full border-2 text-lg items-center bg-blue-500 font-bold text-white cursor-pointer
 }
 
 

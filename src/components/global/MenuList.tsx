@@ -44,7 +44,7 @@ export default function MenuList() {
         </div>
      {location.pathname=='/' && 
 
-     <label className="input input bg-transparent focus:border-white hover:border-white border-white rounded-full input-bordered flex items-center gap-2 mb-3">
+     <label className="input bg-transparent focus:border-white hover:border-white border-white rounded-full input-bordered flex items-center gap-2 mb-3">
         <AiOutlineSearch fontSize={20} color="white"/>
         <input type="text" className="grow text-white" placeholder="جستجو..." />
       </label>

@@ -58,3 +58,5 @@ export const NEW_POSTS=_('/contents/new-posts');
 export const COOPERATIONS=_('/accounts/cooperations');
 
 export const FOOTER=_('/contents/footer/');
+
+export const SEARCH=(q:any)=>_(`/contents/search/?q=${q}`)
