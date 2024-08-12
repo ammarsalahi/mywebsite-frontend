@@ -111,11 +111,11 @@ export default function DetailP(props:detailprops) {
                      {props.project?.technologies.length > 0 &&
                   <div className={theme=="light"?"pb-20 mt-40 pt-5 border-t":"pb-20 mt-40 pt-5 border-t border-gray-600"}>
                       <p className="text-xl">تنکولوژی‌های استفاده‌شده</p>
-                 <div className="px-2 py-5 grid xs:grid-cols-4 xs:lg:md:grid-cols-6 gap-10">
+                 <div className="px-2 py-5 grid xs:grid-cols-4 md:grid-cols-6 gap-10">
                         {props.project.technologies?.map((item:any,idx:number)=>(
 
                             <Link to={`/technologies/${item.english_name}`} key={idx}>
-                            <div className="bg-blue-200 hover:text-white hover:bg-blue-500 py-1  rounded-full text-lg text-center">
+                            <div className="mini-item">
                               {item.name}
                              </div> 
                             </Link>

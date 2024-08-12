@@ -4,12 +4,12 @@ import { Api } from '../api/Index'
 import { PROJECT_TECHNOLOGIES} from '../api/Endpoints'
 import { Spin } from 'antd';
 import Footer from '../global/Footer'
-import PorjectEmpty from '../global/PorjectEmpty';
 
 import { useParams } from 'react-router-dom'
+import EmptyList from '../global/EmptyList';
 
 export default function Technologies() {
-    const name:any=useParams()
+    const {name}:any=useParams()
     const [projects,setProjects]=useState<any>([]);
     const [isLoad,setisLoad]=useState(false)
     
@@ -18,6 +18,7 @@ export default function Technologies() {
       setisLoad(false)
       await Api.get(PROJECT_TECHNOLOGIES(name)).then((res)=>{
          setProjects(res.data)
+         console.log(res.data)
       }).finally(()=>{
            setisLoad(true)
         })
@@ -33,7 +34,11 @@ export default function Technologies() {
   return (
     <div>
    {isLoad?<>
-    <div className='py-14'>
+    <div className='paddingtop'>
+            <div className='flex items-center justify-center md:justify-start'>
+                <p className='text-xl'>نتایج برای </p>
+                <p className="text-3xl font-bold mx-2">{name}</p>
+            </div> 
         <div>
             {projects.length>0 ? <div className='post-card'>
                {projects?.map((item:any,idx:number)=>(
@@ -41,7 +46,7 @@ export default function Technologies() {
                ))}
             </div>
             :
-             <PorjectEmpty/>
+             <EmptyList name='پروژه‌ای'/>
             }
         </div>
     </div>

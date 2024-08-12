@@ -7,6 +7,7 @@ import Footer from '../global/Footer'
 import { useRecoilValue } from 'recoil'
 import { projectSearchSelector, projfilterSelector } from '../states/Selectors'
 import PorjectEmpty from '../global/PorjectEmpty';
+import EmptyList from '../global/EmptyList';
 
 
 export default function Projects() {
@@ -43,11 +44,11 @@ export default function Projects() {
    <div>
    {isLoad?<>
     <div className='paddingtop'>
-        <div className='category-show pt-16'>
+        <div className='category-show pt-16 pb-6'>
 
             {teches.length>0 &&<div className="flex justify-start gap-3 pt-5 ">
               {teches?.map((item:any,idx:number)=>(
-                <button  className='py-2 px-10 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-500 hover:text-white' key={idx} 
+                <button  className='mini-item px-7' key={idx} 
               >{item.name}</button>
               ))}
             </div>}
@@ -59,7 +60,7 @@ export default function Projects() {
                ))}
             </div>
             :
-                <PorjectEmpty/>
+                <EmptyList name='پروژه‌ای'/>
             }
         </div>
     </div>

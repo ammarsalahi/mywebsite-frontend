@@ -12,7 +12,7 @@ import { PiNewspaperFill } from "react-icons/pi";
 import PostFilter from '../posts/PostFilter';
 import ProjectFilters from '../projects/ProjectFilters';
 import { imgurlSelector } from '../states/Selectors';
-import logoblue from '../../assets/logo-blue.png'
+import logoblack from '../../assets/logo-dark.png'
 import logolight from '../../assets/logo-light.png'
 import { themeSelector } from '../states/Selectors';
 import iconlight from '../../assets/icon-light.png'
@@ -42,6 +42,20 @@ export default function Navbar() {
        setTheme('light')
     }
   }
+  
+  const handleSearch=(e:React.ChangeEvent<HTMLInputElement>)=>{
+       setSearch(e.target.value)
+  }
+  const handleSubmit = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (event.key === 'Enter') {
+        navigate(`/search/${search}`)
+       setSearch("")
+    }
+  }
+   const handleOnClick=()=>{
+       navigate(`/search/${search}`);
+       setSearch("")
+  }
   useEffect(()=>{
     document.documentElement.setAttribute('data-theme',theme)
   },[theme])
@@ -59,13 +73,13 @@ export default function Navbar() {
 
             <div className="logo-menu pt-4">
                   <Link to='/'>
-                  <img src={location.pathname=='/'||theme=="dark"?logolight:logoblue} width={170} />
+                  <img src={location.pathname=='/'||theme=="dark"?logolight:logoblack} width={170} />
                   </Link>
             </div>
             <div className='logo-mobile'>
                 <Link to='/'>
                     <button className="btn btn-ghost">
-                    <img src={location.pathname=='/'||theme=="dark"?iconlight:iconblack} width={30} />
+                    <img src={location.pathname=='/'||theme=="dark"?iconlight:iconblack} width={35} />
                     </button>
                 </Link>
             </div>
@@ -80,7 +94,7 @@ export default function Navbar() {
               <button 
                 className="btn btn-ghost"
                 onClick={handleMenu}>
-                {ismenu?<AiOutlineClose fontSize={30}/>:<AiOutlineMenu fontSize={30}/>}
+                {ismenu?<AiOutlineClose fontSize={30}/>:<AiOutlineMenu fontSize={35}/>}
               </button>
          </div>
       <div className="hidden md:flex gap-1 pt-5">
@@ -90,19 +104,23 @@ export default function Navbar() {
        {location.pathname=='/' && 
        <>
 
-     <label className="input input-sm bg-transparent  hover:border-white border-white rounded-full input-bordered flex items-center gap-2">
-        <AiOutlineSearch fontSize={20} color="white"/>
-        <input 
-            type="text" 
-            className="grow text-white" 
-            placeholder="جستجو..."
-            value={search}
-            onChange={
-              (e:React.ChangeEvent<HTMLInputElement>)=>setSearch(e.target.value)
-            }
-       />
-      </label>
-          
+     
+          <div className="dropdown dropdown-bottom">
+            <label className="input input-sm bg-transparent  hover:border-white border-white rounded-full input-bordered flex items-center gap-2">
+              <AiOutlineSearch fontSize={20} color="white"/>
+                <input 
+                  type="text" 
+                  className="grow text-white" 
+                  placeholder="جستجو..."
+                  value={search}
+                  onChange={handleSearch}
+                  onKeyDown={handleSubmit}
+                />
+            </label>
+           {search.length>0 &&<ul tabIndex={0} className=" mt-2 dropdown-content menu bg-white text-black rounded-xl z-[1] w-56 p-2 shadow">
+           <li className="p-3 hover:bg-gray-100 rounded-xl cursor-pointer" onClick={handleOnClick}>جستجو برای "{search}"</li>           
+             </ul>}
+          </div>
        </>
        
        }

@@ -33,27 +33,31 @@ export default function Categories() {
     return (
         <div>
         {isLoad ? <>
-         <div className='py-14'>   
-               {posts.length>0?
-              
-                <>
-                <div className='post-card'>
-                  {posts?.map((item:any,idx:number)=>(
-                      <VerticalCard post={item} key={idx}/>
-                  ))}
-                </div>
-               
-                {posts?.length > 4 &&  <div className="flex justify-center py-10">
-                  <Button size='large' type='primary' className=' text-lg rounded-full' iconPosition='end'>بیشتر</Button>
-                  </div>}
+         <div className='paddingtop'>
+                <div className='flex justify-start'>
+                  <p className='text-xl'>نتایج برای </p>
+                  <p className="text-3xl font-bold mx-2">{name}</p>
+                </div> 
+            <div>   
+                {posts.length>0?
+                  <>
+                  <div className='post-card'>
+                    {posts?.map((item:any,idx:number)=>(
+                        <VerticalCard post={item} key={idx}/>
+                    ))}
+                  </div>
                 
-                
-                </>
-                :
-                  <PostEmpty/>
-            
-                }
+                  {posts?.length > 4 &&  <div className="flex justify-center py-10">
+                    <Button size='large' type='primary' className=' text-lg rounded-full' iconPosition='end'>بیشتر</Button>
+                    </div>}
+                  
+                  
+                  </>
+                  :
+                    <PostEmpty/>
               
+                  }
+            </div>
          </div>
         <Footer/> 
         </>:

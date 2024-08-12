@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Button} from 'antd'
 import VerticalCard from '../posts/VerticalCard'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Footer from '../global/Footer'
 import { Api } from '../api/Index'
-import { POST_CATEGORY, POST_KEYWORDS } from '../api/Endpoints'
-import { useRecoilValue } from 'recoil'
-import { filterSelector } from '../states/Selectors'
+import { POST_KEYWORDS } from '../api/Endpoints'
 import { Spin } from 'antd';
-import PostEmpty from '../global/PostEmpty'
+import EmptyList from '../global/EmptyList'
 
 export default function Keywords() {
     const [posts,setPosts]=useState<any>([])
@@ -36,7 +34,12 @@ export default function Keywords() {
     return (
         <div>
         {isLoad ? <>
-         <div className='py-14'>   
+         <div className='paddingtop'>
+                  <div className='flex justify-start'>
+                      <p className='text-xl'>نتایج برای </p>
+                      <p className="text-3xl font-bold mx-2">{name}</p>
+                  </div> 
+               <div>
                {posts.length>0?
               
                 <>
@@ -53,9 +56,10 @@ export default function Keywords() {
                 
                 </>
                 :
-                  <PostEmpty/>
+                  <EmptyList name="پستی"/>
                 }
-              
+                </div>
+
          </div>
         <Footer/> 
         </>:

@@ -79,7 +79,7 @@ export default function Detail(props:detailprops) {
         </div>
       </div>
       <div className={theme=="dark"?'grid-col border-gray-600':'grid-col'} id="titles">
-          <img src={showImage(props.post?.header_img)} alt="" className='w-full h-96 rounded-2xl' />
+          <img src={showImage(props.post?.header_image)} alt="" className='w-full h-96 rounded-2xl' />
           <div className="flex justify-between py-3 px-4">
                 <Link to={`/categories/${props.post?.category.english_name}`} >
                 <p className=' text-gray-700 text-lg'>{props.post?.category.name}</p>
@@ -106,10 +106,10 @@ export default function Detail(props:detailprops) {
               {props.post?.keywords.length > 0 &&
             <div className={theme=="light"?"pb-20 mt-20 pt-5 border-t":"pb-20 mt-20 pt-5 border-t border-gray-600 "}>
               <p className="text-xl">#کلمات کلیدی</p>
-              <div className="py-6 grid lg:grid-cols-8 gap-5">
+              <div className="px-2 py-5 grid xs:grid-cols-4 md:grid-cols-6 gap-10">
                   {props.post.keywords?.map((item:any,idx:number)=>(
-                      <Link to={`/keywords/${item.english_name}`} className='p-4 rounded-lg' key={idx}>    
-                          <button  className='py-2 px-10 bg-blue-50  rounded-full hover:bg-blue-500 hover:text-white'>{item.name}</button>
+                      <Link to={`/keywords/${item.english_name}`} key={idx}>    
+                          <button  className='mini-item px-7'>{item.name}</button>
                       </Link>
                   ))}
               </div>

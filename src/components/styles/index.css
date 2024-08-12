@@ -38,7 +38,7 @@
 }
 
 .no-list{
-    @apply py-10 md:py-20 px-5 items-center 
+    @apply px-5 items-center 
 }
 
 .paddingtop{
@@ -82,4 +82,17 @@
  }
 .drop-menus{
   @apply block xs:sm:hidden md:block lg:block xs:xl:hidden;
+}
+
+.nav-menu{
+  @apply pb-1 hover:border-b;
+}
+
+.card-move-up{
+  @apply hover:lg:-translate-y-9  transition delay-75 duration-300
+}
+
+.mini-item{
+  @apply  flex justify-center py-2  bg-base-200 font-bold border-2  rounded-full hover:bg-blue-500 hover:text-white hover:border-blue-500;
+  
 }

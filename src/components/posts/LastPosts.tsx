@@ -8,7 +8,7 @@ interface listprops{
 export default function LastPosts(props:listprops) {
   return (
     <div className='lasts'>
-        <div className='flex justify-start py-3 px-3 border-r-4 my-3 border-blue-500 '>
+        <div className='flex justify-start py-3 px-3 border-r-4 mb-10 border-blue-500 '>
             <p className='text-3xl'>پست‌های اخیر</p>
         </div>
     <div>

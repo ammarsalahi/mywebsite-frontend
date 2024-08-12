@@ -9,6 +9,7 @@ import { useRecoilValue } from 'recoil'
 import { filterSelector, postSearchSelector } from '../states/Selectors'
 import HorizontalCard from '../posts/HorizontalCard'
 import { Spin } from 'antd';
+import EmptyList from '../global/EmptyList'
 
 export default function Posts() {
   let navigate=useNavigate()
@@ -52,11 +53,11 @@ export default function Posts() {
   <div>
     {isLoad ? <>
      <div className='paddingtop'>
-        <div className='category-show pt-16'>
+        <div className='category-show pt-12 pb-6'>
 
             {categories.length>0 &&<div className="flex justify-start gap-3 pt-5 ">
               {categories?.map((item:any,idx:number)=>(
-                <button  className='py-2 px-10 bg-blue-50 text-blue-800 font-bold  rounded-full hover:bg-blue-500 hover:text-white' key={idx} 
+                <button  className='mini-item px-7' key={idx} 
                 onClick={()=>setSelectedCategory(item.id)}>{item.name}</button>
               ))}
             </div>}
@@ -82,11 +83,7 @@ export default function Posts() {
             }
             </>
             :
-              <div className=' no-list'>
-                <div className=" p-2 lg:p-4  bg-red-300 text-center rounded-lg">
-                  <p className='text-xl text-red-700'>هیچ پستی وجود ندارد!!!</p>
-                </div>
-              </div>
+             <EmptyList name="پستی"/>
         
             }
           

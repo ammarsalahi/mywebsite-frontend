@@ -35,7 +35,7 @@ export default function HorizontalCard(props:postProps) {
          
         </div>
         <div className=''>
-          <img src={showImage(props.post?.header_img)} className='w-full h-48 rounded-2xl'  />
+          <img src={showImage(props.post?.header_image)} className='w-full h-48 rounded-2xl'  />
         </div>
       </div>
     </Link>

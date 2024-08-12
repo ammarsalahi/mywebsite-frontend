@@ -20,13 +20,17 @@ export default function Search() {
     }
     useEffect(() => {
       getSearch()
-    }, [])
+    }, [query])
     
   return (
     <div>
     {isLoad?<>
      <div className='paddingtop'>
-         <div className="pt-8">
+            <div className='pt-14 pb-10 items-center  flex justify-center md:justify-start'>
+                <p className='text-xl'>نتایج برای </p>
+                <p className="text-3xl font-bold mx-5">"{query}"</p>
+            </div> 
+         <div>
             {searches.length>0 ? <div className='post-card'>
                 {searches?.map((item:any,idx:number)=>(
                     <>
