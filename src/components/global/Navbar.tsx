@@ -1,14 +1,10 @@
-import { Button, Input } from 'antd'
 import React, { useState,useEffect } from 'react'
 import { AiFillSun,AiFillMoon, AiOutlineSearch , AiOutlineClose, } from 'react-icons/ai'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { SiDjango, SiFastapi, SiHtml5, SiPython, SiReact, SiTypescript } from 'react-icons/si'
-import { BsEmojiSunglassesFill } from "react-icons/bs";
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { menuAtom, postSearchAtom, projectSearchAtom } from '../states/Atoms'
+import { menuAtom} from '../states/Atoms'
 import { AiOutlineMenu } from "react-icons/ai";
-import {FaHammer,FaHandshake} from 'react-icons/fa'
-import { PiNewspaperFill } from "react-icons/pi";
 import PostFilter from '../posts/PostFilter';
 import ProjectFilters from '../projects/ProjectFilters';
 import { imgurlSelector } from '../states/Selectors';
@@ -20,7 +16,7 @@ import iconblack from '../../assets/newicon.png'
 import NavMenu from './NavMenu'
 import NavDropDownMenu from './NavDropDownMenu';
 import SearchBar from './SearchBar';
-
+import { motion } from 'framer-motion'
 
 export default function Navbar() {
 
@@ -140,7 +136,43 @@ export default function Navbar() {
       <div className="py-16 xl:py-28">
       {imgurl!=='' && <div className="grid lg:grid-cols-2 ">
         <div className='flex justify-center'>
-          <img src={imgurl} className='rounded-full border-2 border-blue-500 shadow-2xl' alt="" width={400} />
+          <motion.div 
+          initial={{opacity:0}}
+          animate={{
+            opacity:1,
+            transition:{delay:0.3,duration:0.1,ease:"easeInOut"}
+          }}
+          className='w-[400px] absolute'
+          >
+            <img src={imgurl} className="rounded-full"/>
+          </motion.div>
+          <motion.svg 
+            className="w-[400px]"
+            fill="transparent"
+            viewBox="0 0 506 506"
+            xmlns={"https://www.w3.org/2000/svg"}
+          >
+            
+            <motion.circle
+              cx="253"
+              cy="253"
+              r="250"
+              stroke="#fff"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{strokeDasharray:"24 10 0 0"}}
+              animate={{
+                strokeDasharray:["15 120 25 25","16 25 92 72","4 250 22 22"],
+                rotate:[120,360],
+              }}
+              transition={{
+                duration:10,
+                repeat:Infinity,
+                repeatType:"reverse"
+              }}
+            />
+          </motion.svg>
         </div>
         <div className="text-center text-white lg:pt-20 xl:pt-20 md:pt-10 ">
           <p className='text-6xl'>عمار صلاحی هستم</p>

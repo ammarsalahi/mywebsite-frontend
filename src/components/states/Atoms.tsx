@@ -71,4 +71,12 @@ const themeAtom=atom({
     default: sessionStorage.getItem('themes') ? sessionStorage.getItem('themes') : "light",
 });
 
-export {filterAtom,projectSearchAtom,postSearchAtom,projfilterAtom,menuAtom,imgurlAtom,typeAtom,userAtom,isloadingAtom,themeAtom}
+const pageLoadAtom=atom({
+    key:'page-atom',
+    default:false
+})
+export {
+    filterAtom,projectSearchAtom,postSearchAtom,
+    projfilterAtom,menuAtom,imgurlAtom,typeAtom,
+    userAtom,isloadingAtom,themeAtom,pageLoadAtom
+}

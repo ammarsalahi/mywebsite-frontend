@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom';
 export default function Search() {
     const [isLoad,setisLoad]=useState(false)
     const [searches,setSearches]=useState<any>([]);
+    const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
     const {query}:any=useParams()
     const getSearch=async()=>{
         Api.get(SEARCH(query)).then((res)=>{
@@ -19,6 +20,7 @@ export default function Search() {
         })
     }
     useEffect(() => {
+      setpageLoad(true)
       getSearch()
     }, [query])
     

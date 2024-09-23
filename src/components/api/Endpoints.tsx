@@ -53,9 +53,9 @@ export const PROJECT_SEARCH_FILTER=(search:string,sort:boolean)=>_(`/contents/pr
 
 export const PROJECT_TECHNOLOGIES=(name:string)=>(`/contents/technology-projects/${name}`)
 
-export const NEW_POSTS=_('/contents/new-posts');
+export const NEW_POSTS=_('/contents/new-posts/');
 
-export const COOPERATIONS=_('/accounts/cooperations');
+export const COOPERATIONS=_('/accounts/cooperations/');
 
 export const FOOTER=_('/contents/footer/');
 

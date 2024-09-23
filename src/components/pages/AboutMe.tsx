@@ -11,15 +11,17 @@ import { TbWorldWww } from "react-icons/tb";
 import { FaComputer,FaUsers } from "react-icons/fa6";
 import Footer from '../global/Footer';
 import { FaUser } from "react-icons/fa6";
-import { Spin } from 'antd';
-import { themeSelector } from '../states/Selectors';
+import { pageLoadSelector } from '../states/Selectors';
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { MdEmail } from 'react-icons/md';
+import LoadMotion from '../global/LoadMotion';
+import { Spin } from 'antd';
 
 export default function AboutMe() {
   const [about,setAbout]=useState<any>(null);
   const [isLoad,setisLoad]=useState(false);
-  const [theme,setTheme]=useRecoilState<any>(themeSelector)
+  const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
+
   const getAbout=async()=>{
     await Api.get(ABOUT_ME).then((res)=>{
       setAbout(res.data)
@@ -57,6 +59,7 @@ export default function AboutMe() {
      }
   useEffect(() => {
     getAbout()
+    setpageLoad(true)
   }, [])
   
   return (
@@ -121,8 +124,8 @@ export default function AboutMe() {
       <Footer/>
       </>
       :
-        <div className="h-screen w-screen grid place-items-center">
-          <Spin size='large'/>
+         <div className="h-screen w-screen grid place-items-center">
+        <Spin size='large'/>
         </div>
       }
     </div>

@@ -8,13 +8,14 @@ import { HOME } from '../api/Endpoints'
 import { useRecoilState } from 'recoil'
 import { imgurlAtom } from '../states/Atoms'
 import { message, Spin } from 'antd'
+import { pageLoadSelector } from '../states/Selectors'
+import LoadMotion from '../global/LoadMotion'
 
 export default function Home() {
   const [posts,setPosts]=useState<any>([])
   const [projects,setProjects]=useState<any>([]);
   const [imgs,setimgs]=useRecoilState(imgurlAtom)
-  const [socls,setsocls]=useState(0)
-  const [loads,setLoads]=useState(false)
+  const [loads,setLoads]=useRecoilState(pageLoadSelector)
 
   const getHome=()=>{
     Api.get(HOME).then((res)=>{
@@ -25,6 +26,7 @@ export default function Home() {
 
     }).catch((err)=>{
       message.error("متاسفانه مشکلی پیش آمده است!")
+      setLoads(false)
     })
   }
   useEffect(() => {
@@ -33,10 +35,7 @@ export default function Home() {
   
   return (
     <div>
-      
-      {loads?
-      <>
-      <div >
+      {loads ==true ?<div>
       <div>
         <LastPosts posts={posts}/>
       </div>
@@ -45,11 +44,9 @@ export default function Home() {
       </div>
       <Footer/>
     </div>
-    </>:
-        <div className="h-screen w-screen grid place-items-center">
-        <Spin size='large' />
-      </div>}
-
+    :
+      <LoadMotion/>
+    }
     </div>
    
   )

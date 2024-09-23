@@ -4,10 +4,11 @@ import { Api } from '../api/Index'
 import { PROJECT_SEARCH_FILTER ,TECHNOLOGIES} from '../api/Endpoints'
 import { Spin } from 'antd';
 import Footer from '../global/Footer'
-import { useRecoilValue } from 'recoil'
-import { projectSearchSelector, projfilterSelector } from '../states/Selectors'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { pageLoadSelector, projectSearchSelector, projfilterSelector } from '../states/Selectors'
 import PorjectEmpty from '../global/PorjectEmpty';
 import EmptyList from '../global/EmptyList';
+import LoadMotion from '../global/LoadMotion';
 
 
 export default function Projects() {
@@ -16,12 +17,13 @@ export default function Projects() {
     const [isLoad,setisLoad]=useState(false)
     const projectsearch=useRecoilValue(projectSearchSelector)
     const filters=useRecoilValue(projfilterSelector)
+    const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
 
    
     const getFilters=async()=>{
       setisLoad(false)
       await Api.get(PROJECT_SEARCH_FILTER(projectsearch,filters.assort)).then((res)=>{
-         setProjects(res.data)
+         setProjects(res.data.results)
       }).finally(()=>{
            setisLoad(true)
         })
@@ -35,6 +37,7 @@ export default function Projects() {
     useEffect(() => {
       getFilters()
       getTeches()
+      setpageLoad(true)
       return () => {
         setProjects([])
       }
@@ -67,8 +70,8 @@ export default function Projects() {
     <Footer/>
     </>:
        <div className="h-screen w-screen grid place-items-center">
-          <Spin size='large'/>
-        </div>
+        <Spin size='large'/>
+      </div>
       }
       </div>
   )

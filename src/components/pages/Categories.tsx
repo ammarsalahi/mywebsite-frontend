@@ -7,17 +7,21 @@ import { Api } from '../api/Index'
 import { POST_CATEGORY } from '../api/Endpoints'
 import { Spin } from 'antd';
 import PostEmpty from '../global/PostEmpty'
+import LoadMotion from '../global/LoadMotion'
+import { useRecoilState } from 'recoil'
+import { pageLoadSelector } from '../states/Selectors'
 
 export default function Categories() {
 
     const [posts,setPosts]=useState<any>([])
     const {name}:any =useParams();    
     const [isLoad,setisLoad]=useState(false);
-  
+    const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
+
     const getFilters=async()=>{
       setisLoad(false)
       await Api.get(POST_CATEGORY(name)).then((res)=>{
-         setPosts(res.data)
+         setPosts(res.data.results)
       }).finally(()=>{
            setisLoad(true)
         })
@@ -25,7 +29,7 @@ export default function Categories() {
   
     useEffect(() => {
       getFilters()
-    
+      setpageLoad(true)
       return () => {
         setPosts([])
       }
@@ -61,9 +65,9 @@ export default function Categories() {
          </div>
         <Footer/> 
         </>:
-         <div className="h-screen w-screen grid place-items-center">
-              <Spin size='large'/>
-            </div>
+          <div className="h-screen w-screen grid place-items-center">
+            <Spin size='large'/>
+          </div>
         }
         </div>
   )

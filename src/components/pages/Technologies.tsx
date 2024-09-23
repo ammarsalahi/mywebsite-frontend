@@ -7,18 +7,20 @@ import Footer from '../global/Footer'
 
 import { useParams } from 'react-router-dom'
 import EmptyList from '../global/EmptyList';
+import { useRecoilState } from 'recoil';
+import { pageLoadSelector } from '../states/Selectors';
+import LoadMotion from '../global/LoadMotion';
 
 export default function Technologies() {
     const {name}:any=useParams()
     const [projects,setProjects]=useState<any>([]);
     const [isLoad,setisLoad]=useState(false)
+    const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
     
 
     const getProjects=async()=>{
-      setisLoad(false)
       await Api.get(PROJECT_TECHNOLOGIES(name)).then((res)=>{
-         setProjects(res.data)
-         console.log(res.data)
+         setProjects(res.data.results)
       }).finally(()=>{
            setisLoad(true)
         })
@@ -26,6 +28,7 @@ export default function Technologies() {
 
     useEffect(() => {
       getProjects()
+      setpageLoad(true)
       return () => {
         setProjects([])
       }
@@ -53,8 +56,8 @@ export default function Technologies() {
     <Footer/>
     </>:
        <div className="h-screen w-screen grid place-items-center">
-          <Spin size='large'/>
-        </div>
+       <Spin size='large'/>
+     </div>
       }
       </div>
   )

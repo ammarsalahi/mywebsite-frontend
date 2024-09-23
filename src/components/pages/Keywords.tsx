@@ -7,10 +7,14 @@ import { Api } from '../api/Index'
 import { POST_KEYWORDS } from '../api/Endpoints'
 import { Spin } from 'antd';
 import EmptyList from '../global/EmptyList'
+import { useRecoilState } from 'recoil'
+import { pageLoadSelector } from '../states/Selectors'
+import LoadMotion from '../global/LoadMotion'
 
 export default function Keywords() {
     const [posts,setPosts]=useState<any>([])
     const {name}:any =useParams();
+    const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
 
     
     const [isLoad,setisLoad]=useState(false);
@@ -18,7 +22,7 @@ export default function Keywords() {
     const getFilters=async()=>{
       setisLoad(false)
       await Api.get(POST_KEYWORDS(name)).then((res)=>{
-         setPosts(res.data)
+         setPosts(res.data.results)
       }).finally(()=>{
            setisLoad(true)
         })
@@ -26,7 +30,7 @@ export default function Keywords() {
   
     useEffect(() => {
       getFilters()
-    
+      setpageLoad(true)
       return () => {
         setPosts([])
       }
@@ -63,9 +67,9 @@ export default function Keywords() {
          </div>
         <Footer/> 
         </>:
-         <div className="h-screen w-screen grid place-items-center">
-              <Spin size='large'/>
-            </div>
+        <div className="h-screen w-screen grid place-items-center">
+          <Spin size='large'/>
+        </div>   
         }
         </div>
   )

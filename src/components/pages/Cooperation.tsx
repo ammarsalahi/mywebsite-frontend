@@ -37,13 +37,6 @@ export default function Cooperation() {
     <div className='py-10 lg:py-20'>
       <div className="cooper">
       <div className="step-show">
-      {/*<Steps
-        items={steps}
-        onChange={handleCurrent}
-        current={current}
-        direction="vertical"
-        className='h-full rounded-xl border border-dashed border-gray-200 p-5 '
-      />*/}
        <div className="sticky top-20">
         <ul className="steps steps-vertical">
             <li className={current==0 || current>0?"step step-info":"step"}>نوع پروژه</li>

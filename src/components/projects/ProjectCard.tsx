@@ -16,7 +16,7 @@ export default function ProjectCard(props:projectProps) {
   return (
 
      <Link to={`/projects/${props.project?.project_id}`}>
-     <div className="card card-compact bg-base-100 w-76 shadow-xl md:card-move-up">
+     <div className="card card-compact bg-base-100 w-76 shadow-xl card-move-up">
         <figure>
           <img
             src={showImage(props.project?.header_image)}

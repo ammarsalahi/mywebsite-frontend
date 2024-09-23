@@ -69,8 +69,8 @@ export default function StepTwo(props:stepprops) {
                     onChange={handleChange}
                   />
             </label>
-             {errors?.name &&<div class="label">
-                <span class="label-text-alt text-red-700">{errors.name}</span>
+             {errors?.name &&<div className="label">
+                <span className="label-text-alt text-red-700">{errors.name}</span>
               </div>}
             <label className="input input-bordered mt-4 w-full flex items-center gap-5 rounded-full">
                  <FaPhone/>
@@ -82,8 +82,8 @@ export default function StepTwo(props:stepprops) {
                     onChange={handleChange}
                   />
             </label>
-             {errors?.phone &&<div class="label">
-                <span class="label-text-alt text-red-700">{errors.phone}</span>
+             {errors?.phone &&<div className="label">
+                <span className="label-text-alt text-red-700">{errors.phone}</span>
               </div>}
             <label className="input input-bordered mt-4 w-full flex items-center gap-5 rounded-full">
                  <MdEmail/>
@@ -105,12 +105,12 @@ export default function StepTwo(props:stepprops) {
                     onChange={handleChange}
                   />
             </label>
-             {errors?.project &&<div class="label">
-                <span class="label-text-alt text-red-700">{errors.project}</span>
+             {errors?.project &&<div className="label">
+                <span className="label-text-alt text-red-700">{errors.project}</span>
               </div>}
             <button 
               className='btn w-full bg-blue-600 mt-7 text-white hover:bg-blue-600 border border-blue-600 rounded-full'
-              onClick={()=>handleSubmit()}
+              type="submit"
             >
             ادامه
             <FaChevronLeft/>

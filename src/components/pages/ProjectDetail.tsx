@@ -5,34 +5,48 @@ import { useParams } from 'react-router-dom';
 import { PROJECT_DETAIL_ID } from '../api/Endpoints';
 import Footer from '../global/Footer'
 import { Spin } from 'antd';
+import LoadMotion from '../global/LoadMotion';
+import { useRecoilState } from 'recoil';
+import { pageLoadSelector } from '../states/Selectors';
 
 export default function ProjectDetail() {
   const {id}=useParams();
   const [projects,setProjects]=useState<any>([]);
   const [others,setOthers]=useState<any>([]);
   const [isLoad,setisLoad]=useState(false)
+  const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
+  const [isProject,setIsProject]=useState(true)
 
-  const getProject=()=>{
-    Api.get(PROJECT_DETAIL_ID(id)).then((res)=>{
+  const getProject=async()=>{
+    await Api.get(PROJECT_DETAIL_ID(id)).then((res)=>{
         setProjects(res.data.projects)
         setOthers(res.data.others);
-        setisLoad(true)
+    }).catch((err)=>{
+      setIsProject(false)
+    }).finally(()=>{
+       setisLoad(true)
     })
   }
   useEffect(() => {
       getProject()
+      setpageLoad(true)
   }, [])
   return (
     <div>
    {isLoad ? <> <div className='paddingtop'>
+      {isProject?
         <DetailP project={projects} others={others}/>
+        :
+        <>
+        </>
+        }
        </div>
      <Footer/>
      </>:
-      <div className="h-screen w-screen grid place-items-center">
-          <Spin size='large'/>
-        </div>
-        }
+       <div className="h-screen w-screen grid place-items-center">
+        <Spin size='large'/>
+      </div>
+      }
     </div>
   )
 }

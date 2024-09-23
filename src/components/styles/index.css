@@ -89,7 +89,7 @@
 }
 
 .card-move-up{
-  @apply hover:lg:-translate-y-9  transition delay-75 duration-300
+  @apply hover:-translate-y-9  transition delay-75 duration-300
 }
 
 .mini-item{

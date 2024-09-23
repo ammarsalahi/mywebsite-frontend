@@ -5,11 +5,12 @@ import { useNavigate } from 'react-router-dom'
 import Footer from '../global/Footer'
 import { Api } from '../api/Index'
 import { CATEGORIES, POST_SEARCH_FILTER } from '../api/Endpoints'
-import { useRecoilValue } from 'recoil'
-import { filterSelector, postSearchSelector } from '../states/Selectors'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { filterSelector, pageLoadSelector, postSearchSelector } from '../states/Selectors'
 import HorizontalCard from '../posts/HorizontalCard'
 import { Spin } from 'antd';
 import EmptyList from '../global/EmptyList'
+import LoadMotion from '../global/LoadMotion'
 
 export default function Posts() {
   let navigate=useNavigate()
@@ -17,6 +18,7 @@ export default function Posts() {
   const [categories,setCategories]=useState<any>([])
   const postsearch=useRecoilValue(postSearchSelector)
   const [selectedCategory,setSelectedCategory]=useState("")
+  const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
 
   const filters=useRecoilValue(filterSelector);
   
@@ -25,7 +27,7 @@ export default function Posts() {
   const getFilters=async()=>{
     setisLoad(false)
     await Api.get(POST_SEARCH_FILTER(postsearch,filters.assort,selectedCategory)).then((res)=>{
-       setPosts(res.data)
+       setPosts(res.data.results)
     }).finally(()=>{
          setisLoad(true)
       })
@@ -33,14 +35,13 @@ export default function Posts() {
   const getCategory=async()=>{
     await Api.get(CATEGORIES).then((res)=>{
       setCategories(res.data)
-      console.log(res.data)
     })
   }
 
   useEffect(() => {
     getFilters()
     getCategory()
-  
+    setpageLoad(true)
     return () => {
       setCategories([])
       setPosts([])
@@ -91,9 +92,9 @@ export default function Posts() {
      </div>
     <Footer/> 
     </>:
-     <div className="h-screen w-screen grid place-items-center">
-          <Spin size='large'/>
-        </div>
+      <div className="h-screen w-screen grid place-items-center">
+        <Spin size='large'/>
+      </div>
     }
     </div>
   )

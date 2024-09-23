@@ -11,7 +11,7 @@ export default function VerticalCard(props:postProps) {
  
   return (
     <Link to={`/posts/${props.post?.post_id}`}>
-     <div className="card card-compact bg-base-100 w-76 shadow-xl md:card-move-up">
+     <div className="card card-compact bg-base-100 w-76 shadow-xl card-move-up">
         <figure>
           <img
             src={showImage(props.post?.header_image)}
