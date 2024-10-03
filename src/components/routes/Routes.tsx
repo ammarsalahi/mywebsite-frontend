@@ -12,6 +12,7 @@ import Technologies from '../pages/Technologies'
 import Keywords from '../pages/Keywords'
 import Search from '../pages/Search'
 import Signin from '../pages/Signin'
+import AddEditPost from '../pages/AddEditPost'
 
 export default function Routes() {
     const pages=createBrowserRouter([
@@ -27,6 +28,14 @@ export default function Routes() {
         {
           path:'/posts',
           element:<RouteContainer> <Posts/></RouteContainer>
+        },
+        {
+          path:'/posts/add',
+          element:<AddEditPost/>
+        },
+        {
+          path:'/posts/edit/:id',
+          element:<AddEditPost/>
         },
         {
           path:'/projects',

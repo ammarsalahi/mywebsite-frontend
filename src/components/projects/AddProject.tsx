@@ -1,59 +1,84 @@
-import { Input,Button } from 'antd'
-import { Formik } from 'formik'
 import React from 'react'
-import { AiOutlineCheck, AiOutlineClose, AiOutlinePlus } from 'react-icons/ai'
-import { PiCameraPlus } from 'react-icons/pi'
-import imgs from '../../assets/bgs.jpg'
+import { FaCheck, FaHammer, FaPlus } from 'react-icons/fa6'
+import { PiCameraPlusFill } from 'react-icons/pi'
 
-export default function AddProject() {
+export default function AddEditProject() {
   return (
-    <div className='py-10 xl:px-60 lg:px-60 md:px-20 sm:px-10'>
-      <p className='pb-10 text-center text-xl'>افزودن پروژه جدید</p>        
-      <Formik
-         initialValues={{
-            title:'',
-            text:''
-         }}
-         onSubmit={(values)=>{
-
-         }}
-         >
-        {({handleSubmit,values,handleChange,errors,touched})=>(
-
-            <form onSubmit={handleSubmit}>
-                <Input 
-                    placeholder='عنوان پروژه' size='large' 
-                    className='mb-4 rounded-xl'
-                    value={values.title} onChange={handleChange}
-                    name="title" allowClear/>
-
-                    <div className='dashed-card p-16 mb-4'>
-                      <Button type='text' className='text-lg' icon={<PiCameraPlus/>}>تصویر اصلی پروژه</Button>
-                    </div>    
-                <Input.TextArea placeholder='توضیحات' rows={5} size='large' name="text" value={values.text} onChange={handleChange} className='mb-4'/>
-                 <p className='text-lg text-center text-gray-500 mb-3'>افزودن تصاویر</p>
-                <div className='flex justify-start gap-4 mb-5'>
-                  <div className='dashed-card p-5 mb-4'>
-                    <Button type='text' icon={<AiOutlinePlus fontSize={30} color='gray'/>} />
-                  </div>
-                  <div className="p-2">
-                    <img src={imgs}  width={100} height={100} className='rounded-xl'/>
-                  </div>
-                  <div className="p-2">
-                    <img src={imgs}  width={100} height={100} className='rounded-xl'/>
-                  </div>
-                  <div className="p-2">
-                    <img src={imgs}  width={100} height={100} className='rounded-xl'/>
-                  </div>
+    <div className='px-32 py-16'>
+        <div className="card border rounded-xl">
+          <div className="card-body py-10 px-20">
+            <form action="">
+              <div className="flex justify-center">
+                <div className="flex gap-2 items-center">
+                <FaHammer className='text-3xl'/>
+                <p className="text-2xl text-center font-bold mb-10">افزودن پروژه جدید</p>
                 </div>
-                <div className="flex justify-between gap-3">
-                  <Button type='text' className='text-xl w-full bg-gray-200' size='large' icon={<AiOutlineClose/>}>انصراف</Button>
-                  <Button type='primary' className='text-xl w-full' size='large' icon={<AiOutlineCheck/>}>تایید</Button>
-                </div>    
+               
+              </div>
+            <div className="mb-5">
+              {/* <div className="label label-alt mb-1">عنوان پست را وارد کنید</div> */}
+              <input 
+                type="text" className="input input-bordered w-full rounded-2xl" 
+                placeholder='عنوان پست را وارد کنید...'
+              />
+            </div>
+            <div className="mb-5">
+              <div className="dashed-card-gray flex justify-center items-center py-16">
+                <button className='btn btn-ghost  text-gray-700 hover:bg-blue-100'>
+                  <PiCameraPlusFill className='text-xl'/>
+                  افزودن تصویر
+                </button>
+              </div>
+            </div>
+            <div className="mb-5">
+              {/* <div className="label label-alt mb-1">عنوان پست را وارد کنید</div> */}
+              <textarea 
+                className="textarea textarea-bordered w-full rounded-2xl" rows={2}
+                placeholder='عنوان پست را وارد کنید...'
+              />
+            </div>
+            <div className="mb-5">
+              {/* <div className="label label-alt mb-1">عنوان پست را وارد کنید</div> */}
+              <textarea 
+                className="textarea textarea-bordered w-full rounded-2xl" rows={7}
+                placeholder='عنوان پست را وارد کنید...'
+              />
+            </div>
+            <div className="mb-8">
+              <div className="md:flex gap-5">
+                <label className="input input-bordered flex items-center rounded-2xl w-full gap-2 mb-6">
+                  <input type="text" className="grow" placeholder="کلمات کلیدی را اضافه کنید" />
+                  <button className='btn bg-green-300  btn-sm'>
+                    <FaPlus/>
+                    افزودن
+                  </button>
+                </label>
+                <label className="input input-bordered flex items-center rounded-2xl w-full gap-2 mb-6">
+                  <input type="text" className="grow" placeholder=" دسته‌بندی را انتخاب کنید" />
+                 
+                </label>
+              </div>
+            
+            </div>
+            <div className="md:flex justify-between items-center mb-5">
+                <div className="form-control">
+                  <label className="cursor-pointer label">
+                      <input
+                        type="checkbox"
+                        className="checkbox  border-blue-500 [--chkbg:theme(colors.blue.500)] checked:border-blue-500" 
+                      />
+                      <span className="label-text mx-3 text-lg">این پست قابل مشاهد باشد</span>
+                  </label>
+                  
+                </div>
+                <button className='btn-blue md:w-80 rounded-2xl text-lg font-semibold'>
+                  <FaCheck/>
+                    ایجاد پست
+                  </button>
+            </div>
             </form>
-        )}
-
-        </Formik>
+          </div>
+        </div>
     </div>
   )
 }

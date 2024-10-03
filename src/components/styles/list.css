@@ -25,6 +25,9 @@
     @apply flex justify-center cursor-pointer rounded-xl border-blue-100 border-2 border-dashed 
 }
 
+.dashed-card-gray{
+    @apply flex justify-center cursor-pointer rounded-xl border-gray-300 border-2 border-dashed 
+}
 
 
 
