@@ -11,6 +11,7 @@ import Categories from '../pages/Categories'
 import Technologies from '../pages/Technologies'
 import Keywords from '../pages/Keywords'
 import Search from '../pages/Search'
+import Signin from '../pages/Signin'
 
 export default function Routes() {
     const pages=createBrowserRouter([
@@ -18,7 +19,11 @@ export default function Routes() {
             path:'/',
             element:<RouteContainer><Home/></RouteContainer>
         },
-  
+        
+        {
+          path:"/signin",
+          element:<Signin/>
+        },
         {
           path:'/posts',
           element:<RouteContainer> <Posts/></RouteContainer>

@@ -28,6 +28,10 @@
     @apply  w-full pb-2 px-2 lg:px-7 bg-blue-600
 }
 
+.btn-blue{
+  @apply btn w-full bg-blue-500 border border-blue-500 rounded-full text-white hover:bg-blue-500
+}
+
 .lasts{
   @apply p-5 xs:px-5 sm:p-10 xs:md:p-20;
 }
