@@ -17,6 +17,7 @@ import NavMenu from './NavMenu'
 import NavDropDownMenu from './NavDropDownMenu';
 import SearchBar from './SearchBar';
 import { motion } from 'framer-motion'
+import { FaUser } from 'react-icons/fa6'
 
 export default function Navbar() {
 
@@ -63,7 +64,7 @@ export default function Navbar() {
         location.pathname=='/'?"nav-blue text-white":'nav-light-fixed'
         :
         location.pathname=='/'?"nav-dark":'nav-dark-fixed'
-      }  style={{zIndex:2}}>
+      }  style={{zIndex:9999}}>
       <nav className="navbar items-center pb-3">
         <div className='navbar-start'>
 
@@ -125,6 +126,11 @@ export default function Navbar() {
           onClick={handleTheme}
           >
             {theme=="light"?<AiFillSun fontSize={20}/>: <AiFillMoon fontSize={20} color="white"/>}
+         </button>
+         <button
+          className="btn btn-ghost btn-sm"
+          >
+            <FaUser/>
          </button>
         </div>
         </div>

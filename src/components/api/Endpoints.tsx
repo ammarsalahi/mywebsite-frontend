@@ -24,6 +24,8 @@ export const KEYWORDS=_('/contents/keywords')
 
 export const KEYWORDS_ID=(id:any)=>_(`/contents/keywords/${id}`)
 
+export const KEYWORD_ADD =_('/contents/keywords-add/')
+
 export const TECHNOLOGIES=_('/contents/technologies')
 
 export const TECHNOLOGIES_ID=(id:any)=>_(`/contents/technologies/${id}`)

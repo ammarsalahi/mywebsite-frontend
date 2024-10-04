@@ -1,5 +1,5 @@
 import { selector } from "recoil";
-import { filterAtom, imgurlAtom, menuAtom, postSearchAtom, projectSearchAtom, projfilterAtom, typeAtom, userAtom,isloadingAtom,themeAtom, pageLoadAtom } from "./Atoms";
+import { filterAtom, imgurlAtom, menuAtom, postSearchAtom, projectSearchAtom, projfilterAtom, typeAtom, userAtom,isloadingAtom,themeAtom, pageLoadAtom, tokenAtom } from "./Atoms";
 
 
 const filterSelector=selector({
@@ -120,9 +120,20 @@ const pageLoadSelector=selector({
         set(pageLoadAtom,newValue)
     }
 })
+
+const tokenSelector=selector({
+    key:"token-selector",
+    get:({get})=>{
+        const value=get(tokenAtom)
+        return value
+    },
+    set:({set},newValue:any)=>{
+        set(tokenAtom,newValue)
+    }
+})
 export {
     filterSelector,postSearchSelector,projectSearchSelector,
     menuSelector,imgurlSelector,projfilterSelector,
     typeSelector,userSelector,islodingselector,themeSelector,
-    pageLoadSelector
+    pageLoadSelector,tokenSelector
 }

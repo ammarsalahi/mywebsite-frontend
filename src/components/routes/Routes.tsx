@@ -13,6 +13,8 @@ import Keywords from '../pages/Keywords'
 import Search from '../pages/Search'
 import Signin from '../pages/Signin'
 import AddEditPost from '../pages/AddEditPost'
+import AddEditProject from '../pages/AddEditProject'
+import PrivateRouteContainer from './PrivateRouteContainer'
 
 export default function Routes() {
     const pages=createBrowserRouter([
@@ -27,15 +29,15 @@ export default function Routes() {
         },
         {
           path:'/posts',
-          element:<RouteContainer> <Posts/></RouteContainer>
+          element:<RouteContainer><Posts/></RouteContainer>
         },
         {
           path:'/posts/add',
-          element:<AddEditPost/>
+          element:<PrivateRouteContainer><AddEditPost/></PrivateRouteContainer>
         },
         {
           path:'/posts/edit/:id',
-          element:<AddEditPost/>
+          element:<PrivateRouteContainer><AddEditPost/></PrivateRouteContainer>
         },
         {
           path:'/projects',
@@ -45,9 +47,14 @@ export default function Routes() {
           path:'/posts/:id',
           element:<RouteContainer><PostDetail/></RouteContainer>
         },
+
         {
           path:'/projects/:id',
           element:<RouteContainer><ProjectDetail/></RouteContainer>
+        },
+        {
+          path:"/projects/add",
+          element:<AddEditProject/>
         },
         {
           path:'/about',

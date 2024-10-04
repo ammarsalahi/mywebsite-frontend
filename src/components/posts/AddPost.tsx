@@ -1,10 +1,15 @@
 import { Formik } from 'formik'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { FaCheck, FaPlus } from 'react-icons/fa6'
 import {  PiCameraPlusFill, PiNewspaperFill } from 'react-icons/pi'
-import bgs from "../../assets/bgs.jpg"
+import FroalaEditorComponent from 'react-froala-wysiwyg';
+import { Api } from '../api/Index';
+import { CATEGORIES, KEYWORD_ADD, KEYWORDS, KEYWORDS_ID, POSTS } from '../api/Endpoints';
+import Select, { StylesConfig } from 'react-select';
 
-interface formErros{
+
+
+interface formErrors{
     title?:string
     header?:string 
     image?:string
@@ -12,11 +17,91 @@ interface formErros{
     content?:string
 }
 
+interface Keys{
+    id:number 
+    name:string
+}
+const editorConfig = {
+    toolbarButtons: [
+      'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|',
+      'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|',
+      'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-',
+      'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', '|',
+      'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|',
+      'print', 'help', 'html', '|', 'undo', 'redo'
+    ],
+    heightMin:300,
+    placeholderText:"متن پست",
+    quickInsertTags: []
+  };
+
+
+interface Option {
+    value: string;
+    label: string;
+}
+
+
+
+  const customStyles: StylesConfig<Option> = {
+        control: (provided:any) => ({
+            ...provided,
+            borderColor: 'transparent',
+            boxShadow: 'none', 
+            padding:'4px',
+            '&:hover': {
+                borderColor: 'transparent',
+            },
+        }),
+        menu: (provided) => ({
+            ...provided,
+            zIndex: 9999,
+            maxHeight:150,
+            minHeight:100,
+            overflowY:'scroll',
+            width:'96%'
+        }),
+        option: (provided, state) => ({
+            ...provided,
+            backgroundColor: state.isSelected ? 'rgba(255, 255, 255, 0.1)' : 'transparent', // Selected background
+            color: state.isFocused ? 'black' : 'black', 
+            padding: 10,
+        }),
+    };
+
 export default function AddPost() {
     const [file, setfile] = useState<File|null>(null);
     const [image,setImage]=useState<string|null>(null);
-    const [content,setContent]=useState<string>("");
+    const [keys,setKeys]=useState<Keys[]|null>(null);
 
+    const [keyname,setKeyname] = useState<string>("")
+    const [options,setOptions] =useState<Option[]>([])
+
+
+
+    const getCategories=async()=>{
+        try{
+            const response = await Api.get(CATEGORIES);
+            const data = response.data.map((category:{id:number,name:string})=>({
+                value:category.id,
+                label:category.name
+            }))
+            setOptions(data)
+        }catch(error){
+            //error
+        }
+            
+    }
+
+    useEffect(() => {
+      getCategories()
+    }, [])
+    
+
+
+    const handleKeynameChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
+        setKeyname(e.target.value)
+    }
 
     const imgRef=useRef<HTMLInputElement|null>(null);
 
@@ -27,6 +112,7 @@ export default function AddPost() {
         setfile(selectedFile||null);
         if (selectedFile && selectedFile.type.startsWith('image/')) {
             const filePreview = URL.createObjectURL(selectedFile);
+            console.log(selectedFile)
             setImage(filePreview);  
         } else {
             setImage(null);  
@@ -35,20 +121,62 @@ export default function AddPost() {
     const handleOpenImage=()=>{
         imgRef.current?.click()
     }
+
+// Function to append new ID after filtering
+    const addKey = (newKey: Keys) => {
+            setKeys((prevKeys) => {
+                if (prevKeys === null) {
+                    return [newKey];
+                }
+                const exists = prevKeys.some((key) => key.id === newKey.id);
+                if (exists) {
+                    return prevKeys;
+                }
+                return [...prevKeys, newKey];
+            });
+    };
+
+    const deleteKey = (keyId: number) => {
+        setKeys((prevKeys) => {
+            if (prevKeys === null) {
+                return prevKeys; // No keys to delete
+            }
+            // Filter out the key with the matching id
+            return prevKeys.filter((key) => key.id !== keyId);
+        });
+    };
+
+    const addKeyword=()=>{
+        Api.post(KEYWORD_ADD,{name:keyname}).then((res)=>{
+            addKey(res.data)
+            setKeyname("")
+        }).catch((err)=>{
+            console.log(err)
+        })
+    }
+    const deleteKeyword=(id:number)=>()=>{
+        Api.delete(KEYWORDS_ID(id)).then((res)=>{
+            deleteKey(id)
+        });
+    }
+
+
+  
   return (
     <div className='px-32 py-16'>
-        <div className="card border rounded-xl">
+        <div className="card-dark">
           <div className="card-body py-10 px-20">
             <Formik
                 initialValues={{
                     title:"",
                     header:"",
                     image:"",
+                    content:"",
                     is_active:false,
                     category:"",
                 }}
                 validate={(values)=>{
-                    let errors:formErros={}
+                    let errors:formErrors={}
                     if(!values.title){
                         errors.title="عنوان نمی تواند خالی باشد!"
                     }
@@ -58,7 +186,7 @@ export default function AddPost() {
                     if(image==null){
                         errors.image="نصویر نمی تواند خالی باشد!"
                     }
-                    if(content==""){
+                    if(!values.content){
                         errors.content="متن نمی تواند خالی باشد!"
                     }
                     if(!values.category){
@@ -68,10 +196,25 @@ export default function AddPost() {
                     
                 }}
                 onSubmit={(values)=>{
+                    const formdata=new FormData()
+                    formdata.append('title',values.title)
+                    formdata.append('header',values.header)
+                    if(file){
+                        formdata.append('header_image',file)
+                    }
+                    formdata.append("text",values.content)
+                    formdata.append('is_active',String(values.is_active))
+                    formdata.append('category',values.category)
+                    keys?.forEach((key:Keys,idx:number)=>{
+                        formdata.append('keywords',String(key.id))
+                    })
 
+                    Api.post(POSTS,formdata).then((res)=>{
+                        console.log(res.data)
+                    })
                 }}
             >
-                {({values,handleSubmit,handleChange,errors,touched})=>(
+                {({values,handleSubmit,handleChange,errors,setFieldValue,touched})=>(
                     <form onSubmit={handleSubmit}>
                             <div className="flex justify-center">
                                 <div className="flex gap-2">
@@ -104,9 +247,9 @@ export default function AddPost() {
                                 <button
                                     onClick={handleOpenImage}
                                     type='button'
-                                    className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 hover:bg-opacity-[85%] text-white text-xl font-bold py-2 px-4 rounded-xl"
+                                    className="absolute inset-0 flex gap-2 items-center justify-center bg-black bg-opacity-25 hover:bg-opacity-[80%] text-white text-xl font-bold py-2 px-4 rounded-xl"
                                 >
-                                 <PiCameraPlusFill className='text-xl'/>
+                                 <PiCameraPlusFill className='text-2xl'/>
                                  تغییر تصویر
                                 </button>
                               </div>  
@@ -143,37 +286,68 @@ export default function AddPost() {
                             <div className="mb-6">
                                 <div className="label">
                                     <span className="label-text-alt text-base">متن پست را وارد کنید</span>
-                                </div>
-                                <textarea 
-                                    className="textarea textarea-bordered w-full rounded-2xl" rows={7}
+                                </div> 
+                                <FroalaEditorComponent  tag="textarea" 
+                                    config={editorConfig}
+                                    model={values.content}
+                                    onModelChange={(model:string)=>setFieldValue('content',model)}
                                 />
-                               {content=="" &&<div className="label">
-                                    <span className="label-text-alt text-red-600 text-base">{errors.title?.toString()}</span>
+                               
+                               {errors.content &&<div className="label">
+                                    <span className="label-text-alt text-red-600 text-base">{errors.content?.toString()}</span>
                                 </div>}
                             </div>
-                            <div className="mb-10">
+                            <div className="mb-16">
                                 
                                 <div className="md:flex gap-5">
                                     <div className='w-full'>
                                         <div className="label">
                                             <span className="label-text-alt text-base">کلمات کلیدی را اضافه کنید</span>
                                         </div>
-                                        <label className="input input-bordered flex items-center rounded-2xl w-full gap-2 mb-6">
-                                            <input type="text" className="grow"  />
-                                            <button className='btn bg-green-300  btn-sm'>
-                                            <FaPlus/>
-                                            افزودن
-                                            </button>
+                                        <label className="input input-bordered flex items-center rounded-2xl w-full gap-2 mb-4">
+                                            <input type="text" className="grow"
+                                              value={keyname} 
+                                              onChange={handleKeynameChange}  
+                                             />
+                                            {keyname.length > 0 && 
+                                                <button 
+                                                    className='btn btn-ghost  btn-sm'
+                                                    type='button'
+                                                    onClick={addKeyword}
+                                                >
+                                                  <FaPlus/>
+                                                  افزودن
+                                                </button>
+                                            }
                                         </label>
+                                        <div className='flex flex-wrap gap-3'>
+                                        {keys?.map((key:Keys,idx:number)=>(
+                                            <button 
+                                                key={idx} type="button"
+                                                onClick={deleteKeyword(key.id)}
+                                                className='btn btn-success hover:btn-error hover:text-white btn-sm w-max-xs rounded-full text-white'>
+                                                # {key.name}
+                                            </button>
+                                        ))}
+                                        </div>
                                     </div>
                                     <div className='w-full'>
                                         <div className="label">
                                             <span className="label-text-alt text-base">دسته‌بندی را انتخاب کنید</span>
                                         </div>
-                                        <label className="input input-bordered flex items-center rounded-2xl w-full gap-2 mb-6">
-                                            <input type="text" className="grow"/>
+                                        <Select
+                                            isClearable
+                                            options={options}
+                                            styles={customStyles}
+                                            className="input input-bordered rounded-xl"
+                                            placeholder="نام دسته‌بندی"
+                                            value={options.find(option => option.value === values.category) || null}
+                                            onChange={(selectedOption:any) => {
+                                                setFieldValue('category', selectedOption ? selectedOption.value : '');
+                                            }}
+                                        />
+                                        
                                     
-                                        </label>
                                     </div>    
                             </div>
                             

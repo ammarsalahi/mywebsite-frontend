@@ -100,3 +100,10 @@
   @apply  flex justify-center py-2  bg-base-200 font-bold border-2  rounded-full hover:bg-blue-500 hover:text-white hover:border-blue-500;
   
 }
+
+.card-dark{
+  @apply card border border-gray-600 rounded-xl
+}
+.card-light{
+  @apply card border rounded-xl
+}

@@ -4,7 +4,7 @@ import { recoilPersist } from "recoil-persist";
 const { persistAtom } = recoilPersist({
     key:'recoil-persist',
     storage:localStorage,
-    converter:JSON
+    // converter:JSON
 })
 
 
@@ -75,8 +75,16 @@ const pageLoadAtom=atom({
     key:'page-atom',
     default:false
 })
+
+const tokenAtom =atom({
+    key:'token-atom',
+    default:"",
+    effects_UNSTABLE: [persistAtom],
+})
+
 export {
     filterAtom,projectSearchAtom,postSearchAtom,
     projfilterAtom,menuAtom,imgurlAtom,typeAtom,
-    userAtom,isloadingAtom,themeAtom,pageLoadAtom
+    userAtom,isloadingAtom,themeAtom,pageLoadAtom,
+    tokenAtom,
 }

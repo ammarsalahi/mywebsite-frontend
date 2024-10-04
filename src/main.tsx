@@ -7,6 +7,8 @@ import './components/styles/list.css';
 import './components/styles/detail.css'
 import './components/styles/about.css'
 import './components/styles/carousel.css'
+import 'froala-editor/css/froala_editor.pkgd.min.css';
+import 'froala-editor/js/plugins.pkgd.min.js';
 
 
 import { RecoilRoot } from 'recoil'

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import { FaCheck, FaPlus } from 'react-icons/fa6'
 import { PiCameraPlus, PiCameraPlusFill, PiNewspaperFill } from 'react-icons/pi'
@@ -8,6 +8,8 @@ import AddPost from '../posts/AddPost'
 
 export default function AddEditPost() {
   let {id}:any=useParams()
+
+  
   return (
     <div>
       {id?
