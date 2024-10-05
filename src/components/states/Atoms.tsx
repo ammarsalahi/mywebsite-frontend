@@ -78,7 +78,10 @@ const pageLoadAtom=atom({
 
 const tokenAtom =atom({
     key:'token-atom',
-    default:"",
+    default:{
+        access:"",
+        refresh:""
+    },
     effects_UNSTABLE: [persistAtom],
 })
 

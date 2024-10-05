@@ -7,7 +7,7 @@ import { menuAtom} from '../states/Atoms'
 import { AiOutlineMenu } from "react-icons/ai";
 import PostFilter from '../posts/PostFilter';
 import ProjectFilters from '../projects/ProjectFilters';
-import { imgurlSelector } from '../states/Selectors';
+import { imgurlSelector, tokenSelector } from '../states/Selectors';
 import logoblack from '../../assets/logo-dark.png'
 import logolight from '../../assets/logo-light.png'
 import { themeSelector } from '../states/Selectors';
@@ -18,6 +18,7 @@ import NavDropDownMenu from './NavDropDownMenu';
 import SearchBar from './SearchBar';
 import { motion } from 'framer-motion'
 import { FaUser } from 'react-icons/fa6'
+import UserMenu from './UserMenu'
 
 export default function Navbar() {
 
@@ -27,6 +28,7 @@ export default function Navbar() {
   const imgurl=useRecoilValue(imgurlSelector)
   const [theme,setTheme]=useRecoilState<any>(themeSelector)
   const [search,setSearch]=useState("");
+  const token = useRecoilValue(tokenSelector)
 
 
   const handleMenu=(e:React.MouseEvent<HTMLElement>)=>{
@@ -127,11 +129,7 @@ export default function Navbar() {
           >
             {theme=="light"?<AiFillSun fontSize={20}/>: <AiFillMoon fontSize={20} color="white"/>}
          </button>
-         <button
-          className="btn btn-ghost btn-sm"
-          >
-            <FaUser/>
-         </button>
+          <UserMenu path={location.pathname} theme={theme}/>
         </div>
         </div>
       </nav>

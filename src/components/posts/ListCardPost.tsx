@@ -42,6 +42,7 @@ export default function ListCardPost() {
                       <span>12</span>
                     </div>
                 </div>
+                
             </div>
         </div>
             

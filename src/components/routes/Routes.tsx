@@ -15,6 +15,7 @@ import Signin from '../pages/Signin'
 import AddEditPost from '../pages/AddEditPost'
 import AddEditProject from '../pages/AddEditProject'
 import PrivateRouteContainer from './PrivateRouteContainer'
+import Settings from '../pages/Settings'
 
 export default function Routes() {
     const pages=createBrowserRouter([
@@ -26,6 +27,10 @@ export default function Routes() {
         {
           path:"/signin",
           element:<Signin/>
+        },
+        {
+          path:'/settings',
+          element:<PrivateRouteContainer><Settings/></PrivateRouteContainer>
         },
         {
           path:'/posts',

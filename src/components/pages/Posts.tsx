@@ -69,7 +69,9 @@ export default function Posts() {
             <>
             {filters.list==false? <div className='post-card'>
               {posts?.map((item:any,idx:number)=>(
-                  <VerticalCard post={item} key={idx}/>
+                 <div className="py-4" key={idx}>
+                  <VerticalCard post={item} />
+                 </div>
               ))}
             </div>
             :

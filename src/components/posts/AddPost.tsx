@@ -4,15 +4,19 @@ import { FaCheck, FaPlus } from 'react-icons/fa6'
 import {  PiCameraPlusFill, PiNewspaperFill } from 'react-icons/pi'
 import FroalaEditorComponent from 'react-froala-wysiwyg';
 import { Api } from '../api/Index';
-import { CATEGORIES, KEYWORD_ADD, KEYWORDS, KEYWORDS_ID, POSTS } from '../api/Endpoints';
+import { CATEGORIES, KEYWORD_ADD, KEYWORDS_ID, POSTS } from '../api/Endpoints';
 import Select, { StylesConfig } from 'react-select';
+import { AuthConfigHeaderFile } from '../api/Configs';
+import { useRecoilValue } from 'recoil';
+import { tokenSelector } from '../states/Selectors';
+import { message } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 
 
 interface formErrors{
     title?:string
     header?:string 
-    image?:string
     category?:string
     content?:string
 }
@@ -68,16 +72,27 @@ interface Option {
             padding: 10,
         }),
     };
+ 
+interface postprops{
+    theme:string
+}    
 
-export default function AddPost() {
+export default function AddPost(props:postprops) {
     const [file, setfile] = useState<File|null>(null);
     const [image,setImage]=useState<string|null>(null);
     const [keys,setKeys]=useState<Keys[]|null>(null);
 
     const [keyname,setKeyname] = useState<string>("")
-    const [options,setOptions] =useState<Option[]>([])
+    const [options,setOptions] =useState<Option[]>([]);
+    const token=useRecoilValue(tokenSelector)
 
+    let navigate = useNavigate();
 
+    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+    message.config({
+        top: document.documentElement.clientHeight - 100,
+    });
 
     const getCategories=async()=>{
         try{
@@ -163,14 +178,13 @@ export default function AddPost() {
 
   
   return (
-    <div className='px-32 py-16'>
-        <div className="card-dark">
+    <div>
+        <div className={props.theme=="dark"?"card-dark":"card-light"}>
           <div className="card-body py-10 px-20">
             <Formik
                 initialValues={{
                     title:"",
                     header:"",
-                    image:"",
                     content:"",
                     is_active:false,
                     category:"",
@@ -183,9 +197,9 @@ export default function AddPost() {
                     if(!values.header){
                         errors.header="چکیده نمی تواند خالی باشد!"
                     }
-                    if(image==null){
-                        errors.image="نصویر نمی تواند خالی باشد!"
-                    }
+                    // if(image==null){
+                    //     errors.image="نصویر نمی تواند خالی باشد!"
+                    // }
                     if(!values.content){
                         errors.content="متن نمی تواند خالی باشد!"
                     }
@@ -205,12 +219,21 @@ export default function AddPost() {
                     formdata.append("text",values.content)
                     formdata.append('is_active',String(values.is_active))
                     formdata.append('category',values.category)
-                    keys?.forEach((key:Keys,idx:number)=>{
+                    keys?.forEach((key:Keys)=>{
                         formdata.append('keywords',String(key.id))
                     })
+                    // keys?.forEach((key: Keys, idx: number) => {
+                    //     formdata.append(`keywords[${idx}]`, String(key.id));
+                    // });
 
-                    Api.post(POSTS,formdata).then((res)=>{
-                        console.log(res.data)
+                    console.log(formdata)
+                    Api.post(POSTS,formdata,{headers:AuthConfigHeaderFile(token.access)}).then((res)=>{
+                        message.success("با موفقیت پست ایجاد شد");
+                        sleep(3000)
+                        navigate("/posts")
+                    }).catch((err)=>{
+                        console.log(err)
+                        message.error("متاسفانه مشکلی پیش آمده!")
                     })
                 }}
             >
@@ -265,8 +288,8 @@ export default function AddPost() {
                                         افزودن تصویر
                                     </button>
                             </div>}
-                            {errors?.image &&<div className="label">
-                                    <span className="label-text-alt text-red-600 text-base">{errors.image?.toString()}</span>
+                            {image==null &&<div className="label">
+                                    <span className="label-text-alt text-red-600 text-base"></span>
                                 </div>}
                             </div>
                             <div className="mb-5">
@@ -276,7 +299,7 @@ export default function AddPost() {
 
                                 </div>
                                 <textarea 
-                                    value={values.header} name="header"
+                                    value={values.header} name="header" onChange={handleChange}
                                     className="textarea textarea-bordered w-full rounded-2xl" rows={2}
                                 />
                                 {errors.header &&<div className="label">
@@ -325,7 +348,7 @@ export default function AddPost() {
                                             <button 
                                                 key={idx} type="button"
                                                 onClick={deleteKeyword(key.id)}
-                                                className='btn btn-success hover:btn-error hover:text-white btn-sm w-max-xs rounded-full text-white'>
+                                                className='btn bg-blue-600 hover:btn-error hover:text-white btn-sm w-max-xs rounded-full text-white'>
                                                 # {key.name}
                                             </button>
                                         ))}

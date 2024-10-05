@@ -2,13 +2,17 @@ import React from 'react'
 import { PiChat, PiClock, PiEye } from 'react-icons/pi'
 import { BASE_URL ,showImage} from '../api/Index'
 import { Link } from 'react-router-dom'
-import { BiBookReader } from "react-icons/bi";
+import { BiBookReader, BiPencil } from "react-icons/bi";
+import { FaTrash } from 'react-icons/fa6';
+import { useRecoilValue } from 'recoil';
+import { tokenSelector } from '../states/Selectors';
 
 interface postProps{
   post:any
 }
 export default function VerticalCard(props:postProps) {
- 
+  
+  const token=useRecoilValue(tokenSelector)
   return (
     <Link to={`/posts/${props.post?.post_id}`}>
      <div className="card card-compact bg-base-100 w-76 shadow-xl card-move-up">
@@ -31,6 +35,16 @@ export default function VerticalCard(props:postProps) {
             </div>
             </div>
         </div>
+        {token?.access.length>0 &&<div className="card-actions flex justify-between pb-2 px-5">
+          <button className='btn btn-ghost btn-sm text-base text-blue-500 '>
+            ویرایش                  
+            <BiPencil className='text-xl'/>
+          </button>
+          <button className='btn btn-ghost btn-sm text-base text-red-500 '>
+            حذف
+                  <FaTrash className='text-xl'/>
+          </button>
+        </div>}
       </div>
       </Link>
   )

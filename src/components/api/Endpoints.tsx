@@ -4,13 +4,15 @@ const _=(url:string)=>{
     return `${BASE_URL}${url}`
 }
 
-export const POSTS=_('/contents/posts')
+export const POSTS=_('/contents/posts/')
 
-export const POSTS_ID=(post_id:any)=>_(`/contents/posts/${post_id}`)
+export const POSTS_ID=(post_id:any)=>_(`/contents/posts/${post_id}/`)
 
-export const POSTS_DETAIL_ID=(post_id:any)=>_(`/contents/post-detail/${post_id}`)
+export const POSTS_DETAIL_ID=(post_id:any)=>_(`/contents/post-detail/${post_id}/`)
 
-export const PROJECTS=_('/contents/projects')
+// export const POST_ADD = _('/contents/posts-add/')
+
+export const PROJECTS=_('/contents/projects/')
 
 export const PROJECTS_ID=(project_id:any)=>_(`/contents/projects/${project_id}`)
 
@@ -61,4 +63,6 @@ export const COOPERATIONS=_('/accounts/cooperations/');
 
 export const FOOTER=_('/contents/footer/');
 
-export const SEARCH=(q:any)=>_(`/contents/search/?q=${q}`)
+export const SEARCH=(q:any)=>_(`/contents/search/?q=${q}`);
+
+export const SIGNIN=_('/accounts/signin/');
