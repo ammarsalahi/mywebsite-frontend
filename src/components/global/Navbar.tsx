@@ -67,10 +67,10 @@ export default function Navbar() {
         :
         location.pathname=='/'?"nav-dark":'nav-dark-fixed'
       }  style={{zIndex:9999}}>
-      <nav className="navbar items-center pb-3">
+      <nav className="navbar items-center ">
         <div className='navbar-start'>
 
-            <div className="logo-menu pt-4">
+            <div className="logo-menu pt-1">
                   <Link to='/'>
                   <img src={location.pathname=='/'||theme=="dark"?logolight:logoblack} width={170} />
                   </Link>
@@ -96,7 +96,7 @@ export default function Navbar() {
                 {ismenu?<AiOutlineClose fontSize={30}/>:<AiOutlineMenu fontSize={35}/>}
               </button>
          </div>
-      <div className="hidden md:flex gap-1 pt-5">
+      <div className="hidden md:flex gap-1 pt-2">
         <div className='drop-menus'>
             <NavDropDownMenu path={location.pathname} theme={theme}/>
         </div>

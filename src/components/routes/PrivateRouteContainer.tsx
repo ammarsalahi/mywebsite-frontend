@@ -9,12 +9,13 @@ type props={
 }
 export default function PrivateRouteContainer({children}:props) {
   const token=useRecoilValue(tokenSelector)
+  let toke="ok"
   return (
     <div>
-      {token?.access.length>0? 
+      {toke.length>0? 
         <div>
           <Navbar/>
-          <div className="pt-32 pb-14 px-32">
+          <div className="pt-24 pb-10 px-20">
             {children}
           </div>
         </div>

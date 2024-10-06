@@ -76,7 +76,7 @@ export default function Signin() {
                 {({handleSubmit,values,handleChange,errors,touched})=>(
                       <form onSubmit={handleSubmit}>
                         <div className="mb-6">
-                          <label className="input input-bordered flex items-center rounded-full gap-2">
+                          <label className="input input-bordered flex items-center rounded-2xl gap-2">
                             <FaUser className='text-gray-500'/>
                               <input 
                                 type="text" className="grow" 
@@ -89,7 +89,7 @@ export default function Signin() {
                           </div>}
                         </div>
                           <div className="mb-6">
-                            <label className="input input-bordered flex items-center rounded-full gap-2">
+                            <label className="input input-bordered flex items-center rounded-2xl gap-2">
                               <FaLock className='text-gray-500'/>
                               <input 
                                 type="password" className="grow" placeholder="گذرواژه" 
@@ -102,7 +102,7 @@ export default function Signin() {
                           </div>}
                           </div>
                          
-                          <button type='submit' className='btn-blue text-lg font-semibold'>
+                          <button type='submit' className='btn-blue rounded-2xl text-lg font-semibold'>
                               تایید
                               <FaCheck/>
                           </button>

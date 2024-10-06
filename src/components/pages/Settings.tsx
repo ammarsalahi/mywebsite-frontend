@@ -1,38 +1,36 @@
-import React from 'react'
-import bgs from '../../assets/bgs.jpg'
+import React, { useEffect } from 'react'
+import Profile from '../settings/Profile';
+import PasswordChange from '../settings/PasswordChange';
+import { useRecoilValue } from 'recoil';
+import { settingsSelector } from '../states/Selectors';
+import SettingNav from '../settings/SettingNav';
+import Otp from '../settings/Otp';
+
+
 export default function Settings() {
+
+    const settings=useRecoilValue(settingsSelector)  
   return (
     <div>
-        <div className="card-light">
-            <div className="card-body py-5 md:px-20">
-                <form>
-                  <div className="relative">
-                    <div className="flex justify-center pb-10">
-                    <img src={bgs} alt="" className='rounded-[50%] w-[230px] h-[230px]'/>
+              <div className="grid grid-cols-4 gap-4">
+                  <div  className='relative'>
+                    <div className="sticky top-24">
+                      <SettingNav/>
                     </div>
+                   
 
                   </div>
-                 <div className='grid md:grid-cols-2 gap-x-10 gap-y-4'>
-                    <div className="mb-5">
-                      <input type="text" className="input input-bordered w-full" />
+                <div className="col-span-3 px-10 py-0">
+                  <div className="card-light">
+                    <div className="card-body">
+                        {settings=="profile" &&<Profile/>}
+                        {settings=="password" &&<PasswordChange/>}
+                        {settings=="otp" && <Otp/>}
                     </div>
-                    <div className="mb-5">
-                      <input type="text" className="input input-bordered w-full" />
-                    </div>
-                    <div className="mb-5">
-                      <input type="text" className="input input-bordered w-full" />
-                    </div>
-                    <div className="mb-5">
-                      <input type="text" className="input input-bordered w-full" />
-                    </div>
-                    <div className="mb-5">
-                      <input type="text" className="input input-bordered w-full" />
-                    </div>
-                 </div>
-                  
-                </form>
-            </div>
-        </div>
-    </div>
+                  </div>
+                 
+                </div>
+          </div> 
+      </div>
   )
 }

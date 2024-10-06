@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 export default function NavMenu() {
   return (
       <div>
-        <ul className='list-none gap-5 pt-5 flex'>
+        <ul className='list-none gap-5 pt-2 flex'>
           <li className='nav-menu'>
             <Link to="/posts" className='flex items-center gap-2'>
             <PiNewspaperFill fontSize={20} />

@@ -50,7 +50,7 @@ export default function MenuList() {
       </label>
       }
       <ul className={theme=='dark'||location.pathname=="/"?'list-none text-white':'list-none'}>
-          <li className="px-4 py-5 text-xl" onClick={handleMenu}>
+          <li className="px-4 py-5 text-lg" onClick={handleMenu}>
             <Link to="/posts" className='flex items-center gap-2' >
             <PiNewspaperFill fontSize={30}/>
             پست‌ها</Link>

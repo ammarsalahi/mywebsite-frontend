@@ -85,9 +85,15 @@ const tokenAtom =atom({
     effects_UNSTABLE: [persistAtom],
 })
 
+const settingsAtom=atom({
+    key:'setting-atom',
+    default:"profile",
+    effects_UNSTABLE: [persistAtom],
+})
+
 export {
     filterAtom,projectSearchAtom,postSearchAtom,
     projfilterAtom,menuAtom,imgurlAtom,typeAtom,
     userAtom,isloadingAtom,themeAtom,pageLoadAtom,
-    tokenAtom,
+    tokenAtom,settingsAtom
 }
