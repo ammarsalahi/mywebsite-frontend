@@ -25,6 +25,7 @@ interface Keys{
     id:number 
     name:string
 }
+
 const editorConfig = {
     toolbarButtons: [
       'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|',
@@ -166,7 +167,8 @@ export default function AddPost(props:postprops) {
             addKey(res.data)
             setKeyname("")
         }).catch((err)=>{
-            console.log(err)
+            console.log(err);
+            message.error("مشکلی پیش آمد!")
         })
     }
     const deleteKeyword=(id:number)=>()=>{

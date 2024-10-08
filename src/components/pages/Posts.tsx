@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Button} from 'antd'
+import { Button, message} from 'antd'
 import VerticalCard from '../posts/VerticalCard'
 import { useNavigate } from 'react-router-dom'
 import Footer from '../global/Footer'
 import { Api } from '../api/Index'
-import { CATEGORIES, POST_SEARCH_FILTER } from '../api/Endpoints'
+import { CATEGORIES, POST_SEARCH_FILTER, POSTS_ID } from '../api/Endpoints'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { filterSelector, pageLoadSelector, postSearchSelector } from '../states/Selectors'
 import HorizontalCard from '../posts/HorizontalCard'
@@ -38,6 +38,14 @@ export default function Posts() {
     })
   }
 
+
+  const handleDelete=(id:string)=>()=>{
+    Api.delete(POSTS_ID(id)).then((res)=>{
+      message.success("با موفقیت حذف شد")
+    }).catch((err)=>{
+      message.error("متاسفانه مشکلی پیش آمد!")
+    });
+  }
   useEffect(() => {
     getFilters()
     getCategory()
@@ -70,7 +78,7 @@ export default function Posts() {
             {filters.list==false? <div className='post-card'>
               {posts?.map((item:any,idx:number)=>(
                  <div className="py-4" key={idx}>
-                  <VerticalCard post={item} />
+                  <VerticalCard post={item}  deletePost={handleDelete(item?.post_id)}/>
                  </div>
               ))}
             </div>

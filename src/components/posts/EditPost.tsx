@@ -1,18 +1,22 @@
 import { Formik } from 'formik'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { FaCheck, FaPlus } from 'react-icons/fa6'
 import {  PiCameraPlusFill, PiNewspaperFill } from 'react-icons/pi'
 import FroalaEditorComponent from 'react-froala-wysiwyg';
 import { Api } from '../api/Index';
-import { KEYWORD_ADD, POSTS } from '../api/Endpoints';
-import Select, { Props as SelectProps, StylesConfig } from 'react-select';
+import { CATEGORIES, KEYWORD_ADD, KEYWORDS_ID, POSTS, POSTS_ID } from '../api/Endpoints';
+import Select, { StylesConfig } from 'react-select';
+import { AuthConfigHeaderFile } from '../api/Configs';
+import { useRecoilValue } from 'recoil';
+import { tokenSelector } from '../states/Selectors';
+import { message, Spin } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 
 
 interface formErrors{
     title?:string
     header?:string 
-    image?:string
     category?:string
     content?:string
 }
@@ -21,6 +25,19 @@ interface Keys{
     id:number 
     name:string
 }
+
+interface CategoryItem{
+    id:number;
+    name:string;
+}
+interface NewsItem{
+    title:string;
+    text:string;
+    header:string;
+    is_active:boolean;
+    category:CategoryItem;
+}
+
 const editorConfig = {
     toolbarButtons: [
       'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|',
@@ -41,12 +58,7 @@ interface Option {
     label: string;
 }
 
-const options: Option[] = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-     { value: 'chocolate', label: 'Chocolate' },
-];
+
 
   const customStyles: StylesConfig<Option> = {
         control: (provided:any) => ({
@@ -73,20 +85,62 @@ const options: Option[] = [
             padding: 10,
         }),
     };
+ 
+interface postprops{
+    theme:string,
+    id:string
+}    
 
-export default function EditPost() {
+export default function AddPost(props:postprops) {
+    const [news,setNews]=useState<NewsItem|null>(null);
+
     const [file, setfile] = useState<File|null>(null);
     const [image,setImage]=useState<string|null>(null);
-    const [content,setContent]=useState<string>("");
     const [keys,setKeys]=useState<Keys[]|null>(null);
 
     const [keyname,setKeyname] = useState<string>("")
+    const [options,setOptions] =useState<Option[]>([]);
 
+    const [isLoad, setIsLoad] = useState<boolean>(false);
 
+    const token=useRecoilValue(tokenSelector)
 
-    const handleContentChange=(model:string)=>{
-        setContent(model)
+    let navigate = useNavigate();
+
+    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+    message.config({
+        top: document.documentElement.clientHeight - 100,
+    });
+
+    const getCategories=async()=>{
+        try{
+            const response = await Api.get(CATEGORIES);
+            const data = response.data.map((category:{id:number,name:string})=>({
+                value:category.id,
+                label:category.name
+            }))
+            setOptions(data)
+        }catch(error){
+            //error
+        }
+            
     }
+    const getPost=async(id:string)=>{
+        await Api.get(POSTS_ID(id)).then((res)=>{
+            setNews(res.data)
+            setKeys(res.data.keywords);
+            setImage(res.data.header_image)
+            setIsLoad(true)
+        })
+    }
+
+    useEffect(() => {
+      getCategories();
+      getPost(props.id)
+    }, [props.id])
+    
+
 
     const handleKeynameChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
         setKeyname(e.target.value)
@@ -125,8 +179,16 @@ export default function EditPost() {
             });
     };
 
+    const deleteKey = (keyId: number) => {
+        setKeys((prevKeys) => {
+            if (prevKeys === null) {
+                return prevKeys;
+            }
+            return prevKeys.filter((key) => key.id !== keyId);
+        });
+    };
+
     const addKeyword=()=>{
-        
         Api.post(KEYWORD_ADD,{name:keyname}).then((res)=>{
             addKey(res.data)
             setKeyname("")
@@ -134,20 +196,27 @@ export default function EditPost() {
             console.log(err)
         })
     }
+    const deleteKeyword=(id:number)=>()=>{
+        Api.delete(KEYWORDS_ID(id)).then((res)=>{
+            deleteKey(id)
+        });
+    }
 
 
   
   return (
-    <div className='px-32 py-16'>
-        <div className="card-dark">
+    <div>
+        {
+        isLoad?
+        <div className={props.theme=="dark"?"card-dark":"card-light"}>
           <div className="card-body py-10 px-20">
             <Formik
                 initialValues={{
-                    title:"",
-                    header:"",
-                    image:"",
-                    is_active:false,
-                    category:"",
+                    title:news?.title||"",
+                    header:news?.header||"",
+                    content:news?.text||"",
+                    is_active:news?.is_active,
+                    category:news?.category.id||'',
                 }}
                 validate={(values)=>{
                     let errors:formErrors={}
@@ -157,10 +226,8 @@ export default function EditPost() {
                     if(!values.header){
                         errors.header="چکیده نمی تواند خالی باشد!"
                     }
-                    if(image==null){
-                        errors.image="نصویر نمی تواند خالی باشد!"
-                    }
-                    if(content==""){
+                  
+                    if(!values.content){
                         errors.content="متن نمی تواند خالی باشد!"
                     }
                     if(!values.category){
@@ -176,20 +243,31 @@ export default function EditPost() {
                     if(file){
                         formdata.append('header_image',file)
                     }
-                    formdata.append("text",content)
+                    formdata.append("text",values.content)
                     formdata.append('is_active',String(values.is_active))
+                    formdata.append('category',String(values.category))
+                    keys?.forEach((key:Keys)=>{
+                        formdata.append('keywords',String(key.id))
+                    })
+                    
 
-                    Api.post(POSTS,formdata).then((res)=>{
-                        console.log(res.data)
+                    console.log(formdata)
+                    Api.patch(POSTS_ID(props.id),formdata,{headers:AuthConfigHeaderFile(token.access)}).then((res)=>{
+                        message.success("با موفقیت پست ویرایش شد");
+                        sleep(3000)
+                        navigate("/posts")
+                    }).catch((err)=>{
+                        console.log(err)
+                        message.error("متاسفانه مشکلی پیش آمده!")
                     })
                 }}
             >
-                {({values,handleSubmit,handleChange,errors,touched})=>(
+                {({values,handleSubmit,handleChange,errors,setFieldValue,touched})=>(
                     <form onSubmit={handleSubmit}>
                             <div className="flex justify-center">
                                 <div className="flex gap-2">
                                 <PiNewspaperFill className='text-3xl'/>
-                                <p className="text-2xl text-center font-bold mb-10">ویرایش پست</p>
+                                <p className="text-2xl text-center font-bold mb-10">افزودن پست جدید</p>
                                 </div>
                             
                             </div>
@@ -235,8 +313,8 @@ export default function EditPost() {
                                         افزودن تصویر
                                     </button>
                             </div>}
-                            {errors?.image &&<div className="label">
-                                    <span className="label-text-alt text-red-600 text-base">{errors.image?.toString()}</span>
+                            {image==null &&<div className="label">
+                                    <span className="label-text-alt text-red-600 text-base"></span>
                                 </div>}
                             </div>
                             <div className="mb-5">
@@ -246,7 +324,7 @@ export default function EditPost() {
 
                                 </div>
                                 <textarea 
-                                    value={values.header} name="header"
+                                    value={values.header} name="header" onChange={handleChange}
                                     className="textarea textarea-bordered w-full rounded-2xl" rows={2}
                                 />
                                 {errors.header &&<div className="label">
@@ -259,14 +337,12 @@ export default function EditPost() {
                                 </div> 
                                 <FroalaEditorComponent  tag="textarea" 
                                     config={editorConfig}
-                                    model={content}
-                                    onModelChange={handleContentChange}
+                                    model={values.content}
+                                    onModelChange={(model:string)=>setFieldValue('content',model)}
                                 />
-                                {/* <textarea 
-                                    className="textarea textarea-bordered w-full rounded-2xl" rows={7}
-                                /> */}
-                               {content=="" &&<div className="label">
-                                    <span className="label-text-alt text-red-600 text-base">{errors.title?.toString()}</span>
+                               
+                               {errors.content &&<div className="label">
+                                    <span className="label-text-alt text-red-600 text-base">{errors.content?.toString()}</span>
                                 </div>}
                             </div>
                             <div className="mb-16">
@@ -296,7 +372,8 @@ export default function EditPost() {
                                         {keys?.map((key:Keys,idx:number)=>(
                                             <button 
                                                 key={idx} type="button"
-                                                className='btn btn-success hover:btn-error hover:text-white btn-sm w-max-xs rounded-full text-white'>
+                                                onClick={deleteKeyword(key.id)}
+                                                className='btn bg-blue-600 hover:btn-error hover:text-white btn-sm w-max-xs rounded-full text-white'>
                                                 # {key.name}
                                             </button>
                                         ))}
@@ -312,15 +389,13 @@ export default function EditPost() {
                                             styles={customStyles}
                                             className="input input-bordered rounded-xl"
                                             placeholder="نام دسته‌بندی"
+                                            value={options.find(option => option.value === values.category) || null}
+                                            onChange={(selectedOption:any) => {
+                                                setFieldValue('category', selectedOption ? selectedOption.value : '');
+                                            }}
                                         />
-                                        {/* <label className="input input-bordered flex items-center rounded-2xl w-full gap-2 mb-6">
-                                            <FaSearch className='text-gray-600'/>
-                                            <input type="text" className="grow"/>
-
-                                        </label> */}
-                                        <div>
-
-                                        </div>
+                                        
+                                    
                                     </div>    
                             </div>
                             
@@ -354,6 +429,11 @@ export default function EditPost() {
           
           </div>
         </div>
+        :
+        <div className="pt-32 grid place-items-center">
+               <Spin className="text-red-200"/>
+        </div>
+        }
     </div>
   )
 }

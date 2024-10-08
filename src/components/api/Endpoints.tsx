@@ -32,6 +32,10 @@ export const TECHNOLOGIES=_('/contents/technologies')
 
 export const TECHNOLOGIES_ID=(id:any)=>_(`/contents/technologies/${id}`)
 
+export const IMAGES = _('/contents/images/');
+
+export const IMAGES_ID =(id:number) =>_(`/contents/images/${id}`)
+
 export const ABOUTS=_('/accounts/abouts')
 
 export const ABOUTS_ID=(username:any)=>_(`/accounts/abouts/${username}`)

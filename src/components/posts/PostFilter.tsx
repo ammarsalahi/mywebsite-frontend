@@ -61,7 +61,7 @@ export default function PostFilter() {
                         <PiFireFill fontSize={20}/>
                         تازه‌ها
                      </button>
-                       <label className="input input-sm input-primary p-2 w-96 rounded-full  mt-2 input-bordered flex items-center gap-2">
+                       <label className="input input-sm input-bordered p-2 w-96 rounded-full  mt-2 input-bordered flex items-center gap-2">
                         <AiOutlineSearch fontSize={20}/>
                         <input 
                           type="text" className="grow" 

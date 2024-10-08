@@ -12,7 +12,13 @@ const AuthConfigHeaderFile=(token:string):{ Authorization: string ,"Content-Type
     }
 }
 
+const ConfigHeaderFile=():{ "Content-Type":string} => {
+    return {
+        "Content-Type": "multipart/form-data",
+    }
+}
 export{
     AuthConfigHeader,
-    AuthConfigHeaderFile
+    AuthConfigHeaderFile,
+    ConfigHeaderFile
 }
