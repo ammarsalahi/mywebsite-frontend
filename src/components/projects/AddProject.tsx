@@ -87,6 +87,13 @@ export default function AddProject() {
       message.error("مشکلی پیش آمد!")
   })
   }
+
+const handleAddTech=()=>{
+  const formdata = new FormData();
+  formdata.append("name","");
+  Api.post()
+
+}
   return (
     <div className='px-32 py-16'>
         <div className="card border rounded-xl">
