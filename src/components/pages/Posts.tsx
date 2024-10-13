@@ -40,9 +40,10 @@ export default function Posts() {
 
 
   const handleDelete=(id:string)=>()=>{
-    Api.delete(POSTS_ID(id)).then((res)=>{
-      message.success("با موفقیت حذف شد")
-    }).catch((err)=>{
+    Api.delete(POSTS_ID(id)).then(()=>{
+      message.success("با موفقیت حذف شد");
+      getFilters()
+    }).catch(()=>{
       message.error("متاسفانه مشکلی پیش آمد!")
     });
   }

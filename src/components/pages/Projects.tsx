@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import ProjectCard from '../projects/ProjectCard'
 import { Api } from '../api/Index'
-import { PROJECT_SEARCH_FILTER ,TECHNOLOGIES} from '../api/Endpoints'
-import { Spin } from 'antd';
+import { PROJECT_SEARCH_FILTER ,PROJECTS,PROJECTS_ID,TECHNOLOGIES} from '../api/Endpoints'
+import { message, Spin } from 'antd';
 import Footer from '../global/Footer'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { pageLoadSelector, projectSearchSelector, projfilterSelector } from '../states/Selectors'
@@ -18,6 +18,7 @@ export default function Projects() {
     const projectsearch=useRecoilValue(projectSearchSelector)
     const filters=useRecoilValue(projfilterSelector)
     const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
+
 
    
     const getFilters=async()=>{
@@ -43,6 +44,15 @@ export default function Projects() {
       }
     }, [projectsearch,filters.assort])
     
+    const handleDelete=(id:string)=>()=>{
+      Api.delete(PROJECTS_ID(id)).then(()=>{
+          message.success("با موفقیت حذف شد");
+          getFilters()
+      }).catch(()=>{
+        message.error("متاسفانه مشکلی پیش آمد!")
+      })
+    }
+
   return (
    <div>
    {isLoad?<>
@@ -59,7 +69,7 @@ export default function Projects() {
         <div>
             {projects.length>0 ? <div className='post-card'>
                {projects?.map((item:any,idx:number)=>(
-                   <ProjectCard project={item} key={idx}/>
+                   <ProjectCard project={item} key={idx} deleteProject={handleDelete(item.id)}/>
                ))}
             </div>
             :

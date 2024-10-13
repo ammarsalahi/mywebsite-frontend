@@ -229,7 +229,7 @@ const handleDeleteTech=(id:number)=>()=>{
            <div className="flex justify-center mb-10">
              <div className="flex gap-2 items-center">
              <FaHammer className='text-3xl'/>
-             <p className="text-2xl text-center font-bold">افزودن پروژه جدید</p>
+             <p className="text-2xl text-center font-bold">ویرایش پروژه</p>
              </div>
             
            </div>
