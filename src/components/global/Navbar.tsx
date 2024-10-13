@@ -129,7 +129,7 @@ export default function Navbar() {
           >
             {theme=="light"?<AiFillSun fontSize={20}/>: <AiFillMoon fontSize={20} color="white"/>}
          </button>
-          <UserMenu path={location.pathname} theme={theme}/>
+         {token.access?.length>0?<UserMenu path={location.pathname} theme={theme}/>:null}
         </div>
         </div>
       </nav>

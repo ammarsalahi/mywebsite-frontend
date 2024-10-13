@@ -30,7 +30,7 @@ interface CategoryItem{
     id:number;
     name:string;
 }
-interface NewsItem{
+interface PostItem{
     title:string;
     text:string;
     header:string;
@@ -92,7 +92,7 @@ interface postprops{
 }    
 
 export default function AddPost(props:postprops) {
-    const [news,setNews]=useState<NewsItem|null>(null);
+    const [news,setNews]=useState<PostItem|null>(null);
 
     const [file, setfile] = useState<File|null>(null);
     const [image,setImage]=useState<string|null>(null);

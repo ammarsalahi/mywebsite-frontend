@@ -4,15 +4,19 @@ import { PiCameraPlusFill } from 'react-icons/pi'
 import { useParams } from 'react-router-dom'
 import EditProject from '../projects/EditProject'
 import AddProject from '../projects/AddProject'
+import { useRecoilValue } from 'recoil'
+import { themeSelector } from '../states/Selectors'
 
 export default function AddEditProject() {
-  let {id}:any=useParams()
+  let {id}:any=useParams();
+  const theme=useRecoilValue(themeSelector)
+
   return (
     <div>
         {id?
-          <EditProject id={id}/>
+          <EditProject id={id} theme={theme}/>
         :
-        <AddProject/>
+        <AddProject theme={theme}/>
         }
     </div>
   )

@@ -128,7 +128,6 @@ export default function AddPost(props:postprops) {
         setfile(selectedFile||null);
         if (selectedFile && selectedFile.type.startsWith('image/')) {
             const filePreview = URL.createObjectURL(selectedFile);
-            console.log(selectedFile)
             setImage(filePreview);  
         } else {
             setImage(null);  
@@ -228,7 +227,6 @@ export default function AddPost(props:postprops) {
                     //     formdata.append(`keywords[${idx}]`, String(key.id));
                     // });
 
-                    console.log(formdata)
                     Api.post(POSTS,formdata,{headers:AuthConfigHeaderFile(token.access)}).then((res)=>{
                         message.success("با موفقیت پست ایجاد شد");
                         sleep(3000)

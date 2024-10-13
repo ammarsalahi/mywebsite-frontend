@@ -46,7 +46,7 @@ export default function VerticalCard(props:postProps) {
             </div>
         </div>
         </Link>
-        {token?.access.length>0 &&<div className="card-actions flex justify-between pb-2 px-5">
+        {token.access?.length>0 &&<div className="card-actions flex justify-between pb-2 px-5">
           <button 
             className='btn btn-ghost btn-sm text-base text-blue-500'
             onClick={handleEdit(props.post?.post_id)}

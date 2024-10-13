@@ -22,29 +22,29 @@ export const CATEGORIES=_('/contents/categories')
 
 export const CATEGORIES_ID=(name:any)=>_(`/contents/categories/${name}`)
 
-export const KEYWORDS=_('/contents/keywords')
+export const KEYWORDS=_('/contents/keywords/')
 
-export const KEYWORDS_ID=(id:any)=>_(`/contents/keywords/${id}`)
+export const KEYWORDS_ID=(id:any)=>_(`/contents/keywords/${id}/`)
 
 export const KEYWORD_ADD =_('/contents/keywords-add/')
 
-export const TECHNOLOGIES=_('/contents/technologies')
+export const TECHNOLOGIES=_('/contents/technologies/')
 
-export const TECHNOLOGIES_ID=(id:any)=>_(`/contents/technologies/${id}`)
+export const TECHNOLOGIES_ID=(id:any)=>_(`/contents/technologies/${id}/`)
 
 export const IMAGES = _('/contents/images/');
 
-export const IMAGES_ID =(id:number) =>_(`/contents/images/${id}`)
+export const IMAGES_ID =(id:number) =>_(`/contents/images/${id}/`)
 
 export const ABOUTS=_('/accounts/abouts')
 
-export const ABOUTS_ID=(username:any)=>_(`/accounts/abouts/${username}`)
+export const ABOUTS_ID=(username:any)=>_(`/accounts/abouts/${username}/`)
 
 export const ABOUT_ME=_('/accounts/about/')
 
 export const SOCIALS=_('/accounts/socials')
 
-export const SOCIALS_ID=(username:any)=>_(`/accounts/socials/${username}`)
+export const SOCIALS_ID=(username:any)=>_(`/accounts/socials/${username}/`)
 
 
 

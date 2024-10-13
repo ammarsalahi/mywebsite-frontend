@@ -16,6 +16,7 @@ import AddEditPost from '../pages/AddEditPost'
 import AddEditProject from '../pages/AddEditProject'
 import PrivateRouteContainer from './PrivateRouteContainer'
 import Settings from '../pages/Settings'
+import AddProject from '../projects/AddProject'
 
 export default function Routes() {
     const pages=createBrowserRouter([
@@ -37,6 +38,10 @@ export default function Routes() {
           element:<RouteContainer><Posts/></RouteContainer>
         },
         {
+          path:'/posts/:id',
+          element:<RouteContainer><PostDetail/></RouteContainer>
+        },
+        {
           path:'/posts/add',
           element:<PrivateRouteContainer><AddEditPost/></PrivateRouteContainer>
         },
@@ -48,18 +53,18 @@ export default function Routes() {
           path:'/projects',
           element:<RouteContainer> <Projects/></RouteContainer>
         },
-        {
-          path:'/posts/:id',
-          element:<RouteContainer><PostDetail/></RouteContainer>
-        },
-
+      
         {
           path:'/projects/:id',
           element:<RouteContainer><ProjectDetail/></RouteContainer>
         },
         {
           path:"/projects/add",
-          element:<AddEditProject/>
+          element:<PrivateRouteContainer><AddEditProject/></PrivateRouteContainer>
+        },
+        {
+          path:"/projects/edit/:id",
+          element:<PrivateRouteContainer><AddEditProject/></PrivateRouteContainer>
         },
         {
           path:'/about',
