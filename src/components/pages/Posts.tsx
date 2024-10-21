@@ -4,13 +4,15 @@ import VerticalCard from '../posts/VerticalCard'
 import { useNavigate } from 'react-router-dom'
 import Footer from '../global/Footer'
 import { Api } from '../api/Index'
-import { CATEGORIES, POST_SEARCH_FILTER, POSTS_ID } from '../api/Endpoints'
+import { CATEGORIES, POST_SEARCH_FILTER, POST_SEARCH_FILTER_NEXT, POSTS_ID } from '../api/Endpoints'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { filterSelector, pageLoadSelector, postSearchSelector } from '../states/Selectors'
 import HorizontalCard from '../posts/HorizontalCard'
 import { Spin } from 'antd';
 import EmptyList from '../global/EmptyList'
-import LoadMotion from '../global/LoadMotion'
+// import LoadMotion from '../global/LoadMotion'
+import { TfiReload } from "react-icons/tfi";
+
 
 export default function Posts() {
   let navigate=useNavigate()
@@ -19,6 +21,7 @@ export default function Posts() {
   const postsearch=useRecoilValue(postSearchSelector)
   const [selectedCategory,setSelectedCategory]=useState("")
   const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
+  const [next,setNext]=useState<number|null>(null)
 
   const filters=useRecoilValue(filterSelector);
   
@@ -27,7 +30,9 @@ export default function Posts() {
   const getFilters=async()=>{
     setisLoad(false)
     await Api.get(POST_SEARCH_FILTER(postsearch,filters.assort,selectedCategory)).then((res)=>{
-       setPosts(res.data.results)
+       setPosts(res.data.results);
+       setNext(res.data.next_page_number);
+
     }).finally(()=>{
          setisLoad(true)
       })
@@ -38,6 +43,14 @@ export default function Posts() {
     })
   }
 
+  const getNextPages=()=>{
+    if(next!=null){
+      Api.get(POST_SEARCH_FILTER_NEXT(next)).then((res)=>{
+          setPosts((prevPosts:any )=> [...prevPosts, ...res.data.results]);
+          setNext(res.data.next_page_number);
+      })
+    }
+  }
 
   const handleDelete=(id:string)=>()=>{
     Api.delete(POSTS_ID(id)).then(()=>{
@@ -55,7 +68,8 @@ export default function Posts() {
       setCategories([])
       setPosts([])
     }
-  }, [filters,postsearch])
+
+  }, [])
   
  
 
@@ -76,20 +90,32 @@ export default function Posts() {
            {posts.length>0?
           
             <>
-            {filters.list==false? <div className='post-card'>
+            {filters.list==false?<div>
+              <div className='post-card'>
               {posts?.map((item:any,idx:number)=>(
                  <div className="py-4" key={idx}>
                   <VerticalCard post={item}  deletePost={handleDelete(item?.post_id)}/>
                  </div>
               ))}
+               
             </div>
+            {next!=null &&  <div className="flex justify-center py-10">
+                 <button className='btn-blue w-36 gap-3 rounded-2xl font-bold text-xl' onClick={getNextPages}>
+                  <TfiReload/>
+                  بیشتر
+                </button>
+                </div>}
+            </div> 
             :
             <div className="py-10">
               {posts?.map((item:any,idx:number)=>(
                 <HorizontalCard  post={item} key={idx}/>
              ))}
-                {posts?.length > 4 &&  <div className="flex justify-center py-10">
-                <Button size='large' type='primary' className=' text-lg rounded-full' iconPosition='end'>بیشتر</Button>
+                {next!=null &&  <div className="flex justify-center py-10">
+                  <button className='btn-blue w-36 gap-3 rounded-2xl font-bold text-xl' onClick={getNextPages}>
+                  <TfiReload/>
+                  بیشتر
+                </button>
                 </div>}
              </div>
             }

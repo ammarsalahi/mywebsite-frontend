@@ -16,7 +16,8 @@ import AddEditPost from '../pages/AddEditPost'
 import AddEditProject from '../pages/AddEditProject'
 import PrivateRouteContainer from './PrivateRouteContainer'
 import Settings from '../pages/Settings'
-import AddProject from '../projects/AddProject'
+
+import AddEditAbout from '../pages/AddEditAbout'
 
 export default function Routes() {
     const pages=createBrowserRouter([
@@ -69,6 +70,14 @@ export default function Routes() {
         {
           path:'/about',
           element:<RouteContainer><AboutMe/></RouteContainer>
+        },
+        {
+          path:"/about/add",
+          element:<PrivateRouteContainer><AddEditAbout/></PrivateRouteContainer>
+        },
+        {
+          path:"/about/edit/:username",
+          element:<PrivateRouteContainer><AddEditAbout/></PrivateRouteContainer>
         },
         {
           path:'/cooperations',

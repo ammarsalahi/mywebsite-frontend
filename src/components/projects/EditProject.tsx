@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { FaCheck, FaHammer, FaPlus, FaTrash } from 'react-icons/fa6'
 import { PiCameraPlusFill } from 'react-icons/pi'
 import { Formik } from 'formik'
-import bgs from '../../assets/bgs.jpg'
-import { Api } from '../api/Index'
+import { Api, BASE_URL } from '../api/Index'
 import { IMAGES, IMAGES_ID, PROJECTS, PROJECTS_ID, TECHNOLOGIES, TECHNOLOGIES_ID } from '../api/Endpoints'
 import { AuthConfigHeaderFile, ConfigHeaderFile } from '../api/Configs'
 import { useRecoilValue } from 'recoil'
@@ -182,12 +181,12 @@ const handleDeleteTech=(id:number)=>()=>{
        <div className="card-body py-10 px-20">
        <Formik
              initialValues={{
-                 title:"",
-                 header:"",
-                 is_active:false,
+                 title:project?.title||"",
+                 header:project?.text||"",
+                 is_active:project?.is_active||false,
              }}
              validate={(values)=>{
-                 let errors:formErrors={}
+                 const errors:formErrors={};
                  if(!values.title){
                      errors.title="عنوان نمی تواند خالی باشد!"
                  }
@@ -301,7 +300,7 @@ const handleDeleteTech=(id:number)=>()=>{
                  {images?.map((imgs:ImageItem,idx:number)=>(
                    
                      <div className='relative' key={idx}>
-                       <img src={imgs.img} alt="" className='w-[150px] h-full rounded-xl' />
+                       <img src={`${BASE_URL}${imgs.img}`} alt={imgs.img} className='w-[150px] h-full rounded-xl' />
                            <button
                              type='button'
                              className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-10 hover:bg-opacity-75 text-white text-xl font-bold py-2 px-4 rounded-xl"

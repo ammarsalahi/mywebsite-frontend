@@ -1,4 +1,5 @@
 import React from 'react'
+import { BsEmojiSunglassesFill } from 'react-icons/bs'
 import { FaHammer, FaUser } from 'react-icons/fa6'
 import { IoSettings } from 'react-icons/io5'
 import { PiNewspaperFill } from 'react-icons/pi'
@@ -32,11 +33,12 @@ export default function UserMenu(props:userProps) {
             <FaHammer fontSize={22} />
             افزودن پروژه</Link>
             </li>
-            {/* <li>
-            <Link to="/about" className='flex items-center gap-2'>
+            <li>
+            <Link to="/about/add" className='flex items-center gap-2'>
             <BsEmojiSunglassesFill fontSize={22}  />
-            درباره‌ی من </Link>
-            </li> */}
+            ساخت درباره‌ی من
+            </Link>
+            </li>
           
         </ul>
         </div>

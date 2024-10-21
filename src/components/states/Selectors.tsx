@@ -133,7 +133,7 @@ const tokenSelector=selector({
 });
 
 const settingsSelector=selector({
-    key:"token-selector",
+    key:"setting-selector",
     get:({get})=>{
         const value=get(settingsAtom)
         return value

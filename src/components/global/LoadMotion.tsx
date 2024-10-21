@@ -11,8 +11,8 @@ export default function LoadMotion() {
         animate={{ rotate: 360, scale: 1 }}
         transition={{
           type: "spring",
-          stiffness: 260,
-          damping: 20,
+          stiffness: 170,
+          damping: 30,
           repeat:Infinity,
           repeatType:"reverse"
         }}

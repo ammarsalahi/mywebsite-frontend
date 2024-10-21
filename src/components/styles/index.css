@@ -29,7 +29,7 @@
 }
 
 .btn-blue{
-  @apply btn w-full bg-blue-500 border border-blue-500 rounded-full text-white hover:bg-blue-500
+  @apply btn w-full bg-blue-500 border border-blue-500  text-white hover:bg-blue-500
 }
 
 .lasts{
@@ -106,4 +106,20 @@
 }
 .card-light{
   @apply card border rounded-xl
+}
+
+.nav-selected{
+  @apply p-3 bg-blue-400 text-white mb-1
+}
+
+.nav-unselected{
+  @apply p-3 mb-1
+}
+
+.nav-set{
+  @apply menu bg-base-300 h-[490px] pt-10 px-3 text-base  rounded-box border 
+}
+
+.nav-set-dark{
+  @apply menu bg-base-100 h-[490px] pt-10 px-3 text-base  rounded-box border border-gray-500
 }

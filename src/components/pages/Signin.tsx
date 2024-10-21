@@ -1,13 +1,15 @@
 import { Formik } from 'formik'
 import React, { useState } from 'react'
-import { FaCheck, FaEye, FaLock, FaSun, FaUser } from 'react-icons/fa6'
+import { FaCheck, FaEye, FaLock, FaEyeSlash, FaUser } from 'react-icons/fa6'
 import { PiSunFill } from 'react-icons/pi'
 import { Api } from '../api/Index'
 import { SIGNIN } from '../api/Endpoints'
 import { message } from 'antd'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { tokenSelector } from '../states/Selectors'
+import lightIcon from '../../assets/icon-light.png'
+import {motion} from 'framer-motion'
 
 
 interface FormErrors{
@@ -92,10 +94,13 @@ export default function Signin() {
                             <label className="input input-bordered flex items-center rounded-2xl gap-2">
                               <FaLock className='text-gray-500'/>
                               <input 
-                                type="password" className="grow" placeholder="گذرواژه" 
+                                type={show?"password":"text"} className="grow" placeholder="گذرواژه" 
                                 value={values.password} name="password" onChange={handleChange}
                               />
-                              <FaEye className='text-gray-500 cursor-pointer text-xl' onClick={handleShowPass}/>
+                              {show ?
+                                <FaEye className='text-gray-500 cursor-pointer text-xl' onClick={handleShowPass}/>
+                                :<FaEyeSlash className='text-gray-500 cursor-pointer text-xl' onClick={handleShowPass}/>}
+
                             </label>
                              {errors.password && touched.password &&<div className="label">
                              <div className="label-alt text-red-500">{errors.password.toString()}</div>
@@ -113,8 +118,23 @@ export default function Signin() {
               
             </div>
           </div>
-          <div className='p-40 bg-blue-500 border border-blue-500 rounded-e-2xl'>
-          
+          <div className=' flex justify-center items-center h-100 bg-blue-500 border border-blue-500 rounded-e-2xl'>
+            <Link to={'/'}>
+              {/* <img src={lightIcon} className='w-[160px] h-[160px]' /> */}
+              <motion.img
+                src={lightIcon}
+                className="w-20  lg:w-40 "
+                initial={{ scale: 0 }}
+                animate={{ rotate: 360, scale: 1 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 110,
+                  damping: 30,
+                  repeat:Infinity,
+                  repeatType:"reverse"
+                }}
+              />
+            </Link>
           </div>
         </div>
       </div>

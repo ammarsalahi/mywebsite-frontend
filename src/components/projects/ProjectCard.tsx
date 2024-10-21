@@ -46,10 +46,10 @@ export default function ProjectCard(props:projectProps) {
          
         </div>
         </Link>
-       {token.access?.length>0 && <div className="card-actions flex justify-content">
+       {token.access?.length>0 && <div className="card-actions flex justify-between px-5 pb-2">
         <button 
             className='btn btn-ghost btn-sm text-base text-blue-500'
-            onClick={handleEdit(props.project?.post_id)}
+            onClick={handleEdit(props.project?.project_id)}
           >
             ویرایش                  
             <BiPencil className='text-xl'/>
