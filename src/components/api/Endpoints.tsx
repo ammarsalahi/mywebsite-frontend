@@ -40,7 +40,7 @@ export const ABOUTS=_('/accounts/abouts')
 
 export const ABOUTS_ID=(username:any)=>_(`/accounts/abouts/${username}/`)
 
-export const ABOUT_ME=_('/accounts/about/')
+// export const ABOUT_ME=_('/accounts/about/')
 
 export const SOCIALS=_('/accounts/socials')
 

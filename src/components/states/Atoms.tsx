@@ -80,7 +80,8 @@ const tokenAtom =atom({
     key:'token-atom',
     default:{
         access:"",
-        refresh:""
+        refresh:"",
+        user:"",
     },
     effects_UNSTABLE: [persistAtom],
 })

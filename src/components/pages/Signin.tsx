@@ -67,7 +67,8 @@ export default function Signin() {
                     message.success("ورود با موفقیت انجام شد")
                     setToken({
                       access:res.data.access,
-                      refresh:res.data.refresh
+                      refresh:res.data.refresh,
+                      user:res.data.username
                     })
                     navigate('/');
                   }).catch((err)=>{
