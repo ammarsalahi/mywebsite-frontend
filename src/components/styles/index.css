@@ -46,10 +46,10 @@
 }
 
 .paddingtop{
-   @apply py-28 px-5 xs:lg:px-10 xl:px-20;
+   @apply py-28 px-5 xs:lg:px-10 xl:px-10;
 }
 .paddingtop-xl{
-    @apply py-2 xs:py-10 xs:md:sm:py-16 xs:lg:py-32;
+    @apply py-2 xs:py-10 xs:md:sm:py-16 xs:lg:py-24;
  }
 
  .footer-category{

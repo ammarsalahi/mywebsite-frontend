@@ -24,12 +24,12 @@ export default function VerticalCard(props:postProps) {
  
   return (
    
-     <div className="card card-compact bg-base-100 w-76 shadow-xl card-move-up">
+     <div className="card card-compact bg-base-100 w-76 border rounded-2xl hover:shadow-xl card-move-up">
          <Link to={`/posts/${props.post?.post_id}`}>
          <figure>
           <img
             src={showImage(props.post?.header_image)}
-            alt="projects" className="h-44 w-full"/>
+            alt="projects" className="h-60 w-full rounded-t-2xl"/>
         </figure>
         <div className="card-body">
           <span>{props.post?.category.name}</span>

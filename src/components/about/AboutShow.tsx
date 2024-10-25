@@ -114,7 +114,7 @@ export default function AboutShow() {
                   </div>
                 <div className="flex gap-5 py-5">
                  {about.socials?.map((item:any,idx:number)=>(
-                    <div key={idx} onClick={()=>window.open(item.link, '_blank')}>
+                    <div key={idx} onClick={()=>window.open(item.link, '_blank')} className='cursor-pointer text-lg text-blue-600'>
                       {getIcon(item.name)}
                     </div>
                  ))}
