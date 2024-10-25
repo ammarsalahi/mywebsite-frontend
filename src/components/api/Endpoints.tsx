@@ -36,19 +36,19 @@ export const IMAGES = _('/contents/images/');
 
 export const IMAGES_ID =(id:number) =>_(`/contents/images/${id}/`)
 
-export const ABOUTS=_('/accounts/abouts')
+export const ABOUTS=_('/accounts/abouts/')
 
 export const ABOUTS_ID=(username:any)=>_(`/accounts/abouts/${username}/`)
 
 // export const ABOUT_ME=_('/accounts/about/')
 
-export const SOCIALS=_('/accounts/socials')
+export const SOCIALS=_('/accounts/socials/')
 
 export const SOCIALS_ID=(username:any)=>_(`/accounts/socials/${username}/`)
 
 
 
-export const HOME=_('/contents/home')
+export const HOME=_('/contents/home/')
 
 export const POST_SEARCH_FILTER=(search:string,sort:boolean,cate:string)=>_(`/contents/posts/?q=${search}&sort=${sort}&cate=${cate}`)
 

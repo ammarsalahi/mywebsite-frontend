@@ -3,10 +3,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { FaTelegram,FaInstagram ,FaLinkedin,FaGithub} from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Api } from '../api/Index';
-import { ABOUT_ME, FOOTER } from '../api/Endpoints';
+import { ABOUTS_ID, FOOTER } from '../api/Endpoints';
 import { TbWorldWww } from 'react-icons/tb';
 import { useRecoilValue } from 'recoil'
-import { themeSelector } from '../states/Selectors';
+import { themeSelector, tokenSelector } from '../states/Selectors';
 import { SiGmail } from 'react-icons/si';
 
 export default function Footer() {
@@ -15,6 +15,7 @@ export default function Footer() {
   const [teches,setTeches]=useState<any>([]);
   const [socials,setSocials]=useState<any>([]);
   const theme=useRecoilValue(themeSelector)
+  const token=useRecoilValue(tokenSelector)
    const getData=async()=>{
 	 await Api.get(FOOTER).then((res)=>{
 		setCategories(res.data.categories);
@@ -23,7 +24,7 @@ export default function Footer() {
 
    }
    const getAbout=async()=>{
-    await Api.get(ABOUT_ME).then((res)=>{
+    await Api.get(ABOUTS_ID(token.user)).then((res)=>{
       setSocials(res.data.socials)
     })
   }

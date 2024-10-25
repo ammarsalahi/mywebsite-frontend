@@ -4,11 +4,12 @@ import { BsEmojiSunglassesFill } from 'react-icons/bs';
 import { FaCheck ,FaPlus} from 'react-icons/fa6';
 import { IoClose } from "react-icons/io5";
 import { Api } from '../api/Index';
-import { ABOUTS, SOCIALS } from '../api/Endpoints';
+import { ABOUTS, ABOUTS_ID, SOCIALS, SOCIALS_ID } from '../api/Endpoints';
 import { AuthConfigHeader } from '../api/Configs';
 import { useRecoilValue } from 'recoil';
 import { tokenSelector } from '../states/Selectors';
 import { message } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 
 interface SocialItem{
@@ -26,7 +27,7 @@ interface aboutProps{
     theme:string;
 }
 export default function AddAbout(props:aboutProps) {
-
+  let navigate = useNavigate();
   const token=useRecoilValue(tokenSelector)
   const [social,setSocial]=useState({
     name:"",
@@ -66,10 +67,11 @@ export default function AddAbout(props:aboutProps) {
   const handleAddSocial=()=>{
     const formdata=new FormData();
     formdata.append("name",social.name);
-    formdata.append("url",social.url)
-    formdata.append("status","TO ADD");
+    formdata.append("link",social.url)
+    formdata.append("status",`TO ADD ${token.user}`);
     Api.post(SOCIALS,formdata).then((res)=>{
         addSocial(res.data)
+        setSocial({name:"",url:""})
     }).catch((err)=>{
       console.log(err)
       message.error("متاسفانه مشکلی پیش آمده!")
@@ -77,6 +79,16 @@ export default function AddAbout(props:aboutProps) {
     })
   }
   
+  const handleDeleteSocial=(id:number)=>()=>{
+      Api.delete(SOCIALS_ID(id)).then((res)=>{
+         deleteSocial(id)
+           message.info("حذف شد")
+      }).catch((err)=>{
+        console.log(err)
+        message.error("متاسفانه مشکلی پیش آمده!")
+  
+      })
+  }
 
   return (
     <div>
@@ -98,7 +110,7 @@ export default function AddAbout(props:aboutProps) {
                   errors.skill="این فیلد نمی‌تواند خالی باشد"
                 }
                 if(!values.uni_name){
-                  errors.uni_site="این فیلد نمی‌تواند خالی باشد"
+                  errors.uni_name="این فیلد نمی‌تواند خالی باشد"
                 }
                 if(!values.uni_site){
                   errors.uni_site="این فیلد نمی‌تواند خالی باشد"
@@ -111,13 +123,14 @@ export default function AddAbout(props:aboutProps) {
                   formdata.append("skill",values.skill);
                   formdata.append("university_name",values.uni_name);
                   formdata.append("university_site",values.uni_site)
-                  socials.forEach((social:SocialItem)=>{
+                  socials?.forEach((social:SocialItem)=>{
                     formdata.append("socials",String(social.id))
                   })
                 Api.post(ABOUTS,formdata,{
                   headers:AuthConfigHeader(token.access)
                 }).then((res)=>{
                   message.success("با موفقیت ساخته شد")
+                  navigate("/about")
                 }).catch((err)=>{
                   console.log(err)
                   message.error("متاسفانه مشکلی پیش آمده!")
@@ -125,7 +138,7 @@ export default function AddAbout(props:aboutProps) {
                 })
              }}
             >
-            {({values,handleSubmit,handleChange,errors})=>(
+            {({values,handleSubmit,handleChange,errors,touched})=>(
                 <form onSubmit={handleSubmit}>
                         <div className="flex justify-center">
                                 <div className="flex gap-2">
@@ -141,9 +154,9 @@ export default function AddAbout(props:aboutProps) {
                         </div>
                         <textarea
                             className="textarea textarea-bordered w-full rounded-2xl" rows={3}
-                            value={values.description} onChange={handleChange}
+                            value={values.description} onChange={handleChange} name="description"
                         />
-                        {errors.description  &&<div className="label">
+                        {errors.description && touched.description  &&<div className="label">
                             <span className="label-text-alt text-red-600 text-base">{errors.description?.toString()}</span>
                         </div>}
                                                                 
@@ -154,9 +167,9 @@ export default function AddAbout(props:aboutProps) {
                         </div>
                         <input
                             className="input input-bordered w-full rounded-2xl"
-                            value={values.skill} onChange={handleChange}
+                            value={values.skill} onChange={handleChange} name="skill"
                         />
-                        {errors.skill  &&<div className="label">
+                        {errors.skill && touched.skill &&<div className="label">
                             <span className="label-text-alt text-red-600 text-base">{errors.skill?.toString()}</span>
                         </div>}
                                                                 
@@ -167,9 +180,9 @@ export default function AddAbout(props:aboutProps) {
                         </div>
                         <input
                             className="input input-bordered w-full rounded-2xl"
-                            value={values.uni_name} onChange={handleChange}
+                            value={values.uni_name} onChange={handleChange} name="uni_name"
                         />
-                        {errors.uni_name  &&<div className="label">
+                        {errors.uni_name && touched.uni_name &&<div className="label">
                             <span className="label-text-alt text-red-600 text-base">{errors.uni_name?.toString()}</span>
                         </div>}
                                                                 
@@ -180,9 +193,9 @@ export default function AddAbout(props:aboutProps) {
                         </div>
                         <input
                             className="input input-bordered w-full rounded-2xl"
-                            value={values.uni_site} onChange={handleChange}
+                            value={values.uni_site} onChange={handleChange} name="uni_site"
                         />
-                        {errors.uni_site  &&<div className="label">
+                        {errors.uni_site && touched.uni_site  &&<div className="label">
                             <span className="label-text-alt text-red-600 text-base">{errors.uni_site?.toString()}</span>
                         </div>}
                                                                 
@@ -200,12 +213,12 @@ export default function AddAbout(props:aboutProps) {
                           <input 
                             value={social.url} onChange={handleSocialChange('url')}
                             type="url" placeholder='لینک' 
-                            className="input input-bordered rounded-none w-full" 
+                            className="input input-bordered rounded-none w-full text-end" 
                           />
                           <button 
                             className="btn-blue w-40 rounded-s-none rounded-e-2xl font-semibold"
                             type='button'
-                            disabled={social.name!=""&&social.url!=""}
+                            disabled={social.name.length==0 && social.url.length==0}
                             onClick={handleAddSocial}
                           >
                             <FaPlus/>
@@ -214,16 +227,20 @@ export default function AddAbout(props:aboutProps) {
 
                         </div>
                         <div className="pt-7 px-4 flex flex-wrap gap-4">
-                          <div className='py-1 px-4 bg-blue-500 text-white rounded-full cursor-pointer flex items-center gap-2'>
-                            <button 
-                              className='btn btn-ghost btn-sm text-xl'
-                              type="button"
-
-                            >
-                              <IoClose/>
-                            </button>
-                            <p>نام حساب</p>
-                          </div>
+                          {socials?.map((item:SocialItem,idx:number)=>(
+                              <div key={idx}
+                                  className='py-1 px-3 bg-blue-500 text-white rounded-full cursor-pointer flex items-center gap-2'>
+                                  <button 
+                                    className='btn btn-circle btn-ghost btn-sm text-xl hover:bg-red-500'
+                                    type="button"
+                                    onClick={handleDeleteSocial(item.id)}
+                                  >
+                                    <IoClose/>
+                                  </button>
+                                  <p>{item.name}</p>
+                                </div>
+                          ))}
+                          
                          
                         </div>
                       </div>
