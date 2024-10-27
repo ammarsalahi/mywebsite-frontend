@@ -1,15 +1,29 @@
 import React from 'react'
 import { BsEmojiSunglassesFill } from 'react-icons/bs'
 import { FaHammer, FaUser } from 'react-icons/fa6'
+import { FiLogOut } from 'react-icons/fi'
 import { IoSettings } from 'react-icons/io5'
 import { PiNewspaperFill } from 'react-icons/pi'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useRecoilState } from 'recoil'
+import { tokenSelector } from '../states/Selectors'
 
 interface userProps{
     path:string 
     theme:string
 }
 export default function UserMenu(props:userProps) {
+
+  const [token,setToken]=useRecoilState(tokenSelector);
+  let navigate=useNavigate()
+  const handleSignout=()=>{
+    setToken({
+      access:"",
+      refresh:"",
+      user:""
+    })
+    navigate("/signin")
+  }
   return (
     <div>
     <div className="dropdown dropdown-end dropdown-hover">
@@ -38,6 +52,12 @@ export default function UserMenu(props:userProps) {
             <BsEmojiSunglassesFill fontSize={22}  />
             ساخت درباره‌ی من
             </Link>
+            </li>
+            <li>
+            <button className='flex items-center gap-2' onClick={handleSignout}>
+              <FiLogOut fontSize={22}  />
+                خروج
+            </button>
             </li>
           
         </ul>

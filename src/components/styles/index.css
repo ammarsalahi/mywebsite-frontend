@@ -100,7 +100,7 @@
 }
 
 .mini-item{
-  @apply  flex justify-center py-2  bg-base-200 font-bold border-2  rounded-full hover:bg-blue-500 hover:text-white hover:border-blue-500;
+  @apply  flex justify-center py-2  bg-white font-bold border-2 border-blue-500 text-blue-500 rounded-full hover:bg-blue-500 hover:text-white hover:border-blue-500;
   
 }
 
@@ -108,7 +108,14 @@
   @apply card border border-gray-700 rounded-xl
 }
 .card-light{
-  @apply card border rounded-xl
+  @apply card border border-gray-300 rounded-xl
+}
+
+.simple-card-dark{
+  @apply card  rounded-xl
+}
+.simple-card-light{
+  @apply card  rounded-xl
 }
 
 .nav-selected{

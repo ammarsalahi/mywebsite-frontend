@@ -26,7 +26,7 @@ export default function Detail(props:detailprops) {
       {
         key: 'titles',
         href: '#titles',
-        title: <div className="flex gap-4 text-xl items-center">
+        title: <div className="flex gap-4  text-xl items-center">
           <PiSubtitles fontSize={30}/>
           <p>عنوان</p>
         </div>,
@@ -121,7 +121,7 @@ export default function Detail(props:detailprops) {
                 
                 <div className='grid lg:grid-cols-3 gap-5  py-10' id='others'>
                     {props.others?.map((item:any,idx:number)=>(
-                        <VerticalCard post={item} key={idx}/>
+                        <VerticalCard post={item} key={idx} theme={theme} deletePost={()=>{}}/>
                     ))}
                   
                 </div> 

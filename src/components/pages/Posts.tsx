@@ -77,7 +77,7 @@ export default function Posts() {
   <div>
     {isLoad ? <>
      <div className='paddingtop'>
-        <div className='category-show pt-10 pb-4'>
+        <div className='category-show pt-7 pb-3'>
 
             {categories.length>0 &&<div className="flex justify-start gap-3 pt-5 ">
               {categories?.map((item:any,idx:number)=>(
