@@ -29,16 +29,19 @@
 }
 
 .btn-blue{
-  @apply btn w-full bg-blue-500 border border-blue-500  text-white hover:bg-blue-500
+  @apply btn  bg-blue-500 border border-blue-500  text-white hover:bg-blue-500
 }
 
+.btn-red{
+  @apply btn  bg-red-500 border border-red-500  text-white hover:bg-red-500
+}
 .lasts{
   @apply p-5 xs:px-5 sm:p-10 xs:md:p-20;
 }
 
 .last-list{
   @apply py-10 ;
-  @apply xs:items-center xs:md:sm:grid sm:md:grid-cols-2 xs:md:sm:gap-3  lg:grid-cols-3 xs:xl:grid-cols-4 xs:lg:gap-5;
+  @apply xs:items-center xs:md:sm:grid sm:md:grid-cols-2 xs:md:sm:gap-3  lg:grid-cols-3 xs:2xl:grid-cols-4 xs:lg:gap-5;
 }
 
 .no-list{
@@ -102,7 +105,7 @@
 }
 
 .card-dark{
-  @apply card border border-gray-600 rounded-xl
+  @apply card border border-gray-700 rounded-xl
 }
 .card-light{
   @apply card border rounded-xl

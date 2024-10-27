@@ -1,11 +1,15 @@
 
 import { Button } from 'antd'
 import VerticalCard from './VerticalCard'
+import { useRecoilValue } from 'recoil';
+import { themeSelector } from '../states/Selectors';
 
 interface listprops{
   posts:[]|any;
 }
 export default function LastPosts(props:listprops) {
+
+  const theme=useRecoilValue(themeSelector)
   return (
     <div className='lasts'>
         <div className='flex justify-start py-3 px-3 border-r-4 mb-10 border-blue-500 '>
@@ -17,8 +21,8 @@ export default function LastPosts(props:listprops) {
         <> 
           <div className='last-list'>
           {props.posts?.map((item:any,idx:number)=>(
-            <div key={idx}>
-            <VerticalCard post={item}/>
+            <div key={idx} className='py-4'>
+            <VerticalCard post={item} theme={theme} deletePost={()=>{}}/>
             </div>
           ))}
         </div>

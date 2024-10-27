@@ -11,6 +11,7 @@ import { tokenSelector } from '../states/Selectors';
 interface postProps{
   post:any;
   deletePost:()=>void;
+  theme:string
 }
 export default function VerticalCard(props:postProps) {
   
@@ -24,29 +25,30 @@ export default function VerticalCard(props:postProps) {
  
   return (
    
-     <div className="card card-compact bg-base-100 w-76 border rounded-2xl hover:shadow-xl card-move-up">
+     <div className={`card-${props.theme}  w-auto rounded-xl hover:shadow-xl card-move-up`}>
          <Link to={`/posts/${props.post?.post_id}`}>
-         <figure>
+        <div className="card-body p-3">
           <img
             src={showImage(props.post?.header_image)}
-            alt="projects" className="h-60 w-full rounded-t-2xl"/>
-        </figure>
-        <div className="card-body">
-          <span>{props.post?.category.name}</span>
-          <h2 className="card-title py-3 text-blue-600">{props.post?.title}</h2>
+            alt="projects" className="h-60 w-full rounded-xl bg-base-300"/>
+            <div className='px-2'>
+            <span>{props.post?.category.name}</span>
+          <h2 className="py-3 font-bold text-xl">{props.post?.title}</h2>
             <div className="flex justify-between py-3 ">
-            <div className="flex gap-1 items-center">
+            <div className="flex gap-1 items-center text-base">
                 <PiClock fontSize={18}/>
                 <span>{props.post?.persian_date}</span>
             </div>
-            <div className="flex gap-1 items-center">
+            <div className="flex gap-1 items-center text-base">
                 <BiBookReader fontSize={18}/>
                 <span>{props.post?.reading_time}</span>
             </div>
             </div>
+            </div>
+          
         </div>
         </Link>
-        {token.access?.length>0 &&<div className="card-actions flex justify-between pb-2 px-5">
+        {token.access?.length>0 &&<div className="card-actions  flex justify-between py-4 px-5">
           <button 
             className='btn btn-ghost btn-sm text-base text-blue-500'
             onClick={handleEdit(props.post?.post_id)}

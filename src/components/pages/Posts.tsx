@@ -6,7 +6,7 @@ import Footer from '../global/Footer'
 import { Api } from '../api/Index'
 import { CATEGORIES, POST_SEARCH_FILTER, POST_SEARCH_FILTER_NEXT, POSTS_ID } from '../api/Endpoints'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { filterSelector, pageLoadSelector, postSearchSelector } from '../states/Selectors'
+import { filterSelector, pageLoadSelector, postSearchSelector, themeSelector } from '../states/Selectors'
 import HorizontalCard from '../posts/HorizontalCard'
 import { Spin } from 'antd';
 import EmptyList from '../global/EmptyList'
@@ -26,7 +26,7 @@ export default function Posts() {
   const filters=useRecoilValue(filterSelector);
   
   const [isLoad,setisLoad]=useState(false);
-
+  const theme=useRecoilValue(themeSelector)
   const getFilters=async()=>{
     setisLoad(false)
     await Api.get(POST_SEARCH_FILTER(postsearch,filters.assort,selectedCategory)).then((res)=>{
@@ -77,7 +77,7 @@ export default function Posts() {
   <div>
     {isLoad ? <>
      <div className='paddingtop'>
-        <div className='category-show pt-12 pb-6'>
+        <div className='category-show pt-10 pb-4'>
 
             {categories.length>0 &&<div className="flex justify-start gap-3 pt-5 ">
               {categories?.map((item:any,idx:number)=>(
@@ -94,7 +94,7 @@ export default function Posts() {
               <div className='post-card'>
               {posts?.map((item:any,idx:number)=>(
                  <div className="py-4" key={idx}>
-                  <VerticalCard post={item}  deletePost={handleDelete(item?.post_id)}/>
+                  <VerticalCard post={item}  deletePost={handleDelete(item?.post_id)} theme={theme}/>
                  </div>
               ))}
                
@@ -109,7 +109,9 @@ export default function Posts() {
             :
             <div className="py-10">
               {posts?.map((item:any,idx:number)=>(
-                <HorizontalCard  post={item} key={idx}/>
+                <div className={theme=="dark"?'border-b border-gray-600 pb-4':""}>
+                <HorizontalCard  post={item} key={idx} theme={theme}/>
+                </div>
              ))}
                 {next!=null &&  <div className="flex justify-center py-10">
                   <button className='btn-blue w-36 gap-3 rounded-2xl font-bold text-xl' onClick={getNextPages}>

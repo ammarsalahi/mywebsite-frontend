@@ -4,11 +4,11 @@ import userimg from '../../assets/Remove-bg.ai_1717403474388.png'
 import { FaUniversity } from "react-icons/fa";
 import { Api ,showImage} from '../api/Index';
 import { ABOUTS_ID } from '../api/Endpoints';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaTelegram,FaLinkedin ,FaInstagram,FaGithub} from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
 import { TbWorldWww } from "react-icons/tb";
-import { FaComputer,FaUsers } from "react-icons/fa6";
+import { FaComputer,FaTrash,FaUsers } from "react-icons/fa6";
 import Footer from '../global/Footer';
 import { FaUser } from "react-icons/fa6";
 import { pageLoadSelector, tokenSelector } from '../states/Selectors';
@@ -16,6 +16,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { MdEmail } from 'react-icons/md';
 import LoadMotion from '../global/LoadMotion';
 import { Spin } from 'antd';
+import { BiPencil } from 'react-icons/bi';
 
 export default function AboutShow() {
   const [about,setAbout]=useState<any>(null);
@@ -23,6 +24,13 @@ export default function AboutShow() {
   const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
   const token=useRecoilValue(tokenSelector) 
   
+  let navigate=useNavigate()
+
+  const handleGotoEdit=()=>{
+      navigate(`/about/edit/${token.user}`);
+  }
+
+
   const getAbout=async()=>{
     await Api.get(ABOUTS_ID(token.user)).then((res)=>{
       setAbout(res.data)
@@ -83,6 +91,16 @@ export default function AboutShow() {
 
               <div className="about-cols">
                 <div>
+                <div className='flex justify-end pb-4 gap-5'>
+                <button className='btn-blue w-auto rounded-xl btn-sm' onClick={handleGotoEdit}>
+                  <BiPencil className='text-xl'/>
+                  ویرایش
+                </button>
+                <button className='btn-red w-auto rounded-xl btn-sm'>
+                  <FaTrash className='text-lg'/>
+                  حذف
+                </button>
+                </div>
                   <div className="py-5 rounded-xl">
                       <div className="flex gap-2 text-gray-500">
                         <FaUser fontSize={27}/>
@@ -119,7 +137,9 @@ export default function AboutShow() {
                     </div>
                  ))}
                 </div>
+              
                 </div>
+                
               </div> 
           </div>
         </div>

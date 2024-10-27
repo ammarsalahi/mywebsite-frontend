@@ -14,16 +14,26 @@ interface aboutProps{
     theme:string;
     id:number
 }
+interface SocialItem{
+  id:number;
+  name:string;
+  url:string;
+}
 export default function EditAbout(props:aboutProps) {
 
   const [about,setAbout]=useState<any>(null);
   const [isLoad,setisLoad]=useState(false);
   const token=useRecoilValue(tokenSelector) 
+  const [socials,setSocials]=useState<SocialItem[]|[]>([]);
 
-  const getAbout=async()=>{
-    await Api.get(ABOUTS_ID(token.user)).then((res)=>{
+  const getAbout=()=>{
+    Api.get(ABOUTS_ID(props.id)).then((res)=>{
       setAbout(res.data)
+      setSocials(res.data.socials)
+      console.log(res.data)
       setisLoad(true)
+    }).catch((err)=>{
+      console.log(err)
     })
   }
     useEffect(() => {
@@ -37,10 +47,10 @@ export default function EditAbout(props:aboutProps) {
           <div className="card-body py-10 px-20">
             <Formik
              initialValues={{
-                    description:about.description||"",
-                    skill:about.skill||"",
-                    uni_name:about.university_name||"",
-                    uni_site:about.university_site||""
+                    description:about?.description||"",
+                    skill:about?.skill||"",
+                    uni_name:about?.university_name||"",
+                    uni_site:about?.university_web||""
              }}
              onSubmit={()=>{
 
@@ -122,12 +132,19 @@ export default function EditAbout(props:aboutProps) {
 
                         </div>
                         <div className="pt-7 px-4 flex flex-wrap gap-4">
-                          <div className='py-1 px-4 bg-blue-500 text-white rounded-full cursor-pointer flex items-center gap-2'>
-                            <button className='btn btn-ghost btn-sm text-xl'>
-                              <IoClose/>
-                            </button>
-                            <p>نام حساب</p>
-                          </div>
+                          {socials?.map((item:SocialItem,idx:number)=>(
+                              <div key={idx}
+                                  className='py-1 px-3 bg-blue-500 text-white rounded-full cursor-pointer flex items-center gap-2'>
+                                  <button 
+                                    className='btn btn-circle btn-ghost btn-sm text-xl hover:bg-red-500'
+                                    type="button"
+                                  >
+                                    <IoClose/>
+                                  </button>
+                                  <p>{item.name}</p>
+                                </div>
+                          ))}
+                          
                          
                         </div>
                       </div>

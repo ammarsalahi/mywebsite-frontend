@@ -17,8 +17,9 @@ import NavMenu from './NavMenu'
 import NavDropDownMenu from './NavDropDownMenu';
 import SearchBar from './SearchBar';
 import { motion } from 'framer-motion'
-import { FaUser } from 'react-icons/fa6'
+import { FaGolang, FaUser } from 'react-icons/fa6'
 import UserMenu from './UserMenu'
+import { GrGolang } from 'react-icons/gr'
 
 export default function Navbar() {
 
@@ -181,13 +182,29 @@ export default function Navbar() {
         <div className="text-center text-white lg:pt-20 xl:pt-20 md:pt-10 ">
           <p className='text-6xl'>عمار صلاحی هستم</p>
           <p className='text-6xl mt-10'> توسعه دهنده فول‌استک</p>
-          <div className="flex justify-center gap-5 pt-10">
-             <SiPython fontSize={30}/>
-             <SiDjango fontSize={30} />
-             <SiFastapi fontSize={30} />
-             <SiReact fontSize={30} />
-             <SiTypescript fontSize={30} />
-             <SiHtml5 fontSize={30} />
+          <div className="flex flex-wrap justify-center items-center gap-5 pt-7">
+            <Link to="https://www.python.org" target='black'>
+              <SiPython fontSize={40} className='hover:text-indigo-900'/>
+            </Link>
+            <Link to="https://www.djangoproject.com" target='black'>
+              <SiDjango fontSize={40} className=' hover:text-green-900'/>
+            </Link>
+            <Link to="https://fastapi.tiangolo.com/" target='black'>
+              <SiFastapi fontSize={40} className=' hover:text-green-400' />
+            </Link>
+            <Link to="https://go.dev/" target='black'>
+              <FaGolang fontSize={65}/>
+            </Link>
+            <Link to="https://react.dev/" target='black'>
+              <SiReact fontSize={40} className='hover:text-blue-900' />
+            </Link>
+            <Link to="https://www.typescriptlang.org/" target='black'>
+              <SiTypescript fontSize={40} className='hover:text-indigo-900' />
+            </Link>
+            <Link to="https://en.wikipedia.org/wiki/HTML5" target='black'>
+            <SiHtml5 fontSize={40} className=' hover:text-orange-600'/>
+            </Link>
+
         </div>
         </div>
         
