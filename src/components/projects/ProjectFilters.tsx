@@ -20,6 +20,8 @@ export default function ProjectFilters() {
     <div>
 
         <div className="project-filter">
+        <p className='pe-24 text-2xl font-bold'>پروژه‌ها</p>
+
                     <button className={projfilters.assort?'btn btn-ghost text-green-600':'btn btn-ghost'}
                        onClick={handleProjectFilters('assort',true)}
                      >
@@ -35,7 +37,7 @@ export default function ProjectFilters() {
                         نزولی
                      </button>
                  
-                    <label className="input input-sm input-primary p-2 w-96 rounded-full  mt-2 input-bordered flex items-center gap-2">
+                    <label className="input input-sm  p-2 w-96 rounded-full  mt-2 input-bordered flex items-center gap-2">
                         <AiOutlineSearch fontSize={20}/>
                         <input 
                           type="text" className="grow" 

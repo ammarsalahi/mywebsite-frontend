@@ -77,6 +77,12 @@ export default function Posts() {
   <div>
     {isLoad ? <>
      <div className='paddingtop'>
+      {/* <div className="pt-10 px-10">
+      <div className='flex justify-start py-2 px-3 border-r-4 border-blue-500 '>
+            <p className='text-3xl'>پست‌ها</p>
+        </div>
+      </div> */}
+        
         <div className='category-show pt-7 pb-3'>
 
             {categories.length>0 &&<div className="flex justify-start gap-3 pt-5 ">
@@ -93,7 +99,7 @@ export default function Posts() {
             {filters.list==false?<div>
               <div className='post-card'>
               {posts?.map((item:any,idx:number)=>(
-                 <div className="py-4" key={idx}>
+                 <div className="py-2" key={idx}>
                   <VerticalCard post={item}  deletePost={handleDelete(item?.post_id)} theme={theme}/>
                  </div>
               ))}

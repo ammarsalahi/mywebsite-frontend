@@ -27,7 +27,7 @@ export default function RouteContainer({children}:props) {
        {menu==true?
         <MenuList/>
         :
-        <div className={theme=="dark"?"bg-gray-800 text-white":"bg-base-100"}>
+        <div className={theme=="dark"?"bg-gray-800 text-white":"bg-gray-100"}>
              {children}
         </div>
       }

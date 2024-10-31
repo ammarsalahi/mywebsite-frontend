@@ -65,7 +65,7 @@ export default function Detail(props:detailprops) {
     <div className='detail-show '>
       <div className="minicol">
         <div className="ancher-show">
-            <div className="py-5">
+            {/* <div className="py-5">
               <Anchor
               affix={false}
               className="text-3xl"
@@ -74,17 +74,17 @@ export default function Detail(props:detailprops) {
               </div>
               <div>
               <NewPosts />     
-              </div>
+              </div> */}
         
         </div>
       </div>
       <div className={theme=="dark"?'grid-col border-gray-600':'grid-col'} id="titles">
-          <img src={showImage(props.post?.header_image)} alt="" className='w-full h-96 rounded-2xl' />
+          <img src={showImage(props.post?.header_image)} alt="" className='w-full h-96 rounded-2xl border border-base-300 bg-base-300' />
           <div className="flex justify-between py-3 px-4">
                 <Link to={`/categories/${props.post?.category.english_name}`} >
-                <p className=' text-gray-700 text-lg'>{props.post?.category.name}</p>
+                  <p className='text-lg'>{props.post?.category.name}</p>
                 </Link>
-                  <div className='flex items-center text-md'>
+                  <div className='flex items-center text-base'>
                     <PiClock />
                     <span>{props.post?.persian_date}</span>
                   </div>
@@ -121,7 +121,8 @@ export default function Detail(props:detailprops) {
                 
                 <div className='grid lg:grid-cols-3 gap-5  py-10' id='others'>
                     {props.others?.map((item:any,idx:number)=>(
-                        <VerticalCard post={item} key={idx} theme={theme} deletePost={()=>{}}/>
+                      
+                      idx <3 &&  <VerticalCard post={item} key={idx} theme={theme} deletePost={()=>{}}/>
                     ))}
                   
                 </div> 

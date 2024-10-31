@@ -108,7 +108,7 @@
   @apply card border border-gray-700 rounded-xl
 }
 .card-light{
-  @apply card border border-gray-300 rounded-xl
+  @apply card bg-white border border-gray-300 rounded-xl
 }
 
 .simple-card-dark{

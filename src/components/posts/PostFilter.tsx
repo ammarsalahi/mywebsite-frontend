@@ -25,6 +25,8 @@ export default function PostFilter() {
     <div>
 
     <div className="post-filter">
+
+                      <p className='pe-14 text-2xl font-bold'>پست‌ها</p>
                      <button className={filters.assort?'btn btn-ghost text-green-600':'btn btn-ghost'}
                       onClick={handleFilters('assort',true)}
                      >
