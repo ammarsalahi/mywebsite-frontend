@@ -3,6 +3,7 @@ import { Button } from 'antd'
 import VerticalCard from './VerticalCard'
 import { useRecoilValue } from 'recoil';
 import { themeSelector } from '../states/Selectors';
+import { TfiReload } from 'react-icons/tfi';
 
 interface listprops{
   posts:[]|any;
@@ -12,8 +13,8 @@ export default function LastPosts(props:listprops) {
   const theme=useRecoilValue(themeSelector)
   return (
     <div className='lasts'>
-        <div className='flex justify-start py-3 px-3 border-r-4 mb-10 border-blue-500 '>
-            <p className='text-3xl'>پست‌های اخیر</p>
+        <div className='flex justify-start py-3 px-3 border-r-4 mb-5 border-blue-500 '>
+            <p className='text-3xl font-bold'>پست‌های اخیر</p>
         </div>
     <div>
       
@@ -26,8 +27,11 @@ export default function LastPosts(props:listprops) {
             </div>
           ))}
         </div>
-        {props.posts?.length > 4 && <div className="flex justify-center py-10">
-            <Button size='large' type='primary' className=' text-xl  rounded-full' iconPosition='end'>بیشتر</Button>
+        {props.posts?.length > 4 && <div className="flex justify-center py-3">
+            <button className='btn-blue w-36 gap-3 rounded-2xl font-bold text-xl'>
+              <TfiReload/>
+              بیشتر
+            </button>
           </div>}
       </>
     :

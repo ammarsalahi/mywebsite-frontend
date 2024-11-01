@@ -67,7 +67,7 @@ export default function Footer() {
       theme=="light"?
       location.pathname=='/'?'bg-blue-600  w-full text-white':'border-t w-full'
       :
-       'bg-gray-800  w-full text-white border-t border-gray-700'}>
+       'bg-gray-900  w-full text-white border-t border-gray-700'}>
       <div className="py-5">
       	<div className="footer-category">
       	  <div className="footer-cols">

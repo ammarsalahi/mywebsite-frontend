@@ -34,7 +34,7 @@ export default function PostDetail() {
   useEffect(() => {
       getPost()
       setpageLoad(true)
-  }, [])
+  }, [id])
   
   return (
     <>

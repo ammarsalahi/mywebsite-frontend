@@ -45,7 +45,7 @@ export default function Signin() {
   },[theme])
 
   return (
-    <div className={theme=="dark"?"bg-gray-800 text-white":"bg-gray-100"}>
+    <div className={theme=="dark"?"bg-gray-900 text-white":"bg-gray-100"}>
 
 <div className="grid h-screen place-items-center">
 

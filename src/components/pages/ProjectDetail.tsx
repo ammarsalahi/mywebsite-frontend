@@ -30,7 +30,7 @@ export default function ProjectDetail() {
   useEffect(() => {
       getProject()
       setpageLoad(true)
-  }, [])
+  }, [id])
   return (
     <div>
    {isLoad ? <> <div className='paddingtop'>

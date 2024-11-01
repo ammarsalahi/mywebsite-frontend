@@ -5,7 +5,7 @@ import { PROJECT_SEARCH_FILTER ,PROJECTS,PROJECTS_ID,TECHNOLOGIES} from '../api/
 import { message, Spin } from 'antd';
 import Footer from '../global/Footer'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { pageLoadSelector, projectSearchSelector, projfilterSelector } from '../states/Selectors'
+import { pageLoadSelector, projectSearchSelector, projfilterSelector, themeSelector } from '../states/Selectors'
 import PorjectEmpty from '../global/PorjectEmpty';
 import EmptyList from '../global/EmptyList';
 import LoadMotion from '../global/LoadMotion';
@@ -18,6 +18,7 @@ export default function Projects() {
     const projectsearch=useRecoilValue(projectSearchSelector)
     const filters=useRecoilValue(projfilterSelector)
     const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
+    const theme=useRecoilValue(themeSelector)
 
 
    
@@ -69,7 +70,7 @@ export default function Projects() {
         <div>
             {projects.length>0 ? <div className='post-card'>
                {projects?.map((item:any,idx:number)=>(
-                   <ProjectCard project={item} key={idx} deleteProject={handleDelete(item.id)}/>
+                   <ProjectCard project={item} theme={theme} key={idx} deleteProject={handleDelete(item.id)}/>
                ))}
             </div>
             :

@@ -4,9 +4,13 @@ import StepTwo from '../cooperations/StepTwo'
 import StepThree from '../cooperations/StepThree'
 import { Steps } from 'antd';
 import Footer from '../global/Footer';
+import { useRecoilValue } from 'recoil';
+import { themeSelector } from '../states/Selectors';
 
 export default function Cooperation() {
   const [current, setCurrent] = useState(0);
+  const theme=useRecoilValue(themeSelector)
+
   const nextStep=()=>{
     setCurrent(current+1)
   }
@@ -47,8 +51,11 @@ export default function Cooperation() {
      
       </div>
       <div className="steps-space ps-10">
-         <div className="content-show">
+         <div className={`card-${theme}`}>
+            <div className="card-body p-10">
             {steps[current].content}
+
+            </div>
          </div>
       </div>
       </div>

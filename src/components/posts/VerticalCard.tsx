@@ -13,6 +13,7 @@ interface postProps{
   deletePost:()=>void;
   theme:string
 }
+
 export default function VerticalCard(props:postProps) {
   
   let navigate=useNavigate();
@@ -45,7 +46,6 @@ export default function VerticalCard(props:postProps) {
         <div className="card-body p-3">
          
           
-         
             <div className='px-2'>
              
           <h2 className="py-3 font-bold text-xl">{props.post?.title}</h2>

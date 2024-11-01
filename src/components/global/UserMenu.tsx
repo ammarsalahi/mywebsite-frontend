@@ -30,7 +30,7 @@ export default function UserMenu(props:userProps) {
         <div tabIndex={0} role="button" className="btn btn-ghost btn-sm">
          <FaUser/>
         </div>
-        <ul tabIndex={0} className={props.theme=="dark"?"drop-items bg-gray-800 text-white":
+        <ul tabIndex={0} className={props.theme=="dark"?"drop-items bg-gray-900 text-white":
             props.path!=="/"?"drop-items bg-white text-black":"drop-items bg-blue text-white"}>
             <li>
             <Link to="/settings" className='flex items-center gap-2'>

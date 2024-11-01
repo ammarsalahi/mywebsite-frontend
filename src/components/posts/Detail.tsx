@@ -1,84 +1,82 @@
-import React, { useState } from 'react'
-import imgs from '../../assets/bgs.jpg'
-import { ListGroup } from 'react-bootstrap'
+import React, { useRef, useState } from 'react'
 import VerticalCard from './VerticalCard'
-import { PiSubtitles, PiTextAlignRight,PiNewspaperClipping, PiPen, PiTrash, PiClock, PiEye, PiShareNetwork } from 'react-icons/pi'
-
-import Swal from 'sweetalert2'
+import { PiSubtitles, PiTextAlignRight,PiNewspaperClipping, PiClock, PiShareNetwork } from 'react-icons/pi'
 import { Link, useNavigate } from 'react-router-dom'
-import { MenuProps } from 'antd'
 import { showImage } from '../api/Index'
-import { Anchor } from 'antd';
-import newPosts from './newPosts'
-import {  PiFireFill } from 'react-icons/pi'
-import { Api } from '../api/Index'
-import { NEW_POSTS } from '../api/Endpoints'
-import NewPosts from './newPosts'
 import { useRecoilValue } from 'recoil'
 import { themeSelector } from '../states/Selectors'
+import { BiPencil, BiTrashAlt } from 'react-icons/bi'
+import { FaTrash } from 'react-icons/fa6'
+import { FaTrashAlt } from 'react-icons/fa'
 interface detailprops{
   post:any;
   others:any;
 }
 export default function Detail(props:detailprops) {
   const theme=useRecoilValue(themeSelector)
-  const items=[
-      {
-        key: 'titles',
-        href: '#titles',
-        title: <div className="flex gap-4  text-xl items-center">
-          <PiSubtitles fontSize={30}/>
-          <p>عنوان</p>
-        </div>,
-      },
-       {
-        key: 'texts',
-        href: '#texts',
-        title: <div className="flex gap-4 text-xl items-center">
-        <PiTextAlignRight fontSize={30}/>
-          <p>متن پست</p>
-        </div>,
-      },
-        {
-        key: 'others',
-        href: '#others',
-        title: <div className="flex gap-4 text-xl items-center">
-        <PiNewspaperClipping fontSize={30}/>
-          <p>پست‌های مشابه</p>
-        </div>,
-      },
-      {
-        key: 'sharing',
-        href: '#sharing',
-        title: <div className="flex gap-4 text-xl items-center">
-          <PiShareNetwork fontSize={30}/>
-          <p>اشتراک گذاری</p>
-        </div>,
-      },
-    
-  ]
+ 
+  const titleref=useRef(null);
+  const textref=useRef(null);
+  const otherref=useRef(null);
+
+  const [refName,setRefName]=useState("");
+
   let navigate=useNavigate();
+
+  const handleSelectRef=(selection:any,name:string)=>()=>{
+    selection.current.scrollIntoView({ behavior: 'smooth' });
+    setRefName(name)
+  }
+
 
 
  
   return (
     <div className='detail-show '>
       <div className="minicol">
-        <div className="ancher-show">
-            {/* <div className="py-5">
-              <Anchor
-              affix={false}
-              className="text-3xl"
-              items={items}
-                />
+        <div className="ancher-show py-3">
+          <ul className="menu bg-base-200 rounded-box">
+            <div>
+              <div className="flex items-center justify-between mb-1 px-5 py-2">
+                <button className='btn  btn-circle'>
+                  <BiPencil fontSize={30}/>
+                </button>
+                <button className='btn btn-circle'>
+                  <FaTrashAlt fontSize={27}/>
+                </button>
               </div>
-              <div>
-              <NewPosts />     
-              </div> */}
-        
+            </div>
+            <li>
+              <a className={refName=="title"?"anchor-selected mb-1 hover:bg-blue-600":"anchor-unselected mb-1 hover:bg-blue-600"} onClick={handleSelectRef(titleref,"title")}>
+                <PiSubtitles fontSize={30}/>
+                <span>عنوان</span>
+              </a>
+            </li>
+            <li>
+              <a className={refName=="text"?"anchor-selected mb-1 hover:bg-blue-600":"anchor-unselected mb-1 hover:bg-blue-600"} onClick={handleSelectRef(textref,"text")}>
+                <PiTextAlignRight fontSize={30}/>
+                <span>متن پست</span>
+
+              </a>
+            </li>
+            <li>
+              <a className={refName=="other"?"anchor-selected mb-1 hover:bg-blue-600":"anchor-unselected mb-1 hover:bg-blue-600"} onClick={handleSelectRef(otherref,"other")}>
+                <PiNewspaperClipping fontSize={30}/>
+                <span>پست‌های مشابه</span>
+              </a>
+            </li>
+            <li>
+              <a className="anchor-unselected hover:bg-blue-600 mb-1">
+                <PiShareNetwork fontSize={30}/>
+                <span>اشتراک‌گذاری</span>
+
+              </a>
+            </li>
+            
+          </ul>
         </div>
       </div>
-      <div className={theme=="dark"?'grid-col border-gray-600':'grid-col'} id="titles">
+      <div className={theme=="dark"?'grid-col border-gray-600':'grid-col'} ref={titleref}>
           <img src={showImage(props.post?.header_image)} alt="" className='w-full h-96 rounded-2xl border border-base-300 bg-base-300' />
           <div className="flex justify-between py-3 px-4">
                 <Link to={`/categories/${props.post?.category.english_name}`} >
@@ -95,7 +93,7 @@ export default function Detail(props:detailprops) {
           <div className="py-5">
               <p className='text-3xl'>{props.post?.title}</p>
              
-             <div className="py-10" id="texts">
+             <div className="py-10" ref={textref}>
                 <p className='text-md'>{props.post?.header}</p>
                 <div className="py-4">
                   <div dangerouslySetInnerHTML={{ __html: props.post?.text }} />
@@ -116,7 +114,7 @@ export default function Detail(props:detailprops) {
               </div>}
           </div>
           
-          {props.others.length>0 && <div className={theme=="light"?"pb-16 pt-5 border-t":"pb-16 pt-5 border-t border-gray-600"} id="others">
+          {props.others.length>0 && <div className={theme=="light"?"pb-16 pt-5 border-t":"pb-16 pt-5 border-t border-gray-600"} ref={otherref}>
                 <p className='text-xl'>پست‌های مشابه</p>
                 
                 <div className='grid lg:grid-cols-3 gap-5  py-10' id='others'>

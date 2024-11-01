@@ -36,7 +36,7 @@ export default function StepThree(props:stepprops) {
     <div>
       <div className='flex justify-start gap-5'>
           <button 
-          className="btn btn-sm rounded-full btn-error text-white" 
+          className="btn btn-sm rounded-full" 
           onClick={props.prev}>
         <FaChevronRight fontSize={20}/>
         </button>         <p className='text-xl pb-10 text-center'>جزئیات بیشتری را در مورد پروژه اضافه کنید</p>

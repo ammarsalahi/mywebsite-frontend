@@ -33,7 +33,7 @@ export default function MenuList() {
         theme=="light"?
         location.pathname=='/'? 'bg-blue-600 px-3 h-full':'pt-20 px-3 h-full'
         :
-        location.pathname=="/"?'bg-gray-800 px-3 h-full':'bg-gray-800 pt-20 px-3 h-full'}>
+        location.pathname=="/"?'bg-gray-900 px-3 h-full':'bg-gray-900 pt-20 px-3 h-full'}>
         <div className="py-5 flex justify-center">
             <button
           className="btn btn-ghost"

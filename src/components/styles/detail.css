@@ -27,3 +27,11 @@
 .fresh{
   @apply p-4 mt-10 rounded-lg border-2 
 }
+
+.anchor-unselected{
+  @apply flex items-center text-lg gap-3 hover:text-white
+}
+
+.anchor-selected{
+  @apply flex items-center text-lg gap-3 bg-blue-600 text-white hover:bg-blue-600 hover:text-white
+}

@@ -12,6 +12,7 @@ import { tokenSelector } from '../states/Selectors';
 interface projectProps{
   project:any;
   deleteProject:() => void;
+  theme:string;
 }
 
 export default function ProjectCard(props:projectProps) {
@@ -23,22 +24,22 @@ export default function ProjectCard(props:projectProps) {
   const token=useRecoilValue(tokenSelector)
   return (
 
-    <div className="card card-compact bg-base-100 w-76 shadow-xl card-move-up">
+    <div className={`card-${props.theme} w-auto rounded-lg shadow-lg`}>
       <Link to={`/projects/${props.project?.project_id}`}>
 
         <figure>
           <img
             src={showImage(props.project?.header_image)}
-            alt="projects" className="h-52 w-full"/>
+            alt="projects" className="h-52 w-full rounded-t-lg bg-gray-400"/>
         </figure>
-        <div className="card-body">
-          <h2 className="card-title py-3 text-blue-600">{props.project?.title}</h2>
+        <div className="card-body p-3">
+          <h2 className="card-title py-3 ">{props.project?.title}</h2>
             <div className="flex justify-between py-3 ">
-            <div className="flex gap-1 items-center text-gray-600">
+            <div className="flex gap-1 items-center text-sm">
                 <PiClock fontSize={18}/>
                 <span>{props.project?.persian_date}</span>
             </div>
-            <div className="flex gap-1 items-center text-gray-600">
+            <div className="flex gap-1 items-center text-sm">
                 <BiBookReader fontSize={18}/>
               <span>{props.project?.reading_time}</span>
             </div>

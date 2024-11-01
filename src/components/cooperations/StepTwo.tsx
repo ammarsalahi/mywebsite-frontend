@@ -21,7 +21,7 @@ export default function StepTwo(props:stepprops) {
     <div>
       <div className='flex justify-start gap-10'>
         <button 
-          className="btn btn-sm rounded-full btn-error text-white" 
+          className="btn btn-sm btn-ghost rounded-full" 
           onClick={props.prev}>
         <FaChevronRight fontSize={20}/>
         </button>
