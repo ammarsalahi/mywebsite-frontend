@@ -32,8 +32,20 @@
   @apply btn  bg-blue-500 border border-blue-500  text-white hover:bg-blue-500 hover:border-blue-500
 }
 
+.btn-blue-outline{
+  @apply btn   border border-blue-500  text-blue-500  hover:bg-blue-500 hover:border-blue-500 hover:text-white
+}
+
+.btn-page-blue{
+  @apply btn text-blue-600 hover:bg-blue-500 hover:text-white hover:border-blue-500
+}
+
 .btn-red{
   @apply btn  bg-red-500 border border-red-500  text-white hover:bg-red-500 hover:border-red-500
+}
+
+.btn-red-outline{
+  @apply btn  border border-red-500  text-red-500  hover:bg-red-500 hover:border-red-500 hover:text-white
 }
 .lasts{
   @apply p-5 xs:px-5 sm:p-10 xs:md:p-20;
@@ -100,7 +112,7 @@
 }
 
 .mini-item{
-  @apply  flex justify-center py-2  bg-white font-bold border-2 border-blue-500 text-blue-500 rounded-full hover:bg-blue-500 hover:text-white hover:border-blue-500;
+  @apply  flex justify-center py-2  bg-base-100 font-bold border-2 border-blue-500 text-blue-500 rounded-full hover:bg-blue-500 hover:text-white hover:border-blue-500;
   
 }
 

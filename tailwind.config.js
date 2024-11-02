@@ -4,7 +4,7 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{html,js,ts,jsx,tsx}",
   ],
   theme: {
   	   screens: {
@@ -15,9 +15,13 @@ export default {
       'xl': '1280px',
       '2xl': '1536px',
 
-    },
+      },
  
-    extend: {},
+    extend: {
+      colors:{
+        "primary":"#2563eb"
+      }
+    },
   },
   plugins: [
     require('daisyui'),

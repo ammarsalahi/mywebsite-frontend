@@ -8,8 +8,8 @@ import { POST_CATEGORY } from '../api/Endpoints'
 import { Spin } from 'antd';
 import PostEmpty from '../global/PostEmpty'
 import LoadMotion from '../global/LoadMotion'
-import { useRecoilState } from 'recoil'
-import { pageLoadSelector } from '../states/Selectors'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { pageLoadSelector, themeSelector } from '../states/Selectors'
 
 export default function Categories() {
 
@@ -17,6 +17,7 @@ export default function Categories() {
     const {name}:any =useParams();    
     const [isLoad,setisLoad]=useState(false);
     const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
+    const theme =useRecoilValue(themeSelector)
 
     const getFilters=async()=>{
       setisLoad(false)
@@ -47,7 +48,7 @@ export default function Categories() {
                   <>
                   <div className='post-card'>
                     {posts?.map((item:any,idx:number)=>(
-                        <VerticalCard post={item} key={idx}/>
+                        <VerticalCard post={item} key={idx} deletePost={()=>{}} theme={theme}/>
                     ))}
                   </div>
                 

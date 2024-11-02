@@ -18,6 +18,7 @@ import PrivateRouteContainer from './PrivateRouteContainer'
 import Settings from '../pages/Settings'
 
 import AddEditAbout from '../pages/AddEditAbout'
+import CategoryList from '../pages/CategoryList'
 
 export default function Routes() {
     const pages=createBrowserRouter([
@@ -98,6 +99,10 @@ export default function Routes() {
         {
           path:'/search/:query',
           element:<RouteContainer><Search/></RouteContainer>
+        },
+        {
+          path:"category/",
+          element:<PrivateRouteContainer><CategoryList/></PrivateRouteContainer>
         }
 
     ])

@@ -8,6 +8,9 @@ import { themeSelector } from '../states/Selectors'
 import { BiPencil, BiTrashAlt } from 'react-icons/bi'
 import { FaTrash } from 'react-icons/fa6'
 import { FaTrashAlt } from 'react-icons/fa'
+import NewPosts from './newPosts'
+
+
 interface detailprops{
   post:any;
   others:any;
@@ -37,7 +40,7 @@ export default function Detail(props:detailprops) {
         <div className="ancher-show py-3">
           <ul className="menu bg-base-200 rounded-box">
             <div>
-              <div className="flex items-center justify-between mb-1 px-5 py-2">
+              <div className="flex items-center justify-between mb-1 px-5">
                 <button className='btn  btn-circle'>
                   <BiPencil fontSize={30}/>
                 </button>
@@ -74,6 +77,8 @@ export default function Detail(props:detailprops) {
             </li>
             
           </ul>
+          <NewPosts theme={theme}/>
+
         </div>
       </div>
       <div className={theme=="dark"?'grid-col border-gray-600':'grid-col'} ref={titleref}>
