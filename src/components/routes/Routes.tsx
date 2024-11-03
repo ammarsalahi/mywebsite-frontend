@@ -18,7 +18,7 @@ import PrivateRouteContainer from './PrivateRouteContainer'
 import Settings from '../pages/Settings'
 
 import AddEditAbout from '../pages/AddEditAbout'
-import CategoryList from '../pages/CategoryList'
+import CategoryList from '../pages/Category'
 
 export default function Routes() {
     const pages=createBrowserRouter([

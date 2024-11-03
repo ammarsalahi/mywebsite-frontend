@@ -1,22 +1,27 @@
-import React from 'react'
-import { useRecoilValue } from 'recoil'
-import { themeSelector } from '../states/Selectors'
+import React, { useState } from 'react'
 import { FaPencil, FaPlus, FaTrash } from 'react-icons/fa6';
 import { AiOutlineSearch,AiOutlineSortAscending, AiOutlineSortDescending } from 'react-icons/ai';
+import AddEditModal from './AddEditModal';
 
-
-export default function CategoryList() {
-  const theme=useRecoilValue(themeSelector);
-
+interface listProps{
+  theme:string
+}
+export default function CategoryList(props:listProps) {
+  const [modaldata,setModalData]=useState("")
+  const handleOpenModal=(type:string)=>()=>{
+    setModalData(type);
+    const modalElement = document.getElementById('catmodal') as HTMLDialogElement | null;
+    modalElement?.showModal();
+  }
   return (
-    <div className={`card-${theme} rounded-xl`}>
+    <div className={`card-${props.theme} rounded-xl`}>
         <div className="card-body">
           <div className='flex justify-center items-center text-center pb-7 w-full text-xl font-bold '>
              <p >دسته‌بندی‌ها</p>
           </div>
 
         <div className="overflow-x-auto">
-        <div className="flex justify-between items-center px-10 bg-base-200 border border-blue-500 p-3 rounded-t-lg w-full">
+        <div className="flex justify-between items-center px-10 bg-base-300  p-3 rounded-t-lg w-full">
             {/* <input className="input input-bordered input-sm rounded-xl"/> */}
             <button className='btn btn-ghost btn-sm'>
               <AiOutlineSortAscending className='text-2xl text-blue-600'/>
@@ -28,12 +33,15 @@ export default function CategoryList() {
               />
               <AiOutlineSearch fontSize={20}/>
             </label>
-            <button className='btn-blue-outline rounded-xl hover:text-white  btn-sm flex'>
+            <button 
+                className='btn-blue-outline rounded-xl hover:text-white  btn-sm flex'
+                onClick={handleOpenModal("add")}
+            >
               <FaPlus/>
               افزودن
             </button>
           </div>
-          <table className="table table-zebra border-x border-blue-500">
+          <table className="table table-zebra border-x border-base-300">
          
             <thead>
               <tr className='text-sm text-center'>
@@ -50,7 +58,10 @@ export default function CategoryList() {
                 <td>Brice Swyre</td>
                 <td>Tax Accountant</td>
                 <td className="flex gap-2 justify-center items-center">
-                      <button className='btn-blue-outline btn-sm rounded-xl flex'>
+                      <button 
+                          className='btn-blue-outline btn-sm rounded-xl flex'
+                          onClick={handleOpenModal("edit")}
+                      >
                          <FaPencil/>
                          ویرایش
                       </button>
@@ -62,7 +73,7 @@ export default function CategoryList() {
               </tr>
             </tbody>
           </table>
-          <div className="flex justify-center items-center px-10 bg-base-200 border border-blue-500 py-5 rounded-b-lg w-full">
+          <div className="flex justify-center items-center px-10 bg-base-300  py-5 rounded-b-lg w-full">
               <div className="join border border-blue-600 rounded-xl">
                 <button className="join-item btn-page-blue btn-sm text-base">1</button>
                 <button className="join-item btn-page-blue btn-sm text-base">2</button>
@@ -72,6 +83,7 @@ export default function CategoryList() {
           </div>
         </div>
         </div>
+        <AddEditModal  type={modaldata} />
     </div>
   )
 }
