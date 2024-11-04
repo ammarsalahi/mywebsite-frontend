@@ -1,5 +1,5 @@
 import { selector } from "recoil";
-import { filterAtom, imgurlAtom, menuAtom, postSearchAtom, projectSearchAtom, projfilterAtom, typeAtom, userAtom,isloadingAtom,themeAtom, pageLoadAtom, tokenAtom, settingsAtom } from "./Atoms";
+import { filterAtom, imgurlAtom, menuAtom, postSearchAtom, projectSearchAtom, projfilterAtom, typeAtom, userAtom,isloadingAtom,themeAtom, pageLoadAtom, tokenAtom, settingsAtom, categoryAtom } from "./Atoms";
 
 
 const filterSelector=selector({
@@ -142,9 +142,21 @@ const settingsSelector=selector({
         set(settingsAtom,newValue)
     }
 })
+
+const categorySelector=selector({
+    key:"cat-selector",
+    get:({get})=>{
+        const value=get(categoryAtom)
+        return value
+    },
+    set:({set},newValue:any)=>{
+        set(categoryAtom,newValue)
+    }
+})
+
 export {
     filterSelector,postSearchSelector,projectSearchSelector,
     menuSelector,imgurlSelector,projfilterSelector,
     typeSelector,userSelector,islodingselector,themeSelector,
-    pageLoadSelector,tokenSelector,settingsSelector
+    pageLoadSelector,tokenSelector,settingsSelector,categorySelector
 }

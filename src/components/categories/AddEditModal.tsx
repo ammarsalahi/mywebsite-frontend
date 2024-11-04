@@ -1,12 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CgClose } from 'react-icons/cg';
+import { Api } from '../api/Index';
+import { CATEGORIES, CATEGORIES_ID } from '../api/Endpoints';
+import { message } from 'antd';
+import { useRecoilValue } from 'recoil';
+import { categorySelector } from '../states/Selectors';
 
 interface modalProps{
-    type:string
+    type:string;
+    reload:()=>void;
+
 }
 export default function AddEditModal(props:modalProps) {
   const modalElement = document.getElementById('catmodal') as HTMLDialogElement | null;
-
+  const cat=useRecoilValue(categorySelector)
   const [name,setName]=useState<string>("");
 
   const handleChangeName=(e:React.ChangeEvent<HTMLInputElement>)=>{
@@ -17,8 +24,31 @@ export default function AddEditModal(props:modalProps) {
   }
 
   const handleAdd=()=>{
-      
+      Api.post(CATEGORIES,{name:name}).then((res)=>{
+        props.reload()
+        setName("");
+        modalElement?.close()
+      }).catch((err)=>{
+        message.error("متاسفانه مشکلی پیش آمد!")
+      })
   }
+  const handleEdit=()=>{
+    Api.patch(CATEGORIES_ID(cat.id),{name:name}).then((res)=>{
+      props.reload()
+      setName("");
+      modalElement?.close()
+    }).catch((err)=>{
+      message.error("متاسفانه مشکلی پیش آمد!")
+    })
+  }
+
+  useEffect(()=>{
+    if(props.type=="edit"){
+      setName(cat.name)
+    }
+  },[cat])
+
+
   return (
     <dialog id={"catmodal"} className="modal">
         <div className="modal-box py-3">
@@ -34,7 +64,10 @@ export default function AddEditModal(props:modalProps) {
                   className='input input-bordered w-full rounded-2xl mb-5' 
                   placeholder='نام دسته‌بندی را وارد کنید...' />
               <div className="flex items-center gap-3">
-                <button className='btn-blue w-52 rounded-2xl' type='button' disabled={name.length==0}>
+                <button 
+                    className='btn-blue w-52 rounded-2xl' type='button' disabled={name.length==0} 
+                    onClick={cat.id==0?handleAdd:handleEdit}
+                >
                   تایید
                 </button>
                 <button className='btn-red w-52 rounded-2xl' type='button' onClick={handleClose}>

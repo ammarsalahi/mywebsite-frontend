@@ -18,9 +18,9 @@ export const PROJECTS_ID=(project_id:any)=>_(`/contents/projects/${project_id}`)
 
 export const PROJECT_DETAIL_ID=(project_id:any)=>_(`/contents/project-detail/${project_id}`)
 
-export const CATEGORIES=_('/contents/categories')
+export const CATEGORIES=_('/contents/categories/')
 
-export const CATEGORIES_ID=(name:any)=>_(`/contents/categories/${name}`)
+export const CATEGORIES_ID=(name:any)=>_(`/contents/categories/${name}/`)
 
 export const KEYWORDS=_('/contents/keywords/')
 

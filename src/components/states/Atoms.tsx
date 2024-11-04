@@ -92,9 +92,16 @@ const settingsAtom=atom({
     effects_UNSTABLE: [persistAtom],
 })
 
+const categoryAtom=atom({
+    key:"cat-atom",
+    default:{
+        name:"",
+        id:0
+    }
+})
 export {
     filterAtom,projectSearchAtom,postSearchAtom,
     projfilterAtom,menuAtom,imgurlAtom,typeAtom,
     userAtom,isloadingAtom,themeAtom,pageLoadAtom,
-    tokenAtom,settingsAtom
+    tokenAtom,settingsAtom,categoryAtom
 }

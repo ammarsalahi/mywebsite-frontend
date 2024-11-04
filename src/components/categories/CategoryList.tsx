@@ -1,18 +1,56 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaPencil, FaPlus, FaTrash } from 'react-icons/fa6';
-import { AiOutlineSearch,AiOutlineSortAscending, AiOutlineSortDescending } from 'react-icons/ai';
+import { AiOutlineSearch,AiOutlineSortAscending } from 'react-icons/ai';
 import AddEditModal from './AddEditModal';
+import { Api } from '../api/Index';
+import { CATEGORIES, CATEGORIES_ID } from '../api/Endpoints';
+import Swal from 'sweetalert2';
+import { useRecoilState } from 'recoil';
+import { categorySelector } from '../states/Selectors';
 
 interface listProps{
   theme:string
 }
 export default function CategoryList(props:listProps) {
-  const [modaldata,setModalData]=useState("")
-  const handleOpenModal=(type:string)=>()=>{
-    setModalData(type);
-    const modalElement = document.getElementById('catmodal') as HTMLDialogElement | null;
-    modalElement?.showModal();
+  const[catType,setCatType]=useState("");
+  const [categories,setCategories]=useState([]);
+  const [cateId,setCatId]=useRecoilState(categorySelector)
+  const getCategories=()=>{
+    Api.get(CATEGORIES).then((res)=>{
+        setCategories(res.data.results)
+    })
   }
+  const handleOpenModal=(type:string,item:any|null)=>()=>{
+      setCatType(type)
+      if(item!=null){
+        setCatId({
+          name:item.name,
+          id:item.id
+        })
+      }
+      const modalElement = document.getElementById('catmodal') as HTMLDialogElement | null;
+      modalElement?.showModal();
+
+  }
+  const handleDelete=(id:number,name:string)=>()=>{
+    Swal.fire({
+      title:`آیا میخواهید ${name} حذف شود؟`,
+      icon:"error",
+      confirmButtonText:"بله",
+      cancelButtonText:"نه, بیخیال",
+      showCancelButton:true
+    }).then((result)=>{
+        if(result.isConfirmed){
+            Api.delete(CATEGORIES_ID(id)).then((res)=>{
+                getCategories()
+            })
+        }
+    })
+  }
+
+  useEffect(()=>{
+    getCategories()
+  },[])
   return (
     <div className={`card-${props.theme} rounded-xl`}>
         <div className="card-body">
@@ -35,7 +73,7 @@ export default function CategoryList(props:listProps) {
             </label>
             <button 
                 className='btn-blue-outline rounded-xl hover:text-white  btn-sm flex'
-                onClick={handleOpenModal("add")}
+                onClick={handleOpenModal("add",null)}
             >
               <FaPlus/>
               افزودن
@@ -53,24 +91,27 @@ export default function CategoryList(props:listProps) {
             </thead>
             <tbody>
               {/* row 3 */}
-              <tr className='text-center'>
-                <th>3</th>
-                <td>Brice Swyre</td>
-                <td>Tax Accountant</td>
-                <td className="flex gap-2 justify-center items-center">
-                      <button 
-                          className='btn-blue-outline btn-sm rounded-xl flex'
-                          onClick={handleOpenModal("edit")}
-                      >
-                         <FaPencil/>
-                         ویرایش
-                      </button>
-                      <button className='btn-red-outline rounded-xl btn-sm flex '>
-                         <FaTrash/>
-                         حذف
-                      </button>
-                </td>
-              </tr>
+              {categories?.map((item:any,idx:number)=>(
+                <tr className='text-center' key={idx}>
+                  <th>{item.id}</th>
+                  <td>{item.name}</td>
+                  <td>{item.post_count}</td>
+                  <td className="flex gap-2 justify-center items-center">
+                        <button 
+                            className='btn-blue-outline btn-sm rounded-xl flex'
+                            onClick={handleOpenModal("edit",item)}
+                        >
+                          <FaPencil/>
+                          ویرایش
+                        </button>
+                        <button className='btn-red-outline rounded-xl btn-sm flex' onClick={handleDelete(item.id,item.name)}>
+                          <FaTrash/>
+                          حذف
+                        </button>
+                  </td>
+                </tr>
+              ))}
+              
             </tbody>
           </table>
           <div className="flex justify-center items-center px-10 bg-base-300  py-5 rounded-b-lg w-full">
@@ -83,7 +124,7 @@ export default function CategoryList(props:listProps) {
           </div>
         </div>
         </div>
-        <AddEditModal  type={modaldata} />
+        <AddEditModal  type={catType} reload={getCategories}/>
     </div>
   )
 }
