@@ -6,6 +6,7 @@ import { BiBookReader, BiPencil } from "react-icons/bi";
 import { FaFire, FaTrash } from 'react-icons/fa6';
 import { useRecoilValue } from 'recoil';
 import { tokenSelector } from '../states/Selectors';
+import { BiCategory } from "react-icons/bi";
 
 
 interface postProps{
@@ -33,13 +34,13 @@ export default function VerticalCard(props:postProps) {
          <figure>
             <img
             src={showImage(props.post?.header_image)}
-            alt="projects" className="h-52 w-full rounded-t-lg bg-gray-400"/>
-             <button className='btn btn-sm btn-glass shadow-lg px-6 rounded-full absolute top-5 right-5 hover:bg-blue-500 hover:text-white hover:border-blue-500'>
-                  {props.post?.category.name}
+            alt="projects" className="h-44 w-full rounded-t-lg bg-gray-400"/>
+             <button className='btn btn-sm btn-glass flex gap-2 shadow-lg px-6  rounded-full absolute top-5 right-5 hover:bg-blue-500 hover:text-white hover:border-blue-500'>
+                <BiCategory/>  {props.post?.category.name}
               </button>
-              <span className='absolute top-5 left-5'>
+              {/* <span className='absolute top-5 left-5'>
                 <FaFire className='text-2xl shadow-xl text-orange-500'/>
-              </span>
+              </span> */}
           </figure>
           </div>
 
@@ -48,7 +49,7 @@ export default function VerticalCard(props:postProps) {
           
             <div className='px-2'>
              
-          <h2 className="py-3 font-bold text-xl">{props.post?.title}</h2>
+          <h2 className="pt-3 pb-1 font-bold text-base">{props.post?.title}</h2>
             <div className="flex justify-between py-3 ">
             <div className="flex gap-1 items-center text-sm">
                 <PiClock fontSize={18}/>

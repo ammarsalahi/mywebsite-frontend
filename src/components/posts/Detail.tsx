@@ -1,15 +1,16 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import VerticalCard from './VerticalCard'
-import { PiSubtitles, PiTextAlignRight,PiNewspaperClipping, PiClock, PiShareNetwork } from 'react-icons/pi'
+import { PiNewspaperClipping, PiClock, PiShareNetwork } from 'react-icons/pi'
 import { Link, useNavigate } from 'react-router-dom'
 import { showImage } from '../api/Index'
 import { useRecoilValue } from 'recoil'
 import { themeSelector } from '../states/Selectors'
-import { BiPencil, BiTrashAlt } from 'react-icons/bi'
-import { FaTrash } from 'react-icons/fa6'
-import { FaTrashAlt } from 'react-icons/fa'
-import NewPosts from './newPosts'
-
+import { BsPen } from "react-icons/bs";
+import { GoTrash } from "react-icons/go";
+import { MdOutlineMore } from "react-icons/md";
+import { BiBookReader, BiPencil } from "react-icons/bi";
+import { FaFire, FaTrash } from 'react-icons/fa6';
+import { BiCategory } from "react-icons/bi";
 
 interface detailprops{
   post:any;
@@ -18,87 +19,105 @@ interface detailprops{
 export default function Detail(props:detailprops) {
   const theme=useRecoilValue(themeSelector)
  
-  const titleref=useRef(null);
-  const textref=useRef(null);
-  const otherref=useRef(null);
+ 
+  const [scrollValue, setScrollValue] = useState(0);
 
-  const [refName,setRefName]=useState("");
 
-  let navigate=useNavigate();
+  const handlePageScroll = () => {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const currentScroll = window.scrollY;
+    const newValue = 100 - (currentScroll / maxScroll) * 100;
+    setScrollValue(newValue);
+  };
 
-  const handleSelectRef=(selection:any,name:string)=>()=>{
-    selection.current.scrollIntoView({ behavior: 'smooth' });
-    setRefName(name)
-  }
+  const handleScroll = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    setScrollValue(value);
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollTo = ((100 - value) / 100) * maxScroll
+    window.scrollTo({ top: scrollTo, behavior: "smooth" });
+  };
 
+  useEffect(() => {
+    handlePageScroll();
+    window.addEventListener("scroll", handlePageScroll);
+    
+    return () => {
+      window.removeEventListener("scroll", handlePageScroll);
+    };
+  }, []);
 
 
  
   return (
     <div className='detail-show '>
-      <div className="minicol">
-        <div className="ancher-show py-3">
-          <ul className="menu bg-base-200 rounded-box">
-            <div>
-              <div className="flex items-center justify-between mb-1 px-5">
-                <button className='btn  btn-circle'>
-                  <BiPencil fontSize={30}/>
-                </button>
-                <button className='btn btn-circle'>
-                  <FaTrashAlt fontSize={27}/>
-                </button>
+      <div className="minicol pb-40">
+        <div className="ancher-show">
+
+          <ul className="flex flex-col items-center ">
+            <li>
+              <button className="btn btn-ghost text-2xl">
+                <BiPencil fontSize={30} />
+              </button>
+            </li>
+            <li>
+              <button className="btn btn-ghost text-2xl">
+                <GoTrash />
+              </button>
+            </li>
+            <li>
+              <button className="btn btn-ghost text-2xl">
+                <MdOutlineMore />
+              </button>
+            </li>
+            <li>
+              <button className="btn btn-ghost text-2xl">
+                <PiShareNetwork />
+              </button>
+            </li>
+            <li>
+              <div className="flex justify-center items-center mt-20">
+                <input
+                  type="range"
+                  className="range range-xs [--range-shdw:#2563eb] transform rotate-90 "
+                  min="0"
+                  max="100"
+                  value={scrollValue}
+                  onChange={handleScroll}
+                />
               </div>
-            </div>
-            <li>
-              <a className={refName=="title"?"anchor-selected mb-1 hover:bg-blue-600":"anchor-unselected mb-1 hover:bg-blue-600"} onClick={handleSelectRef(titleref,"title")}>
-                <PiSubtitles fontSize={30}/>
-                <span>عنوان</span>
-              </a>
             </li>
-            <li>
-              <a className={refName=="text"?"anchor-selected mb-1 hover:bg-blue-600":"anchor-unselected mb-1 hover:bg-blue-600"} onClick={handleSelectRef(textref,"text")}>
-                <PiTextAlignRight fontSize={30}/>
-                <span>متن پست</span>
-
-              </a>
-            </li>
-            <li>
-              <a className={refName=="other"?"anchor-selected mb-1 hover:bg-blue-600":"anchor-unselected mb-1 hover:bg-blue-600"} onClick={handleSelectRef(otherref,"other")}>
-                <PiNewspaperClipping fontSize={30}/>
-                <span>پست‌های مشابه</span>
-              </a>
-            </li>
-            <li>
-              <a className="anchor-unselected hover:bg-blue-600 mb-1">
-                <PiShareNetwork fontSize={30}/>
-                <span>اشتراک‌گذاری</span>
-
-              </a>
-            </li>
-            
           </ul>
-          <NewPosts theme={theme}/>
 
         </div>
       </div>
-      <div className={theme=="dark"?'grid-col border-gray-600':'grid-col'} ref={titleref}>
-          <img src={showImage(props.post?.header_image)} alt="" className='w-full h-96 rounded-2xl border border-base-300 bg-base-300' />
-          <div className="flex justify-between py-3 px-4">
-                <Link to={`/categories/${props.post?.category.english_name}`} >
+      <div className={theme=="dark"?'grid-col border-gray-600':'grid-col'}>
+        <div className="py-6 ps-5 ">
+        <p className='text-2xl font-semibold'>{props.post?.title}</p>
+        <div className="flex justify-start gap-5 pt-10 px-4">
+                <Link 
+                    to={`/categories/${props.post?.category.name}`} 
+                    className='border-2 border-blue-500 text-blue-500 hover:bg-blue-500 px-5 hover:text-white  rounded-full flex items-center gap-2 text-xl'
+                >
+                   <BiCategory fontSize={18}/>
                   <p className='text-lg'>{props.post?.category.name}</p>
                 </Link>
                   <div className='flex items-center text-base'>
                     <PiClock />
                     <span>{props.post?.persian_date}</span>
-                  </div>
-
-                  
+                  </div>  
+                  <div className="flex gap-1 items-center text-sm">
+                    <BiBookReader fontSize={18}/>
+                  <span>{props.post?.reading_time}</span>
+                </div>
           </div>
+        </div>
+
+          <img src={showImage(props.post?.header_image)} alt="" className='w-full h-96 lg:h-[450px] rounded-xl border border-base-300 bg-base-300 shadow-lg' />
 
           <div className="py-5">
-              <p className='text-3xl'>{props.post?.title}</p>
              
-             <div className="py-10" ref={textref}>
+             <div className="py-10">
                 <p className='text-md'>{props.post?.header}</p>
                 <div className="py-4">
                   <div dangerouslySetInnerHTML={{ __html: props.post?.text }} />
@@ -119,13 +138,13 @@ export default function Detail(props:detailprops) {
               </div>}
           </div>
           
-          {props.others.length>0 && <div className={theme=="light"?"pb-16 pt-5 border-t":"pb-16 pt-5 border-t border-gray-600"} ref={otherref}>
+          {props.others.length>0 && <div className={theme=="light"?"pb-16 pt-5 border-t":"pb-16 pt-5 border-t border-gray-600"}>
                 <p className='text-xl'>پست‌های مشابه</p>
                 
                 <div className='grid lg:grid-cols-3 gap-5  py-10' id='others'>
                     {props.others?.map((item:any,idx:number)=>(
                       
-                      idx <3 &&  <VerticalCard post={item} key={idx} theme={theme} deletePost={()=>{}}/>
+                      idx <6 &&  <VerticalCard post={item} key={idx} theme={theme} deletePost={()=>{}}/>
                     ))}
                   
                 </div> 

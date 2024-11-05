@@ -9,6 +9,7 @@ import { pageLoadSelector, projectSearchSelector, projfilterSelector, themeSelec
 import PorjectEmpty from '../global/PorjectEmpty';
 import EmptyList from '../global/EmptyList';
 import LoadMotion from '../global/LoadMotion';
+import Swal from 'sweetalert2';
 
 
 export default function Projects() {
@@ -45,12 +46,25 @@ export default function Projects() {
       }
     }, [projectsearch,filters.assort])
     
-    const handleDelete=(id:string)=>()=>{
-      Api.delete(PROJECTS_ID(id)).then(()=>{
-          message.success("با موفقیت حذف شد");
-          getFilters()
-      }).catch(()=>{
-        message.error("متاسفانه مشکلی پیش آمد!")
+    const handleDelete=(id:string,titles:string)=>()=>{
+      Swal.fire({
+        title:"آیا میخواهید پروژه موردنظر حذف شود؟!",
+        text:`${titles}`,
+        icon:"error",
+        confirmButtonText:"بله",
+        confirmButtonColor:"red",
+        cancelButtonText:"نه,بیخیال",
+        showCancelButton:true
+
+      }).then((result)=>{
+        if(result.isConfirmed){
+          Api.delete(PROJECTS_ID(id)).then(()=>{
+            message.success("با موفقیت حذف شد");
+            getFilters()
+          }).catch(()=>{
+            message.error("متاسفانه مشکلی پیش آمد!")
+          });
+        }
       })
     }
 
@@ -70,7 +84,7 @@ export default function Projects() {
         <div>
             {projects.length>0 ? <div className='post-card'>
                {projects?.map((item:any,idx:number)=>(
-                   <ProjectCard project={item} theme={theme} key={idx} deleteProject={handleDelete(item.id)}/>
+                   <ProjectCard project={item} theme={theme} key={idx} deleteProject={handleDelete(item.project_id,item.title)}/>
                ))}
             </div>
             :

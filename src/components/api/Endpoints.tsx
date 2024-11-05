@@ -20,6 +20,8 @@ export const PROJECT_DETAIL_ID=(project_id:any)=>_(`/contents/project-detail/${p
 
 export const CATEGORIES=_('/contents/categories/')
 
+export const CATEGORIES_PAGE=(page:number)=>_(`/contents/categories/?page=${page}`)
+ 
 export const CATEGORIES_ID=(name:any)=>_(`/contents/categories/${name}/`)
 
 export const KEYWORDS=_('/contents/keywords/')

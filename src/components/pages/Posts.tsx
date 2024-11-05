@@ -7,11 +7,12 @@ import { Api } from '../api/Index'
 import { CATEGORIES, POST_SEARCH_FILTER, POST_SEARCH_FILTER_NEXT, POSTS_ID } from '../api/Endpoints'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { filterSelector, pageLoadSelector, postSearchSelector, themeSelector } from '../states/Selectors'
-import HorizontalCard from '../posts/HorizontalCard'
 import { Spin } from 'antd';
 import EmptyList from '../global/EmptyList'
 // import LoadMotion from '../global/LoadMotion'
 import { TfiReload } from "react-icons/tfi";
+import Swal from 'sweetalert2'
+import { BiCategory } from "react-icons/bi";
 
 
 export default function Posts() {
@@ -39,7 +40,7 @@ export default function Posts() {
   }
   const getCategory=async()=>{
     await Api.get(CATEGORIES).then((res)=>{
-      setCategories(res.data)
+      setCategories(res.data.results)
     })
   }
 
@@ -52,13 +53,26 @@ export default function Posts() {
     }
   }
 
-  const handleDelete=(id:string)=>()=>{
-    Api.delete(POSTS_ID(id)).then(()=>{
-      message.success("با موفقیت حذف شد");
-      getFilters()
-    }).catch(()=>{
-      message.error("متاسفانه مشکلی پیش آمد!")
-    });
+  const handleDelete=(id:string,titles:string)=>()=>{
+    Swal.fire({
+      title:"آیا میخواهید پست موردنظر حذف شود؟!",
+      text:`${titles}`,
+      icon:"error",
+      confirmButtonText:"بله",
+      confirmButtonColor:"red",
+      cancelButtonText:"نه,بیخیال",
+      showCancelButton:true
+    }).then((result)=>{
+      if(result.isConfirmed){
+        Api.delete(POSTS_ID(id)).then(()=>{
+          message.success("با موفقیت حذف شد");
+          getFilters()
+        }).catch(()=>{
+          message.error("متاسفانه مشکلی پیش آمد!")
+        });
+      }
+    })
+    
   }
   useEffect(() => {
     getFilters()
@@ -87,8 +101,11 @@ export default function Posts() {
 
             {categories.length>0 &&<div className="flex justify-start gap-3 pt-5 ">
               {categories?.map((item:any,idx:number)=>(
-                <button  className='mini-item px-7' key={idx} 
-                onClick={()=>setSelectedCategory(item.id)}>{item.name}</button>
+                <button  className='mini-item px-7 flex gap-2 items-center' key={idx} 
+                onClick={()=>setSelectedCategory(item.id)}>
+                  <BiCategory fontSize={20}/>
+                  {item.name}
+                </button>
               ))}
             </div>}
         </div>    
@@ -96,11 +113,11 @@ export default function Posts() {
            {posts.length>0?
           
             <>
-            {filters.list==false?<div>
+            <div>
               <div className='post-card'>
               {posts?.map((item:any,idx:number)=>(
                  <div className="py-2" key={idx}>
-                  <VerticalCard post={item}  deletePost={handleDelete(item?.post_id)} theme={theme}/>
+                  <VerticalCard post={item}  deletePost={handleDelete(item?.post_id,item?.title)} theme={theme}/>
                  </div>
               ))}
                
@@ -112,21 +129,20 @@ export default function Posts() {
                 </button>
                 </div>}
             </div> 
-            :
-            <div className="py-10">
-              {posts?.map((item:any,idx:number)=>(
-                <div className={theme=="dark"?'border-b border-gray-600 pb-4':""}>
-                <HorizontalCard  post={item} key={idx} theme={theme}/>
-                </div>
-             ))}
-                {next!=null &&  <div className="flex justify-center py-10">
-                  <button className='btn-blue w-36 gap-3 rounded-2xl font-bold text-xl' onClick={getNextPages}>
-                  <TfiReload/>
-                  بیشتر
-                </button>
-                </div>}
-             </div>
-            }
+            {/* // <div className="py-10">
+            //   {posts?.map((item:any,idx:number)=>(
+            //     <div className="px-10">
+            //     <HorizontalCard  post={item} key={idx} theme={theme}/>
+            //     </div>
+            //  ))}
+            //     {next!=null &&  <div className="flex justify-center py-10">
+            //       <button className='btn-blue w-36 gap-3 rounded-2xl font-bold text-xl' onClick={getNextPages}>
+            //       <TfiReload/>
+            //       بیشتر
+            //     </button>
+            //     </div>}
+            //  </div>
+            // } */}
             </>
             :
              <EmptyList name="پستی"/>

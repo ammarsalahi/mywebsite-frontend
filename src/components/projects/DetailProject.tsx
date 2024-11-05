@@ -1,16 +1,16 @@
-import React from 'react'
-import { ListGroup } from 'react-bootstrap'
-import { PiClock, PiEye, PiImage, PiNewspaperClipping, PiPen, PiShareNetwork, PiSubtitles, PiTextAlignRight, PiTrash } from 'react-icons/pi'
+import React, { useEffect, useState } from 'react'
+import { PiClock, PiShareNetwork} from 'react-icons/pi'
 import { Link, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import ProjectCard from './ProjectCard'
-import { Anchor, Carousel } from 'antd'
 import { showImage } from '../api/Index'
-import { FaHammer } from 'react-icons/fa6'
-import NewPosts from '../posts/newPosts';
 import ImageCarousel from './ImageCarousel'
 import { useRecoilValue } from 'recoil'
 import { themeSelector } from '../states/Selectors'
+import { BiBookReader, BiPencil } from 'react-icons/bi'
+import { GoTrash } from 'react-icons/go'
+import { MdOutlineMore } from 'react-icons/md'
+import { Carousel } from 'antd'
 
 interface detailprops{
   project:any;
@@ -18,74 +18,103 @@ interface detailprops{
 }
 export default function DetailP(props:detailprops) {
   const theme=useRecoilValue(themeSelector)
-  const items=[
-          {
-            key: 'titles',
-            href: '#titles',
-            title: <div className="flex gap-4 text-xl items-center">
-              <PiSubtitles fontSize={30}/>
-              <p>عنوان</p>
-            </div>
-          },
-          
-           {
-            key: 'texts',
-            href: '#texts',
-            title: <div className="flex gap-4 text-xl items-center">
-            <PiImage fontSize={30}/>
-              <p>تصاویر پروژه</p>
-            </div>,
-          },
-            {
-            key: 'others',
-            href: '#others',
-            title: <div className="flex gap-4 text-xl items-center">
-            <FaHammer fontSize={30}/>
-              <p>پروژه‌های دیگر</p>
-            </div>,
-          },
-          {
-            key: 'sharing',
-            href: '#sharing',
-            title: <div className="flex gap-4 text-xl items-center">
-              <PiShareNetwork fontSize={30}/>
-              <p>اشتراک گذاری</p>
-            </div>,
-          }]
+ 
+  const [scrollValue, setScrollValue] = useState(0);
+
+
+  const handlePageScroll = () => {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const currentScroll = window.scrollY;
+    const newValue = 100 - (currentScroll / maxScroll) * 100;
+    setScrollValue(newValue);
+  };
+
+  const handleScroll = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    setScrollValue(value);
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollTo = ((100 - value) / 100) * maxScroll
+    window.scrollTo({ top: scrollTo, behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    handlePageScroll();
+    window.addEventListener("scroll", handlePageScroll);
+    
+    return () => {
+      window.removeEventListener("scroll", handlePageScroll);
+    };
+  }, []);
   let navigate=useNavigate()
 
   return (
  <div className='detail-show'>
-      <div className="minicol">
+      <div className="minicol pb-40">
         <div className="ancher-show">
-          <div className="py-5">
-              <Anchor
-                affix={false}
-              className="text-3xl"
-              items={items}
-            />
-          </div>
-          <div>
-          <NewPosts />
-
-          </div>
+        <ul className="flex flex-col items-center ">
+            <li>
+              <button className="btn btn-ghost text-2xl">
+                <BiPencil fontSize={30} />
+              </button>
+            </li>
+            <li>
+              <button className="btn btn-ghost text-2xl">
+                <GoTrash />
+              </button>
+            </li>
+            <li>
+              <button className="btn btn-ghost text-2xl">
+                <MdOutlineMore />
+              </button>
+            </li>
+            <li>
+              <button className="btn btn-ghost text-2xl">
+                <PiShareNetwork />
+              </button>
+            </li>
+            <li>
+              <div className="flex justify-center items-center mt-20">
+                <input
+                  type="range"
+                  className="range range-xs [--range-shdw:#2563eb] transform rotate-90 "
+                  min="0"
+                  max="100"
+                  value={scrollValue}
+                  onChange={handleScroll}
+                />
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
-      </div>
 
-      <div className='grid-col' id="titles">
-          <img src={showImage(props.project?.header_image)} alt="" className='w-full h-96 rounded-2xl' />
-          <div className="flex justify-start pt-3 pb-5 px-4">
+      <div className='grid-col' >
+      <div className="py-6 ps-5 ">
+        <p className='text-2xl font-semibold'>{props.project?.title}</p>
+        <div className="flex justify-start gap-5 pt-10 px-4">
+                
+                  <div className='flex items-center text-base'>
+                    <PiClock />
+                    <span>{props.project?.persian_date}</span>
+                  </div>  
+                  <div className="flex gap-1 items-center text-sm">
+                    <BiBookReader fontSize={18}/>
+                  <span>{props.project?.reading_time}</span>
+                </div>
+          </div>
+        </div>
+          <img src={showImage(props.project?.header_image)} alt="" className='w-full h-96 lg:h-[450px] rounded-2xl' />
+          {/* <div className="flex justify-start pt-3 pb-5 px-4">
                   <div className='flex items-center'>
                     <PiClock fontSize={20}/>
                     <span>{props.project?.persian_date}</span>
                   </div>
 
-          </div>
+          </div> */}
 
           <div className="pb-5">
-              <p className='text-3xl block'>{props.project?.title}</p>
              
-             <div className="py-10" id="texts">
+             <div className="py-10" >
                 <div className="py-4">
                   <p className='text-md'>{props.project?.text}</p>
                 </div>
@@ -127,10 +156,10 @@ export default function DetailP(props:detailprops) {
           {props.others.length>0 && <div className={theme=="dark"?"pb-16 pt-5 border-t ":"pb-16 pt-5 border-t border-gray-600"} id="others">
                 <p className='text-xl'>پروژه‌های دیگر</p>
                 
-                <div className='grid lg:xl:grid-cols-3 gap-2  py-10' id='others'>
+                <div className='grid lg:xl:grid-cols-3 gap-2  py-10'>
                     {props.others?.map((item:any,idx:number)=>(
                       <>{item.project_id!==props.project.project_id && 
-                        <ProjectCard project={item} key={idx}/>
+                        <ProjectCard project={item} key={idx} theme={theme} deleteProject={()=>{}}/>
                       }</>
                   ))}
                   

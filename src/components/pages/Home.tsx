@@ -5,10 +5,10 @@ import LastProjects from '../projects/LastProjects'
 import Footer from '../global/Footer'
 import { Api } from '../api/Index'
 import { HOME } from '../api/Endpoints'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { imgurlAtom } from '../states/Atoms'
 import { message, Spin } from 'antd'
-import { pageLoadSelector } from '../states/Selectors'
+import { pageLoadSelector, themeSelector } from '../states/Selectors'
 import LoadMotion from '../global/LoadMotion'
 
 export default function Home() {
@@ -16,6 +16,7 @@ export default function Home() {
   const [projects,setProjects]=useState<any>([]);
   const [imgs,setimgs]=useRecoilState(imgurlAtom)
   const [loads,setLoads]=useRecoilState(pageLoadSelector)
+  const theme=useRecoilValue(themeSelector)
 
   const getHome=()=>{
     Api.get(HOME).then((res)=>{
@@ -37,10 +38,10 @@ export default function Home() {
     <div>
       {loads ==true ?<div>
       <div>
-        <LastPosts posts={posts}/>
+        <LastPosts posts={posts} theme={theme} reload={getHome}/>
       </div>
       <div>
-          <LastProjects projects={projects}/>
+          <LastProjects projects={projects} theme={theme} reload={getHome}/>
       </div>
       <Footer/>
     </div>

@@ -42,7 +42,7 @@ export default function PostFilter() {
                         نزولی
                      </button>
 
-                       <button 
+                       {/* <button 
                      className={filters.list==false?'btn btn-ghost text-blue-600':'btn btn-ghost'}
                       onClick={handleFilters('list',false)}
                      >
@@ -55,7 +55,7 @@ export default function PostFilter() {
                      >
                         <AiOutlineUnorderedList fontSize={20}/>
                         لیستی
-                     </button>
+                     </button> */}
                     <button 
                      className={filters.news?'btn btn-ghost text-orange-700':'btn btn-ghost'}
                       onClick={handleFilters('news',!filters.news)}

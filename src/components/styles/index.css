@@ -61,7 +61,7 @@
 }
 
 .paddingtop{
-   @apply py-28 px-5 xs:lg:px-10 xl:px-10;
+   @apply py-28 px-5 xs:lg:px-8 xl:px-8;
 }
 .paddingtop-xl{
     @apply py-2 xs:py-10 xs:md:sm:py-16 xs:lg:py-24;
@@ -72,11 +72,11 @@
  }
 
  .footer-cols{
-  @apply p-8 xs:border-b mx-5 xs:border-gray-300 xs:md:sm:border-0;
+  @apply p-2 xs:border-b mx-5 xs:border-gray-300 xs:md:sm:border-0;
  }
 
  .footer-list{
-    @apply grid grid-cols-2 gap-5 list-none
+    @apply grid grid-cols-2 lg:grid-cols-3 gap-3 list-none
  }
 
  .mini-logo{

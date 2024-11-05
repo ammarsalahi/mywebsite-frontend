@@ -3,7 +3,7 @@ import { FaPencil, FaPlus, FaTrash } from 'react-icons/fa6';
 import { AiOutlineSearch,AiOutlineSortAscending } from 'react-icons/ai';
 import AddEditModal from './AddEditModal';
 import { Api } from '../api/Index';
-import { CATEGORIES, CATEGORIES_ID } from '../api/Endpoints';
+import { CATEGORIES, CATEGORIES_ID, CATEGORIES_PAGE } from '../api/Endpoints';
 import Swal from 'sweetalert2';
 import { useRecoilState } from 'recoil';
 import { categorySelector } from '../states/Selectors';
@@ -15,9 +15,23 @@ export default function CategoryList(props:listProps) {
   const[catType,setCatType]=useState("");
   const [categories,setCategories]=useState([]);
   const [cateId,setCatId]=useRecoilState(categorySelector)
-  const getCategories=()=>{
-    Api.get(CATEGORIES).then((res)=>{
+  const [page,setPage]=useState(1);
+  const [isPage,setIsPage]=useState({
+    next:null,
+    prev:null,
+    count:0
+  })
+
+ 
+
+  const getCategories=async()=>{
+    await Api.get(CATEGORIES_PAGE(page)).then((res)=>{
         setCategories(res.data.results)
+        setIsPage({
+          next:res.data.next_page_number,
+          prev:res.data.prev_page_number,
+          count:res.data.count
+        })
     })
   }
   const handleOpenModal=(type:string,item:any|null)=>()=>{
@@ -48,9 +62,14 @@ export default function CategoryList(props:listProps) {
     })
   }
 
+  const handlePageChange=(num:number)=>()=>{
+    setPage(num)
+    getCategories()
+  }
+
   useEffect(()=>{
     getCategories()
-  },[])
+  },[page])
   return (
     <div className={`card-${props.theme} rounded-xl`}>
         <div className="card-body">
@@ -93,7 +112,7 @@ export default function CategoryList(props:listProps) {
               {/* row 3 */}
               {categories?.map((item:any,idx:number)=>(
                 <tr className='text-center' key={idx}>
-                  <th>{item.id}</th>
+                  <th>{idx+1}</th>
                   <td>{item.name}</td>
                   <td>{item.post_count}</td>
                   <td className="flex gap-2 justify-center items-center">
@@ -114,13 +133,24 @@ export default function CategoryList(props:listProps) {
               
             </tbody>
           </table>
-          <div className="flex justify-center items-center px-10 bg-base-300  py-5 rounded-b-lg w-full">
-              <div className="join border border-blue-600 rounded-xl">
-                <button className="join-item btn-page-blue btn-sm text-base">1</button>
-                <button className="join-item btn-page-blue btn-sm text-base">2</button>
-                <button className="join-item btn-page-blue btn-sm text-base">3</button>
-                <button className="join-item btn-page-blue btn-sm text-base">4</button>
-              </div>
+          <div className="flex justify-center items-center bg-base-300  py-4 rounded-b-lg w-full">
+          {isPage.count>5 &&<div className="join border border-blue-600 rounded-xl" dir='ltr'>
+                {isPage.prev!=null && <button className="join-item btn-page-blue btn-sm text-base"
+                   onClick={handlePageChange(isPage.prev)}
+                  >{isPage.prev}</button>}
+                {isPage.count<4 ?
+                  <button className="join-item btn-ghost btn-sm text-base">1</button>
+                :
+                 <button className="join-item btn-ghost btn-sm text-base">{page}</button>
+                }
+                {isPage.next!=null && <button className="join-item btn-page-blue btn-sm text-base"
+                  onClick={handlePageChange(isPage.next)}
+                >{isPage.next}</button>}
+
+                {/* <button className="join-item btn-page-blue btn-sm text-base">2</button>
+                <button className="join-item btn-page-blue btn-sm text-base">3</button> */}
+                {/* <button className="join-item btn-page-blue btn-sm text-base">4</button> */}
+              </div>}
           </div>
         </div>
         </div>

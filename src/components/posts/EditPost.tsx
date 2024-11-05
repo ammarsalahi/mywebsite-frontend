@@ -116,7 +116,7 @@ export default function AddPost(props:postprops) {
     const getCategories=async()=>{
         try{
             const response = await Api.get(CATEGORIES);
-            const data = response.data.map((category:{id:number,name:string})=>({
+            const data = response.data.results.map((category:{id:number,name:string})=>({
                 value:category.id,
                 label:category.name
             }))
@@ -155,7 +155,6 @@ export default function AddPost(props:postprops) {
         setfile(selectedFile||null);
         if (selectedFile && selectedFile.type.startsWith('image/')) {
             const filePreview = URL.createObjectURL(selectedFile);
-            console.log(selectedFile)
             setImage(filePreview);  
         } else {
             setImage(null);  
@@ -251,7 +250,6 @@ export default function AddPost(props:postprops) {
                     })
                     
 
-                    console.log(formdata)
                     Api.patch(POSTS_ID(props.id),formdata,{headers:AuthConfigHeaderFile(token.access)}).then((res)=>{
                         message.success("با موفقیت پست ویرایش شد");
                         sleep(3000)
@@ -387,7 +385,7 @@ export default function AddPost(props:postprops) {
                                             isClearable
                                             options={options}
                                             styles={customStyles}
-                                            className="input input-bordered rounded-xl"
+                                            className="input input-bordered bg-white rounded-xl"
                                             placeholder="نام دسته‌بندی"
                                             value={options.find(option => option.value === values.category) || null}
                                             onChange={(selectedOption:any) => {
