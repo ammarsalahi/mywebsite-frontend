@@ -131,11 +131,11 @@
 }
 
 .nav-selected{
-  @apply p-3 bg-blue-400 text-white mb-1
+  @apply w-full  flex justify-start gap-5 text-lg rounded-2xl mb-1
 }
 
 .nav-unselected{
-  @apply p-3 mb-1
+  @apply btn btn-ghost w-full  flex justify-start gap-5 text-lg rounded-2xl mb-1
 }
 
 .nav-set{

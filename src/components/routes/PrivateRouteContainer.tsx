@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from '../global/Navbar';
 import { useRecoilValue } from 'recoil';
-import { tokenSelector } from '../states/Selectors';
+import { themeSelector, tokenSelector } from '../states/Selectors';
 import { Navigate } from 'react-router-dom';
 
 type props={
@@ -9,13 +9,14 @@ type props={
 }
 export default function PrivateRouteContainer({children}:props) {
   const token=useRecoilValue(tokenSelector)
-  let toke="ok"
+  const theme=useRecoilValue(themeSelector)
+
   return (
     <div>
-      {toke.length>0? 
+      {token.access.length>0? 
         <div>
           <Navbar/>
-          <div className="pt-24 pb-10 px-20">
+          <div className={theme=="dark"?"bg-gray-900 text-white pt-24 pb-10 px-20":"bg-gray-50 pt-24 pb-10 px-20"}>
             {children}
           </div>
         </div>

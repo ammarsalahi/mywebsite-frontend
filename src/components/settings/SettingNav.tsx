@@ -18,7 +18,41 @@ export default function SettingNav(props:themeProps) {
 
   return (
     <div>
-         <ul className={props.theme=="dark"?"nav-set-dark":"nav-set"}>
+      <div className='px-3 pt-16'>
+        <button className={settings=="profile"?'btn-blue nav-selected':'nav-unselected'} onClick={handleSettingsChanges("profile")}>
+            <ImProfile />
+           ویرایش پروفایل  
+        </button>
+        <button className={settings=="password"?'btn-blue nav-selected':'nav-unselected'} onClick={handleSettingsChanges("password")}>
+            <FaLock />
+            تغییر گذرواژه   
+        </button>
+        <button className={settings=="otp"?'btn-blue nav-selected':'nav-unselected'} onClick={handleSettingsChanges("otp")}>
+            <FaCheckDouble/>
+             تایید دو مرحله   
+        </button>
+      </div>
+       {/* <ul className="menu rounded-box w-full my-10">
+        <li className='text-xl'>
+          <a onClick={handleSettingsChanges("profile")}>
+            <ImProfile />
+            ویرایش پروفایل
+          </a>
+        </li>
+        <li className='text-xl mt-2 border bg-blue-500 rounded-xl'>
+          <a onClick={handleSettingsChanges("password")}>
+            <FaLock />
+            تغییر گذرواژه  
+          </a>
+        </li>
+        <li className='text-xl mt-2'>
+          <a onClick={handleSettingsChanges("otp")}>
+          <FaCheckDouble/>
+          تایید دو مرحله
+          </a>
+        </li>
+      </ul> */}
+         {/* <ul className={props.theme=="dark"?"nav-set-dark":"nav-set"}>
               <li>
                   <a  className={settings=="profile"?"nav-selected":"nav-unselected"} onClick={handleSettingsChanges('profile')}>
                     <ImProfile className='text-xl'/>
@@ -37,7 +71,7 @@ export default function SettingNav(props:themeProps) {
                    تایید دو مرحله
                   </a>
               </li>
-        </ul>
+        </ul> */}
     </div>
   )
 }

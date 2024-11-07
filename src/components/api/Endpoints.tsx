@@ -74,3 +74,6 @@ export const FOOTER=_('/contents/footer/');
 export const SEARCH=(q:any)=>_(`/contents/search/?q=${q}`);
 
 export const SIGNIN=_('/accounts/signin/');
+
+export const USERS_ID=(username:string)=>_(`/accounts/users/${username}/`)
+export const USERS_PASSWORD_CHANGE=_(`/accounts/change-password/`)

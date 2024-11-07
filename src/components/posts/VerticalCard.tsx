@@ -27,7 +27,7 @@ export default function VerticalCard(props:postProps) {
  
   return (
    
-     <div className={`card-${props.theme} w-auto rounded-lg shadow-lg`}>
+     <div className={`card-${props.theme} w-auto rounded-lg `}>
          <Link to={`/posts/${props.post?.post_id}`}>
          <div className="relative">
 
