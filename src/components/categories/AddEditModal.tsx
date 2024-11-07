@@ -15,27 +15,35 @@ export default function AddEditModal(props:modalProps) {
   const modalElement = document.getElementById('catmodal') as HTMLDialogElement | null;
   const cat=useRecoilValue(categorySelector)
   const [name,setName]=useState<string>("");
+  const [engname,setEngName]=useState<string>("");
+
 
   const handleChangeName=(e:React.ChangeEvent<HTMLInputElement>)=>{
       setName(e.target.value)
   }
+  const handleChangeEnglishName=(e:React.ChangeEvent<HTMLInputElement>)=>{
+      setEngName(e.target.value)
+  }
+
   const handleClose=()=>{
     modalElement?.close();
   }
 
   const handleAdd=()=>{
-      Api.post(CATEGORIES,{name:name}).then((res)=>{
+      Api.post(CATEGORIES,{name:name,english_name:engname}).then((res)=>{
         props.reload()
         setName("");
+        setEngName("")
         modalElement?.close()
       }).catch((err)=>{
         message.error("متاسفانه مشکلی پیش آمد!")
       })
   }
   const handleEdit=()=>{
-    Api.patch(CATEGORIES_ID(cat.id),{name:name}).then((res)=>{
+    Api.patch(CATEGORIES_ID(cat.id),{name:name,english_name:engname}).then((res)=>{
       props.reload()
       setName("");
+      setEngName("")
       modalElement?.close()
     }).catch((err)=>{
       message.error("متاسفانه مشکلی پیش آمد!")
@@ -45,6 +53,7 @@ export default function AddEditModal(props:modalProps) {
   useEffect(()=>{
     if(props.type=="edit"){
       setName(cat.name)
+      setEngName(cat.english)
     }
   },[cat])
 
@@ -63,6 +72,10 @@ export default function AddEditModal(props:modalProps) {
                   type="text" value={name} onChange={handleChangeName}
                   className='input input-bordered w-full rounded-2xl mb-5' 
                   placeholder='نام دسته‌بندی را وارد کنید...' />
+              <input 
+                  type="text" value={engname} onChange={handleChangeEnglishName}
+                  className='input input-bordered w-full rounded-2xl mb-5' 
+                  placeholder='نام دسته‌بندی انگلیسی را وارد کنید...' />    
               <div className="flex items-center gap-3">
                 <button 
                     className='btn-blue w-52 rounded-2xl' type='button' disabled={name.length==0} 

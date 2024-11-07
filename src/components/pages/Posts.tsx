@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Button, message} from 'antd'
 import VerticalCard from '../posts/VerticalCard'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Footer from '../global/Footer'
 import { Api } from '../api/Index'
-import { CATEGORIES, POST_SEARCH_FILTER, POST_SEARCH_FILTER_NEXT, POSTS_ID } from '../api/Endpoints'
+import { CATEGORIES, POST_SEARCH_FILTER, POSTS_ID } from '../api/Endpoints'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { filterSelector, pageLoadSelector, postSearchSelector, themeSelector } from '../states/Selectors'
 import { Spin } from 'antd';
@@ -19,8 +19,7 @@ export default function Posts() {
   let navigate=useNavigate()
   const [posts,setPosts]=useState<any>([])
   const [categories,setCategories]=useState<any>([])
-  const postsearch=useRecoilValue(postSearchSelector)
-  const [selectedCategory,setSelectedCategory]=useState("")
+  const [postsearch,setPostSearch]=useRecoilState(postSearchSelector)
   const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
   const [next,setNext]=useState<number|null>(null)
 
@@ -28,15 +27,15 @@ export default function Posts() {
   
   const [isLoad,setisLoad]=useState(false);
   const theme=useRecoilValue(themeSelector)
+
   const getFilters=async()=>{
     setisLoad(false)
-    await Api.get(POST_SEARCH_FILTER(postsearch,filters.assort,selectedCategory)).then((res)=>{
+    await Api.get(POST_SEARCH_FILTER(postsearch,1)).then((res)=>{
        setPosts(res.data.results);
        setNext(res.data.next_page_number);
-
     }).finally(()=>{
          setisLoad(true)
-      })
+    });
   }
   const getCategory=async()=>{
     await Api.get(CATEGORIES).then((res)=>{
@@ -46,7 +45,7 @@ export default function Posts() {
 
   const getNextPages=()=>{
     if(next!=null){
-      Api.get(POST_SEARCH_FILTER_NEXT(next)).then((res)=>{
+      Api.get(POST_SEARCH_FILTER(postsearch,next)).then((res)=>{
           setPosts((prevPosts:any )=> [...prevPosts, ...res.data.results]);
           setNext(res.data.next_page_number);
       })
@@ -74,6 +73,16 @@ export default function Posts() {
     })
     
   }
+  const handleCategorySearch=(search:string)=>()=>{
+    console.log(search)
+    setisLoad(false)
+    Api.get(POST_SEARCH_FILTER(search,1)).then((res)=>{
+       setPosts(res.data.results);
+       setNext(res.data.next_page_number);
+    }).finally(()=>{
+         setisLoad(true)
+    });
+  }
   useEffect(() => {
     getFilters()
     getCategory()
@@ -82,10 +91,28 @@ export default function Posts() {
       setCategories([])
       setPosts([])
     }
-
-  }, [])
+  }, [postsearch])
   
  
+
+      const sortDataByCreatedAt = (ascending: boolean) => {
+        const sortedData = [...posts].sort((a, b) => {
+          const dateA = new Date(a.created_at).getTime();
+          const dateB = new Date(b.created_at).getTime();
+          
+          if (ascending) {
+            return dateA - dateB; // Ascending order
+          } else {
+            return dateB - dateA; // Descending order
+          }
+        });
+
+        setPosts(sortedData);
+      };
+   useEffect(()=>{
+      sortDataByCreatedAt(filters.assort)
+   },[filters.assort])
+
 
   return (
   <div>
@@ -101,8 +128,8 @@ export default function Posts() {
 
             {categories.length>0 &&<div className="flex justify-start gap-3 pt-5 ">
               {categories?.map((item:any,idx:number)=>(
-                <button  className='mini-item px-7 flex gap-2 items-center' key={idx} 
-                onClick={()=>setSelectedCategory(item.id)}>
+                <button className='mini-item px-7 flex gap-2 items-center' key={idx} 
+                onClick={handleCategorySearch(item.name)}>
                   <BiCategory fontSize={20}/>
                   {item.name}
                 </button>
@@ -129,20 +156,7 @@ export default function Posts() {
                 </button>
                 </div>}
             </div> 
-            {/* // <div className="py-10">
-            //   {posts?.map((item:any,idx:number)=>(
-            //     <div className="px-10">
-            //     <HorizontalCard  post={item} key={idx} theme={theme}/>
-            //     </div>
-            //  ))}
-            //     {next!=null &&  <div className="flex justify-center py-10">
-            //       <button className='btn-blue w-36 gap-3 rounded-2xl font-bold text-xl' onClick={getNextPages}>
-            //       <TfiReload/>
-            //       بیشتر
-            //     </button>
-            //     </div>}
-            //  </div>
-            // } */}
+           
             </>
             :
              <EmptyList name="پستی"/>

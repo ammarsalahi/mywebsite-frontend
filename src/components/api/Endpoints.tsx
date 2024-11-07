@@ -52,7 +52,7 @@ export const SOCIALS_ID=(username:any)=>_(`/accounts/socials/${username}/`)
 
 export const HOME=_('/contents/home/')
 
-export const POST_SEARCH_FILTER=(search:string,sort:boolean,cate:string)=>_(`/contents/posts/?q=${search}&sort=${sort}&cate=${cate}`)
+export const POST_SEARCH_FILTER=(search:string,page:number)=>_(`/contents/posts/?page=${page}&q=${search}`)
 
 export const POST_SEARCH_FILTER_NEXT=(page_number:number)=>_(`/contents/posts/?page=${page_number}`)
 
@@ -61,7 +61,7 @@ export const POST_CATEGORY=(name:string)=>_(`/contents/category-posts/${name}`)
 export const POST_KEYWORDS=(name:string)=>_(`/contents/keyword-posts/${name}`)
 
 
-export const PROJECT_SEARCH_FILTER=(search:string,sort:boolean)=>_(`/contents/projects/?q=${search}&sort=${sort}`)
+export const PROJECT_SEARCH_FILTER=(search:string,page:number)=>_(`/contents/projects/?page=${page}&q=${search}`)
 
 export const PROJECT_TECHNOLOGIES=(name:string)=>(`/contents/technology-projects/${name}`)
 

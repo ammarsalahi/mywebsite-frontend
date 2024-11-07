@@ -11,8 +11,7 @@ const { persistAtom } = recoilPersist({
 const filterAtom=atom({
     key:'filters',
     default:{
-        assort:true,
-        list:false,
+        assort:false,
         news:false,
     }
 })
@@ -20,7 +19,7 @@ const filterAtom=atom({
 const projfilterAtom=atom({
     key:'proj-filters',
     default:{
-        assort:true,
+        assort:false,
     }
 })
 const postSearchAtom=atom({
@@ -96,6 +95,7 @@ const categoryAtom=atom({
     key:"cat-atom",
     default:{
         name:"",
+        english:"",
         id:0
     }
 })

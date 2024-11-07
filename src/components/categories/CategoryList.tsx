@@ -39,6 +39,7 @@ export default function CategoryList(props:listProps) {
       if(item!=null){
         setCatId({
           name:item.name,
+          english:item.english_name,
           id:item.id
         })
       }
@@ -104,6 +105,7 @@ export default function CategoryList(props:listProps) {
               <tr className='text-sm text-center'>
                 <th>#</th>
                 <th>نام</th>
+                <th>نام انگلیسی</th>
                 <th>تعداد پست‌ها</th>
                 <th>گزینه‌ها</th>
               </tr>
@@ -114,6 +116,7 @@ export default function CategoryList(props:listProps) {
                 <tr className='text-center' key={idx}>
                   <th>{idx+1}</th>
                   <td>{item.name}</td>
+                  <td>{item.english_name}</td>
                   <td>{item.post_count}</td>
                   <td className="flex gap-2 justify-center items-center">
                         <button 

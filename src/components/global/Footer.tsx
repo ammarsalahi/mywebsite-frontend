@@ -8,8 +8,10 @@ import { TbWorldWww } from 'react-icons/tb';
 import { useRecoilValue } from 'recoil'
 import { themeSelector, tokenSelector } from '../states/Selectors';
 import { SiGmail } from 'react-icons/si';
-import logowhite from '../../assets/logo-light.png'
-import logodark from '../../assets/logo-blue.png'
+import logoWhite from '../../assets/icon-light.png'
+import logoBlue from '../../assets/icon-blue2.png'
+import {motion} from 'framer-motion'
+
 
 export default function Footer() {
   const location=useLocation()
@@ -72,14 +74,36 @@ export default function Footer() {
        'bg-gray-900  w-full text-white border-t border-gray-700'}>
       <div className="py-3">
       	<div className="footer-category">
-      	  <div className="footer-cols">
+		  <div className="footer-cols flex justify-center">
+            <div className="relative px-20 py-4">
+				<div>
+					<motion.img
+						src={theme=="light"&&location.pathname!=="/"?logoBlue:logoWhite}
+						className="h-32 mb-5"
+						initial={{ scale: 1 }}
+						animate={{ rotate: 360 }}
+						transition={{
+							type: "spring",
+							stiffness: 110,
+							damping: 40,
+							repeat:Infinity,
+							repeatType:"reverse"
+						}}
+					/>
+					{/* <img src={theme=="light"|| location.pathname!=="/"?logoBlue:logoWhite} className='h-36 mb-5'/> */}
+				</div>
+				<div className=' text-center'>
+					<span className='text-base font-semibold'>&copy; 2024</span>
+				</div>
+			</div>
+		  </div>
+      	  <div className="footer-cols lg:col-span-2 lg:px-5 py-3">
 			{categories.length>0&&
 			<>
-      	     <p className="text-2xl font-semibold">پست‌ها</p>
       	     <div className="p-2 pt-10">
       	     <ul className="footer-list text-center">
 				{categories?.map((item:any,idx:number)=>(
-					<li className="text-md py-3" key={idx}>
+					<li className="text-lg font-semibold py-3" key={idx}>
 						<Link to={`/categories/${item.name}`}>{item.name}</Link>
 					</li>
 				))}
@@ -88,40 +112,8 @@ export default function Footer() {
       	     </div>
       	     </>}
       	  </div>
- 		<div className="footer-cols">
-			{teches.length >0 &&
-			  <>
-      	     <p className="text-2xl font-semibold">پروژه‌ها</p>
-      	     <div className="p-5 pt-10">
-      	      <ul className="footer-list text-center">
-				{teches?.map((item:any,idx:number)=>(
-					<li className="text-md py-3 hover:border-b" key={idx}>
-						<Link to={`/teches/${item.name}`}>{item.name}</Link>
-					</li>
-				))}
-
-      	     </ul>
-      	     </div>
-			 </>}
-      	  </div>
       	</div>
-		<div className="pt-10 pb-2 px-10 lg:px-32 flex justify-between items-center">
-			<div>
-				<img src={theme=="dark"?logowhite:logodark} className='w-[200px]'/>
-			</div>
-			<div>
-				<span className='text-base'>&copy; 2024</span>
-			</div>
-      {socials.length>0 && <div>
-        <div className={location.pathname=="/"?"flex justify-center gap-5 text-white":"flex justify-center gap-5"}>
-         {socials?.map((item:any,idx:number)=>(
-			<div className="cursor-pointer" key={idx} onClick={()=>window.open(item.link, '_blank')}>
-            	{getIcon(item.name)}
-        	</div>
-		 ))}
-        </div>
-        </div>}
-		</div>
+	
       </div>
     </div>
   )

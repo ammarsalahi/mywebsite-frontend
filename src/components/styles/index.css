@@ -68,7 +68,7 @@
  }
 
  .footer-category{
-    @apply  xs:md:sm:grid xs:md:sm:grid-cols-2;
+    @apply  xs:md:sm:grid xs:md:sm:grid-cols-2 lg:grid-cols-3;
  }
 
  .footer-cols{
@@ -76,7 +76,7 @@
  }
 
  .footer-list{
-    @apply grid grid-cols-2 lg:grid-cols-3 gap-3 list-none
+    @apply grid grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-3 list-none
  }
 
  .mini-logo{
