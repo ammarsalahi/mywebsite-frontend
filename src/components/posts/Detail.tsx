@@ -96,7 +96,7 @@ export default function Detail(props:detailprops) {
         <p className='text-2xl font-semibold'>{props.post?.title}</p>
         <div className="flex justify-start gap-5 pt-10 px-4">
                 <Link 
-                    to={`/categories/${props.post?.category.name}`} 
+                    to={`/categories/${props.post?.category.english_name}`} 
                     className='border-2 border-blue-500 text-blue-500 hover:bg-blue-500 px-5 hover:text-white  rounded-full flex items-center gap-2 text-xl'
                 >
                    <BiCategory fontSize={18}/>

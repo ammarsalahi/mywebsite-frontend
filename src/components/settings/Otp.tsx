@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import bgs from '../../assets/qrcodeno.jpg'
 import { IoMdRefresh } from "react-icons/io";
+import { Api } from '../api/Index';
 
 export default function Otp() {
+   const [opt, setOpt] = useState<any|null>(null)
   
+  //  const handleOpt=()=>{
+  //   Api.get()
+  //  }
   
   return (
     <div className='md:pt-16'>

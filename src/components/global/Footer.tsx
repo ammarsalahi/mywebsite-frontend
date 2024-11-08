@@ -104,7 +104,7 @@ export default function Footer() {
       	     <ul className="footer-list text-center">
 				{categories?.map((item:any,idx:number)=>(
 					<li className="text-lg font-semibold py-3" key={idx}>
-						<Link to={`/categories/${item.name}`}>{item.name}</Link>
+						<Link to={`/categories/${item.english_name}`}>{item.name}</Link>
 					</li>
 				))}
       	    

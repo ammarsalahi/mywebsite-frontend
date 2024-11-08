@@ -12,6 +12,10 @@ import LoadMotion from '../global/LoadMotion';
 import Swal from 'sweetalert2';
 import { SiSharp } from "react-icons/si";
 import { TfiReload } from 'react-icons/tfi';
+import { AiOutlineSearch, AiOutlineSortAscending, AiOutlineSortDescending } from 'react-icons/ai';
+import { PiFireFill } from 'react-icons/pi';
+import { FaHammer } from 'react-icons/fa6';
+import { MdFilterList } from 'react-icons/md';
 
 export default function Projects() {
     const [projects,setProjects]=useState<any>([]);
@@ -110,10 +114,52 @@ export default function Projects() {
   return (
    <div>
    {isLoad?<>
-    <div className='paddingtop'>
-        <div className='category-show pt-16 pb-6'>
+    <div className='paddingtop md:px-8 lg:px-20'>
 
-            {teches.length>0 &&<div className="flex justify-start gap-3 pt-5 ">
+    <p className='text-center pb-8 text-4xl text-blue-600 font-bold flex justify-center items-center gap-2'>
+          <FaHammer/>
+          پروژه‌ها
+        </p>
+         
+        <div className='flex justify-center items-center px-40 gap-2'>
+        <div className={`card-${theme} border-2 border-blue-500 rounded-full`}>
+            <div className="p-1 flex gap-0">
+              <label className="input input-ghost input-sm w-[600px]  border-0 rounded-full flex items-center gap-2">
+                <AiOutlineSearch className='text-blue-600 font-bold text-xl'/>
+                <input type="text" className="grow" placeholder="جستجو..." />
+                
+                <div className="dropdown dropdown-right dropdown-hover">
+                <div tabIndex={0} role="button" className="btn btn-ghost btn-sm rounded-full text-blue-500">
+                <MdFilterList/>
+                فیلترها   
+                </div>
+                <ul tabIndex={0} className={theme=="dark"?"drop-items bg-gray-900 text-white":"drop-items bg-white text-black"}>
+                
+                    <li>
+                      <button className='text-green-600 text-base hover:bg-green-500 hover:text-white rounded-2xl'>
+                        <AiOutlineSortAscending/>
+                        صعودی 
+                      </button>
+                        
+                    </li>
+                    <li>
+                      <button className='text-red-600 text-base hover:bg-red-500 hover:text-white rounded-2xl'>
+                        <AiOutlineSortDescending/>
+                         نزولی 
+                      </button>
+                        
+                    </li>
+                </ul>
+              </div> 
+              </label> 
+              
+            </div>
+          </div>
+          
+        </div>
+        <div className='category-show py-4'>
+
+            {teches.length>0 &&<div className="flex flex-wrap justify-center gap-3 pt-5 ">
               {teches?.map((item:any,idx:number)=>(
                 <button  className='mini-item px-7 flex gap-2 items-center' key={idx} 
                   onClick={handleKeywordSearch(item.name)}>

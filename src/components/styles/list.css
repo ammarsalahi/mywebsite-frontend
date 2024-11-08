@@ -57,6 +57,13 @@
     @apply flex  xs:md:sm:hidden justify-center gap-5 pt-4  px-2
 }
 
+.filter-dark-menu{
+    @apply menu border-2 border-blue-500 rounded-box w-[63px] p-1  top-10;
+}
+
+.filter-light-menu{
+    @apply menu bg-base-300 rounded-box w-[63px] p-1  top-10;
+}
 
 
 

@@ -212,13 +212,13 @@ export default function Navbar() {
       
       </div>
       }
-      {location.pathname=='/posts' &&
+      {/* {location.pathname=='/posts' &&
           <PostFilter/>
       }
 
       {location.pathname=='/projects' && 
           <ProjectFilters/>
-      } 
+      }  */}
       {location.pathname.startsWith('/search') &&
           <SearchBar/>
       }
