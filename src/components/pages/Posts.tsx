@@ -17,28 +17,46 @@ import { AiOutlineSearch, AiOutlineSortAscending, AiOutlineSortDescending } from
 import { PiFireFill, PiNewspaperFill } from 'react-icons/pi'
 import { MdFilterList } from "react-icons/md";
 import { CgClose } from 'react-icons/cg'
+import { FaArrowLeft } from "react-icons/fa";
+
+
 
 export default function Posts() {
   let navigate=useNavigate()
   const [posts,setPosts]=useState<any>([])
   const [categories,setCategories]=useState<any>([])
   const [postsearch,setPostSearch]=useRecoilState(postSearchSelector)
+  const [search,setSearch]=useState("");
   const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
   const [next,setNext]=useState<number|null>(null)
   
 
 
-  const filters=useRecoilValue(filterSelector);
+  const [filters,setFilters]=useRecoilState(filterSelector);
   
   const [isLoad,setisLoad]=useState(false);
   const theme=useRecoilValue(themeSelector)
   const modalElement = document.getElementById('searchmodal') as HTMLDialogElement | null;
 
 
+
+  const handleFilters=(name:string,value:boolean)=>()=>{
+    setFilters({...filters,[name]:value});
+    sortDataByCreatedAt(filters.assort)
+
+  }
   const handleSearch=(e:React.ChangeEvent<HTMLInputElement>)=>{
-      setPostSearch(e.target.value)
+      setSearch(e.target.value)
+  }
+  const handlePostSearch=()=>{
+    setPostSearch(search)
   }
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+          handlePostSearch()
+    }
+  };
   const handleOpenModal=()=>{
       modalElement?.showModal();
   }
@@ -92,7 +110,6 @@ export default function Posts() {
     
   }
   const handleCategorySearch=(search:string)=>()=>{
-    console.log(search)
     setisLoad(false)
     Api.get(POST_SEARCH_FILTER(search,1)).then((res)=>{
        setPosts(res.data.results);
@@ -131,12 +148,32 @@ export default function Posts() {
       sortDataByCreatedAt(filters.assort)
    },[filters.assort])
 
+   const [scrollY, setScrollY] = useState<number>(1); 
+   useEffect(() => {
+    const handleScroll = () => {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+
+      if (maxScroll > 0) {
+        // Calculate the scroll percentage and map it to a range of 1-100
+        const scrollPercent = (window.scrollY / maxScroll) * 100;
+        const clampedScrollY = Math.min(Math.max(scrollPercent, 1), 100);
+        setScrollY(clampedScrollY);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
 
   return (
   <div>
     {isLoad ? <>
      <div className='paddingtop'>
-        <div className="hidden fixed">
+        <div className={scrollY >30?"block fixed":"hidden"}>
           <ul className={`filter-${theme}-menu`}>
             <li>
               <button className='text-xl' onClick={handleOpenModal}>
@@ -144,13 +181,21 @@ export default function Posts() {
               </button>
             </li>
             <li>
-              <button className='text-xl'>
-                <PiFireFill/>
+              <button className='text-xl'
+                onClick={handleFilters('news',!filters.news)}
+              >
+                <PiFireFill className={filters.news?'text-orange-500':''}/>
               </button>
             </li>
             <li>
-              <button className='text-2xl '>
-                <AiOutlineSortAscending/>
+              <button className='text-2xl '
+                  onClick={handleFilters('assort',!filters.assort)}
+              >
+                {filters.assort ?
+                  <AiOutlineSortAscending className='text-green-500'/>
+                  :
+                  <AiOutlineSortDescending className='text-red-500'/>
+                }
               </button>
             </li>
           </ul>  
@@ -165,7 +210,13 @@ export default function Posts() {
             <div className="p-1 flex gap-0">
               <label className="input input-ghost input-sm w-96 lg:w-[650px]  border-0 rounded-full flex items-center gap-2">
                 <AiOutlineSearch className='text-2xl '/>
-                <input type="text" className="grow" placeholder="جستجو..." />
+                <input type="text" className="grow" placeholder="جستجو..." 
+                    value={search} onChange={handleSearch} onKeyDown={handleKeyDown}
+                />
+                {search.length>0 &&
+                <button className="btn btn-sm btn-ghost" onClick={handlePostSearch}>
+                  <FaArrowLeft className="text-xl"/>
+                </button>}
                 <div className="dropdown dropdown-right dropdown-hover">
                 <div tabIndex={0} role="button" className="btn btn-ghost btn-sm rounded-full ">
                 <MdFilterList/>
@@ -175,20 +226,25 @@ export default function Posts() {
                     <li>
                       <button 
                         className='text-orange-600 text-base hover:bg-orange-500 hover:text-white rounded-2xl'
+                        onClick={handleFilters('news',!filters.news)}
                       >
                       <PiFireFill/>
                       تازه‌ها
                       </button>
                     </li>
                     <li>
-                      <button className='text-green-600 text-base hover:bg-green-500 hover:text-white rounded-2xl'>
+                      <button className='text-green-600 text-base hover:bg-green-500 hover:text-white rounded-2xl'
+                        onClick={handleFilters('assort',true)}
+                      >
                         <AiOutlineSortAscending/>
                         صعودی 
                       </button>
                         
                     </li>
                     <li>
-                      <button className='text-red-600 text-base hover:bg-red-500 hover:text-white rounded-2xl'>
+                      <button className='text-red-600 text-base hover:bg-red-500 hover:text-white rounded-2xl'
+                        onClick={handleFilters('assort',false)}
+                      >
                         <AiOutlineSortDescending/>
                          نزولی 
                       </button>
@@ -207,6 +263,11 @@ export default function Posts() {
         <div className='category-show py-4'>
 
             {categories.length>0 &&<div className="flex flex-wrap justify-center gap-3 pt-3 ">
+              <button className='mini-item px-5 flex gap-2 items-center'
+                onClick={handleCategorySearch("")}>
+                  <BiCategory fontSize={20}/>
+                  همه
+                </button>
               {categories?.map((item:any,idx:number)=>(
                 <button className='mini-item px-5 flex gap-2 items-center' key={idx} 
                 onClick={handleCategorySearch(item.name)}>
@@ -255,7 +316,13 @@ export default function Posts() {
             <div className='py-10 px-5'>
               <label className="input input-bordered  w-full rounded-2xl flex items-center gap-2">
                 <AiOutlineSearch className='text-2xl '/>
-                <input type="text" className="grow" placeholder="جستجو..." value={postsearch} onChange={handleSearch}/>
+                <input type="text" className="grow" placeholder="جستجو..." 
+                value={search} onChange={handleSearch} onKeyDown={handleKeyDown}
+                />
+                {search.length>0 &&
+                <button className="btn btn-sm btn-ghost" onClick={handlePostSearch}>
+                  <FaArrowLeft className="text-xl"/>
+                </button>}
               </label>
              
             </div>

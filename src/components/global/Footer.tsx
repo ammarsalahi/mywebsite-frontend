@@ -77,7 +77,7 @@ export default function Footer() {
 		  <div className="footer-cols flex justify-center">
             <div className="relative px-20 py-4">
 				<div>
-					<motion.img
+					{/* <motion.img
 						src={theme=="light"&&location.pathname!=="/"?logoBlue:logoWhite}
 						className="h-32 mb-5"
 						initial={{ scale: 1 }}
@@ -89,8 +89,8 @@ export default function Footer() {
 							repeat:Infinity,
 							repeatType:"reverse"
 						}}
-					/>
-					{/* <img src={theme=="light"|| location.pathname!=="/"?logoBlue:logoWhite} className='h-36 mb-5'/> */}
+					/> */}
+					<img src={theme=="light"&&location.pathname!=="/"?logoBlue:logoWhite} className='h-36 mb-5'/>
 				</div>
 				<div className=' text-center'>
 					<span className='text-base font-semibold'>&copy; 2024</span>

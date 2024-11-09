@@ -76,4 +76,12 @@ export const SEARCH=(q:any)=>_(`/contents/search/?q=${q}`);
 export const SIGNIN=_('/accounts/signin/');
 
 export const USERS_ID=(username:string)=>_(`/accounts/users/${username}/`)
+
+
 export const USERS_PASSWORD_CHANGE=_(`/accounts/change-password/`)
+
+export const USERS_PASSWORD_VERIFY=_(`/accounts/verify-password/`)
+
+export const PROFILES_ID =(username:string)=>_(`/accounts/profiles/${username}/`)
+
+export const OTP_VERIFY =_("/accounts/otp/")

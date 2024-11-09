@@ -16,16 +16,19 @@ import { AiOutlineSearch, AiOutlineSortAscending, AiOutlineSortDescending } from
 import { PiFireFill } from 'react-icons/pi';
 import { FaHammer } from 'react-icons/fa6';
 import { MdFilterList } from 'react-icons/md';
+import { CgClose } from 'react-icons/cg';
+import { FaArrowLeft } from 'react-icons/fa6';
 
 export default function Projects() {
     const [projects,setProjects]=useState<any>([]);
     const [teches,setTeches]=useState<any>([]);
     const [isLoad,setisLoad]=useState(false)
-    const projectsearch=useRecoilValue(projectSearchSelector)
-    const filters=useRecoilValue(projfilterSelector)
+    const [projectsearch,setProjectSearch]=useRecoilState(projectSearchSelector)
+    const [filters,setFilters]=useRecoilState(projfilterSelector)
     const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
     const theme=useRecoilValue(themeSelector)
     const [next,setNext]=useState<number|null>(null)
+    const [search,setSearch]=useState("");
 
 
    
@@ -63,6 +66,33 @@ export default function Projects() {
     });
   }
 
+  const handleFilters=(name:string,value:boolean)=>()=>{
+    setFilters({...filters,[name]:value});
+    sortDataByCreatedAt(filters.assort)
+
+  }
+  const handleSearch=(e:React.ChangeEvent<HTMLInputElement>)=>{
+      setSearch(e.target.value)
+  }
+  const handlePostSearch=()=>{
+    setProjectSearch(search)
+  }
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+          handlePostSearch()
+    }
+  };
+
+    const modalElement = document.getElementById('searchmodal') as HTMLDialogElement | null;
+
+      const handleOpenModal=()=>{
+          modalElement?.showModal();
+      }
+
+      const handleClose=()=>{
+        modalElement?.close();
+      }
     useEffect(() => {
       getFilters()
       getTeches()
@@ -111,11 +141,51 @@ export default function Projects() {
       sortDataByCreatedAt(filters.assort)
    },[filters.assort])
 
+
+   const [scrollY, setScrollY] = useState<number>(1); 
+   useEffect(() => {
+    const handleScroll = () => {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+
+      if (maxScroll > 0) {
+        // Calculate the scroll percentage and map it to a range of 1-100
+        const scrollPercent = (window.scrollY / maxScroll) * 100;
+        const clampedScrollY = Math.min(Math.max(scrollPercent, 1), 100);
+        setScrollY(clampedScrollY);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   return (
    <div>
    {isLoad?<>
-    <div className='paddingtop md:px-8 lg:px-20'>
-
+    <div className='paddingtop '>
+    <div className={scrollY >35?"block fixed":"hidden"}>
+          <ul className={`filter-${theme}-menu`}>
+            <li>
+              <button className='text-xl' onClick={handleOpenModal}>
+                <AiOutlineSearch/>
+              </button>
+            </li>
+           
+            <li>
+              <button className='text-2xl'
+                  onClick={handleFilters('assort',!filters.assort)}
+              >
+                {filters.assort ?
+                  <AiOutlineSortAscending className='text-green-500'/>
+                  :
+                  <AiOutlineSortDescending className='text-red-500'/>
+                }
+              </button>
+            </li>
+          </ul>  
+          </div>
     <p className='text-center pb-8 text-4xl text-blue-600 font-bold flex justify-center items-center gap-2'>
           <FaHammer/>
           پروژه‌ها
@@ -126,7 +196,9 @@ export default function Projects() {
             <div className="p-1 flex gap-0">
               <label className="input input-ghost input-sm w-[600px]  border-0 rounded-full flex items-center gap-2">
                 <AiOutlineSearch className='text-blue-600 font-bold text-xl'/>
-                <input type="text" className="grow" placeholder="جستجو..." />
+                <input type="text" className="grow" placeholder="جستجو..." 
+                  value={search} onChange={handleSearch} onKeyDown={handleKeyDown}
+                />
                 
                 <div className="dropdown dropdown-right dropdown-hover">
                 <div tabIndex={0} role="button" className="btn btn-ghost btn-sm rounded-full text-blue-500">
@@ -158,8 +230,13 @@ export default function Projects() {
           
         </div>
         <div className='category-show py-4'>
-
+                
             {teches.length>0 &&<div className="flex flex-wrap justify-center gap-3 pt-5 ">
+              <button  className='mini-item px-7 flex gap-2 items-center'
+                  onClick={handleKeywordSearch("")}>
+                    <SiSharp fontSize={15}/>
+                  همه
+                </button>
               {teches?.map((item:any,idx:number)=>(
                 <button  className='mini-item px-7 flex gap-2 items-center' key={idx} 
                   onClick={handleKeywordSearch(item.name)}>
@@ -172,7 +249,7 @@ export default function Projects() {
         <div>
             {projects.length>0 ?
             <>
-              <div className='post-card'>
+              <div className='post-card gap-3 md:px-8 lg:px-20'>
                 {projects?.map((item:any,idx:number)=>(
                     <ProjectCard project={item} theme={theme} key={idx} deleteProject={handleDelete(item.project_id,item.title)}/>
                 ))}
@@ -189,6 +266,29 @@ export default function Projects() {
                 <EmptyList name='پروژه‌ای'/>
             }
         </div>
+        <dialog id={"searchmodal"} className="modal ">
+        <div className={theme=="dark"?"modal-box py-3 bg-black":"modal-box py-3 bg-blue-500"}>
+          <div className="flex justify-end ps-5 items-center">
+              <button className='btn btn-circle btn-ghost text-2xl text-white font-semibold' onClick={handleClose}>
+                <CgClose/>
+              </button>
+          </div>
+            <div className='py-10 px-5'>
+              <p className='text-2xl mb-4 text-center text-white font-semibold'>جستجوی پروژه‌ها</p>
+              <label className="input   w-full rounded-full flex items-center gap-2">
+                <AiOutlineSearch className='text-2xl '/>
+                <input type="text" className="grow" placeholder="جستجو..." 
+                value={search} onChange={handleSearch} onKeyDown={handleKeyDown}
+                />
+                {search.length>0 &&
+                <button className="btn btn-sm btn-ghost" onClick={handlePostSearch}>
+                  <FaArrowLeft className="text-xl"/>
+                </button>}
+              </label>
+             
+            </div>
+        </div>
+    </dialog>
     </div>
     <Footer/>
     </>:

@@ -44,7 +44,7 @@ export default function Settings() {
               <div className="md:col-span-2 lg:col-span-3 p-5">
               {settings=="profile" &&<Profile user={userInfo} token={token} reload={getUserInfo}/>}
               {settings=="password" &&<PasswordChange token={token.access}/>}
-              {settings=="otp" && <Otp/>}
+              {settings=="otp" && <Otp token={token}/>}
               </div>
             </div>
           </div>
