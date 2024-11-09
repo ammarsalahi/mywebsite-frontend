@@ -74,12 +74,16 @@ export default function Otp(props:optProps) {
   return (
     <div className='md:pt-16'>
       {otp?.qrcode_image==null?
-         <div className=' flex justify-center text-center'>
-            <p>تصویر پیدا نشد!</p>
+         <div className=' flex justify-center items-center text-center'>
+           <div className="relative">
+           <img src={bgs} className='w-[270px] h-[270px] rounded-2xl border-4 border-blue-500 opacity-25 ' />
+           <p className='absolute inset-0 mt-28  text-2xl font-bold'>تصویر پیدا نشد!</p>
+           </div>
+            
          </div> 
       :
       <div className="flex justify-center">
-        <img src={otp.qrcode_image} className='w-[270px] h-[270px] rounded-2xl' />
+        <img src={otp.qrcode_image} className='w-[270px] h-[270px] rounded-2xl border-4 border-blue-500' />
 
       </div>}
       <div className="flex items-center justify-center py-5">
@@ -98,15 +102,15 @@ export default function Otp(props:optProps) {
       </div>
       <dialog id={"otpmodal"} className="modal">
         <div className="modal-box py-3">
-          <div className="flex justify-between ps-5 items-center">
+          <div className="flex justify-end ps-5 items-center">
               <button className='btn btn-circle btn-ghost text-2xl' onClick={handleClose}>
                 <CgClose/>
               </button>
           </div>
             <div className='py-10 px-5'>
-              <p className='text-lg font-semibold mb-4'>گذرواژه خود را وارد کنید</p>
+              <p className='text-xl font-semibold mb-4 text-center'>گذرواژه خود را وارد کنید</p>
               <input 
-                  type="text" value={password} onChange={handleChangePassword}
+                  type="password" value={password} onChange={handleChangePassword}
                   className='input input-bordered w-full rounded-2xl mb-5' 
                   placeholder='نام دسته‌بندی را وارد کنید...' />
               

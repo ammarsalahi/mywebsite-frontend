@@ -4,14 +4,14 @@
 
 
  .about{
-  @apply  px-5 xs:md:sm:ps-10 xs:md:sm:px-10 xs:md:sm:pt-5
+  @apply  px-5  xs:md:sm:px-10 xs:md:sm:pt-5
 }
 .about-grid{
 	@apply  p-3 rounded-xl xs:md:grid xs:md:gap-10 xs:md:grid-cols-3 xs:lg:grid-cols-4
 }
 
 .about-cols{
-	@apply  xs:border-t xs:md:sm:border-t-0 xs:md:sm:border-s  px-5 flex xs:md:col-span-2 xs:lg:col-span-3 xs:sm:justify-center xs:md:justify-start xs:lg:ps-14; 
+	@apply  xs:border-t xs:md:sm:border-t-0 xs:md:sm:border-s border-gray-300 px-5 flex xs:md:col-span-2 xs:lg:col-span-3 xs:sm:justify-center xs:md:justify-start xs:lg:ps-14; 
 }
 
 .paddingabout{

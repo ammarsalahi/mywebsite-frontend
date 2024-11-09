@@ -11,7 +11,7 @@ import { TbWorldWww } from "react-icons/tb";
 import { FaComputer,FaTrash,FaUsers } from "react-icons/fa6";
 import Footer from '../global/Footer';
 import { FaUser } from "react-icons/fa6";
-import { pageLoadSelector, tokenSelector } from '../states/Selectors';
+import { pageLoadSelector, themeSelector, tokenSelector } from '../states/Selectors';
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { MdEmail } from 'react-icons/md';
 import LoadMotion from '../global/LoadMotion';
@@ -22,7 +22,8 @@ export default function AboutShow() {
   const [about,setAbout]=useState<any>(null);
   const [isLoad,setisLoad]=useState(false);
   const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
-  const token=useRecoilValue(tokenSelector) 
+  const token=useRecoilValue(tokenSelector);
+  const theme=useRecoilValue(themeSelector) 
   
   let navigate=useNavigate()
 
@@ -78,29 +79,30 @@ export default function AboutShow() {
   <div>
     {isLoad?
     <>
-    <div className="pt-16 pb-5">
-        <div className="about py-5">
+    <div className="paddingtop">
+        <div className={`about py-5 `}>
           <div className="about-grid">
-             <div className='flex justify-center ps-2 pt-4'>
-             <div>
+                <div className='flex justify-center pt-4'>
+                  <div>
                  <img src={showImage(about?.user_img)} className='rounded-full border-2 border-blue-500 shadow-2xl' width={300} alt="" />
                  <p className='xs:text-3xl xs:md:sm:text-4xl xs:xl:text-5xl py-5 text-center'>{about?.fullname}</p>
-              </div>
+
+                {token?.access.length>0&& <div className='flex justify-center pb-4 gap-5'>
+                <button className='btn-blue-outline btn-circle' onClick={handleGotoEdit}>
+                  <BiPencil className='text-3xl'/>
+                </button>
+                <button className='btn-red-outline btn-circle'>
+                  <FaTrash className='text-2xl'/>
+                </button>
+                </div>}
+                </div>
+              
               </div>
 
 
               <div className="about-cols">
                 <div>
-                <div className='flex justify-end pb-4 gap-5'>
-                <button className='btn-blue w-auto rounded-xl btn-sm' onClick={handleGotoEdit}>
-                  <BiPencil className='text-xl'/>
-                  ویرایش
-                </button>
-                <button className='btn-red w-auto rounded-xl btn-sm'>
-                  <FaTrash className='text-lg'/>
-                  حذف
-                </button>
-                </div>
+               
                   <div className="py-5 rounded-xl">
                       <div className="flex gap-2 text-gray-500">
                         <FaUser fontSize={27}/>

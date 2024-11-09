@@ -51,7 +51,7 @@ export default function Settings() {
       </div>
 
         :
-        <div className="h-screen w-screen grid place-items-center">
+        <div className="h-full-screen w-full grid place-items-center">
         <Spin size='large'/>
         </div>}
       </div>
