@@ -19,7 +19,6 @@ export default function Settings() {
     const [userInfo,setUserInfo]=useState<any[]|[]>([]);
     const [isLoad,setIsLoad]=useState(false);
 
-
     const getUserInfo=async()=>{
       await Api.get(USERS_ID(token.user),{
         headers:AuthConfigHeader(token.access)
@@ -44,7 +43,7 @@ export default function Settings() {
               <div className="md:col-span-2 lg:col-span-3 p-5">
               {settings=="profile" &&<Profile user={userInfo} token={token} reload={getUserInfo}/>}
               {settings=="password" &&<PasswordChange token={token.access}/>}
-              {settings=="otp" && <Otp token={token}/>}
+              {settings=="otp" && <Otp token={token} user={userInfo}/>}
               </div>
             </div>
           </div>

@@ -7,7 +7,7 @@ import { PiCameraPlusFill } from 'react-icons/pi'
 import { TbCameraPlus } from 'react-icons/tb'
 import { Api } from '../api/Index'
 import { USERS_ID } from '../api/Endpoints'
-import { AuthConfigHeader } from '../api/Configs'
+import { AuthConfigHeader, AuthConfigHeaderFile } from '../api/Configs'
 import { message } from 'antd'
 import { Formik } from 'formik'
 
@@ -44,7 +44,8 @@ export default function Profile(props:userProps) {
             firstName:props.user.first_name||"",
             lastName:props.user.last_name||"",
             userName:props.user.username,
-            email:props.user.email
+            email:props.user.email,
+            is_otp:props.user.is_otp
           }}
           validate={(values)=>{
             let errors:any={}
@@ -62,9 +63,13 @@ export default function Profile(props:userProps) {
             formData.append("last_name",values.lastName)
             formData.append("username",values.userName)
             formData.append("email",values.email)
-            console.log("ooo")
+            formData.append("is_otp",values.is_otp)
+            if(imgFile!=null){
+              formData.append("profile_image",imgFile)
+            }
+
             Api.patch(USERS_ID(props.token.user),formData,{
-              headers:AuthConfigHeader(props.token.access)
+              headers:AuthConfigHeaderFile(props.token.access)
             }).then((res)=>{
               message.success("تغییرات با موفقیت انجام شد");
               props.reload()
@@ -127,19 +132,28 @@ export default function Profile(props:userProps) {
                       </div>
                     </div>
                     <div>
-                    <div className="label">
-                        <div className="label-alt text-base">ایمیل</div>
-                      </div>
-                      <input 
-                          type="email" name="email" value={values.email} onChange={handleChange}
-                          className="input input-bordered rounded-2xl w-full" 
-                      />
-                      <div className="label">
-                        {errors.email && touched.email &&<div className="label-alt text-base text-red-500">{errors.email.toString()}</div>}
+                        <div className="label">
+                            <div className="label-alt text-base">ایمیل</div>
+                          </div>
+                          <input 
+                              type="email" name="email" value={values.email} onChange={handleChange}
+                              className="input input-bordered rounded-2xl w-full" 
+                          />
+                          <div className="label">
+                            {errors.email && touched.email &&<div className="label-alt text-base text-red-500">{errors.email.toString()}</div>}
+                          </div>
+                        </div>
+                    </div>
+                    <div>
+                      <div className="flex justify-start items-center gap-5 px-2 pb-3">
+                        <input 
+                            type="checkbox" className="toggle toggle-md checked:[--tglbg:#3b82f6] checked:border-white checked:text-white" 
+                            name="is_otp" value={values.is_otp} onChange={handleChange}
+                            defaultChecked={values.is_otp==true}
+                         />
+                        <span className='text-lg'>{values.is_otp==true?"اعتبارسنجی دو مرحله فعال باشد":"اعتبارسنجی دومرحله ای فعال نیست"}</span>
                       </div>
                     </div>
-                   
-                  </div>
                     <button 
                       className='btn-blue rounded-2xl w-full mt-3'
                       type='submit'
