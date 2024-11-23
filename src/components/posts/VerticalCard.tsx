@@ -27,14 +27,14 @@ export default function VerticalCard(props:postProps) {
  
   return (
    
-     <div className={`card-${props.theme} w-auto rounded-lg `}>
+     <div className={`card-${props.theme} w-auto rounded-xl `}>
          <Link to={`/posts/${props.post?.post_id}`}>
          <div className="relative">
 
          <figure>
             <img
             src={showImage(props.post?.header_image)}
-            alt="projects" className="h-44 w-full rounded-t-lg bg-gray-400"/>
+            alt="projects" className="h-44 w-full rounded-t-xl bg-gray-400"/>
              <button className='btn btn-sm btn-glass flex gap-2 shadow-lg px-6  rounded-full absolute top-5 right-5 hover:bg-blue-500 hover:text-white hover:border-blue-500'>
                 <BiCategory/>  {props.post?.category.name}
               </button>

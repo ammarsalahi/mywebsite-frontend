@@ -283,7 +283,7 @@ export default function Posts() {
             <>
             <div >
            
-              <div className='post-card gap-3 md:px-8 lg:px-20'>
+              <div className='post-card  md:px-8 lg:px-20'>
               {posts?.map((item:any,idx:number)=>(
                  <div className="py-2" key={idx}>
                   <VerticalCard post={item}  deletePost={handleDelete(item?.post_id,item?.title)} theme={theme}/>

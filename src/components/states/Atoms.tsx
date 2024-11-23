@@ -99,9 +99,16 @@ const categoryAtom=atom({
         id:0
     }
 })
+
+const langAtom=atom({
+    key:"lang-atom",
+    default:"EN",
+    effects_UNSTABLE: [persistAtom],
+
+})
 export {
     filterAtom,projectSearchAtom,postSearchAtom,
     projfilterAtom,menuAtom,imgurlAtom,typeAtom,
     userAtom,isloadingAtom,themeAtom,pageLoadAtom,
-    tokenAtom,settingsAtom,categoryAtom
+    tokenAtom,settingsAtom,categoryAtom,langAtom
 }

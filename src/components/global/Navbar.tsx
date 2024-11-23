@@ -7,7 +7,7 @@ import { menuAtom} from '../states/Atoms'
 import { AiOutlineMenu } from "react-icons/ai";
 import PostFilter from '../posts/PostFilter';
 import ProjectFilters from '../projects/ProjectFilters';
-import { imgurlSelector, tokenSelector } from '../states/Selectors';
+import { imgurlSelector, langSelector, tokenSelector } from '../states/Selectors';
 import logoblack from '../../assets/logo-dark.png'
 import logolight from '../../assets/logo-light.png'
 import { themeSelector } from '../states/Selectors';
@@ -27,7 +27,8 @@ export default function Navbar() {
   let navigate=useNavigate()
   const [ismenu,setismenu]=useRecoilState(menuAtom)
   const imgurl=useRecoilValue(imgurlSelector)
-  const [theme,setTheme]=useRecoilState<any>(themeSelector)
+  const [theme,setTheme]=useRecoilState<any>(themeSelector);
+  const [lang,setLang]=useRecoilState<string>(langSelector);
   const [search,setSearch]=useState("");
   const token = useRecoilValue(tokenSelector)
 
@@ -40,6 +41,15 @@ export default function Navbar() {
        setTheme('dark')
     }else{
        setTheme('light')
+    }
+  }
+
+  const handleLang=()=>{
+    if(lang=='EN'){
+      setLang("FA")
+    }else{
+      setLang("EN")
+
     }
   }
   
@@ -124,12 +134,19 @@ export default function Navbar() {
        </>
        
        }
+          <button
+          className="btn btn-ghost btn-sm"
+          onClick={handleLang}
+          >
+            {lang}
+         </button>
          <button
           className="btn btn-ghost btn-sm"
           onClick={handleTheme}
           >
             {theme=="light"?<AiFillSun fontSize={20}/>: <AiFillMoon fontSize={20} color="white"/>}
          </button>
+
          {token.access?.length>0?<UserMenu path={location.pathname} theme={theme}/>:null}
         </div>
         </div>

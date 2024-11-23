@@ -27,7 +27,7 @@ export default function PasswordChange(props:passProps) {
     }
     
   return (
-    <div className='md:px-32 py-5'>
+    <div className='md:px-36 py-5'>
         <Formik
           initialValues={{
             old:"",
@@ -64,7 +64,10 @@ export default function PasswordChange(props:passProps) {
 
         {({handleSubmit,values,handleChange,errors,touched})=>(
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='py-5'>
+            {/* <div className="py-5">
+                <p className='text-2xl font-semibold text-center'>تغییر گذرواژه کاربری</p>
+            </div> */}
             <div>
                 <div className="label">
                     <div className="label-alt text-base">گذرواژه قبلی</div>
@@ -76,7 +79,7 @@ export default function PasswordChange(props:passProps) {
                         <FaEye className='text-gray-500 cursor-pointer text-xl' onClick={handleShowChange('old',true)}/>
                         :<FaEyeSlash className='text-gray-500 cursor-pointer text-xl' onClick={handleShowChange('old',false)}/>}
                 </label>
-                <div className="label">
+                <div className="label p-0 mb-2">
                     {errors.old && touched.old &&<div className="label-alt text-base text-red-500">{errors.old.toString()}</div>}
                 </div>
             </div> 
@@ -91,7 +94,7 @@ export default function PasswordChange(props:passProps) {
                         <FaEye className='text-gray-500 cursor-pointer text-xl' onClick={handleShowChange('new',true)}/>
                         :<FaEyeSlash className='text-gray-500 cursor-pointer text-xl' onClick={handleShowChange('new',false)}/>}
                 </label>
-                <div className="label">
+                <div className="label p-0 mb-2">
                     {errors.new && touched.new &&<div className="label-alt text-base text-red-500">{errors.new.toString()}</div>}
                 </div>
             </div>
@@ -106,7 +109,7 @@ export default function PasswordChange(props:passProps) {
                         <FaEye className='text-gray-500 cursor-pointer text-xl' onClick={handleShowChange('renew',true)}/>
                         :<FaEyeSlash className='text-gray-500 cursor-pointer text-xl' onClick={handleShowChange('renew',false)}/>}
                 </label>
-                <div className="label">
+                <div className="label p-0 mb-2">
                     {errors.renew && touched.renew &&<div className="label-alt text-base text-red-500">{errors.renew.toString()}</div>}
                 </div>
             </div>      
