@@ -20,6 +20,8 @@ import { motion } from 'framer-motion'
 import { FaGolang, FaUser } from 'react-icons/fa6'
 import UserMenu from './UserMenu'
 import { GrGolang } from 'react-icons/gr'
+import { useTranslation } from 'react-i18next'
+import LanguageSync from './LanguageSync'
 
 export default function Navbar() {
 
@@ -31,7 +33,7 @@ export default function Navbar() {
   const [lang,setLang]=useRecoilState<string>(langSelector);
   const [search,setSearch]=useState("");
   const token = useRecoilValue(tokenSelector)
-
+  const { t } = useTranslation();
 
   const handleMenu=(e:React.MouseEvent<HTMLElement>)=>{
       setismenu(!ismenu)
@@ -45,10 +47,10 @@ export default function Navbar() {
   }
 
   const handleLang=()=>{
-    if(lang=='EN'){
-      setLang("FA")
+    if(lang=='en'){
+      setLang("fa")
     }else{
-      setLang("EN")
+      setLang("en")
 
     }
   }
@@ -72,6 +74,8 @@ export default function Navbar() {
  
 
   return (    
+    <>
+    {/* <LanguageSync/> */}
     <div className={
         theme=='light'?
         location.pathname=='/'?"nav-blue text-white":'nav-light-fixed'
@@ -121,7 +125,7 @@ export default function Navbar() {
                 <input 
                   type="text" 
                   className="grow text-white" 
-                  placeholder="جستجو..."
+                  placeholder={t("search")}
                   value={search}
                   onChange={handleSearch}
                   onKeyDown={handleSubmit}
@@ -138,7 +142,7 @@ export default function Navbar() {
           className="btn btn-ghost btn-sm"
           onClick={handleLang}
           >
-            {lang}
+            {lang.toUpperCase()}
          </button>
          <button
           className="btn btn-ghost btn-sm"
@@ -197,8 +201,8 @@ export default function Navbar() {
           </motion.svg>
         </div>
         <div className="text-center text-white lg:pt-20 xl:pt-20 md:pt-10 ">
-          <p className='text-6xl'>عمار صلاحی هستم</p>
-          <p className='text-6xl mt-10'> توسعه دهنده فول‌استک</p>
+          <p className='text-6xl'>{t("name")}</p>
+          <p className='text-5xl mt-10'>{t("job")}</p>
           <div className="flex flex-wrap justify-center items-center gap-5 pt-7">
             <Link to="https://www.python.org" target='black'>
               <SiPython fontSize={40} className='hover:text-indigo-900'/>
@@ -241,6 +245,7 @@ export default function Navbar() {
       }
       </div>
     </div>
-    
+    </>
+
   )
 }

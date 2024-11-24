@@ -5,7 +5,7 @@ import { PROJECT_SEARCH_FILTER ,PROJECTS,PROJECTS_ID,TECHNOLOGIES} from '../api/
 import { message, Spin } from 'antd';
 import Footer from '../global/Footer'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { pageLoadSelector, projectSearchSelector, projfilterSelector, themeSelector } from '../states/Selectors'
+import { langSelector, pageLoadSelector, projectSearchSelector, projfilterSelector, themeSelector } from '../states/Selectors'
 import PorjectEmpty from '../global/PorjectEmpty';
 import EmptyList from '../global/EmptyList';
 import LoadMotion from '../global/LoadMotion';
@@ -18,6 +18,8 @@ import { FaHammer } from 'react-icons/fa6';
 import { MdFilterList } from 'react-icons/md';
 import { CgClose } from 'react-icons/cg';
 import { FaArrowLeft } from 'react-icons/fa6';
+import { useTranslation } from 'react-i18next';
+import { FaArrowRight } from 'react-icons/fa';
 
 export default function Projects() {
     const [projects,setProjects]=useState<any>([]);
@@ -30,6 +32,8 @@ export default function Projects() {
     const [next,setNext]=useState<number|null>(null)
     const [search,setSearch]=useState("");
 
+    const {t}=useTranslation()
+    const lang=useRecoilValue(langSelector)
 
    
     const getFilters=async()=>{
@@ -186,38 +190,41 @@ export default function Projects() {
             </li>
           </ul>  
           </div>
-    <p className='text-center pb-8 text-4xl text-blue-600 font-bold flex justify-center items-center gap-2'>
+        <p className='text-center pb-8 text-4xl text-blue-600 font-bold flex justify-center items-center gap-2'>
           <FaHammer/>
-          پروژه‌ها
+          {t('menu2')}
         </p>
          
         <div className='flex justify-center items-center px-40 gap-2'>
         <div className={`card-${theme} border-2 border-blue-500 rounded-full`}>
             <div className="p-1 flex gap-0">
-              <label className="input input-ghost input-sm w-[600px]  border-0 rounded-full flex items-center gap-2">
-                <AiOutlineSearch className='text-blue-600 font-bold text-xl'/>
-                <input type="text" className="grow" placeholder="جستجو..." 
+              <label className="input input-ghost input-sm w-[600px]  border-0 rounded-full flex items-center gap-2" dir={t('dir')}>
+                <AiOutlineSearch className='text-2xl'/>
+                <input type="text" className="grow" placeholder={t('projsearch')} 
                   value={search} onChange={handleSearch} onKeyDown={handleKeyDown}
                 />
-                
+                {search.length>0 &&
+                <button className="btn btn-sm btn-ghost" onClick={handlePostSearch}>
+                  {lang=="fa"?<FaArrowLeft className="text-xl"/>:<FaArrowRight className="text-xl"/>}
+                </button>}
                 <div className="dropdown dropdown-right dropdown-hover">
-                <div tabIndex={0} role="button" className="btn btn-ghost btn-sm rounded-full text-blue-500">
+                <div tabIndex={0} role="button" className="btn btn-ghost btn-sm rounded-full">
                 <MdFilterList/>
-                فیلترها   
+                {t('filters')}   
                 </div>
-                <ul tabIndex={0} className={theme=="dark"?"drop-items bg-gray-900 text-white":"drop-items bg-white text-black"}>
+                <ul tabIndex={0} className={theme=="dark"?"drop-items bg-gray-900 text-white":"drop-items bg-white text-black"} >
                 
                     <li>
-                      <button className='text-green-600 text-base hover:bg-green-500 hover:text-white rounded-2xl'>
-                        <AiOutlineSortAscending/>
-                        صعودی 
+                      <button className='text-green-600 text-base hover:bg-green-500 hover:text-white rounded-2xl' >
+                        {<AiOutlineSortAscending/>}
+                        {t('asc')} 
                       </button>
                         
                     </li>
                     <li>
                       <button className='text-red-600 text-base hover:bg-red-500 hover:text-white rounded-2xl'>
-                        <AiOutlineSortDescending/>
-                         نزولی 
+                       <AiOutlineSortDescending/>
+                         {t('desc')} 
                       </button>
                         
                     </li>
@@ -231,17 +238,18 @@ export default function Projects() {
         </div>
         <div className='category-show py-4'>
                 
-            {teches.length>0 &&<div className="flex flex-wrap justify-center gap-3 pt-5 ">
+            {teches.length>0 &&<div className="flex flex-wrap justify-center gap-3 pt-5" dir={t('dir')}>
               <button  className='mini-item px-7 flex gap-2 items-center'
                   onClick={handleKeywordSearch("")}>
                     <SiSharp fontSize={15}/>
-                  همه
+                  {t('all')}
                 </button>
               {teches?.map((item:any,idx:number)=>(
                 <button  className='mini-item px-7 flex gap-2 items-center' key={idx} 
+                  dir={t('dir')}
                   onClick={handleKeywordSearch(item.name)}>
                     <SiSharp fontSize={15}/>
-                  {item.name}
+                    {lang=="fa"?item.name:item.english_name}
                 </button>
               ))}
             </div>}
@@ -249,7 +257,7 @@ export default function Projects() {
         <div>
             {projects.length>0 ?
             <>
-              <div className='post-card gap-3 md:px-8 lg:px-20'>
+              <div className='post-card gap-3 md:px-8 lg:px-20'  dir={t("dir")}>
                 {projects?.map((item:any,idx:number)=>(
                     <ProjectCard project={item} theme={theme} key={idx} deleteProject={handleDelete(item.project_id,item.title)}/>
                 ))}
@@ -257,32 +265,32 @@ export default function Projects() {
               {next!=null &&  <div className="flex justify-center py-10">
                  <button className='btn-blue w-36 gap-3 rounded-2xl font-bold text-xl' onClick={getNextPages}>
                   <TfiReload/>
-                  بیشتر
+                  {t('more')}
                 </button>
                 </div>}
             </> 
 
             :
-                <EmptyList name='پروژه‌ای'/>
+                <EmptyList name='noproject'/>
             }
         </div>
         <dialog id={"searchmodal"} className="modal ">
-        <div className={theme=="dark"?"modal-box py-3 bg-black":"modal-box py-3 bg-blue-500"}>
+        <div className={theme=="dark"?"modal-box py-3 bg-black":"modal-box py-3 bg-gray-400"}>
           <div className="flex justify-end ps-5 items-center">
-              <button className='btn btn-circle btn-ghost text-2xl text-white font-semibold' onClick={handleClose}>
+              <button className='btn btn-circle btn-ghost text-2xl font-semibold' onClick={handleClose}>
                 <CgClose/>
               </button>
           </div>
             <div className='py-10 px-5'>
-              <p className='text-2xl mb-4 text-center text-white font-semibold'>جستجوی پروژه‌ها</p>
-              <label className="input   w-full rounded-full flex items-center gap-2">
+              <p className='text-2xl mb-4 text-center  font-semibold'>{t("projsearch")}</p>
+              <label className="input   w-full rounded-full flex items-center gap-2" dir={t("dir")}>  
                 <AiOutlineSearch className='text-2xl '/>
-                <input type="text" className="grow" placeholder="جستجو..." 
+                <input type="text" className="grow" placeholder={t("search")} 
                 value={search} onChange={handleSearch} onKeyDown={handleKeyDown}
                 />
                 {search.length>0 &&
-                <button className="btn btn-sm btn-ghost" onClick={handlePostSearch}>
-                  <FaArrowLeft className="text-xl"/>
+                  <button className="btn btn-sm btn-ghost" onClick={handlePostSearch}>
+                  {lang=="fa"?<FaArrowLeft className="text-xl"/>:<FaArrowRight className="text-xl"/>}
                 </button>}
               </label>
              

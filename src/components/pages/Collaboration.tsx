@@ -1,15 +1,19 @@
 import React, { useState } from 'react'
-import StepOne from '../cooperations/StepOne'
-import StepTwo from '../cooperations/StepTwo'
-import StepThree from '../cooperations/StepThree'
+import StepOne from '../collaborations/StepOne'
+import StepTwo from '../collaborations/StepTwo'
+import StepThree from '../collaborations/StepThree'
 import { Steps } from 'antd';
 import Footer from '../global/Footer';
 import { useRecoilValue } from 'recoil';
 import { themeSelector } from '../states/Selectors';
+import { useTranslation } from 'react-i18next';
 
-export default function Cooperation() {
+export default function Collaboration() {
   const [current, setCurrent] = useState(0);
   const theme=useRecoilValue(themeSelector)
+
+  const {t}=useTranslation();
+
 
   const nextStep=()=>{
     setCurrent(current+1)
@@ -42,21 +46,26 @@ export default function Cooperation() {
       <div className="cooper">
       <div className="step-show">
        <div className="sticky top-20">
-        <ul className="steps steps-vertical">
-            <li className={current==0 || current>0?"step step-info":"step"}>نوع پروژه</li>
-            <li className={current==1 || current>1?"step step-info":"step"}>اطلاعات شما</li>
-            <li className={current==2?"step step-info":"step"}>جزئیات پروژه</li>
+        <ul className="steps steps-vertical" dir="rtl">
+            <li className={current==0 || current>0?"step step-info":"step"}>{t('step1')}</li>
+            <li className={current==1 || current>1?"step step-info":"step"}>{t('step2')}</li>
+            <li className={current==2?"step step-info":"step"}>{t('step3')}</li>
          </ul>
        </div> 
      
       </div>
-      <div className="steps-space ps-10">
-         <div className={`card-${theme}`}>
-            <div className="card-body p-10">
+      <div className="steps-space flex justify-center ">
+         <div>
+          <div className={`card-${theme}  w-full md:w-[500px]`}>
+            <div className="card-body p-6">
+            <p className='text-3xl pb-6 text-center font-semibold'>{t('cooper')}</p>
+
             {steps[current].content}
 
             </div>
+          </div>
          </div>
+         
       </div>
       </div>
     </div>

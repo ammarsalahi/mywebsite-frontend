@@ -102,7 +102,7 @@ const categoryAtom=atom({
 
 const langAtom=atom({
     key:"lang-atom",
-    default:"EN",
+    default:"en",
     effects_UNSTABLE: [persistAtom],
 
 })

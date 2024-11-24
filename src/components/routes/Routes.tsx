@@ -6,7 +6,6 @@ import PostDetail from '../pages/PostDetail'
 import ProjectDetail from '../pages/ProjectDetail'
 import AboutMe from '../pages/AboutMe'
 import RouteContainer from './RouteContainer'
-import Cooperation from '../pages/Cooperation'
 import Categories from '../pages/Categories'
 import Technologies from '../pages/Technologies'
 import Keywords from '../pages/Keywords'
@@ -16,7 +15,7 @@ import AddEditPost from '../pages/AddEditPost'
 import AddEditProject from '../pages/AddEditProject'
 import PrivateRouteContainer from './PrivateRouteContainer'
 import Settings from '../pages/Settings'
-
+import Collaboration from '../pages/Collaboration'
 import AddEditAbout from '../pages/AddEditAbout'
 import CategoryList from '../pages/Category'
 
@@ -81,8 +80,8 @@ export default function Routes() {
           element:<PrivateRouteContainer><AddEditAbout/></PrivateRouteContainer>
         },
         {
-          path:'/cooperations',
-          element:<RouteContainer><Cooperation/></RouteContainer>
+          path:'/collaboration',
+          element:<RouteContainer><Collaboration/></RouteContainer>
         },
         {
           path:'/categories/:name',

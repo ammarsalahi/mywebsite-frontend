@@ -6,11 +6,11 @@
  
 
 .unselected_step{
-    @apply mb-5 border py-2 px-5 rounded-full border text-lg items-center cursor-pointer
+    @apply mb-5 border-2 py-2 px-5 rounded-full flex justify-between text-lg items-center hover:bg-blue-600;
 }
 
 .selected_step{
-    @apply mb-5 border py-2 px-5 rounded-full border-2 text-lg items-center bg-blue-500 font-bold text-white cursor-pointer
+    @apply mb-5 border-2 py-2 px-5 rounded-full text-lg items-center bg-blue-600 hover:bg-blue-600 font-bold text-white cursor-pointer
 }
 
 
@@ -19,12 +19,12 @@
 	@apply hidden xs:md:block ;
 }
 .cooper{
-  @apply pt-10 px-4  xs:sm:px-20 ;
-  @apply xs:md:sm:grid  md:grid-cols-3 md:gap-5 xs:lg:grid-cols-4 xs:lg:gap-10;
+  @apply pt-5 px-4  xs:sm:px-20 ;
+  @apply xs:md:sm:grid  md:grid-cols-3 md:gap-5 xs:lg:grid-cols-5 xs:lg:gap-10;
 } 
 
 .steps-space{
-    @apply md:col-span-2 xs:lg:col-span-2;
+    @apply px-3 md:col-span-2 xs:lg:col-span-4 ;
 }
 .content-show{
   @apply p-5 border shadow-md rounded-xl xs:sm:p-10 xs:sm:border;

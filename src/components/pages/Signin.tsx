@@ -7,7 +7,7 @@ import { SIGNIN } from '../api/Endpoints'
 import { message } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
-import { themeSelector, tokenSelector } from '../states/Selectors'
+import { langSelector, themeSelector, tokenSelector } from '../states/Selectors'
 import lightIcon from '../../assets/icon-light.png'
 import {motion} from 'framer-motion'
 import { AiFillMoon, AiFillSun } from 'react-icons/ai'
@@ -23,7 +23,7 @@ export default function Signin() {
    const [show,setShow]=useState(true);
    const [token,setToken]=useRecoilState(tokenSelector);
    const [theme,setTheme]=useRecoilState(themeSelector)
-
+    const [lang,setLang]=useRecoilState(langSelector)
 
   message.config({
     top: document.documentElement.clientHeight - 100,
@@ -40,6 +40,15 @@ export default function Signin() {
    }
   }
 
+  const handleLang=()=>{
+    if(lang=='EN'){
+      setLang("FA")
+    }else{
+      setLang("EN")
+
+    }
+  }
+
   useEffect(()=>{
     document.documentElement.setAttribute('data-theme',theme)
   },[theme])
@@ -54,13 +63,16 @@ export default function Signin() {
     <div className="card-body p-0">
       <div className="grid grid-cols-2">
         <div className='py-10 px-10'>
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center gap-3">
           <button className='btn btn-ghost btn-sm text-2xl' onClick={handleChangeTheme}>
             {theme=="dark"?<AiFillMoon/>: <AiFillSun />}
           </button>
+          <button className='btn btn-ghost btn-sm text-xl' onClick={handleLang}>
+            {lang}
+          </button>
           </div>
           <div className='py-10'>
-                          <p className="text-2xl font-semibold mb-14 text-center">ورود کاربر</p>
+              <p className="text-2xl font-semibold mb-14 text-center">{lang=="FA"?"ورود کاربر":"User Signin"}</p>
             <Formik
             
             initialValues={{
@@ -98,12 +110,13 @@ export default function Signin() {
                     <form onSubmit={handleSubmit}>
                       <div className="mb-6">
                         <label className="input input-bordered flex items-center rounded-2xl gap-2">
-                          <FaUser className='text-gray-500'/>
+                          {lang=="FA" && <FaUser className='text-gray-500'/>}
                             <input 
-                              type="text" className="grow" 
+                              type="text" className={lang=="FA"?"grow":"grow text-end"} 
                               value={values.username} name="username"
-                              onChange={handleChange} placeholder="نام کاربری" 
+                              onChange={handleChange} placeholder={lang=="FA"?"نام کاربری":"username"} 
                             />
+                             {lang=="EN" && <FaUser className='text-gray-500'/>}
                         </label>
                         {errors.username &&<div className="label">
                           <div className="label-alt text-red-500">{errors.username.toString()}</div>
@@ -111,15 +124,25 @@ export default function Signin() {
                       </div>
                         <div className="mb-6">
                           <label className="input input-bordered flex items-center rounded-2xl gap-2">
-                            <FaLock className='text-gray-500'/>
+                            {lang=="FA"?
+                              <FaLock className='text-gray-500'/>
+                              :
+                              show?
+                              <FaEye className='text-gray-500 cursor-pointer text-xl' onClick={handleShowPass}/>
+                              :<FaEyeSlash className='text-gray-500 cursor-pointer text-xl' onClick={handleShowPass}/>
+                            }
                             <input 
-                              type={show?"password":"text"} className="grow" placeholder="گذرواژه" 
+                              type={show?"password":"text"} className={lang=="FA"?"grow":"grow text-end"} 
+                               placeholder={lang=="FA"?"گذرواژه":"password"} 
                               value={values.password} name="password" onChange={handleChange}
                             />
-                            {show ?
+                            {lang=="FA"?
+                              show?
                               <FaEye className='text-gray-500 cursor-pointer text-xl' onClick={handleShowPass}/>
-                              :<FaEyeSlash className='text-gray-500 cursor-pointer text-xl' onClick={handleShowPass}/>}
-
+                              :<FaEyeSlash className='text-gray-500 cursor-pointer text-xl' onClick={handleShowPass}/>
+                            :
+                              <FaLock className='text-gray-500'/>
+                            }
                           </label>
                           {errors.password && touched.password &&<div className="label">
                           <div className="label-alt text-red-500">{errors.password.toString()}</div>
@@ -127,7 +150,7 @@ export default function Signin() {
                         </div>
                       
                         <button type='submit' className='btn-blue w-full hover:w-full rounded-2xl text-lg font-semibold'>
-                            تایید
+                           {lang=="FA"?"تایید":"Signin"}
                             <FaCheck/>
                         </button>
                         </form>
