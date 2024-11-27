@@ -9,6 +9,7 @@ import { Api } from '../api/Index';
 import { USERS_ID } from '../api/Endpoints';
 import { AuthConfigHeader } from '../api/Configs';
 import { Spin } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 
 export default function Settings() {
@@ -18,7 +19,7 @@ export default function Settings() {
     const token=useRecoilValue(tokenSelector)
     const [userInfo,setUserInfo]=useState<any[]|[]>([]);
     const [isLoad,setIsLoad]=useState(false);
-
+    const {t} = useTranslation()
     const getUserInfo=async()=>{
       await Api.get(USERS_ID(token.user),{
         headers:AuthConfigHeader(token.access)
@@ -33,7 +34,7 @@ export default function Settings() {
     },[])
     
   return (
-    <div>
+    <div dir={t('dir')}>
      {isLoad? <div className={theme=='light'?"card-light":"card-dark"}>
           <div className="card-body py-3 px-0">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
@@ -41,7 +42,7 @@ export default function Settings() {
               <SettingNav theme={theme}/>
               </div>
               <div className="md:col-span-2 lg:col-span-3 p-5">
-              {settings=="profile" &&<Profile user={userInfo} token={token} reload={getUserInfo}/>}
+              {settings=="profile" &&<Profile user={userInfo} token={token} reload={getUserInfo} theme={theme}/>}
               {settings=="password" &&<PasswordChange token={token.access}/>}
               {settings=="otp" && <Otp token={token} user={userInfo}/>}
               </div>

@@ -5,6 +5,7 @@ import { Api } from '../api/Index'
 import { USERS_PASSWORD_CHANGE } from '../api/Endpoints'
 import { AuthConfigHeader } from '../api/Configs'
 import { message } from 'antd'
+import { useTranslation } from 'react-i18next'
 
 interface passProps{
     token:any
@@ -12,6 +13,7 @@ interface passProps{
 
 export default function PasswordChange(props:passProps) {
 
+    const {t}=useTranslation()
     message.config({
         top: document.documentElement.clientHeight - 100,
     });
@@ -37,13 +39,13 @@ export default function PasswordChange(props:passProps) {
           validate={(values)=>{
             let errors:any={}
             if(!values.old){
-              errors.old="این فیلد نمی تواند خالی باشد!"
+              errors.old=t('notempty')
             }
             if(!values.new){
-              errors.new="این فیلد نمی تواند خالی باشد!"
+              errors.new=t('notempty')
             }
             if(values.new!==values.renew){
-                errors.new="گذرواژه‌ها برابر نیستند!"
+                errors.new=t('pserror')
             }
             
           }}
@@ -54,10 +56,10 @@ export default function PasswordChange(props:passProps) {
                 Api.post(USERS_PASSWORD_CHANGE,formData,{
                     headers:AuthConfigHeader(props.token)
                 }).then((res)=>{
-                    message.success("تغییرات با موفقیت انجام شد");
+                    message.success(t('accepted'));
                     resetForm()
                   }).catch((err)=>{
-                    message.error("متاسفانه مشکلی پیش آمد!")
+                    message.error(t('notaccepted'))
                 })
           }}
         >
@@ -70,7 +72,7 @@ export default function PasswordChange(props:passProps) {
             </div> */}
             <div>
                 <div className="label">
-                    <div className="label-alt text-base">گذرواژه قبلی</div>
+                    <div className="label-alt text-base">{t('psch1')}</div>
                 </div>
                 <label  className="input input-bordered flex items-center gap-2 rounded-2xl w-full">
                     <FaLock className='text-gray-500'/>
@@ -85,7 +87,7 @@ export default function PasswordChange(props:passProps) {
             </div> 
             <div>
                 <div className="label">
-                    <div className="label-alt text-base">گذرواژه جدید</div>
+                    <div className="label-alt text-base">{t('psch2')}</div>
                 </div>
                 <label  className="input input-bordered flex items-center gap-2 rounded-2xl w-full">
                     <FaLock className='text-gray-500'/>
@@ -100,7 +102,7 @@ export default function PasswordChange(props:passProps) {
             </div>
             <div>
                 <div className="label">
-                    <div className="label-alt text-base">تکرار گذرواژه جدید</div>
+                    <div className="label-alt text-base">{t('psch3')}</div>
                 </div>
                 <label  className="input input-bordered flex items-center gap-2 rounded-2xl w-full">
                 <FaLock className='text-gray-500'/>
@@ -113,9 +115,9 @@ export default function PasswordChange(props:passProps) {
                     {errors.renew && touched.renew &&<div className="label-alt text-base text-red-500">{errors.renew.toString()}</div>}
                 </div>
             </div>      
-                <button className='btn-blue rounded-2xl mt-7 w-full' type='submit'>
+                <button className='btn-blue rounded-2xl mt-7 w-full text-base' type='submit'>
                     <FaCheck/>  
-                        تایید
+                        {t('agree')}
                 </button>
 
         </form>

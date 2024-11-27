@@ -11,6 +11,7 @@ import { useRecoilValue } from 'recoil';
 import { tokenSelector } from '../states/Selectors';
 import { message, Spin } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -38,19 +39,7 @@ interface PostItem{
     category:CategoryItem;
 }
 
-const editorConfig = {
-    toolbarButtons: [
-      'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|',
-      'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|',
-      'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-',
-      'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', '|',
-      'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|',
-      'print', 'help', 'html', '|', 'undo', 'redo'
-    ],
-    heightMin:300,
-    placeholderText:"متن پست",
-    quickInsertTags: []
-  };
+
 
 
 interface Option {
@@ -103,7 +92,9 @@ export default function AddPost(props:postprops) {
 
     const [isLoad, setIsLoad] = useState<boolean>(false);
 
-    const token=useRecoilValue(tokenSelector)
+    const token=useRecoilValue(tokenSelector);
+
+    const {t}= useTranslation();
 
     let navigate = useNavigate();
 
@@ -140,7 +131,19 @@ export default function AddPost(props:postprops) {
       getPost(props.id)
     }, [props.id])
     
-
+    const editorConfig = {
+        toolbarButtons: [
+          'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|',
+          'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|',
+          'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-',
+          'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', '|',
+          'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|',
+          'print', 'help', 'html', '|', 'undo', 'redo'
+        ],
+        heightMin:300,
+        placeholderText:t('potext'),
+        quickInsertTags: []
+      };
 
     const handleKeynameChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
         setKeyname(e.target.value)
@@ -219,18 +222,30 @@ export default function AddPost(props:postprops) {
                 }}
                 validate={(values)=>{
                     let errors:formErrors={}
+                    // if(!values.title){
+                    //     errors.title="عنوان نمی تواند خالی باشد!"
+                    // }
+                    // if(!values.header){
+                    //     errors.header="چکیده نمی تواند خالی باشد!"
+                    // }
+                  
+                    // if(!values.content){
+                    //     errors.content="متن نمی تواند خالی باشد!"
+                    // }
+                    // if(!values.category){
+                    //     errors.category="دسته‌بندی نمی تواند خالی باشد!"
+                    // }
                     if(!values.title){
-                        errors.title="عنوان نمی تواند خالی باشد!"
+                        errors.title=t('notempty')
                     }
                     if(!values.header){
-                        errors.header="چکیده نمی تواند خالی باشد!"
+                        errors.header=t('notempty')
                     }
-                  
                     if(!values.content){
-                        errors.content="متن نمی تواند خالی باشد!"
+                        errors.content=t('notempty')
                     }
                     if(!values.category){
-                        errors.category="دسته‌بندی نمی تواند خالی باشد!"
+                        errors.category=t('notempty')
                     }
                    return errors
                     
@@ -251,12 +266,12 @@ export default function AddPost(props:postprops) {
                     
 
                     Api.patch(POSTS_ID(props.id),formdata,{headers:AuthConfigHeaderFile(token.access)}).then((res)=>{
-                        message.success("با موفقیت پست ویرایش شد");
+                        message.success(t('accepted'));
                         sleep(3000)
                         navigate("/posts")
                     }).catch((err)=>{
                         console.log(err)
-                        message.error("متاسفانه مشکلی پیش آمده!")
+                        message.error(t('notaccepted'))
                     })
                 }}
             >
@@ -265,13 +280,13 @@ export default function AddPost(props:postprops) {
                             <div className="flex justify-center">
                                 <div className="flex gap-2">
                                 <PiNewspaperFill className='text-3xl'/>
-                                <p className="text-2xl text-center font-bold mb-10">افزودن پست جدید</p>
+                                <p className="text-2xl text-center font-bold mb-10">{t('postaddtitle')}</p>
                                 </div>
                             
                             </div>
                             <div className="mb-4">
                                 <div className="label mb-1">
-                                    <span className="label-text-alt text-base">عنوان پست را وارد کنید</span>
+                                    <span className="label-text-alt text-base">{t('posttitle')}</span>
                                     <span className="label-text me-2">{values.title.length}/200</span>
                                 </div>
                                 <input 
@@ -286,7 +301,7 @@ export default function AddPost(props:postprops) {
                             <div className="mb-4">
                                 <input type="file" accept='image/*' className='hidden' onChange={handleImage} ref={imgRef} />
                                 <div className="label">
-                                    <span className="label-text-alt text-base">تصویر پست را انتخاب کنید</span>
+                                    <span className="label-text-alt text-base">{t('postimg')}</span>
                                 </div>
                              {image? <div className='relative '>
                                 <img src={image} alt="" className='h-[250px] w-full rounded-xl' />
@@ -296,7 +311,7 @@ export default function AddPost(props:postprops) {
                                     className="absolute inset-0 flex gap-2 items-center justify-center bg-black bg-opacity-25 hover:bg-opacity-[80%] text-white text-xl font-bold py-2 px-4 rounded-xl"
                                 >
                                  <PiCameraPlusFill className='text-2xl'/>
-                                 تغییر تصویر
+                                 {t('imgbtnch')}
                                 </button>
                               </div>  
                             :
@@ -308,7 +323,7 @@ export default function AddPost(props:postprops) {
 
                                     >
                                         <PiCameraPlusFill className='text-xl'/>
-                                        افزودن تصویر
+                                        {t('imgbtn')}
                                     </button>
                             </div>}
                             {image==null &&<div className="label">
@@ -317,7 +332,7 @@ export default function AddPost(props:postprops) {
                             </div>
                             <div className="mb-5">
                                 <div className="label">
-                                    <span className="label-text-alt text-base">چکیده پست را وارد کنید</span>
+                                    <span className="label-text-alt text-base">{t('posthead')}</span>
                                     <span className="label-text me-2">{values.header.length}/400</span>
 
                                 </div>
@@ -331,7 +346,7 @@ export default function AddPost(props:postprops) {
                             </div>
                             <div className="mb-6">
                                 <div className="label">
-                                    <span className="label-text-alt text-base">متن پست را وارد کنید</span>
+                                    <span className="label-text-alt text-base">{t('posttext')}</span>
                                 </div> 
                                 <FroalaEditorComponent  tag="textarea" 
                                     config={editorConfig}
@@ -348,12 +363,13 @@ export default function AddPost(props:postprops) {
                                 <div className="md:flex gap-5">
                                     <div className='w-full'>
                                         <div className="label">
-                                            <span className="label-text-alt text-base">کلمات کلیدی را اضافه کنید</span>
+                                            <span className="label-text-alt text-base">{t('postkey')}</span>
                                         </div>
                                         <label className="input input-bordered flex items-center rounded-2xl w-full gap-2 mb-4">
                                             <input type="text" className="grow"
                                               value={keyname} 
-                                              onChange={handleKeynameChange}  
+                                              onChange={handleKeynameChange} 
+                                              placeholder={t('keyname')} 
                                              />
                                             {keyname.length > 0 && 
                                                 <button 
@@ -362,7 +378,7 @@ export default function AddPost(props:postprops) {
                                                     onClick={addKeyword}
                                                 >
                                                   <FaPlus/>
-                                                  افزودن
+                                                  {t('add')}
                                                 </button>
                                             }
                                         </label>
@@ -379,14 +395,14 @@ export default function AddPost(props:postprops) {
                                     </div>
                                     <div className='w-full'>
                                         <div className="label">
-                                            <span className="label-text-alt text-base">دسته‌بندی را انتخاب کنید</span>
+                                            <span className="label-text-alt text-base">{t('postcat')}</span>
                                         </div>
                                         <Select
                                             isClearable
                                             options={options}
                                             styles={customStyles}
                                             className="input input-bordered bg-white rounded-xl"
-                                            placeholder="نام دسته‌بندی"
+                                            placeholder={t('catname')}
                                             value={options.find(option => option.value === values.category) || null}
                                             onChange={(selectedOption:any) => {
                                                 setFieldValue('category', selectedOption ? selectedOption.value : '');
@@ -408,7 +424,7 @@ export default function AddPost(props:postprops) {
                                         onChange={handleChange}
                                         className="checkbox  border-blue-500 [--chkbg:theme(colors.blue.500)] checked:border-blue-500" 
                                     />
-                                    <span className="label-text mx-3 text-lg">این پست قابل مشاهد باشد</span>
+                                    <span className="label-text mx-3 text-lg">{t('postshow')}</span>
                                 </label>
                                 
                                 </div>
@@ -417,7 +433,7 @@ export default function AddPost(props:postprops) {
                                     type='submit'
                                 >
                                 <FaCheck/>
-                                    ایجاد پست
+                                    {t('edit')}
                                 </button>
                             </div>
                             </form>

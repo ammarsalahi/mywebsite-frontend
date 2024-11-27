@@ -10,17 +10,19 @@ import { USERS_ID } from '../api/Endpoints'
 import { AuthConfigHeader, AuthConfigHeaderFile } from '../api/Configs'
 import { message } from 'antd'
 import { Formik } from 'formik'
+import { useTranslation } from 'react-i18next'
 
 interface userProps{
   user:any;
   token:any;
-  reload:()=>void
+  reload:()=>void;
+  theme:string
 }
 export default function Profile(props:userProps) {
     const [imgFile,setImgFile]=useState<File|null>(null)
     const [imgShow,setImgShow]=useState("");
     const imgref=useRef<HTMLInputElement>(null);
- 
+    const {t}=useTranslation()
   message.config({
     top: document.documentElement.clientHeight - 100,
   });
@@ -50,10 +52,10 @@ export default function Profile(props:userProps) {
           validate={(values)=>{
             let errors:any={}
             if(!values.email){
-              errors.email="این فیلد نمی تواند خالی باشد!"
+              errors.email=t('notempy')
             }
             if(!values.userName){
-              errors.userName="این فیلد نمی تواند خالی باشد!"
+              errors.userName=t('notempty')
             }
             
           }}
@@ -71,10 +73,10 @@ export default function Profile(props:userProps) {
             Api.patch(USERS_ID(props.token.user),formData,{
               headers:AuthConfigHeaderFile(props.token.access)
             }).then((res)=>{
-              message.success("تغییرات با موفقیت انجام شد");
+              message.success(t('accepted'));
               props.reload()
             }).catch((err)=>{
-              message.error("متاسفانه مشکلی پیش آمد!")
+              message.error(t('notaccepted'))
             })
           }}
         >
@@ -89,11 +91,11 @@ export default function Profile(props:userProps) {
                       </div>  */}
                       <div className="relative">
                         <input type="file" className='hidden'  ref={imgref} onChange={handleChangeImage}/>
-                        <img src={imgShow==""?props.user.profile_image:imgShow} alt="" className='rounded-[50%] w-[170px] h-[170px] border-4 border-blue-500 shadow-lg'/>
+                        <img src={imgShow==""?props.user.profile_image:imgShow} alt="" className='rounded-[50%] w-[140px] h-[140px] border-4 border-blue-500 shadow-lg'/>
                         <button 
                             type='button' onClick={handleOpenFile}
-                            className='absolute inset-0 mt-28 me-12 btn btn-ghost text-5xl text-base-300 bg-transparent hover:bg-transparent'>
-                          <PiCameraPlusFill/>
+                            className='absolute inset-0 mt-24 me-12 btn btn-ghost text-5xl text-base-300 hover:bg-transparent '>
+                          <PiCameraPlusFill className={props.theme=='dark'?"text-white":"text-black"}/>
                         </button>
                       </div>
                     
@@ -103,7 +105,7 @@ export default function Profile(props:userProps) {
                  <div className='grid md:grid-cols-2 gap-x-5 gap-y-3'>
                     <div>
                       <div className="label">
-                        <div className="label-alt text-base">نام (اختیاری)</div>
+                        <div className="label-alt text-base">{t('firstname')}</div>
                       </div>
                       <input 
                           type="text" name="firstName" value={values.firstName}  onChange={handleChange}
@@ -112,7 +114,7 @@ export default function Profile(props:userProps) {
                     </div>
                     <div>
                       <div className="label">
-                        <div className="label-alt text-base">نام خانوادگی (اختیاری)</div>
+                        <div className="label-alt text-base">{t('lastname')}</div>
                       </div>
                       <input 
                           type="text" name="lastName" value={values.lastName} onChange={handleChange}
@@ -121,7 +123,7 @@ export default function Profile(props:userProps) {
                     </div>
                     <div>
                       <div className="label">
-                        <div className="label-alt text-base">نام کاربری</div>
+                        <div className="label-alt text-base">{t('signuser')}</div>
                       </div>
                       <input 
                           type="text" name="userName" value={values.userName} onChange={handleChange}
@@ -133,7 +135,7 @@ export default function Profile(props:userProps) {
                     </div>
                     <div>
                         <div className="label">
-                            <div className="label-alt text-base">ایمیل</div>
+                            <div className="label-alt text-base">{t('profemail')}</div>
                           </div>
                           <input 
                               type="email" name="email" value={values.email} onChange={handleChange}
@@ -151,15 +153,15 @@ export default function Profile(props:userProps) {
                             name="is_otp" value={values.is_otp} onChange={handleChange}
                             defaultChecked={values.is_otp==true}
                          />
-                        <span className='text-lg'>{values.is_otp==true?"اعتبارسنجی دو مرحله فعال باشد":"اعتبارسنجی دومرحله ای فعال نیست"}</span>
+                        <span className='text-base'>{values.is_otp==true?t('profopt1'):t('profopt2')}</span>
                       </div>
                     </div>
                     <button 
-                      className='btn-blue rounded-2xl w-full mt-3'
+                      className='btn-blue rounded-2xl w-full mt-3 flex gap-2 text-base'
                       type='submit'
                     >
                       <FaCheck/>  
-                      تایید
+                      {t('agree')}
                     </button>
 
                 </form>)}

@@ -16,7 +16,7 @@ export default function PrivateRouteContainer({children}:props) {
       {token.access.length>0? 
         <div>
           <Navbar/>
-          <div className={theme=="dark"?"bg-gray-900 text-white pt-24 pb-10 px-20":"bg-gray-50 pt-24 pb-10 px-20"}>
+          <div className={theme=="dark"?"bg-gray-900 text-white pt-24 pb-10 px-16":"bg-gray-50 pt-24 pb-10 px-16"}>
             {children}
           </div>
         </div>

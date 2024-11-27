@@ -10,6 +10,7 @@ import { useRecoilValue } from 'recoil'
 import { tokenSelector } from '../states/Selectors'
 import { message } from 'antd'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 interface formErrors{
   title?:string;
@@ -41,7 +42,7 @@ export default function AddProject(props:projectProps) {
   const [techname,setTechname] = useState<string>("");
 
 
-
+  const {t} = useTranslation()
   const token = useRecoilValue(tokenSelector);
 
   let navigate = useNavigate();
@@ -99,7 +100,7 @@ export default function AddProject(props:projectProps) {
             addImg(res.data);
         }).catch(()=>{
           // console.log(err);
-          message.error("مشکلی پیش آمد!")
+          message.error(t('notaccept'))
         })
       }
    
@@ -109,8 +110,7 @@ export default function AddProject(props:projectProps) {
     Api.delete(IMAGES_ID(id)).then(()=>{
         deleteImg(id);
     }).catch(()=>{
-      // console.log(err);
-      message.error("مشکلی پیش آمد!")
+      message.error(t('notaccept'))
   })
   }
 
@@ -141,7 +141,7 @@ const handleAddTech=()=>{
         addTech(res.data);
   }).catch(()=>{
       // console.log(err);
-      message.error("مشکلی پیش آمد!")
+      message.error(t('notaccept'))
   })
 }
 const handleDeleteTech=(id:number)=>()=>{
@@ -149,11 +149,11 @@ const handleDeleteTech=(id:number)=>()=>{
         deleteTech(id)
     }).catch(()=>{
       // console.log(err);
-      message.error("مشکلی پیش آمد!")
+      message.error(t('notaccept'))
     })
 }
   return (
-    <div>
+    <div dir={t('dir')}>
         <div className={props.theme=="dark"?"card-dark":"card-light"}>
           <div className="card-body py-10 px-20">
           <Formik
@@ -165,10 +165,10 @@ const handleDeleteTech=(id:number)=>()=>{
                 validate={(values)=>{
                     let errors:formErrors={}
                     if(!values.title){
-                        errors.title="عنوان نمی تواند خالی باشد!"
+                        errors.title=t('notempty')
                     }
                     if(!values.header){
-                        errors.header="چکیده نمی تواند خالی باشد!"
+                        errors.header=t('notempty')
                     }
                     
                    
@@ -191,12 +191,12 @@ const handleDeleteTech=(id:number)=>()=>{
                   });
 
                   Api.post(PROJECTS,formdata,{headers:AuthConfigHeaderFile(token.access)}).then(()=>{
-                      message.success("پروژه با موفقیت ایجاد شد")
+                      message.success(t('accept'))
                       navigate("/projects")
                   }).catch((err)=>{
                      console.log(err)
                      console.log(token)
-                      message.error("متاسفانه مشکلی پیش آمد!")
+                      message.error(t('notaccept'))
                   })
                 }}
             >
@@ -205,13 +205,13 @@ const handleDeleteTech=(id:number)=>()=>{
               <div className="flex justify-center mb-10">
                 <div className="flex gap-2 items-center">
                 <FaHammer className='text-3xl'/>
-                <p className="text-2xl text-center font-bold">افزودن پروژه جدید</p>
+                <p className="text-2xl text-center font-bold"></p>
                 </div>
                
               </div>
             <div className="mb-5">
                     <div className="label mb-1">
-                      <span className="label-text-alt text-base">عنوان پست را وارد کنید</span>
+                      <span className="label-text-alt text-base">{t('posttitle')}</span>
                       <span className="label-text me-2">{values.title.length}/200</span>
                     </div>
                     <input 
@@ -225,7 +225,7 @@ const handleDeleteTech=(id:number)=>()=>{
             <div className="mb-4">
                    <input type="file" accept='image/*' className='hidden' onChange={handleImage} ref={imgRef} />
                       <div className="label">
-                         <span className="label-text-alt text-base">تصویر نمایه پروژه را انتخاب کنید</span>
+                         <span className="label-text-alt text-base">{t('postimg')}</span>
                       </div>
                       {image? <div className='relative '>
                                 <img src={image} alt="" className='h-[250px] w-full rounded-xl' />
@@ -235,7 +235,7 @@ const handleDeleteTech=(id:number)=>()=>{
                                     className="absolute inset-0 flex gap-2 items-center justify-center bg-black bg-opacity-25 hover:bg-opacity-[80%] text-white text-xl font-bold py-2 px-4 rounded-xl"
                                 >
                                  <PiCameraPlusFill className='text-2xl'/>
-                                 تغییر تصویر
+                                  {t('imgbtnch')}
                                 </button>
                               </div>  
                             :
@@ -247,7 +247,7 @@ const handleDeleteTech=(id:number)=>()=>{
 
                                     >
                                         <PiCameraPlusFill className='text-xl'/>
-                                        افزودن تصویر
+                                        {t('imgbtn')}
                                     </button>
                             </div>}
                             {image==null &&<div className="label">
@@ -256,7 +256,7 @@ const handleDeleteTech=(id:number)=>()=>{
                             </div>
             <div className="mb-5">
                   <div className="label mb-1">
-                      <span className="label-text-alt text-base">توضیحات پروژه را وارد کنید</span>
+                      <span className="label-text-alt text-base">{t('projectdesc')}</span>
                       <span className="label-text me-2">{values.header.length}/500</span>
                   </div>
                   <textarea 
@@ -270,7 +270,7 @@ const handleDeleteTech=(id:number)=>()=>{
             </div>
             <div className='mb-5'>
                   <div className="label my-2">
-                      <span className="label-text-alt text-base">تصاویر پروژه را انتخاب و وارد کنید</span>
+                      <span className="label-text-alt text-base">{t('projimgs')}</span>
                   </div>
                   <div className="grid grid-cols-3 md:grid-cols-6 justify-start gap-5 pb-5">
                     <input type="file" accept="image/*" className='hidden' onChange={handleImages} ref={imgsRef}/>
@@ -284,7 +284,7 @@ const handleDeleteTech=(id:number)=>()=>{
                                 onClick={handleDeleteImage(imgs.id)}
                               >
                               <FaTrash className='text-xl'/>
-                                      حذف 
+                               {t('delete')} 
                               </button>
                         </div>
                   ))}
@@ -299,7 +299,7 @@ const handleDeleteTech=(id:number)=>()=>{
             </div>
             <div className="mb-8">
                 <div className="label mb-1">
-                      <span className="label-text-alt text-base">تکنولوژی‌های استفاده را اضافه کنید</span>
+                      <span className="label-text-alt text-base">{t('projtechs')}</span>
                   </div>
                 <label className="input input-bordered flex items-center rounded-2xl w-full gap-2 mb-6">
                   <input  
@@ -312,7 +312,7 @@ const handleDeleteTech=(id:number)=>()=>{
                     onClick={handleAddTech}
                   >
                     <FaPlus/>
-                    افزودن
+                    {t('add')}
                   </button>
                 </label>
                 <div className='flex flex-wrap gap-3'>
@@ -334,13 +334,13 @@ const handleDeleteTech=(id:number)=>()=>{
                         type="checkbox"
                         className="checkbox  border-blue-500 [--chkbg:theme(colors.blue.500)] checked:border-blue-500" 
                       />
-                      <span className="label-text mx-3 text-lg">این پروژه قابل مشاهد باشد</span>
+                      <span className="label-text mx-3 text-lg">{t('projshow')}</span>
                   </label>
                   
                 </div>
                 <button className='btn-blue md:w-80 rounded-2xl text-lg font-semibold'>
                   <FaCheck/>
-                    ایجاد پروژه
+                    {t('projcreate')} 
                   </button>
             </div>
             </form>)}

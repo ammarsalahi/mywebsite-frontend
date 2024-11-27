@@ -10,6 +10,7 @@ import { Api } from '../api/Index';
 import { COOPERATIONS } from '../api/Endpoints';
 import { FaCircleCheck } from "react-icons/fa6";
 import Swal from 'sweetalert2';
+import { useTranslation } from 'react-i18next';
 
 interface stepprops{
   prev:any;
@@ -21,6 +22,7 @@ export default function StepThree(props:stepprops) {
   const [imgfile,setImgfile]=useState<any>(null);
   const types=useRecoilValue(typeSelector);
   const userdata=useRecoilValue(userSelector);
+  const {t} =useTranslation()
 
   const openFile=()=>{
     fileInput.current.click()
@@ -39,7 +41,8 @@ export default function StepThree(props:stepprops) {
           className="btn btn-sm rounded-full" 
           onClick={props.prev}>
         <FaChevronRight fontSize={20}/>
-        </button>         <p className='text-xl pb-10 text-center'>جزئیات بیشتری را در مورد پروژه اضافه کنید</p>
+        </button>         
+        <p className='text-xl pb-10 text-center'>{t('title3')}</p>
       </div>
       <Formik
         initialValues={{
@@ -48,7 +51,7 @@ export default function StepThree(props:stepprops) {
         validate={(values)=>{
           let errors:any={}
           if(!values.text){
-            errors.text="این فیلد نمی‌تواند خالی باشد!"
+            errors.text=t('notempty')
           }
           return errors
         }}
@@ -70,7 +73,7 @@ export default function StepThree(props:stepprops) {
           }).then((res)=>{
              Swal.fire({
                 icon:'success',
-                text:"با موفقیت انجام شد",
+                text:t('accepted'),
                 showCancelButton:false,
                 confirmButtonText:"باشه"
              }).then((result)=>{
@@ -81,6 +84,7 @@ export default function StepThree(props:stepprops) {
                
             
           }).catch(err=>{
+
              console.log(err)
           })
         }}
@@ -88,10 +92,10 @@ export default function StepThree(props:stepprops) {
 
         {({handleSubmit,values,handleChange,errors,touched})=>(
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} dir={t('dir')}>
             <textarea 
               className="textarea textarea-bordered w-full mb-5" 
-              placeholder='در مورد پروژه بیشتر توضیح بدید...'
+              placeholder={t('projdesc')}
               value={values.text}
               name='text'
               onChange={handleChange}
@@ -104,7 +108,7 @@ export default function StepThree(props:stepprops) {
               <input type='file' hidden ref={fileInput} onChange={handleFileChange} accept="image/png, image/jpg, image/jpeg"/>
               <button className='btn btn-ghost text-lg' type="button" onClick={openFile}>
               <PiCameraPlus/>
-              افزودن نمونه تصویر
+              {t('projimg')}
               </button>
             </div>:
             <div className="grid grid-cols-10 mb-5">
@@ -122,7 +126,7 @@ export default function StepThree(props:stepprops) {
               className='btn  w-full bg-blue-600 text-white hover:bg-blue-600 border border-blue-600 rounded-full'
               type="submit"
               >
-            تایید
+            {t('accepted')}
             </button>
         </form>
         )}

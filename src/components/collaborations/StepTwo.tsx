@@ -6,6 +6,7 @@ import { MdEmail } from "react-icons/md";
 import { FaChevronRight, FaChevronLeft} from "react-icons/fa6";
 import { useRecoilState } from 'recoil';
 import { userSelector } from '../states/Selectors';
+import { useTranslation } from 'react-i18next';
 
 interface stepprops{
   prev:any;
@@ -15,7 +16,7 @@ interface stepprops{
 export default function StepTwo(props:stepprops) {
 
   const [userdata,setUserdata]=useRecoilState(userSelector);
-
+  const {t} = useTranslation()
 
   return (
     <div>
@@ -25,7 +26,7 @@ export default function StepTwo(props:stepprops) {
           onClick={props.prev}>
         <FaChevronRight fontSize={20}/>
         </button>
-        <p className='text-2xl pb-10 ps-5 text-center'>اطلاعات موردنظر را وارد کنید</p>
+        <p className='text-2xl pb-10 ps-5 text-center'>{t('title2')}</p>
       </div>
       <Formik
         initialValues={{
@@ -46,24 +47,24 @@ export default function StepTwo(props:stepprops) {
         validate={(values)=>{
           let errors:any={}
           if(!values.name){
-              errors.name="این فیلد نمی‌تواند خالی باشد!"
+              errors.name=t('notempty')
           }
           if(!values.phone){
-            errors.phone="این فیلد نمی‌تواند خالی باشد!"
+            errors.phone=t('notempty')
           }
           if(!values.project){
-            errors.project="این فیلد نمی‌تواند خالی باشد!"
+            errors.project=t('notempty')
           }
           return errors
         }}
       >         
       {({handleSubmit,values,handleChange,errors,touched})=>(
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} dir={t('dir')}>
             <label className="input input-bordered w-full flex items-center gap-5 rounded-full">
                <FaUser/>
                 <input 
                     type="text" className="grow" 
-                    placeholder='نام و نام‌خانوادگی' 
+                    placeholder={t('fullname')} 
                     value={values.name}
                     name="name"
                     onChange={handleChange}
@@ -76,7 +77,7 @@ export default function StepTwo(props:stepprops) {
                  <FaPhone/>
                 <input 
                     type="text" className="grow" 
-                    placeholder='شماره موبایل'
+                    placeholder={t('phone')}
                     value={values.phone}
                     name="phone"
                     onChange={handleChange}
@@ -89,7 +90,7 @@ export default function StepTwo(props:stepprops) {
                  <MdEmail/>
                 <input 
                     type="text" className="grow" 
-                    placeholder='ایمیل(اختیاری)'
+                    placeholder={t('email')}
                     value={values.email}
                     name="email"
                     onChange={handleChange}
@@ -99,7 +100,7 @@ export default function StepTwo(props:stepprops) {
                <FaHammer/>
                 <input 
                     type="text" className="grow" 
-                    placeholder='نام پروژه'
+                    placeholder={t('projname')}
                     value={values.project}
                     name="project"
                     onChange={handleChange}
@@ -112,7 +113,7 @@ export default function StepTwo(props:stepprops) {
               className='btn w-full bg-blue-600 mt-7 text-white hover:bg-blue-600 border border-blue-600 rounded-full'
               type="submit"
             >
-            ادامه
+            {t('continue')}
             <FaChevronLeft/>
           </button>
           
