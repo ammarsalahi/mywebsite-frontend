@@ -5,6 +5,7 @@ import { CATEGORIES, CATEGORIES_ID } from '../api/Endpoints';
 import { message } from 'antd';
 import { useRecoilValue } from 'recoil';
 import { categorySelector } from '../states/Selectors';
+import { useTranslation } from 'react-i18next';
 
 interface modalProps{
     type:string;
@@ -16,6 +17,7 @@ export default function AddEditModal(props:modalProps) {
   const cat=useRecoilValue(categorySelector)
   const [name,setName]=useState<string>("");
   const [engname,setEngName]=useState<string>("");
+  const {t} = useTranslation();
 
 
   const handleChangeName=(e:React.ChangeEvent<HTMLInputElement>)=>{
@@ -36,7 +38,7 @@ export default function AddEditModal(props:modalProps) {
         setEngName("")
         modalElement?.close()
       }).catch((err)=>{
-        message.error("متاسفانه مشکلی پیش آمد!")
+        message.error(t('notaccepted'))
       })
   }
   const handleEdit=()=>{
@@ -46,7 +48,7 @@ export default function AddEditModal(props:modalProps) {
       setEngName("")
       modalElement?.close()
     }).catch((err)=>{
-      message.error("متاسفانه مشکلی پیش آمد!")
+      message.error(t('notaccepted'))
     })
   }
 
@@ -62,7 +64,7 @@ export default function AddEditModal(props:modalProps) {
     <dialog id={"catmodal"} className="modal">
         <div className="modal-box py-3">
           <div className="flex justify-between ps-5 items-center">
-             <h3 className="font-bold text-lg text-center">{props.type=="add"?"افزودن دسته‌بندی‌":"ویرایش دسته‌بندی"}</h3>
+             <h3 className="font-bold text-lg text-center">{props.type=="add"?t("addcat"):t("editcat")}</h3>
               <button className='btn btn-circle btn-ghost text-2xl' onClick={handleClose}>
                 <CgClose/>
               </button>
@@ -71,20 +73,20 @@ export default function AddEditModal(props:modalProps) {
               <input 
                   type="text" value={name} onChange={handleChangeName}
                   className='input input-bordered w-full rounded-2xl mb-5' 
-                  placeholder='نام دسته‌بندی را وارد کنید...' />
+                  placeholder={t('entercatname')} />
               <input 
                   type="text" value={engname} onChange={handleChangeEnglishName}
                   className='input input-bordered w-full rounded-2xl mb-5' 
-                  placeholder='نام دسته‌بندی انگلیسی را وارد کنید...' />    
-              <div className="flex items-center gap-3">
+                  placeholder={t('entercateng')} />    
+              <div className="flex items-center gap-3" dir="rtl">
                 <button 
                     className='btn-blue w-52 rounded-2xl' type='button' disabled={name.length==0} 
                     onClick={cat.id==0?handleAdd:handleEdit}
                 >
-                  تایید
+                  {t('agree')}
                 </button>
                 <button className='btn-red w-52 rounded-2xl' type='button' onClick={handleClose}>
-                  انصراف
+                  {t('cancel')}
                 </button>
               </div>
             </div>

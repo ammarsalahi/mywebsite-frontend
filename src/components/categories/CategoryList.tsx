@@ -5,8 +5,9 @@ import AddEditModal from './AddEditModal';
 import { Api } from '../api/Index';
 import { CATEGORIES, CATEGORIES_ID, CATEGORIES_PAGE } from '../api/Endpoints';
 import Swal from 'sweetalert2';
-import { useRecoilState } from 'recoil';
-import { categorySelector } from '../states/Selectors';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { categorySelector, langSelector } from '../states/Selectors';
+import { useTranslation } from 'react-i18next';
 
 interface listProps{
   theme:string
@@ -15,6 +16,8 @@ export default function CategoryList(props:listProps) {
   const[catType,setCatType]=useState("");
   const [categories,setCategories]=useState([]);
   const [cateId,setCatId]=useRecoilState(categorySelector)
+  const {t} = useTranslation();
+  const lang=useRecoilValue(langSelector)
   const [page,setPage]=useState(1);
   const [isPage,setIsPage]=useState({
     next:null,
@@ -49,10 +52,10 @@ export default function CategoryList(props:listProps) {
   }
   const handleDelete=(id:number,name:string)=>()=>{
     Swal.fire({
-      title:`آیا میخواهید ${name} حذف شود؟`,
+      title:lang=="fa"?`آیا میخواهید ${name} حذف شود؟`:`do you want to delete ${name}?`,
       icon:"error",
-      confirmButtonText:"بله",
-      cancelButtonText:"نه, بیخیال",
+      confirmButtonText:t('yes'),
+      cancelButtonText:t('no'),
       showCancelButton:true
     }).then((result)=>{
         if(result.isConfirmed){
@@ -72,10 +75,10 @@ export default function CategoryList(props:listProps) {
     getCategories()
   },[page])
   return (
-    <div className={`card-${props.theme} rounded-xl`}>
+    <div className={`card-${props.theme} rounded-xl`} dir={t('dir')}>
         <div className="card-body">
           <div className='flex justify-center items-center text-center pb-7 w-full text-xl font-bold '>
-             <p >دسته‌بندی‌ها</p>
+             <p>{t('cates')}</p>
           </div>
 
         <div className="overflow-x-auto">
@@ -87,7 +90,7 @@ export default function CategoryList(props:listProps) {
             <label className='input input-bordered  input-sm rounded-xl flex items-center w-80'>
               <input 
                 className='grow'
-                placeholder='جستجو...'
+                placeholder={t('search')}
               />
               <AiOutlineSearch fontSize={20}/>
             </label>
@@ -96,7 +99,7 @@ export default function CategoryList(props:listProps) {
                 onClick={handleOpenModal("add",null)}
             >
               <FaPlus/>
-              افزودن
+              {t('add')}
             </button>
           </div>
           <table className="table table-zebra border-x border-base-300">
@@ -104,10 +107,10 @@ export default function CategoryList(props:listProps) {
             <thead>
               <tr className='text-sm text-center'>
                 <th>#</th>
-                <th>نام</th>
-                <th>نام انگلیسی</th>
-                <th>تعداد پست‌ها</th>
-                <th>گزینه‌ها</th>
+                <th>{t('cname')}</th>
+                <th>{t('englishname')}</th>
+                <th>{t('postcount')}</th>
+                <th>{t('catoption')}</th>
               </tr>
             </thead>
             <tbody>
@@ -124,11 +127,11 @@ export default function CategoryList(props:listProps) {
                             onClick={handleOpenModal("edit",item)}
                         >
                           <FaPencil/>
-                          ویرایش
+                          {t('edit')}
                         </button>
                         <button className='btn-red-outline rounded-xl btn-sm flex' onClick={handleDelete(item.id,item.name)}>
                           <FaTrash/>
-                          حذف
+                          {t('delete')}
                         </button>
                   </td>
                 </tr>

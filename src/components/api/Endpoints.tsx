@@ -48,6 +48,10 @@ export const SOCIALS=_('/accounts/socials/')
 
 export const SOCIALS_ID=(username:any)=>_(`/accounts/socials/${username}/`)
 
+export const SKILLS=_('/accounts/skills/')
+export const SKILLS_ID=(id:number)=>_(`/accounts/skills/${id}/`)
+
+
 
 
 export const HOME=_('/contents/home/')

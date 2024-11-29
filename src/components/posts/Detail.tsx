@@ -4,13 +4,14 @@ import { PiNewspaperClipping, PiClock, PiShareNetwork } from 'react-icons/pi'
 import { Link, useNavigate } from 'react-router-dom'
 import { showImage } from '../api/Index'
 import { useRecoilValue } from 'recoil'
-import { themeSelector } from '../states/Selectors'
+import { langSelector, themeSelector } from '../states/Selectors'
 import { BsPen } from "react-icons/bs";
 import { GoTrash } from "react-icons/go";
 import { MdOutlineMore } from "react-icons/md";
 import { BiBookReader, BiPencil } from "react-icons/bi";
 import { FaFire, FaTrash } from 'react-icons/fa6';
 import { BiCategory } from "react-icons/bi";
+import { useTranslation } from 'react-i18next'
 
 interface detailprops{
   post:any;
@@ -21,6 +22,8 @@ export default function Detail(props:detailprops) {
  
  
   const [scrollValue, setScrollValue] = useState(0);
+  const {t} = useTranslation();
+  const lang=useRecoilValue(langSelector);
 
 
   const handlePageScroll = () => {
@@ -97,7 +100,7 @@ export default function Detail(props:detailprops) {
         <div className="flex justify-start gap-5 pt-10 px-4">
                 <Link 
                     to={`/categories/${props.post?.category.english_name}`} 
-                    className='border-2 border-blue-500 text-blue-500 hover:bg-blue-500 px-5 hover:text-white  rounded-full flex items-center gap-2 text-xl'
+                    className='border-2 border-blue-500 text-blue-500 hover:bg-blue-500 px-5 hover:text-white rounded-full flex items-center gap-2 text-xl'
                 >
                    <BiCategory fontSize={18}/>
                   <p className='text-lg'>{props.post?.category.name}</p>
@@ -127,7 +130,7 @@ export default function Detail(props:detailprops) {
 
               {props.post?.keywords.length > 0 &&
             <div className={theme=="light"?"pb-20 mt-20 pt-5 border-t":"pb-20 mt-20 pt-5 border-t border-gray-600 "}>
-              <p className="text-xl">#کلمات کلیدی</p>
+              <p className="text-xl">#{t('keywords')}</p>
               <div className="px-2 py-5 grid xs:grid-cols-4 md:grid-cols-6 gap-10">
                   {props.post.keywords?.map((item:any,idx:number)=>(
                       <Link to={`/keywords/${item.english_name}`} key={idx}>    
@@ -139,7 +142,7 @@ export default function Detail(props:detailprops) {
           </div>
           
           {props.others.length>0 && <div className={theme=="light"?"pb-16 pt-5 border-t":"pb-16 pt-5 border-t border-gray-600"}>
-                <p className='text-xl'>پست‌های مشابه</p>
+                <p className='text-xl'>{t('others')}</p>
                 
                 <div className='grid lg:grid-cols-3 gap-5  py-10' id='others'>
                     {props.others?.map((item:any,idx:number)=>(

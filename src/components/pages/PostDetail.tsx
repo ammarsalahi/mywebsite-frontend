@@ -42,7 +42,7 @@ export default function PostDetail() {
         {isPost?
         <Detail post={post} others={others}/>
         :
-        <EmptyList name='پستی'/>
+        <EmptyList name='not'/>
       }
        </div>
        <Footer/>

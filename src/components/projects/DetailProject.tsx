@@ -11,6 +11,7 @@ import { BiBookReader, BiPencil } from 'react-icons/bi'
 import { GoTrash } from 'react-icons/go'
 import { MdOutlineMore } from 'react-icons/md'
 import { Carousel } from 'antd'
+import { useTranslation } from 'react-i18next'
 
 interface detailprops{
   project:any;
@@ -18,7 +19,7 @@ interface detailprops{
 }
 export default function DetailP(props:detailprops) {
   const theme=useRecoilValue(themeSelector)
- 
+  const {t} = useTranslation()
   const [scrollValue, setScrollValue] = useState(0);
 
 
@@ -48,7 +49,7 @@ export default function DetailP(props:detailprops) {
   let navigate=useNavigate()
 
   return (
- <div className='detail-show'>
+ <div className='detail-show' dir={t('dir')}>
       <div className="minicol pb-40">
         <div className="ancher-show">
         <ul className="flex flex-col items-center ">
@@ -139,7 +140,7 @@ export default function DetailP(props:detailprops) {
                </div>
                      {props.project?.technologies.length > 0 &&
                   <div className={theme=="light"?"pb-20 mt-40 pt-5 border-t":"pb-20 mt-40 pt-5 border-t border-gray-600"}>
-                      <p className="text-xl">تنکولوژی‌های استفاده‌شده</p>
+                      <p className="text-xl">{t('usetech')}</p>
                  <div className="px-2 py-5 grid xs:grid-cols-4 md:grid-cols-6 gap-10">
                         {props.project.technologies?.map((item:any,idx:number)=>(
 
@@ -154,7 +155,7 @@ export default function DetailP(props:detailprops) {
           </div>
      
           {props.others.length>0 && <div className={theme=="dark"?"pb-16 pt-5 border-t ":"pb-16 pt-5 border-t border-gray-600"} id="others">
-                <p className='text-xl'>پروژه‌های دیگر</p>
+                <p className='text-xl'>{t('projothers')}</p>
                 
                 <div className='grid lg:xl:grid-cols-3 gap-2  py-10'>
                     {props.others?.map((item:any,idx:number)=>(

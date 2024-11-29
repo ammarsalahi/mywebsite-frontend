@@ -122,7 +122,7 @@ export default function EditProject(props:editProps) {
             addImg(res.data);
         }).catch(()=>{
           // console.log(err);
-          message.error(t('notaccept'))
+          message.error(t('notaccepted'))
         })
       }
    
@@ -133,7 +133,7 @@ export default function EditProject(props:editProps) {
         deleteImg(id);
     }).catch(()=>{
       // console.log(err);
-      message.error(t('notaccept'))
+      message.error(t('notaccepted'))
   })
   }
 
@@ -164,7 +164,7 @@ const handleAddTech=()=>{
         addTech(res.data);
   }).catch(()=>{
       // console.log(err);
-      message.error(t('notaccept'))
+      message.error(t('notaccepted'))
   })
 }
 const handleDeleteTech=(id:number)=>()=>{
@@ -172,7 +172,7 @@ const handleDeleteTech=(id:number)=>()=>{
         deleteTech(id)
     }).catch(()=>{
       // console.log(err);
-      message.error(t('notaccept'))
+      message.error(t('notaccepted'))
     })
 }
   return (
@@ -215,12 +215,12 @@ const handleDeleteTech=(id:number)=>()=>{
                });
 
                Api.post(PROJECTS,formdata,{headers:AuthConfigHeaderFile(token.access)}).then(()=>{
-                   message.success(t('accept'))
+                   message.success(t('accepted'))
                    navigate("/projects")
                }).catch((err)=>{
                   console.log(err)
                   console.log(token)
-                   message.error(t('notaccept'))
+                   message.error(t('notaccepted'))
                })
              }}
          >

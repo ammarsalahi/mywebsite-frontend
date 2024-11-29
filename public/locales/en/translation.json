@@ -96,7 +96,32 @@
     "projimgs":"Add Project Screenshots",
     "projtechs":"Add Used Technologies in This Project",
     "projshow":"This Project is Visibile",
-    "editproject":"Edit Project"
+    "editproject":"Edit Project",
+    "yes":"Yes",
+    "no":"No!",
+    "removed":"Remove Done",
+    "cates":"Categories",
+    "cname":"Persian Name",
+    "englishname":"English Name",
+    "postcount":"Post's Count",
+    "catoption":"Options",
+    "addcat":"Add Category",
+    "editcat":"Edit Category",
+    "entercatname":"Enter Category Name...",
+    "entercateng":"Enter Category English Name...",
+    "createabout":"Create About Me",
+    "aboutdec":"Enter About Description",
+    "skills":"Add Your Skills",
+    "univ":"Enter University Name",
+    "unisite":"Enter University WebSite",
+    "socials":"Add Social Medias",
+    "soname":"Name",
+    "liname":"Link",
+    "creates":"Create",
+    "keywords":"Keywords",
+    "others":"Similar Posts",
+    "projothers":"Other Projects",
+    "usetech":"Used Technologies"
     
 
     
