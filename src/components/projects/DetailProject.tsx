@@ -6,7 +6,7 @@ import ProjectCard from './ProjectCard'
 import { showImage } from '../api/Index'
 import ImageCarousel from './ImageCarousel'
 import { useRecoilValue } from 'recoil'
-import { themeSelector } from '../states/Selectors'
+import { langSelector, themeSelector } from '../states/Selectors'
 import { BiBookReader, BiPencil } from 'react-icons/bi'
 import { GoTrash } from 'react-icons/go'
 import { MdOutlineMore } from 'react-icons/md'
@@ -19,7 +19,8 @@ interface detailprops{
 }
 export default function DetailP(props:detailprops) {
   const theme=useRecoilValue(themeSelector)
-  const {t} = useTranslation()
+  const {t} = useTranslation();
+  const lang=useRecoilValue(langSelector)
   const [scrollValue, setScrollValue] = useState(0);
 
 
@@ -91,7 +92,7 @@ export default function DetailP(props:detailprops) {
 
       <div className='grid-col' >
       <div className="py-6 ps-5 ">
-        <p className='text-2xl font-semibold'>{props.project?.title}</p>
+        <p className='text-2xl font-semibold'>{lang=="fa"?props.project?.title:props.project?.english_title}</p>
         <div className="flex justify-start gap-5 pt-10 px-4">
                 
                   <div className='flex items-center text-base'>
@@ -117,7 +118,7 @@ export default function DetailP(props:detailprops) {
              
              <div className="py-10" >
                 <div className="py-4">
-                  <p className='text-md'>{props.project?.text}</p>
+                  <p className='text-md'>{lang=="fa"?props.project?.text:props.project?.english_text}</p>
                 </div>
              </div>
                 <div className="block md:hidden">
@@ -146,7 +147,7 @@ export default function DetailP(props:detailprops) {
 
                             <Link to={`/technologies/${item.english_name}`} key={idx}>
                             <div className="mini-item">
-                              {item.name}
+                              {lang=="fa"?item.name:item.english_name}
                              </div> 
                             </Link>
                         ))}
@@ -154,7 +155,7 @@ export default function DetailP(props:detailprops) {
               </div>}
           </div>
      
-          {props.others.length>0 && <div className={theme=="dark"?"pb-16 pt-5 border-t ":"pb-16 pt-5 border-t border-gray-600"} id="others">
+          {props.others.length>0 && <div className={theme=="dark"?"pb-16 pt-5 border-t ":"pb-16 pt-5 border-t border-gray-600"}>
                 <p className='text-xl'>{t('projothers')}</p>
                 
                 <div className='grid lg:xl:grid-cols-3 gap-2  py-10'>

@@ -12,6 +12,9 @@ import { BiBookReader, BiPencil } from "react-icons/bi";
 import { FaFire, FaTrash } from 'react-icons/fa6';
 import { BiCategory } from "react-icons/bi";
 import { useTranslation } from 'react-i18next'
+import { FaXTwitter ,FaTelegram,FaDiscord} from "react-icons/fa6";
+import { IoCopy } from "react-icons/io5";
+
 
 interface detailprops{
   post:any;
@@ -74,9 +77,32 @@ export default function Detail(props:detailprops) {
               </button>
             </li>
             <li>
-              <button className="btn btn-ghost text-2xl">
+              <div className="dropdown dropdown-right">
+                <div tabIndex={0} role="button" className="btn btn-ghost text-2xl">
+                  <PiShareNetwork />
+                </div>
+                <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] p-0 shadow">
+                  <li>
+                    <div className='flex justify-between'>
+                        <button className='btn btn-ghost btn-circle text-2xl'>
+                          <IoCopy/>
+                        </button>
+                        <button className='btn btn-ghost btn-circle text-2xl'>
+                          <FaXTwitter/>
+                        </button>
+                        <button className='btn btn-ghost btn-circle text-2xl'>
+                          <FaTelegram/>
+                        </button>
+                        <button className='btn btn-ghost btn-circle text-2xl'>
+                          <FaDiscord/>
+                        </button>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              {/* <button className="btn btn-ghost text-2xl">
                 <PiShareNetwork />
-              </button>
+              </button> */}
             </li>
             <li>
               <div className="flex justify-center items-center mt-20">
@@ -96,14 +122,14 @@ export default function Detail(props:detailprops) {
       </div>
       <div className={theme=="dark"?'grid-col border-gray-600':'grid-col'}>
         <div className="py-6 ps-5 ">
-        <p className='text-2xl font-semibold'>{props.post?.title}</p>
+        <p className='text-2xl font-semibold'>{lang=="fa"?props.post?.title:props.post?.english_title}</p>
         <div className="flex justify-start gap-5 pt-10 px-4">
                 <Link 
                     to={`/categories/${props.post?.category.english_name}`} 
                     className='border-2 border-blue-500 text-blue-500 hover:bg-blue-500 px-5 hover:text-white rounded-full flex items-center gap-2 text-xl'
                 >
-                   <BiCategory fontSize={18}/>
-                  <p className='text-lg'>{props.post?.category.name}</p>
+                  <BiCategory fontSize={18}/>
+                  <p className='text-lg'>{lang=="fa"?props.post?.category.name:props.post?.category.english_name}</p>
                 </Link>
                   <div className='flex items-center text-base'>
                     <PiClock />
@@ -121,9 +147,9 @@ export default function Detail(props:detailprops) {
           <div className="py-5">
              
              <div className="py-10">
-                <p className='text-md'>{props.post?.header}</p>
+                <p className='text-md'>{lang=="fa"?props.post?.header:props.post?.english_header}</p>
                 <div className="py-4">
-                  <div dangerouslySetInnerHTML={{ __html: props.post?.text }} />
+                  <div dangerouslySetInnerHTML={lang=="fa"?{ __html: props.post?.text }:{__html: props.post?.english_text}} />
                 </div>
              </div>
               
@@ -134,7 +160,7 @@ export default function Detail(props:detailprops) {
               <div className="px-2 py-5 grid xs:grid-cols-4 md:grid-cols-6 gap-10">
                   {props.post.keywords?.map((item:any,idx:number)=>(
                       <Link to={`/keywords/${item.english_name}`} key={idx}>    
-                          <button  className='mini-item px-7'>{item.name}</button>
+                          <button  className='mini-item px-7'>{lang=="fa"?item.name:item.english_name}</button>
                       </Link>
                   ))}
               </div>
