@@ -222,30 +222,42 @@ export default function Posts() {
             <div
               className={
                 scrollY > 10
-                  ? "  fixed bottom-5 right-5 left-5 w-100"
+                  ? "md:hidden  fixed bottom-3 right-3 left-3 w-100 shadow-lg"
                   : "hidden"
               }
               style={{ zIndex: 9999 }}
             >
-              <ul className="menu menu-horizontal bg-base-200 rounded-box shadow-lg w-full px-5 flex justify-between items-center">
+              <ul className="menu menu-horizontal bg-blue-600 text-white rounded-box shadow-lg w-full px-2 flex justify-between items-center">
                 <li>
-                  <a>
-                    <AiOutlineSearch className="text-2xl " />
+                  <a className="text-3xl" onClick={handleOpenModal}>
+                    <AiOutlineSearch />
                   </a>
                 </li>
                 <li>
-                  <a>
-                    <PiFireFill className="text-2xl " />
+                  <a
+                    className="text-3xl"
+                    onClick={handleFilters("news", !filters.news)}
+                  >
+                    <PiFireFill
+                      className={filters.news ? "text-orange-500" : ""}
+                    />
                   </a>
                 </li>
                 <li>
-                  <a>
-                    <AiOutlineSortAscending className="text-2xl " />
+                <a
+                    className="text-4xl font-semibold"
+                    onClick={handleFilters("assort", !filters.assort)}
+                  >
+                    {filters.assort ? (
+                      <AiOutlineSortAscending className="text-green-500" />
+                    ) : (
+                      <AiOutlineSortDescending className="text-red-500" />
+                    )}
                   </a>
                 </li>
                   <li>
-                    <a>
-                      <FaArrowUp className="text-2xl " />
+                    <a className="text-3xl" onClick={()=>setScrollY(0)}>
+                      <FaArrowUp />
                     </a>
                   </li>
               </ul>
@@ -401,10 +413,10 @@ export default function Posts() {
             </div>
             <dialog id={"searchmodal"} className="modal">
               <div
-                className={
-                  theme == "dark"
-                    ? "modal-box py-3 bg-black"
-                    : "modal-box py-3 bg-gray-400"
+                className={`h-screen md:h-auto
+                  ${theme == "dark"
+                    ? "modal-box py-3 bg-base-200"
+                    : "modal-box py-3 bg-gray-400"}`
                 }
               >
                 <div className="flex justify-end ps-5 items-center">
@@ -434,7 +446,7 @@ export default function Posts() {
                     />
                     {search.length > 0 && (
                       <button
-                        className="btn btn-sm btn-ghost"
+                        className="btn btn-sm btn-ghost hidden md:block"
                         onClick={handlePostSearch}
                       >
                         {lang == "fa" ? (
@@ -445,6 +457,18 @@ export default function Posts() {
                       </button>
                     )}
                   </label>
+                  {search.length > 0 && (
+                      <button
+                        className="mt-3 btn-blue w-full md:hidden"
+                        onClick={handlePostSearch}
+                      >
+                        {lang == "fa" ? (
+                          <FaArrowLeft className="text-xl" />
+                        ) : (
+                          <FaArrowRight className="text-xl" />
+                        )}
+                      </button>
+                    )}
                 </div>
               </div>
             </dialog>

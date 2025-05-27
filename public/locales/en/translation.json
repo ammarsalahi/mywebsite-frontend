@@ -48,7 +48,7 @@
     "notempty":"this field can't be empty!",
     "accepted":"Operation successfully done",
     "notaccepted":"Unfortunately, we encountered a problem",
-    "signin":"User Signin",
+    "signintitle":"User Signin",
     "signuser":"Username",
     "signpass":"Password",
     "signbtn":"Signin",

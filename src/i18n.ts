@@ -9,7 +9,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 i18n.use(Backend).use(LanguageDetector).use(initReactI18next).init({
   backend: {
-    loadPath: '/public/locales/{{lng}}/{{ns}}.json'
+    loadPath: '/locales/{{lng}}/{{ns}}.json'
   },
     fallbackLng: 'en',
     debug: true,

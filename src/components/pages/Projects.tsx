@@ -14,7 +14,7 @@ import { SiSharp } from "react-icons/si";
 import { TfiReload } from 'react-icons/tfi';
 import { AiOutlineSearch, AiOutlineSortAscending, AiOutlineSortDescending } from 'react-icons/ai';
 import { PiFireFill } from 'react-icons/pi';
-import { FaHammer } from 'react-icons/fa6';
+import { FaArrowUp, FaHammer } from 'react-icons/fa6';
 import { MdFilterList } from 'react-icons/md';
 import { CgClose } from 'react-icons/cg';
 import { FaArrowLeft } from 'react-icons/fa6';
@@ -167,143 +167,285 @@ export default function Projects() {
   }, []);
   return (
    <div>
-   {isLoad?<>
-    <div className='paddingtop '>
-    <div className={scrollY >35?"block fixed":"hidden"}>
-          <ul className={`filter-${theme}-menu`}>
-            <li>
-              <button className='text-xl' onClick={handleOpenModal}>
-                <AiOutlineSearch/>
-              </button>
-            </li>
-           
-            <li>
-              <button className='text-2xl'
-                  onClick={handleFilters('assort',!filters.assort)}
-              >
-                {filters.assort ?
-                  <AiOutlineSortAscending className='text-green-500'/>
-                  :
-                  <AiOutlineSortDescending className='text-red-500'/>
-                }
-              </button>
-            </li>
-          </ul>  
-          </div>
-        <p className='text-center pb-8 text-4xl text-blue-600 font-bold flex justify-center items-center gap-2'>
-          <FaHammer/>
-          {t('menu2')}
-        </p>
-         
-        <div className='flex justify-center items-center px-40 gap-2'>
-        <div className={`card-${theme} border-2 border-blue-500 rounded-full`}>
-            <div className="p-1 flex gap-0">
-              <label className="input input-ghost input-sm w-[600px]  border-0 rounded-full flex items-center gap-2" dir={t('dir')}>
-                <AiOutlineSearch className='text-2xl'/>
-                <input type="text" className="grow" placeholder={t('projsearch')} 
-                  value={search} onChange={handleSearch} onKeyDown={handleKeyDown}
-                />
-                {search.length>0 &&
-                <button className="btn btn-sm btn-ghost" onClick={handlePostSearch}>
-                  {lang=="fa"?<FaArrowLeft className="text-xl"/>:<FaArrowRight className="text-xl"/>}
-                </button>}
-                <div className="dropdown dropdown-right dropdown-hover">
-                <div tabIndex={0} role="button" className="btn btn-ghost btn-sm rounded-full">
-                <MdFilterList/>
-                {t('filters')}   
-                </div>
-                <ul tabIndex={0} className={theme=="dark"?"drop-items bg-gray-900 text-white":"drop-items bg-white text-black"} >
-                
-                    <li>
-                      <button className='text-green-600 text-base hover:bg-green-500 hover:text-white rounded-2xl' >
-                        {<AiOutlineSortAscending/>}
-                        {t('asc')} 
-                      </button>
-                        
-                    </li>
-                    <li>
-                      <button className='text-red-600 text-base hover:bg-red-500 hover:text-white rounded-2xl'>
-                       <AiOutlineSortDescending/>
-                         {t('desc')} 
-                      </button>
-                        
-                    </li>
-                </ul>
-              </div> 
-              </label> 
-              
-            </div>
-          </div>
-          
+      {isLoad?
+      <div>
+        <div className="paddingtop">
+                    <div className={scrollY > 30 ? " hidden md:block fixed" : "hidden"}>
+                      <ul className={`filter-${theme}-menu`}>
+                        <li>
+                          <button className="text-xl" onClick={handleOpenModal}>
+                            <AiOutlineSearch />
+                          </button>
+                        </li>
+                        {/* <li>
+                          <button
+                            className="text-xl"
+                            onClick={handleFilters("news", !filters.news)}
+                          >
+                            <PiFireFill
+                              className={filters.news ? "text-orange-500" : ""}
+                            />
+                          </button>
+                        </li> */}
+                        <li>
+                          <button
+                            className="text-2xl "
+                            onClick={handleFilters("assort", !filters.assort)}
+                          >
+                            {filters.assort ? (
+                              <AiOutlineSortAscending className="text-green-500" />
+                            ) : (
+                              <AiOutlineSortDescending className="text-red-500" />
+                            )}
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                    <div
+                      className={
+                        scrollY > 10
+                          ? "md:hidden  fixed bottom-3 right-3 left-3 w-100 shadow-lg"
+                          : "hidden"
+                      }
+                      style={{ zIndex: 9999 }}
+                    >
+                      <ul className="menu menu-horizontal bg-blue-600 text-white rounded-box shadow-lg w-full px-2 flex justify-between items-center">
+                        <li>
+                          <a className="text-3xl" onClick={handleOpenModal}>
+                            <AiOutlineSearch />
+                          </a>
+                        </li>
+                        {/* <li>
+                          <a
+                            className="text-3xl"
+                            onClick={handleFilters("news", !filters.news)}
+                          >
+                            <PiFireFill
+                              className={filters.news ? "text-orange-500" : ""}
+                            />
+                          </a>
+                        </li> */}
+                        <li>
+                        <a
+                            className="text-4xl font-semibold"
+                            onClick={handleFilters("assort", !filters.assort)}
+                          >
+                            {filters.assort ? (
+                              <AiOutlineSortAscending className="text-green-500" />
+                            ) : (
+                              <AiOutlineSortDescending className="text-red-500" />
+                            )}
+                          </a>
+                        </li>
+                          <li>
+                            <a className="text-3xl" onClick={()=>setScrollY(0)}>
+                              <FaArrowUp />
+                            </a>
+                          </li>
+                      </ul>
+                    </div>
+                    <p className="text-center pb-8 text-4xl text-blue-600 font-bold flex justify-center items-center gap-2">
+                      {lang == "fa" && <FaHammer fontSize={40} />}
+                      {t("menu2")}
+                      {lang == "en" && <FaHammer fontSize={40} />}
+                    </p>
+        
+                    <div className="md:flex justify-center items-center px-0 md:px-10 lg:px-40 gap-2">
+                      <div
+                        className={`card-${theme} border-2 border-blue-500 rounded-full`}
+                      >
+                        <div className="p-1 flex gap-0 w-full">
+                          <label
+                            className="input input-ghost input-sm w-full  md:w-[400px] lg:w-[650px] border-0 rounded-full flex items-center gap-2"
+                            dir={t("dir")}
+                          >
+                            <AiOutlineSearch className="text-2xl " />
+                            <input
+                              type="text"
+                              className="grow"
+                              placeholder={t("search")}
+                              dir={t("dir")}
+                              value={search}
+                              onChange={handleSearch}
+                              onKeyDown={handleKeyDown}
+                            />
+                            {search.length > 0 && (
+                              <button
+                                className="btn btn-sm btn-ghost"
+                                onClick={handlePostSearch}
+                              >
+                                {lang == "fa" ? (
+                                  <FaArrowLeft className="text-xl" />
+                                ) : (
+                                  <FaArrowRight className="text-xl" />
+                                )}
+                              </button>
+                            )}
+                            <div className="dropdown dropdown-right dropdown-hover hidden md:block">
+                              <div
+                                tabIndex={0}
+                                role="button"
+                                className="btn btn-ghost btn-sm rounded-full "
+                              >
+                                <MdFilterList />
+                                {t("filters")}
+                              </div>
+                              <ul
+                                tabIndex={0}
+                                className={
+                                  theme == "dark"
+                                    ? "drop-items bg-gray-900 text-white"
+                                    : "drop-items bg-white text-black"
+                                }
+                              >
+                                {/* <li>
+                                  <button
+                                    className="text-orange-600 text-base hover:bg-orange-500 hover:text-white rounded-2xl"
+                                    onClick={handleFilters("news", !filters.news)}
+                                  >
+                                    <PiFireFill />
+                                    {t("newest")}
+                                  </button>
+                                </li> */}
+                                <li>
+                                  <button
+                                    className="text-green-600 text-base hover:bg-green-500 hover:text-white rounded-2xl"
+                                    onClick={handleFilters("assort", true)}
+                                  >
+                                    <AiOutlineSortAscending />
+                                    {t("asc")}
+                                  </button>
+                                </li>
+                                <li>
+                                  <button
+                                    className="text-red-600 text-base hover:bg-red-500 hover:text-white rounded-2xl"
+                                    onClick={handleFilters("assort", false)}
+                                  >
+                                    <AiOutlineSortDescending />
+                                    {t("desc")}
+                                  </button>
+                                </li>
+                              </ul>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="category-show py-4">
+                    {teches.length>0 &&<div className="flex flex-wrap justify-center gap-3 pt-5" dir={t('dir')}>
+                        <button  className='mini-item px-7 flex gap-2 items-center'
+                            onClick={handleKeywordSearch("")}>
+                              <SiSharp fontSize={15}/>
+                            {t('all')}
+                          </button>
+                        {teches?.map((item:any,idx:number)=>(
+                          <button  className='mini-item px-7 flex gap-2 items-center' key={idx} 
+                            dir={t('dir')}
+                            onClick={handleKeywordSearch(item.name)}>
+                              <SiSharp fontSize={15}/>
+                              {lang=="fa"?item.name:item.english_name}
+                          </button>
+                        ))}
+                      </div>}
+                    </div>
+                    <div>
+                      {projects.length > 0 ? (
+                        <>
+                          <div>
+                            <div className="post-card  md:px-8 lg:px-20" dir={t("dir")}>
+                              {projects?.map((item: any, idx: number) => (
+                                <div className="py-2 z-0" key={idx}>
+                                    <ProjectCard project={item} theme={theme} key={idx} deleteProject={handleDelete(item.project_id,item.title)}/>
+                                 
+                                </div>
+                              ))}
+                            </div>
+                            {next != null && (
+                              <div className="flex justify-center py-10">
+                                <button
+                                  className="btn-blue w-36 gap-3 rounded-2xl font-bold text-xl"
+                                  onClick={getNextPages}
+                                >
+                                  <TfiReload />
+                                  {t("more")}
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        </>
+                      ) : (
+                        <EmptyList name="noproject" />
+                      )}
+                    </div>
+                    <dialog id={"searchmodal"} className="modal">
+                      <div
+                       className={`h-screen md:h-auto
+                          ${theme == "dark"
+                            ? "modal-box py-3 bg-base-200"
+                            : "modal-box py-3 bg-base-300"}`
+                        }
+                      >
+                        <div className="flex justify-end ps-5 items-center">
+                          <button
+                            className="btn btn-circle btn-ghost text-2xl"
+                            onClick={handleClose}
+                          >
+                            <CgClose />
+                          </button>
+                        </div>
+                        <div className="py-10 px-5">
+                          <p className="text-2xl mb-4 text-center font-semibold">
+                            {t("projsearch")}
+                          </p>
+                          <label
+                            className="input input-bordered  w-full rounded-2xl flex items-center gap-2"
+                            dir={t("dir")}
+                          >
+                            <AiOutlineSearch className="text-2xl " />
+                            <input
+                              type="text"
+                              className="grow"
+                              placeholder={t("search")}
+                              value={search}
+                              onChange={handleSearch}
+                              onKeyDown={handleKeyDown}
+                            />
+                            {search.length > 0 && (
+                              <button
+                                className="btn btn-sm btn-ghost hidden md:block"
+                                onClick={handlePostSearch}
+                              >
+                                {lang == "fa" ? (
+                                  <FaArrowLeft className="text-xl" />
+                                ) : (
+                                  <FaArrowRight className="text-xl" />
+                                )}
+                              </button>
+                            )}
+                          </label>
+                          {search.length > 0 && (
+                            <button
+                                className="mt-3 btn-blue w-full md:hidden"
+                                onClick={handlePostSearch}
+                              >
+                                {lang == "fa" ? (
+                                  <FaArrowLeft className="text-xl" />
+                                   ) : (
+                                   <FaArrowRight className="text-xl" />
+                                )}
+                               </button>
+                            )}
+                        </div>
+                      </div>
+                    </dialog>
         </div>
-        <div className='category-show py-4'>
-                
-            {teches.length>0 &&<div className="flex flex-wrap justify-center gap-3 pt-5" dir={t('dir')}>
-              <button  className='mini-item px-7 flex gap-2 items-center'
-                  onClick={handleKeywordSearch("")}>
-                    <SiSharp fontSize={15}/>
-                  {t('all')}
-                </button>
-              {teches?.map((item:any,idx:number)=>(
-                <button  className='mini-item px-7 flex gap-2 items-center' key={idx} 
-                  dir={t('dir')}
-                  onClick={handleKeywordSearch(item.name)}>
-                    <SiSharp fontSize={15}/>
-                    {lang=="fa"?item.name:item.english_name}
-                </button>
-              ))}
-            </div>}
-        </div> 
-        <div>
-            {projects.length>0 ?
-            <>
-              <div className='post-card gap-3 md:px-8 lg:px-20'  dir={t("dir")}>
-                {projects?.map((item:any,idx:number)=>(
-                    <ProjectCard project={item} theme={theme} key={idx} deleteProject={handleDelete(item.project_id,item.title)}/>
-                ))}
-              </div>
-              {next!=null &&  <div className="flex justify-center py-10">
-                 <button className='btn-blue w-36 gap-3 rounded-2xl font-bold text-xl' onClick={getNextPages}>
-                  <TfiReload/>
-                  {t('more')}
-                </button>
-                </div>}
-            </> 
-
-            :
-                <EmptyList name='noproject'/>
-            }
-        </div>
-        <dialog id={"searchmodal"} className="modal ">
-        <div className={theme=="dark"?"modal-box py-3 bg-black":"modal-box py-3 bg-gray-400"}>
-          <div className="flex justify-end ps-5 items-center">
-              <button className='btn btn-circle btn-ghost text-2xl font-semibold' onClick={handleClose}>
-                <CgClose/>
-              </button>
-          </div>
-            <div className='py-10 px-5'>
-              <p className='text-2xl mb-4 text-center  font-semibold'>{t("projsearch")}</p>
-              <label className="input   w-full rounded-full flex items-center gap-2" dir={t("dir")}>  
-                <AiOutlineSearch className='text-2xl '/>
-                <input type="text" className="grow" placeholder={t("search")} 
-                value={search} onChange={handleSearch} onKeyDown={handleKeyDown}
-                />
-                {search.length>0 &&
-                  <button className="btn btn-sm btn-ghost" onClick={handlePostSearch}>
-                  {lang=="fa"?<FaArrowLeft className="text-xl"/>:<FaArrowRight className="text-xl"/>}
-                </button>}
-              </label>
-             
-            </div>
-        </div>
-    </dialog>
+                  <Footer />
+      </div>  
+    :
+    <div className="h-screen w-screen grid place-items-center">
+      <Spin size='large'/>
     </div>
-    <Footer/>
-    </>:
-       <div className="h-screen w-screen grid place-items-center">
-        <Spin size='large'/>
-      </div>
-      }
-      </div>
+    }
+    </div>
   )
 }

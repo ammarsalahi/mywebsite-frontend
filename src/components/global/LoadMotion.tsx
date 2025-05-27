@@ -6,7 +6,7 @@ export default function LoadMotion() {
     <div className="flex justify-center py-60 bg-blue-600 h-screen">
       <motion.img
         src={logo}
-        className="w-20  lg:w-40 "
+        className="w-100 h-[100px]"
         initial={{ scale: 0 }}
         animate={{ rotate: 360, scale: 1 }}
         transition={{

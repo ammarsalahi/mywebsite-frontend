@@ -69,23 +69,7 @@ export default function Signin() {
             <div className="card-body p-0">
               <div className="grid lg:grid-cols-2">
                 <div className="py-5 md:py-10 md:px-10">
-                  {/*  <div className="flex justify-center items-center gap-3 pb-10">
-                    <Link to={"/"}>
-                      <motion.img
-                        src={theme == "dark" ? lightIcon : darkIcon}
-                        className="w-16"
-                        initial={{ scale: 0 }}
-                        animate={{ rotate: 360, scale: 1 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 110,
-                          damping: 30,
-                          repeat: Infinity,
-                          repeatType: "reverse",
-                        }}
-                      />
-                    </Link>
-                  </div>*/}
+                 
                   <div className="flex justify-center items-center gap-3">
                     <button
                       className="btn btn-ghost btn-sm text-2xl"
@@ -100,9 +84,9 @@ export default function Signin() {
                       {lang.toUpperCase()}
                     </button>
                   </div>
-                  <div className="py-10">
+                  <div className="py-10 px-2">
                     <p className="text-2xl font-semibold mb-14 text-center">
-                      {t("singin")}
+                      {t("signintitle")}
                     </p>
                     <Formik
                       initialValues={{
