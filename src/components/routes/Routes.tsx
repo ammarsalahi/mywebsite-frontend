@@ -18,6 +18,7 @@ import Settings from '../pages/Settings'
 import Collaboration from '../pages/Collaboration'
 import AddEditAbout from '../pages/AddEditAbout'
 import CategoryList from '../pages/Category'
+import NotFound from '../pages/NotFound'
 
 export default function Routes() {
     const pages=createBrowserRouter([
@@ -102,6 +103,10 @@ export default function Routes() {
         {
           path:"category/",
           element:<PrivateRouteContainer><CategoryList/></PrivateRouteContainer>
+        },
+        {
+          path:"*",
+          element:<RouteContainer><NotFound/></RouteContainer>
         }
 
     ])
