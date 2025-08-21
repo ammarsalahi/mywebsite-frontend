@@ -76,7 +76,7 @@ export default function CategoryList(props:listProps) {
   },[page])
   return (
     <div className={`card-${props.theme} rounded-xl`} dir={t('dir')}>
-        <div className="card-body">
+        <div className="card-body px-0 py-5">
           <div className='flex justify-center items-center text-center pb-7 w-full text-xl font-bold '>
              <p>{t('cates')}</p>
           </div>

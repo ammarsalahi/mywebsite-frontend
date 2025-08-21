@@ -19,8 +19,8 @@ export default function PrivateRouteContainer({ children }: props) {
           <div
             className={
               theme == "dark"
-                ? "bg-gray-900 text-white pt-24 pb-5 px-16"
-                : "bg-gray-50 pt-24 pb-5 px-16"
+                ? "bg-gray-900 text-white pt-24 pb-5 px-4 md:px-16"
+                : "bg-gray-50 pt-24 pb-5 px-4 md:px-16"
             }
           >
             {children}

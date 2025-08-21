@@ -179,7 +179,7 @@ const handleDeleteTech=(id:number)=>()=>{
     <div dir={t('dir')}>
       {isload ?
        <div className={props.theme=="dark"?"card-dark":"card-light"}>
-       <div className="card-body py-10 px-20">
+       <div className="md:card-body md:py-10 md:px-20">
        <Formik
              initialValues={{
                  title:project?.title||"",
@@ -362,7 +362,7 @@ const handleDeleteTech=(id:number)=>()=>{
                </label>
                
              </div>
-             <button className='btn-blue md:w-80 rounded-2xl text-lg font-semibold'>
+              <button className='btn-blue w-full mt-5 md:mt-0 md:w-80 rounded-2xl text-lg font-semibold'>
                <FaCheck/>
                 {t('editproject')}
                </button>

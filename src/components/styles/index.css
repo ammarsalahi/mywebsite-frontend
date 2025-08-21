@@ -117,17 +117,17 @@
 }
 
 .card-dark{
-  @apply card border border-gray-700 rounded-xl
+  @apply md:card md:border md:border-gray-700 md:rounded-xl
 }
 .card-light{
-  @apply card bg-white border border-gray-300 rounded-xl
+  @apply md:card md:bg-white md:border md:border-gray-300 md:rounded-xl
 }
 
 .simple-card-dark{
-  @apply card  rounded-xl
+  @apply md:card  md:rounded-xl
 }
 .simple-card-light{
-  @apply card  rounded-xl
+  @apply md:card  md:rounded-xl
 }
 
 .nav-selected{

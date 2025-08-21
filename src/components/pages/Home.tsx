@@ -20,7 +20,7 @@ export default function Home() {
 
   const getHome=()=>{
     Api.get(HOME).then((res)=>{
-        setimgs(res.data.userimg)
+        // setimgs(res.data.userimg)
         setPosts(res.data.posts)
         setProjects(res.data.projects)
         setLoads(true)
@@ -32,6 +32,7 @@ export default function Home() {
   }
   useEffect(() => {
     getHome()
+    // setLoads(true)
   }, [])
   
   return (

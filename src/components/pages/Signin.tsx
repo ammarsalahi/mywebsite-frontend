@@ -31,7 +31,7 @@ export default function Signin() {
   const [lang, setLang] = useRecoilState(langSelector);
   const { t } = useTranslation();
   message.config({
-    top: document.documentElement.clientHeight - 100,
+    top:  70,
   });
 
   const handleShowPass = () => {
@@ -61,14 +61,14 @@ export default function Signin() {
   return (
     <div className={theme == "dark" ? "bg-gray-900 text-white" : "bg-gray-100"}>
       <div className="grid h-screen place-items-center">
-        <div className="mg:p-10">
+        <div className="md:p-10 md:w-[80%] lg:w-[65%] xl:w-[75%]">
           <div
-            className={`md:card-${theme} md:border rounded-2xl md:shadow-lg`}
+            className={` md:card-${theme} md:border rounded-2xl md:shadow-lg`}
             dir={t("dir")}
           >
             <div className="card-body p-0">
-              <div className="grid lg:grid-cols-2">
-                <div className="py-5 md:py-10 md:px-10">
+              <div className="grid lg:grid-cols-2 px-0">
+                <div className="py-5 md:py-10 md:px-5">
                  
                   <div className="flex justify-center items-center gap-3">
                     <button

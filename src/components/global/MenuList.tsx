@@ -101,10 +101,10 @@ export default function MenuList() {
       className={
         theme == "light"
           ? location.pathname == "/"
-            ? "bg-blue-600 px-3 h-[85.4vh]"
+            ? "bg-blue-600 px-3 h-[87vh]"
             : "px-3 h-screen"
           : location.pathname == "/"
-            ? "bg-gray-900 px-3 h-[85.4vh]"
+            ? "bg-gray-900 px-3 h-[87vh]"
             : "bg-gray-900 px-3 h-screen"
       }
     >
@@ -150,7 +150,7 @@ export default function MenuList() {
       >
         {isUser
           ? Usermenus.map((item: any, idx: number) => (
-              <li className="px-4 pb-5 text-lg" onClick={handleMenu}>
+              <li className="px-4 pb-5 text-lg" onClick={handleMenu} key={idx}>
                 <Link to={item.url} className="flex items-center gap-2">
                   {item.icon}
                   {t(`user${idx + 1}`)}
@@ -158,7 +158,7 @@ export default function MenuList() {
               </li>
             ))
           : menus.map((item: any, idx: number) => (
-              <li className="px-4 pb-7 text-lg" onClick={handleMenu}>
+              <li className="px-4 pb-7 text-lg" onClick={handleMenu} key={idx}>
                 <Link to={item.url} className="flex items-center gap-2">
                   {item.icon}
                   {t(`menu${idx + 1}`)}

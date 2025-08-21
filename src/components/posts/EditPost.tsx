@@ -211,7 +211,7 @@ export default function AddPost(props:postprops) {
         {
         isLoad?
         <div className={props.theme=="dark"?"card-dark":"card-light"}>
-          <div className="card-body py-10 px-20">
+          <div className="md:card-body md:py-10 md:px-20">
             <Formik
                 initialValues={{
                     title:news?.title||"",
@@ -222,19 +222,7 @@ export default function AddPost(props:postprops) {
                 }}
                 validate={(values)=>{
                     let errors:formErrors={}
-                    // if(!values.title){
-                    //     errors.title="عنوان نمی تواند خالی باشد!"
-                    // }
-                    // if(!values.header){
-                    //     errors.header="چکیده نمی تواند خالی باشد!"
-                    // }
                   
-                    // if(!values.content){
-                    //     errors.content="متن نمی تواند خالی باشد!"
-                    // }
-                    // if(!values.category){
-                    //     errors.category="دسته‌بندی نمی تواند خالی باشد!"
-                    // }
                     if(!values.title){
                         errors.title=t('notempty')
                     }
@@ -429,7 +417,7 @@ export default function AddPost(props:postprops) {
                                 
                                 </div>
                                 <button 
-                                    className='btn-blue md:w-80 rounded-2xl text-lg font-semibold'
+                                    className='btn-blue w-full mt-5 md:mt-0 md:w-80 rounded-2xl text-lg font-semibold'
                                     type='submit'
                                 >
                                 <FaCheck/>

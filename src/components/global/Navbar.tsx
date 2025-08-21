@@ -232,7 +232,7 @@ export default function Navbar() {
         </nav>
 
         <div>
-          {location.pathname == "/" && ismenu == false && (
+          {location.pathname == "fbhgfd/" && ismenu == false && (
             <div className="py-16 xl:py-28">
               {imgurl !== "" && (
                 <div className="grid lg:grid-cols-2 ">
