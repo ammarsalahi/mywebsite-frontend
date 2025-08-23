@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { categorySelector, langSelector } from '../states/Selectors';
 import { useTranslation } from 'react-i18next';
-import AddEditSocial from '../about/AddSocial';
+import AddEditSocial from '../about/AddSocialModal';
 import AddEditCategory from './AddEditCategory';
 
 interface listProps{

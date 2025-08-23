@@ -12,7 +12,7 @@ interface modalProps{
   close:any;
 
 }
-export default function AddSocial(props:modalProps) {
+export default function AddSocialModal(props:modalProps) {
   // const modalElement = document.getElementById('socialmodal') as HTMLDialogElement | null;
   const cat=useRecoilValue(categorySelector)
   const token=useRecoilValue(tokenSelector)
@@ -74,7 +74,7 @@ export default function AddSocial(props:modalProps) {
                   type="text" value={url} onChange={handleChangeUrl}
                   className='input input-bordered w-full rounded-2xl' 
                   placeholder={t('liname')} />    
-              <div className="md:flex items-center space-y-3 md:gap-3" dir="rtl">
+              <div className="md:flex items-center space-y-3 md:space-y-0 md:gap-3" dir="rtl">
                 <button 
                     className='btn-blue w-full md:w-52 rounded-2xl' type='button' disabled={name.length==0 || url.length==0} 
                     onClick={handleAdd}

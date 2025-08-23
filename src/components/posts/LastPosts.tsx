@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { POSTS_ID } from '../api/Endpoints';
 import { Api } from '../api/Index';
 import { useTranslation } from 'react-i18next';
+import DeleteModal from '../global/DeleteModal';
 
 interface listprops{
   posts:[]|any;
@@ -17,27 +18,33 @@ interface listprops{
 export default function LastPosts(props:listprops) {
   const {t} = useTranslation();
   const lang=useRecoilValue(langSelector)
+  let modalElement = document.getElementById('delmodal') as HTMLDialogElement | null;
 
   const handleDelete=(id:string,titles:string)=>()=>{
-    Swal.fire({
-      title:"آیا میخواهید پست موردنظر حذف شود؟!",
-      text:`${titles}`,
-      icon:"error",
-      confirmButtonText:"بله",
-      confirmButtonColor:"red",
-      cancelButtonText:"نه,بیخیال",
-      showCancelButton:true
+   modalElement = document.getElementById('delmodal') as HTMLDialogElement | null;
+    modalElement?.showModal();
+    // Swal.fire({
+    //   title:"آیا میخواهید پست موردنظر حذف شود؟!",
+    //   text:`${titles}`,
+    //   icon:"error",
+    //   confirmButtonText:"بله",
+    //   confirmButtonColor:"red",
+    //   cancelButtonText:"نه,بیخیال",
+    //   showCancelButton:true
 
-    }).then((result)=>{
-      if(result.isConfirmed){
-        Api.delete(POSTS_ID(id)).then(()=>{
-          message.success("با موفقیت حذف شد");
-          props.reload()
-        }).catch(()=>{
-          message.error("متاسفانه مشکلی پیش آمد!")
-        });
-      }
-    })
+    // }).then((result)=>{
+    //   if(result.isConfirmed){
+    //     Api.delete(POSTS_ID(id)).then(()=>{
+    //       message.success("با موفقیت حذف شد");
+    //       props.reload()
+    //     }).catch(()=>{
+    //       message.error("متاسفانه مشکلی پیش آمد!")
+    //     });
+    //   }
+    // })
+  }
+  const handleClose=()=>{
+    modalElement?.close()
   }
   return (
     <div className='lasts'>
@@ -73,7 +80,7 @@ export default function LastPosts(props:listprops) {
 
       </div>    
 
-   
+        <DeleteModal id={1} close={handleClose}/>
      </div>
   
    

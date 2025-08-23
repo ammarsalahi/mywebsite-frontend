@@ -4,14 +4,14 @@ import { BsEmojiSunglassesFill } from 'react-icons/bs';
 import { FaCheck ,FaPlus} from 'react-icons/fa6';
 import { IoClose } from "react-icons/io5";
 import { Api } from '../api/Index';
-import { ABOUTS, ABOUTS_ID, SKILLS, SKILLS_ID, SOCIALS, SOCIALS_ID } from '../api/Endpoints';
+import { ABOUTS, SKILLS, SKILLS_ID, SOCIALS, SOCIALS_ID } from '../api/Endpoints';
 import { AuthConfigHeader } from '../api/Configs';
 import { useRecoilValue } from 'recoil';
 import { tokenSelector } from '../states/Selectors';
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import AddEditSocial from './AddSocial';
+import AddSocialModal from './AddSocialModal';
 
 
 interface SocialItem{
@@ -374,7 +374,7 @@ const handleDeleteSkill=(id:number)=>()=>{
             </Formik>
           </div>
         </div>
-        <AddEditSocial  addsocial={addSocial} close={handleOpenClose}/>
+        <AddSocialModal  addsocial={addSocial} close={handleOpenClose}/>
         
         {/* <AddEditSocial/> */}
     </div>
