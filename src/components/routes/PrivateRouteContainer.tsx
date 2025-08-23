@@ -1,8 +1,9 @@
 import React from "react";
 import Navbar from "../global/Navbar";
 import { useRecoilValue } from "recoil";
-import { themeSelector, tokenSelector } from "../states/Selectors";
+import { menuSelector, themeSelector, tokenSelector } from "../states/Selectors";
 import { Navigate } from "react-router-dom";
+import MenuList from "../global/MenuList";
 
 type props = {
   children: React.ReactNode;
@@ -10,13 +11,16 @@ type props = {
 export default function PrivateRouteContainer({ children }: props) {
   const token = useRecoilValue(tokenSelector);
   const theme = useRecoilValue(themeSelector);
+  const menu=useRecoilValue(menuSelector)
 
   return (
     <div>
       {token.access.length > 0 ? (
         <div>
           <Navbar />
-          <div
+          {menu==true?
+          <MenuList/>
+          :<div
             className={
               theme == "dark"
                 ? "bg-gray-900 text-white pt-24 pb-5 px-4 md:px-16"
@@ -24,7 +28,7 @@ export default function PrivateRouteContainer({ children }: props) {
             }
           >
             {children}
-          </div>
+          </div>}
         </div>
       ) : (
         <Navigate to={"/signin"} />

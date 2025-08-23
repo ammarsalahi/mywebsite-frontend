@@ -118,7 +118,7 @@ export default function EditAbout(props:aboutProps) {
     <div  dir={t('dir')}>
       {isLoad ?
         <div className={props.theme=="dark"?"card-dark":"card-light"}>
-          <div className="card-body py-10 px-20">
+          <div className="md:card-body md:py-10 md:px-20">
             <Formik
              initialValues={{
                     description:about?.description||"",

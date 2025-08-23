@@ -123,6 +123,14 @@
   @apply md:card md:bg-white md:border md:border-gray-300 md:rounded-xl
 }
 
+.mini-card-dark{
+  @apply card border border-gray-700 rounded-xl
+}
+.mini-card-light{
+  @apply card bg-white border border-gray-300 rounded-xl
+}
+
+
 .simple-card-dark{
   @apply md:card  md:rounded-xl
 }

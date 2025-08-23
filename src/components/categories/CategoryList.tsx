@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { FaPencil, FaPlus, FaTrash } from 'react-icons/fa6';
 import { AiOutlineSearch,AiOutlineSortAscending } from 'react-icons/ai';
-import AddEditModal from './AddEditModal';
+import AddEditModal from './AddEditCategory';
 import { Api } from '../api/Index';
 import { CATEGORIES, CATEGORIES_ID, CATEGORIES_PAGE } from '../api/Endpoints';
 import Swal from 'sweetalert2';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { categorySelector, langSelector } from '../states/Selectors';
 import { useTranslation } from 'react-i18next';
+import AddEditSocial from '../about/AddSocial';
+import AddEditCategory from './AddEditCategory';
 
 interface listProps{
   theme:string
@@ -48,8 +50,8 @@ export default function CategoryList(props:listProps) {
       }
       const modalElement = document.getElementById('catmodal') as HTMLDialogElement | null;
       modalElement?.showModal();
-
   }
+
   const handleDelete=(id:number,name:string)=>()=>{
     Swal.fire({
       title:lang=="fa"?`آیا میخواهید ${name} حذف شود؟`:`do you want to delete ${name}?`,
@@ -75,7 +77,8 @@ export default function CategoryList(props:listProps) {
     getCategories()
   },[page])
   return (
-    <div className={`card-${props.theme} rounded-xl`} dir={t('dir')}>
+    <div className='w-full'>
+    <div className={`hidden md:block card-${props.theme} rounded-xl`} dir={t('dir')}>
         <div className="card-body px-0 py-5">
           <div className='flex justify-center items-center text-center pb-7 w-full text-xl font-bold '>
              <p>{t('cates')}</p>
@@ -160,7 +163,41 @@ export default function CategoryList(props:listProps) {
           </div>
         </div>
         </div>
-        <AddEditModal  type={catType} reload={getCategories}/>
+    </div>
+    <div className='block md:hidden pt-4'>
+      <div className='flex justify-center items-center text-center pb-7 w-full text-xl font-bold '>
+             <p>{t('cates')}</p>
+      </div>
+    <div className=' flex flex-col justify-center gap-y-4 items-center  '>
+      {categories?.map((item:any,idx:number)=>(
+          <div className={`mini-card-${props.theme} !w-full`} key={idx}>
+              <div className="card-body p-4 text-base">
+                <div className="flex justify-between">
+                   <div className='flex flex-col justify-start !text-start '>
+                    <p>{t('cname')} : {item.name}</p>
+                    <p>{t('englishname')} : {item.english_name}</p>
+                    <p>{t('postcount')} : {item.post_count}</p>
+                   </div>
+                   <div className="flex flex-col gap-2 justify-center items-center">
+                        <button 
+                            className='btn-blue-outline rounded-xl'
+                            onClick={handleOpenModal("edit",item)}
+                        >
+                          <FaPencil/>
+                        </button>
+                        <button className='btn-red-outline rounded-xl' onClick={handleDelete(item.id,item.name)}>
+                          <FaTrash/>
+                        </button>
+                   </div>
+                </div>
+                
+              </div>
+          </div>
+      ))}
+    </div>
+        </div>
+
+      <AddEditCategory  type={catType} reload={getCategories}/>
     </div>
   )
 }

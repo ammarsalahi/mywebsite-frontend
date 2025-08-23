@@ -232,7 +232,7 @@ export default function Navbar() {
         </nav>
 
         <div>
-          {location.pathname == "fbhgfd/" && ismenu == false && (
+          {/* {location.pathname == "fbhgfd/" && ismenu == false && (
             <div className="py-16 xl:py-28">
               {imgurl !== "" && (
                 <div className="grid lg:grid-cols-2 ">
@@ -333,7 +333,7 @@ export default function Navbar() {
                 </div>
               )}
             </div>
-          )}
+          )} */}
           {/* {location.pathname=='/posts' &&
           <PostFilter/>
       }

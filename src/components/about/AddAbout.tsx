@@ -11,6 +11,7 @@ import { tokenSelector } from '../states/Selectors';
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import AddEditSocial from './AddSocial';
 
 
 interface SocialItem{
@@ -33,6 +34,8 @@ interface aboutProps{
 }
 export default function AddAbout(props:aboutProps) {
   let navigate = useNavigate();
+  let modalElement = document.getElementById('socialmodal') as HTMLDialogElement | null;
+
   const token=useRecoilValue(tokenSelector)
   const [social,setSocial]=useState({
     name:"",
@@ -42,7 +45,6 @@ export default function AddAbout(props:aboutProps) {
 
   // const [skillname,setSkillName]=useState("");
   const [skills,setSkills]=useState<SkillItem[]>([]);
-
 
   const {t} = useTranslation()
 
@@ -76,6 +78,16 @@ export default function AddAbout(props:aboutProps) {
         return prevSocials.filter((social) => social.id !== SocialId);
     });
     };
+
+  const handleOpenModal=()=>{
+    modalElement = document.getElementById('socialmodal') as HTMLDialogElement | null;
+    modalElement?.showModal();
+  } 
+  
+  const handleOpenClose=()=>{
+    modalElement?.close();
+  } 
+
   const handleAddSocial=()=>{
     const formdata=new FormData();
     formdata.append("name",social.name);
@@ -152,7 +164,7 @@ const handleDeleteSkill=(id:number)=>()=>{
   return (
     <div dir={t('dir')}>
         <div className={props.theme=="dark"?"card-dark":"card-light"}>
-          <div className="card-body py-10 px-20">
+          <div className="md:card-body md:py-10 md:px-20">
             <Formik
              initialValues={{
                     description:"",
@@ -206,8 +218,8 @@ const handleDeleteSkill=(id:number)=>()=>{
                                 </div>
                             
                         </div>
-                    <div>
-                      <div className="mb-4">
+                    <div className='space-y-4'>
+                      <div>
                         <div className="label mb-1">
                             <span className="label-text-alt text-base">{t('aboutdec')}</span>
                         </div>
@@ -221,7 +233,7 @@ const handleDeleteSkill=(id:number)=>()=>{
                                                                 
                         </div>
                     
-                      <div className="mb-4">
+                      <div>
                         <div className="label mb-1">
                             <span className="label-text-alt text-base">{t('univ')}</span>
                         </div>
@@ -234,7 +246,7 @@ const handleDeleteSkill=(id:number)=>()=>{
                         </div>}
                                                                 
                       </div>
-                      <div className="mb-4">
+                      <div >
                         <div className="label mb-1">
                             <span className="label-text-alt text-base">{t('unisite')}</span>
                         </div>
@@ -247,7 +259,7 @@ const handleDeleteSkill=(id:number)=>()=>{
                         </div>}
                                                                 
                       </div>
-                      <div className="mb-4">
+                      <div>
                         <div className="label mb-1">
                             <span className="label-text-alt text-base">{t('skills')}</span>
                         </div>
@@ -287,8 +299,8 @@ const handleDeleteSkill=(id:number)=>()=>{
                         </div>}
                                                                 
                       </div>
-                      <div className="mb-4">
-                      <div className="label mb-1">
+                      <div className='hidden md:block'>
+                        <div className="label mb-1">
                             <span className="label-text-alt text-base">{t('socials')}</span>
                         </div>
                         <div className="flex gap-0 w-full">
@@ -332,14 +344,29 @@ const handleDeleteSkill=(id:number)=>()=>{
                         </div>
                       </div>
 
-
+                      <div className="md:hidden">
+                        <div className="label mb-1">
+                            <span className="label-text-alt text-base">{t('socials')}</span>
+                        </div>
+                        <div className="flex justify-center items-center pt-4 px-10">
+                            <button 
+                              type='button'
+                              className='btn btn-outline btn-primary w-full rounded-2xl'
+                              onClick={handleOpenModal}
+                            >
+                               {t('add')}
+                            </button>
+                        </div>
+                      </div>
+                      <div className='pt-5'>
                         <button 
-                            className='btn-blue md:w-80 rounded-2xl text-lg font-semibold mt-4'
+                            className='btn-blue w-full md:w-80 rounded-2xl text-lg font-semibold mt-10'
                             type='submit'
                         >
                           <FaCheck/>
                           {t('creates')}
                         </button>
+                        </div>
                     </div>
                    
                 </form>
@@ -347,6 +374,9 @@ const handleDeleteSkill=(id:number)=>()=>{
             </Formik>
           </div>
         </div>
+        <AddEditSocial  addsocial={addSocial} close={handleOpenClose}/>
+        
+        {/* <AddEditSocial/> */}
     </div>
   )
 }

@@ -41,27 +41,7 @@ export default function NavMenu() {
             </Link>
           </li>
         ))}
-        {/* <li className='nav-menu'>
-            <Link to="/posts" className='flex items-center gap-1'>
-              <PiNewspaperFill fontSize={20} />
-              {lang=="FA"?"پست‌ها":"posts"}
-            </Link>
-          </li>
-          <li className='nav-menu'>
-            <Link to="/projects" className='flex items-center gap-2'>
-            <FaHammer fontSize={20} />
-            پروژه‌ها</Link>
-          </li>
-          <li className='nav-menu'>
-          <Link to="/about" className='flex items-center gap-2'>
-            <BsEmojiSunglassesFill fontSize={20}  />
-            درباره‌ی من </Link>
-          </li>
-           <li className='nav-menu'>
-             <Link to="/cooperations" className='flex items-center gap-2'>
-            <FaHandshake fontSize={20}/>
-            درخواست همکاری </Link>
-          </li>  */}
+       
       </ul>
     </div>
   );

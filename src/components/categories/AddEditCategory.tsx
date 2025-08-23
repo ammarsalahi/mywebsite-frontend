@@ -12,7 +12,7 @@ interface modalProps{
     reload:()=>void;
 
 }
-export default function AddEditModal(props:modalProps) {
+export default function AddEditCategory(props:modalProps) {
   const modalElement = document.getElementById('catmodal') as HTMLDialogElement | null;
   const cat=useRecoilValue(categorySelector)
   const [name,setName]=useState<string>("");
@@ -69,7 +69,7 @@ export default function AddEditModal(props:modalProps) {
                 <CgClose/>
               </button>
           </div>
-            <div className='py-10 px-5'>
+            <div className='py-4 md:py-10 md:px-5'>
               <input 
                   type="text" value={name} onChange={handleChangeName}
                   className='input input-bordered w-full rounded-2xl mb-5' 
@@ -78,14 +78,14 @@ export default function AddEditModal(props:modalProps) {
                   type="text" value={engname} onChange={handleChangeEnglishName}
                   className='input input-bordered w-full rounded-2xl mb-5' 
                   placeholder={t('entercateng')} />    
-              <div className="flex items-center gap-3" dir="rtl">
+              <div className="md:flex items-center space-y-3 md:gap-3" dir="rtl">
                 <button 
-                    className='btn-blue w-52 rounded-2xl' type='button' disabled={name.length==0} 
+                    className='btn-blue w-full md:w-52 rounded-2xl' type='button' disabled={name.length==0} 
                     onClick={cat.id==0?handleAdd:handleEdit}
                 >
                   {t('agree')}
                 </button>
-                <button className='btn-red w-52 rounded-2xl' type='button' onClick={handleClose}>
+                <button className='btn-red w-full md:w-52 rounded-2xl' type='button' onClick={handleClose}>
                   {t('cancel')}
                 </button>
               </div>
