@@ -8,7 +8,7 @@ export default function CategoryPage() {
   const theme=useRecoilValue(themeSelector);
 
   return (
-    <div className='h-screen'>
+    <div>
       <CategoryList theme={theme}/>
     </div>
   )

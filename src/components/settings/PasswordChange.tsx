@@ -1,17 +1,22 @@
 import { Formik } from 'formik'
 import React, { useState } from 'react'
-import { FaCheck, FaEye, FaEyeSlash, FaLock } from 'react-icons/fa6'
+import { FaCheck, FaChevronLeft, FaChevronRight, FaEye, FaEyeSlash, FaLock } from 'react-icons/fa6'
 import { Api } from '../api/Index'
 import { USERS_PASSWORD_CHANGE } from '../api/Endpoints'
 import { AuthConfigHeader } from '../api/Configs'
 import { message } from 'antd'
 import { useTranslation } from 'react-i18next'
+import { useRecoilValue } from 'recoil'
+import { langSelector } from '../states/Selectors'
 
 interface passProps{
-    token:any
+  token:any;
+  prevload?:()=>void;
+
 }
 
 export default function PasswordChange(props:passProps) {
+  const lang = useRecoilValue(langSelector);
 
     const {t}=useTranslation()
     message.config({
@@ -29,7 +34,17 @@ export default function PasswordChange(props:passProps) {
     }
     
   return (
-    <div className='md:px-36 py-5'>
+    <div className='md:px-36 '>
+        <div className="flex justify-between items-center pb-5 pe-4">
+                <button className="btn btn-ghost w-20 text-2xl rounded-2xl" onClick={props.prevload}>
+                    {lang == "en" ? (
+                        <FaChevronLeft  />
+                    ) : (
+                      <FaChevronRight />
+                    )}
+                </button>
+                <p className="text-3xl  text-center">{t('set2')} </p>
+            </div>
         <Formik
           initialValues={{
             old:"",
@@ -67,9 +82,7 @@ export default function PasswordChange(props:passProps) {
         {({handleSubmit,values,handleChange,errors,touched})=>(
 
         <form onSubmit={handleSubmit} className='py-5'>
-            {/* <div className="py-5">
-                <p className='text-2xl font-semibold text-center'>تغییر گذرواژه کاربری</p>
-            </div> */}
+            
             <div>
                 <div className="label">
                     <div className="label-alt text-base">{t('psch1')}</div>

@@ -44,6 +44,12 @@ const imgurlAtom=atom({
 })
 
 const typeAtom=atom({
+    key:'web-type',
+    default:'',
+
+});
+
+const generalTypeAtom=atom({
     key:'project-type',
     default:'',
 
@@ -108,7 +114,7 @@ const langAtom=atom({
 })
 export {
     filterAtom,projectSearchAtom,postSearchAtom,
-    projfilterAtom,menuAtom,imgurlAtom,typeAtom,
+    projfilterAtom,menuAtom,imgurlAtom,generalTypeAtom,typeAtom,
     userAtom,isloadingAtom,themeAtom,pageLoadAtom,
     tokenAtom,settingsAtom,categoryAtom,langAtom
 }

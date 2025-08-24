@@ -80,7 +80,7 @@ export default function AddEditCategory(props:modalProps) {
                   placeholder={t('entercateng')} />    
               <div className="md:flex items-center space-y-3 md:gap-3" dir="rtl">
                 <button 
-                    className='btn-blue w-full md:w-52 rounded-2xl' type='button' disabled={name.length==0} 
+                    className='btn-blue w-full md:w-52 rounded-2xl' type='button' disabled={name.length==0 || engname.length==0} 
                     onClick={cat.id==0?handleAdd:handleEdit}
                 >
                   {t('agree')}

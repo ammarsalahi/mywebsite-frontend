@@ -227,15 +227,15 @@ export default function Posts() {
               }
               style={{ zIndex: 9999 }}
             >
-              <ul className="menu menu-horizontal bg-blue-600 text-white rounded-box shadow-lg w-full px-2 flex justify-between items-center">
+              <ul className="menu menu-horizontal bg-base-300 border-2 border-blue-500 text-blue-500 rounded-box shadow-lg w-full px-2 flex justify-between items-center">
                 <li>
-                  <a className="text-3xl" onClick={handleOpenModal}>
+                  <a className="text-2xl" onClick={handleOpenModal}>
                     <AiOutlineSearch />
                   </a>
                 </li>
                 <li>
                   <a
-                    className="text-3xl"
+                    className="text-2xl"
                     onClick={handleFilters("news", !filters.news)}
                   >
                     <PiFireFill
@@ -245,18 +245,18 @@ export default function Posts() {
                 </li>
                 <li>
                 <a
-                    className="text-4xl font-semibold"
+                    className="text-2xl font-bold"
                     onClick={handleFilters("assort", !filters.assort)}
                   >
                     {filters.assort ? (
-                      <AiOutlineSortAscending className="text-green-500" />
+                      <AiOutlineSortAscending  className="text-green-500 " />
                     ) : (
-                      <AiOutlineSortDescending className="text-red-500" />
+                      <AiOutlineSortDescending  className="text-red-500" />
                     )}
                   </a>
                 </li>
                   <li>
-                    <a className="text-3xl" onClick={()=>setScrollY(0)}>
+                    <a className="text-2xl" onClick={()=>setScrollY(0)}>
                       <FaArrowUp />
                     </a>
                   </li>
@@ -385,10 +385,7 @@ export default function Posts() {
                         <div className="py-2 z-0" key={idx}>
                           <VerticalCard
                             post={item}
-                            deletePost={handleDelete(
-                              item?.post_id,
-                              item?.title,
-                            )}
+                            reload={getFilters}
                             theme={theme}
                           />
                         </div>
@@ -413,10 +410,10 @@ export default function Posts() {
             </div>
             <dialog id={"searchmodal"} className="modal">
               <div
-                className={`h-screen md:h-auto
+                className={`h-auto
                   ${theme == "dark"
-                    ? "modal-box py-3 bg-base-200"
-                    : "modal-box py-3 bg-gray-400"}`
+                    ? "modal-box py-5 bg-base-200"
+                    : "modal-box py-5 bg-gray-400"}`
                 }
               >
                 <div className="flex justify-end ps-5 items-center">
@@ -427,8 +424,8 @@ export default function Posts() {
                     <CgClose />
                   </button>
                 </div>
-                <div className="py-10 px-5">
-                  <p className="text-2xl mb-4 text-center font-semibold">
+                <div className="py-5 md:py-10 md:px-5 space-y-6">
+                  <p className="text-2xl text-center font-semibold">
                     {t("postsearch")}
                   </p>
                   <label
@@ -462,6 +459,7 @@ export default function Posts() {
                         className="mt-3 btn-blue w-full md:hidden"
                         onClick={handlePostSearch}
                       >
+                        {t("agree")}
                         {lang == "fa" ? (
                           <FaArrowLeft className="text-xl" />
                         ) : (

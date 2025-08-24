@@ -21,13 +21,16 @@ export default function PrivateRouteContainer({ children }: props) {
           {menu==true?
           <MenuList/>
           :<div
-            className={
-              theme == "dark"
-                ? "bg-gray-900 text-white pt-24 pb-5 px-4 md:px-16"
-                : "bg-gray-50 pt-24 pb-5 px-4 md:px-16"
-            }
+            className={`!min-h-screen flex flex-col
+              ${theme == "dark"
+                ? "bg-gray-900 text-white"
+                : "bg-gray-50 "}
+            `}
           >
+            <div className="pt-28 !pb-10 px-4 md:px-16">
             {children}
+
+            </div>
           </div>}
         </div>
       ) : (

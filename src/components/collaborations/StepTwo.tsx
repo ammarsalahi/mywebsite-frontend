@@ -7,15 +7,19 @@ import { FaChevronRight, FaChevronLeft } from "react-icons/fa6";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { langSelector, userSelector } from "../states/Selectors";
 import { useTranslation } from "react-i18next";
+import { generalTypeAtom } from "../states/Atoms";
 
 interface stepprops {
-  prev: any;
-  next: any;
+  prev: ()=>void;
+  next: ()=>void;
+  prev2:()=>void;
 }
 
 export default function StepTwo(props: stepprops) {
   const [userdata, setUserdata] = useRecoilState(userSelector);
   const lang = useRecoilValue(langSelector);
+  const types = useRecoilValue(generalTypeAtom);
+  
   const { t } = useTranslation();
 
   return (
@@ -23,11 +27,11 @@ export default function StepTwo(props: stepprops) {
       <div className="flex justify-start gap-10">
         <button
           className="btn btn-sm btn-ghost rounded-full"
-          onClick={props.prev}
+          onClick={types=="AI"?props.prev2:props.prev}
         >
           {lang == "en" ? <FaChevronLeft fontSize={20} /> : <FaChevronRight fontSize={20} />}
         </button>
-        <p className="text-2xl pb-10 ps-5 text-center">{t("title2")}</p>
+        <p className="text-lg lg:text-2xl pb-10 ps-5 text-center">{t("title2")}</p>
       </div>
       <Formik
         initialValues={{

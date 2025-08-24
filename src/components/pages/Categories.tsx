@@ -48,7 +48,7 @@ export default function Categories() {
                   <>
                   <div className='post-card'>
                     {posts?.map((item:any,idx:number)=>(
-                        <VerticalCard post={item} key={idx} deletePost={()=>{}} theme={theme}/>
+                        <VerticalCard post={item} key={idx} reload={getFilters} theme={theme}/>
                     ))}
                   </div>
                 

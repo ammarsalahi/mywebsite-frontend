@@ -11,17 +11,22 @@ import { AuthConfigHeader, AuthConfigHeaderFile } from "../api/Configs";
 import { message } from "antd";
 import { Formik } from "formik";
 import { useTranslation } from "react-i18next";
+import { useRecoilValue } from "recoil";
+import { langSelector } from "../states/Selectors";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 interface userProps {
   user: any;
   token: any;
   reload: () => void;
   theme: string;
+  prevload?:()=>void;
 }
 export default function Profile(props: userProps) {
   const [imgFile, setImgFile] = useState<File | null>(null);
   const [imgShow, setImgShow] = useState("");
   const imgref = useRef<HTMLInputElement>(null);
+  const lang = useRecoilValue(langSelector);
   const { t } = useTranslation();
   message.config({
     top: document.documentElement.clientHeight - 100,
@@ -41,6 +46,16 @@ export default function Profile(props: userProps) {
 
   return (
     <div className="md:px-28">
+      <div className="flex justify-between items-center pb-5 pe-3">
+                <button className="btn btn-ghost w-20 text-2xl rounded-2xl" onClick={props.prevload}>
+                    {lang == "en" ? (
+                      <FaChevronLeft  />
+                    ) : (
+                      <FaChevronRight />
+                    )}
+                </button>
+        <p className="text-3xl text-center">{t('set1')} </p>
+      </div> 
       <Formik
         initialValues={{
           firstName: props.user.first_name || "",
@@ -83,12 +98,10 @@ export default function Profile(props: userProps) {
       >
         {({ handleSubmit, values, handleChange, errors, touched }) => (
           <form onSubmit={handleSubmit}>
+                   
             <div className="relative">
               <div className="flex justify-center pb-4 items-center gap-10">
-                {/* <div className="flex gap-2 items-center mt-10">
-                         <BsFillCheckCircleFill className='text-success text-xl'/>
-                        <p className='text-success font-semibold'>کاربر تایید شده است</p>
-                      </div>  */}
+
                 <div className="relative">
                   <input
                     type="file"

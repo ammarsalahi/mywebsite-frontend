@@ -18,34 +18,7 @@ interface listprops{
 export default function LastPosts(props:listprops) {
   const {t} = useTranslation();
   const lang=useRecoilValue(langSelector)
-  let modalElement = document.getElementById('delmodal') as HTMLDialogElement | null;
-
-  const handleDelete=(id:string,titles:string)=>()=>{
-   modalElement = document.getElementById('delmodal') as HTMLDialogElement | null;
-    modalElement?.showModal();
-    // Swal.fire({
-    //   title:"آیا میخواهید پست موردنظر حذف شود؟!",
-    //   text:`${titles}`,
-    //   icon:"error",
-    //   confirmButtonText:"بله",
-    //   confirmButtonColor:"red",
-    //   cancelButtonText:"نه,بیخیال",
-    //   showCancelButton:true
-
-    // }).then((result)=>{
-    //   if(result.isConfirmed){
-    //     Api.delete(POSTS_ID(id)).then(()=>{
-    //       message.success("با موفقیت حذف شد");
-    //       props.reload()
-    //     }).catch(()=>{
-    //       message.error("متاسفانه مشکلی پیش آمد!")
-    //     });
-    //   }
-    // })
-  }
-  const handleClose=()=>{
-    modalElement?.close()
-  }
+  
   return (
     <div className='lasts'>
         <div 
@@ -59,7 +32,7 @@ export default function LastPosts(props:listprops) {
           <div className='last-list' dir={t('dir')}>
           {props.posts?.map((item:any,idx:number)=>(
             <div key={idx} className='py-4'>
-            <VerticalCard post={item} theme={props.theme} deletePost={handleDelete(item.post_id,item.title)}/>
+            <VerticalCard post={item} theme={props.theme} reload={props.reload}/>
             </div>
           ))}
         </div>
@@ -80,7 +53,6 @@ export default function LastPosts(props:listprops) {
 
       </div>    
 
-        <DeleteModal id={1} close={handleClose}/>
      </div>
   
    

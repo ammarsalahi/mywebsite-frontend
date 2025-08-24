@@ -50,27 +50,27 @@ export default function Navbar() {
   const token = useRecoilValue(tokenSelector);
   const { t } = useTranslation();
 
-  const textVariants: Variants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: (index: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: index * 0.1, // تأخیر برای هر حرف
-        duration: 0.3,
-      },
-    }),
-  };
+  // const textVariants: Variants = {
+  //   hidden: { opacity: 0, y: 10 },
+  //   visible: (index: number) => ({
+  //     opacity: 1,
+  //     y: 0,
+  //     transition: {
+  //       delay: index * 0.1, // تأخیر برای هر حرف
+  //       duration: 0.3,
+  //     },
+  //   }),
+  // };
 
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1, // تأخیر بین حروف
-      },
-    },
-  };
+  // const containerVariants: Variants = {
+  //   hidden: { opacity: 0 },
+  //   visible: {
+  //     opacity: 1,
+  //     transition: {
+  //       staggerChildren: 0.1, // تأخیر بین حروف
+  //     },
+  //   },
+  // };
   const handleMenu = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     setismenu(!ismenu);
@@ -107,7 +107,7 @@ export default function Navbar() {
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
-
+ console.log("navbar")
   return (
     <>
       {/* <LanguageSync/> */}
@@ -146,7 +146,7 @@ export default function Navbar() {
                         ? iconlight
                         : iconblack
                     }
-                    width={35}
+                    width={30}
                   />
                 </button>
               </Link>
@@ -173,9 +173,9 @@ export default function Navbar() {
             <div className="menu-mobile">
               <button className="btn btn-ghost" onClick={handleMenu}>
                 {ismenu ? (
-                  <AiOutlineClose fontSize={30} />
+                  <AiOutlineClose fontSize={28} />
                 ) : (
-                  <AiOutlineMenu fontSize={35} />
+                  <AiOutlineMenu fontSize={30} />
                 )}
               </button>
             </div>

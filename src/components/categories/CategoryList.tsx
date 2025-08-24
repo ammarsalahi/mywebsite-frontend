@@ -10,6 +10,7 @@ import { categorySelector, langSelector } from '../states/Selectors';
 import { useTranslation } from 'react-i18next';
 import AddEditSocial from '../about/AddSocialModal';
 import AddEditCategory from './AddEditCategory';
+import DeleteModal from '../global/DeleteModal';
 
 interface listProps{
   theme:string
@@ -17,10 +18,11 @@ interface listProps{
 export default function CategoryList(props:listProps) {
   const[catType,setCatType]=useState("");
   const [categories,setCategories]=useState([]);
-  const [cateId,setCatId]=useRecoilState(categorySelector)
+  const [catId,setCatId]=useRecoilState(categorySelector)
   const {t} = useTranslation();
   const lang=useRecoilValue(langSelector)
   const [page,setPage]=useState(1);
+  const [cat,setCat] = useState(0);
   const [isPage,setIsPage]=useState({
     next:null,
     prev:null,
@@ -52,21 +54,6 @@ export default function CategoryList(props:listProps) {
       modalElement?.showModal();
   }
 
-  const handleDelete=(id:number,name:string)=>()=>{
-    Swal.fire({
-      title:lang=="fa"?`آیا میخواهید ${name} حذف شود؟`:`do you want to delete ${name}?`,
-      icon:"error",
-      confirmButtonText:t('yes'),
-      cancelButtonText:t('no'),
-      showCancelButton:true
-    }).then((result)=>{
-        if(result.isConfirmed){
-            Api.delete(CATEGORIES_ID(id)).then((res)=>{
-                getCategories()
-            })
-        }
-    })
-  }
 
   const handlePageChange=(num:number)=>()=>{
     setPage(num)
@@ -75,11 +62,34 @@ export default function CategoryList(props:listProps) {
 
   useEffect(()=>{
     getCategories()
-  },[page])
+  },[page]);
+
+
+
+   let modalElement = document.getElementById('delmodal') as HTMLDialogElement | null;
+  
+    const handleShowDelete=(id:number)=>()=>{
+      setCat(id)
+     modalElement = document.getElementById('delmodal') as HTMLDialogElement | null;
+      modalElement?.showModal();
+    }
+    const handleClose=()=>{
+      getCategories()
+      modalElement?.close()
+    }
+
+    const handleDelete=()=>{
+      Api.delete(CATEGORIES_ID(cat)).then((res)=>{
+                getCategories()
+            })
+      handleClose()
+    }
+
+
   return (
     <div className='w-full'>
     <div className={`hidden md:block card-${props.theme} rounded-xl`} dir={t('dir')}>
-        <div className="card-body px-0 py-5">
+        <div className="card-body px-0 pt-5 pb-0">
           <div className='flex justify-center items-center text-center pb-7 w-full text-xl font-bold '>
              <p>{t('cates')}</p>
           </div>
@@ -132,11 +142,21 @@ export default function CategoryList(props:listProps) {
                           <FaPencil/>
                           {t('edit')}
                         </button>
-                        <button className='btn-red-outline rounded-xl btn-sm flex' onClick={handleDelete(item.id,item.name)}>
+                        <button 
+                          className='btn-red-outline rounded-xl btn-sm flex' 
+                          onClick={handleShowDelete(item.id)}
+                        >
                           <FaTrash/>
                           {t('delete')}
                         </button>
                   </td>
+                      <DeleteModal
+                        type="catetype" 
+                        name={item.name} 
+                        engname={item.english_name} 
+                        close={handleClose} 
+                        delete={handleDelete}
+                      />
                 </tr>
               ))}
               
@@ -185,13 +205,20 @@ export default function CategoryList(props:listProps) {
                         >
                           <FaPencil/>
                         </button>
-                        <button className='btn-red-outline rounded-xl' onClick={handleDelete(item.id,item.name)}>
+                        <button className='btn-red-outline rounded-xl' onClick={handleShowDelete(item.id)}>
                           <FaTrash/>
                         </button>
                    </div>
                 </div>
                 
               </div>
+                <DeleteModal
+                  type="catetype" 
+                  name={item.name} 
+                  engname={item.english_name} 
+                  close={handleClose} 
+                  delete={handleDelete}
+                />
           </div>
       ))}
     </div>

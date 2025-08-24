@@ -5,7 +5,7 @@ import { PiCameraPlus } from "react-icons/pi";
 import { FaCheck, FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { PiPen, PiTrash } from "react-icons/pi";
 import { useRecoilValue } from "recoil";
-import { typeSelector, userSelector } from "../states/Selectors";
+import { langSelector, typeSelector, userSelector } from "../states/Selectors";
 import { Api } from "../api/Index";
 import { COOPERATIONS } from "../api/Endpoints";
 import { FaCircleCheck } from "react-icons/fa6";
@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 import { useTranslation } from "react-i18next";
 
 interface stepprops {
-  prev: any;
+  prev: ()=>void;
 }
 export default function StepThree(props: stepprops) {
   const fileInput = useRef<any>(null);
@@ -21,6 +21,8 @@ export default function StepThree(props: stepprops) {
   const [imgfile, setImgfile] = useState<any>(null);
   const types = useRecoilValue(typeSelector);
   const userdata = useRecoilValue(userSelector);
+  const lang = useRecoilValue(langSelector);
+
   const { t } = useTranslation();
 
   const openFile = () => {
@@ -43,7 +45,7 @@ export default function StepThree(props: stepprops) {
             <FaChevronRight fontSize={20} />
           )}
         </button>
-        <p className="text-xl pb-10 text-center">{t("title3")}</p>
+        <p className="text-base lg:text-xl pb-10 text-center">{t("title3")}</p>
       </div>
       <Formik
         initialValues={{
@@ -97,7 +99,7 @@ export default function StepThree(props: stepprops) {
               value={values.text}
               name="text"
               onChange={handleChange}
-              rows={4}
+              rows={5}
             />
             {errors?.text && (
               <div className="label">

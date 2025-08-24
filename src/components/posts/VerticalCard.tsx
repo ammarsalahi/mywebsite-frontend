@@ -1,6 +1,6 @@
 import React from "react";
 import { PiClock } from "react-icons/pi";
-import { showImage } from "../api/Index";
+import { Api, showImage } from "../api/Index";
 import { Link, useNavigate } from "react-router-dom";
 import { BiBookReader, BiPencil } from "react-icons/bi";
 import { FaFire, FaTrash } from "react-icons/fa6";
@@ -8,10 +8,13 @@ import { useRecoilValue } from "recoil";
 import { langSelector, tokenSelector } from "../states/Selectors";
 import { BiCategory } from "react-icons/bi";
 import { useTranslation } from "react-i18next";
+import DeleteModal from "../global/DeleteModal";
+import { POSTS_ID } from "../api/Endpoints";
+import { message } from 'antd';
 
 interface postProps {
   post: any;
-  deletePost: () => void;
+  reload: () => void;
   theme: string;
 }
 
@@ -24,7 +27,29 @@ export default function VerticalCard(props: postProps) {
   const token = useRecoilValue(tokenSelector);
   const { t } = useTranslation();
   const lang = useRecoilValue(langSelector);
+  message.config({
+      top: document.documentElement.clientHeight - 100,
+    });
+  let modalElement = document.getElementById('delmodal') as HTMLDialogElement | null;
+  
+    const handleShowDelete=()=>{
+     modalElement = document.getElementById('delmodal') as HTMLDialogElement | null;
+      modalElement?.showModal();
+    }
+    const handleClose=()=>{
+      props.reload()
+      modalElement?.close()
+    }
 
+    const handleDelete=()=>{
+      Api.delete(POSTS_ID(props.post.post_id)).then(()=>{
+            message.success("با موفقیت حذف شد");
+            props.reload()
+          }).catch(()=>{
+            message.error("متاسفانه مشکلی پیش آمد!")
+      });
+      handleClose()
+    }
   return (
     <div className={`card-${props.theme} w-auto rounded-xl z-0`} dir={t("dir")}>
       <Link to={`/posts/${props.post?.post_id}`}>
@@ -75,12 +100,20 @@ export default function VerticalCard(props: postProps) {
           </button>
           <button
             className="btn btn-ghost btn-circle btn-sm text-base text-red-500"
-            onClick={props.deletePost}
+            onClick={handleShowDelete}
           >
             <FaTrash className="text-xl" />
           </button>
         </div>
       )}
+        <DeleteModal 
+            type="posttype" 
+            name={props.post.title} 
+            engname={props.post.english_title} 
+            close={handleClose} 
+            delete={handleDelete}
+         />
+
     </div>
   );
 }

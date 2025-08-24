@@ -1,16 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import StepOne from '../collaborations/StepOne'
 import StepTwo from '../collaborations/StepTwo'
 import StepThree from '../collaborations/StepThree'
 import { Steps } from 'antd';
 import Footer from '../global/Footer';
-import { useRecoilValue } from 'recoil';
-import { themeSelector } from '../states/Selectors';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { pageLoadSelector, themeSelector } from '../states/Selectors';
 import { useTranslation } from 'react-i18next';
+import StepZero from '../collaborations/StepZero';
 
 export default function Collaboration() {
   const [current, setCurrent] = useState(0);
   const theme=useRecoilValue(themeSelector)
+    const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
 
   const {t}=useTranslation();
 
@@ -18,8 +20,15 @@ export default function Collaboration() {
   const nextStep=()=>{
     setCurrent(current+1)
   }
+  const next2Step=()=>{
+    setCurrent(current+2)
+  }
   const prevStep=()=>{
     setCurrent(current-1)
+  }
+
+   const prev2Step=()=>{
+    setCurrent(current-2)
   }
 
 
@@ -29,20 +38,30 @@ export default function Collaboration() {
   const steps=[
     {
       title:'نوع پروژه',
-      content:<StepOne  next={nextStep}/>
+      content:<StepZero  next={nextStep} next2={next2Step}/>
+    },
+    {
+      title:'نوع پروژه وب',
+      content:<StepOne prev={prevStep} next={nextStep}/>
     },
     {
       title:'اطلاعات شما',
-      content:<StepTwo  prev={prevStep} next={nextStep} />
+      content:<StepTwo  prev={prevStep} next={nextStep} prev2={prev2Step} />
     },
     {
       title:'جزئیات پروژه',
-      content:<StepThree  prev={prevStep}/>
+      content:<StepThree  prev={prevStep} />
     },
+     
   ]
+
+  useEffect(() => {
+        setpageLoad(true)
+      
+  }, [])
   return (
    <div>
-    <div className='py-10 lg:py-20'>
+    <div className='py-20'>
       <div className="cooper">
       <div className="step-show">
        <div className="sticky top-20">
@@ -54,10 +73,10 @@ export default function Collaboration() {
        </div> 
      
       </div>
-      <div className="steps-space flex justify-center ">
+      <div className="steps-space md:flex md:justify-center ">
          <div>
           <div className={`card-${theme}  w-full md:w-[500px]`}>
-            <div className="card-body p-6">
+            <div className="md:card-body md:p-6">
             <p className='text-3xl pb-6 text-center font-semibold'>{t('cooper')}</p>
 
             {steps[current].content}

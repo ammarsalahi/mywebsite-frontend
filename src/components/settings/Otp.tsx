@@ -6,21 +6,25 @@ import { OTP_VERIFY, PROFILES_ID, USERS_PASSWORD_VERIFY } from '../api/Endpoints
 import { AuthConfigHeader } from '../api/Configs';
 import { CgClose } from 'react-icons/cg';
 import { message } from 'antd';
-import { FaArrowLeft, FaEye } from 'react-icons/fa6';
-import { useRecoilState } from 'recoil';
-import { settingsSelector } from '../states/Selectors';
+import { FaArrowLeft, FaChevronLeft, FaChevronRight, FaEye } from 'react-icons/fa6';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { langSelector, settingsSelector } from '../states/Selectors';
 import { useTranslation } from 'react-i18next';
 
 
 interface optProps{
   token:any;
-  user:any
+  user:any;
+  prevload?:()=>void;
+
 }
 export default function Otp(props:optProps) {
    const [otp, setOtp] = useState<any|null>(null);
    const [password,setPassword]=useState("");
    const [isopt,setIsOtp]=useState(false);
    const [settings,setSettings]=useRecoilState(settingsSelector)  
+  const lang = useRecoilValue(langSelector);
+
     const {t} = useTranslation();
 
   
@@ -83,6 +87,16 @@ export default function Otp(props:optProps) {
   
   return (
     <div className='md:pt-16'>
+            <div className="flex justify-between items-center pb-10 px-2">
+                <button className="btn btn-ghost w-20 text-2xl rounded-2xl" onClick={props.prevload}>
+                                    {lang == "en" ? (
+                                        <FaChevronLeft  />
+                                    ) : (
+                                      <FaChevronRight />
+                  )}
+                </button>
+                <p className="text-3xl text-center">{t('set3')} </p>
+            </div>      
        {props.user.is_otp==false?
           <div className='flex justify-center items-center md:py-32'>
 
