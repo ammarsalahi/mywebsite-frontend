@@ -330,7 +330,7 @@ export default function Projects() {
                             <div className="post-card  md:px-8 lg:px-20" dir={t("dir")}>
                               {projects?.map((item: any, idx: number) => (
                                 <div className="py-2 z-0" key={idx}>
-                                    <ProjectCard project={item} theme={theme} key={idx} deleteProject={handleDelete(item.project_id,item.title)}/>
+                                    <ProjectCard project={item} theme={theme} key={idx} reload={getFilters}/>
                                  
                                 </div>
                               ))}

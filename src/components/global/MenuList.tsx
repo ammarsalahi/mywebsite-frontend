@@ -8,12 +8,12 @@ import {
 } from "react-icons/ai";
 import { BsEmojiSunglassesFill } from "react-icons/bs";
 import { PiNewspaperClipping } from "react-icons/pi";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { menuAtom } from "../states/Atoms";
 import { FaHammer, FaHandshake } from "react-icons/fa";
 import { PiNewspaperFill } from "react-icons/pi";
-import { langSelector, themeSelector, menuSelector } from "../states/Selectors";
+import { langSelector, themeSelector, menuSelector, tokenSelector } from "../states/Selectors";
 import { useTranslation } from "react-i18next";
 import { FaUser } from "react-icons/fa6";
 import { IoSettings } from "react-icons/io5";
@@ -27,6 +27,8 @@ export default function MenuList() {
   const { t } = useTranslation();
   const [lang, setLang] = useRecoilState(langSelector);
   const [isUser, setIsUser] = useState(false);
+  const [token,setToken]=useRecoilState(tokenSelector);
+  let navigate=useNavigate()
 
   const handleMenu = (e: React.MouseEvent<HTMLElement>) => {
     setismenu(false);
@@ -50,6 +52,15 @@ export default function MenuList() {
       setLang("en");
     }
   };
+
+  const handleSignout=()=>{
+    setToken({
+      access:"",
+      refresh:"",
+      user:""
+    })
+    navigate("/signin")
+  }
 
   const menus = [
     {
@@ -151,10 +162,15 @@ export default function MenuList() {
         {isUser
           ? Usermenus.map((item: any, idx: number) => (
               <li className="px-4 pb-5 text-lg" onClick={handleMenu} key={idx}>
-                <Link to={item.url} className="flex items-center gap-2">
+                {item.url.length>0?<Link to={item.url} className="flex items-center gap-2">
                   {item.icon}
                   {t(`user${idx + 1}`)}
                 </Link>
+                :
+                <button className="flex items-center gap-2" onClick={handleSignout}>
+                  {item.icon}
+                  {t(`user${idx + 1}`)}
+                </button>}
               </li>
             ))
           : menus.map((item: any, idx: number) => (

@@ -17,6 +17,8 @@ import darkIcon from "../../assets/icon-blue2.png";
 import { motion } from "framer-motion";
 import { AiFillMoon, AiFillSun } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
+import { CgHome } from "react-icons/cg";
+import { BiHome } from "react-icons/bi";
 
 interface FormErrors {
   username?: string;
@@ -129,8 +131,8 @@ export default function Signin() {
                         errors,
                         touched,
                       }) => (
-                        <form onSubmit={handleSubmit}>
-                          <div className="mb-6">
+                        <form onSubmit={handleSubmit} className="space-y-5">
+                          <div>
                             <label className="input input-bordered flex items-center rounded-2xl gap-2">
                               <FaUser className="text-gray-500" />
                               <input
@@ -150,7 +152,7 @@ export default function Signin() {
                               </div>
                             )}
                           </div>
-                          <div className="mb-6">
+                          <div>
                             <label className="input input-bordered flex items-center rounded-2xl gap-2">
                               <FaLock className="text-gray-500" />
 
@@ -191,6 +193,14 @@ export default function Signin() {
                             {t("signbtn")}
                             <FaCheck />
                           </button>
+                          <div className="flex justify-center pt-7 lg:pt-1">
+                              <Link to={"/"} className="text-center text-xl flex gap-2 items-center">
+                              <BiHome/>
+                                {t("home")}
+                                
+                              </Link>
+                            </div>  
+
                         </form>
                       )}
                     </Formik>

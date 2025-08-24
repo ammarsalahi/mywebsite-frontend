@@ -56,6 +56,7 @@
     "signbtn":"Signin",
     "signerror":"username or password is incorrect",
     "signok":"successfully signed!",
+    "home":"Back to Home",
     "set1":"Profile Edit",
     "set2":"Password Change",
     "set3":"2-Factor Auth",

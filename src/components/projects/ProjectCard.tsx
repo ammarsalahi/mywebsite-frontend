@@ -1,7 +1,7 @@
 
-import { Button } from 'antd'
+import { Button, message } from 'antd'
 import { useNavigate } from 'react-router-dom';
-import { BASE_URL ,showImage} from '../api/Index'
+import { Api, BASE_URL ,showImage} from '../api/Index'
 import { PiClock } from 'react-icons/pi'
 import { Link } from 'react-router-dom'
 import { BiBookReader, BiPencil } from "react-icons/bi";
@@ -9,10 +9,12 @@ import { FaTrash } from 'react-icons/fa';
 import { useRecoilValue } from 'recoil';
 import { langSelector, tokenSelector } from '../states/Selectors';
 import { useTranslation } from 'react-i18next';
+import { PROJECTS_ID } from '../api/Endpoints';
+import DeleteModal from '../global/DeleteModal';
 
 interface projectProps{
   project:any;
-  deleteProject:() => void;
+  reload:() => void;
   theme:string;
 }
 
@@ -24,7 +26,32 @@ export default function ProjectCard(props:projectProps) {
   const handleEdit=(id:string)=>()=>{
       navigate(`/projects/edit/${id}`)
   }
-  const token=useRecoilValue(tokenSelector)
+  const token=useRecoilValue(tokenSelector);
+
+   message.config({
+      top: document.documentElement.clientHeight - 100,
+    });
+    let modalElement = document.getElementById('delmodal') as HTMLDialogElement | null;
+    
+      const handleShowDelete=()=>{
+       modalElement = document.getElementById('delmodal') as HTMLDialogElement | null;
+        modalElement?.showModal();
+      }
+      const handleClose=()=>{
+        props.reload()
+        modalElement?.close()
+      }
+  
+    const handleDelete=()=>{
+        Api.delete(PROJECTS_ID(props.project.project_id)).then(()=>{
+              message.success("با موفقیت حذف شد");
+              props.reload()
+            }).catch(()=>{
+              message.error("متاسفانه مشکلی پیش آمد!")
+        });
+        handleClose()
+    }
+
   return (
 
     <div className={`card-${props.theme} w-auto rounded-lg shadow-lg`} dir={t('dir')}>
@@ -59,11 +86,18 @@ export default function ProjectCard(props:projectProps) {
           </button>
           <button 
             className='btn btn-ghost btn-circle btn-sm text-base text-red-500'
-            onClick={props.deleteProject}
+            onClick={handleShowDelete}
           >
             <FaTrash className='text-xl'/>
           </button> 
         </div>}
+            <DeleteModal 
+                    type="projtype" 
+                    name={props.project.title} 
+                    engname={props.project.english_title} 
+                    close={handleClose} 
+                    delete={handleDelete}
+            />
       </div>
   )
 }

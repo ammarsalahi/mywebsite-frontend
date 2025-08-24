@@ -37,7 +37,7 @@ export default function StepThree(props: stepprops) {
   };
   return (
     <div dir={t("dir")}>
-      <div className="flex justify-start gap-5">
+      <div className="flex  justify-between lg:justify-start lg:gap-10">
         <button className="btn btn-sm rounded-full" onClick={props.prev}>
           {lang == "en" ? (
             <FaChevronLeft fontSize={20} />
@@ -45,7 +45,7 @@ export default function StepThree(props: stepprops) {
             <FaChevronRight fontSize={20} />
           )}
         </button>
-        <p className="text-base lg:text-xl pb-10 text-center">{t("title3")}</p>
+        <p className="text-base font-semibold lg:text-2xl pb-10 ps-5 text-center">{t("title3")}</p>
       </div>
       <Formik
         initialValues={{

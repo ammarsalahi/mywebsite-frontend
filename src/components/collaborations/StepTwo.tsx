@@ -24,14 +24,14 @@ export default function StepTwo(props: stepprops) {
 
   return (
     <div dir={t("dir")}>
-      <div className="flex justify-start gap-10">
+      <div className="flex  justify-between lg:justify-start lg:gap-10">
         <button
           className="btn btn-sm btn-ghost rounded-full"
           onClick={types=="AI"?props.prev2:props.prev}
         >
           {lang == "en" ? <FaChevronLeft fontSize={20} /> : <FaChevronRight fontSize={20} />}
         </button>
-        <p className="text-lg lg:text-2xl pb-10 ps-5 text-center">{t("title2")}</p>
+        <p className="text-base font-semibold lg:text-2xl pb-10 ps-5 text-center">{t("title2")}</p>
       </div>
       <Formik
         initialValues={{
