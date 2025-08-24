@@ -32,6 +32,8 @@
     "title1":"Choose an Option",
     "title2":"Enter the desired information",
     "title3":"Add more details about the project",
+    "opt01":"Web Project",
+    "opt02":"AI Project",
     "opt1":"Backend Project",
     "opt2":"Frontend Project",
     "opt3":"Full-Stack Project",
@@ -98,7 +100,7 @@
     "projshow":"This Project is Visibile",
     "editproject":"Edit Project",
     "yes":"Yes",
-    "no":"No!",
+    "no":"No",
     "removed":"Remove Done",
     "cates":"Categories",
     "cname":"Persian Name",
@@ -122,8 +124,11 @@
     "keywords":"Keywords",
     "others":"Similar Posts",
     "projothers":"Other Projects",
-    "usetech":"Used Technologies"
-    
+    "usetech":"Used Technologies",
+    "posttype":"Post",
+    "projtype":"Project",
+    "catetype":"Category",
+    "socitype":"Social"
 
     
 
