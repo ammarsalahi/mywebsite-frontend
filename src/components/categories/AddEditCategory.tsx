@@ -78,14 +78,14 @@ export default function AddEditCategory(props:modalProps) {
                   type="text" value={engname} onChange={handleChangeEnglishName}
                   className='input input-bordered w-full rounded-2xl mb-5' 
                   placeholder={t('entercateng')} />    
-              <div className="md:flex items-center space-y-3 md:gap-3" dir="rtl">
+              <div className="flex items-center justify-between gap-3" dir="rtl">
                 <button 
-                    className='btn-blue w-full md:w-52 rounded-2xl' type='button' disabled={name.length==0 || engname.length==0} 
+                    className='btn-blue w-40  md:w-52 rounded-2xl' type='button' disabled={name.length==0 || engname.length==0} 
                     onClick={cat.id==0?handleAdd:handleEdit}
                 >
                   {t('agree')}
                 </button>
-                <button className='btn-red w-full md:w-52 rounded-2xl' type='button' onClick={handleClose}>
+                <button className='btn-red w-40 md:w-52 rounded-2xl' type='button' onClick={handleClose}>
                   {t('cancel')}
                 </button>
               </div>

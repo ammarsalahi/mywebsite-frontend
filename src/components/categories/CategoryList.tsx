@@ -1,28 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { FaPencil, FaPlus, FaTrash } from 'react-icons/fa6';
 import { AiOutlineSearch,AiOutlineSortAscending } from 'react-icons/ai';
-import AddEditModal from './AddEditCategory';
 import { Api } from '../api/Index';
-import { CATEGORIES, CATEGORIES_ID, CATEGORIES_PAGE } from '../api/Endpoints';
-import Swal from 'sweetalert2';
+import { CATEGORIES_ID, CATEGORIES_PAGE } from '../api/Endpoints';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { categorySelector, langSelector } from '../states/Selectors';
 import { useTranslation } from 'react-i18next';
-import AddEditSocial from '../about/AddSocialModal';
 import AddEditCategory from './AddEditCategory';
 import DeleteModal from '../global/DeleteModal';
+import { TfiReload } from 'react-icons/tfi';
+
 
 interface listProps{
   theme:string
 }
 export default function CategoryList(props:listProps) {
   const[catType,setCatType]=useState("");
-  const [categories,setCategories]=useState([]);
+  const [categories,setCategories]=useState<any>([]);
   const [catId,setCatId]=useRecoilState(categorySelector)
   const {t} = useTranslation();
   const lang=useRecoilValue(langSelector)
   const [page,setPage]=useState(1);
-  const [cat,setCat] = useState(0);
+  const [nextmob,setNextMob] = useState(1)
   const [isPage,setIsPage]=useState({
     next:null,
     prev:null,
@@ -34,7 +33,10 @@ export default function CategoryList(props:listProps) {
   const getCategories=async()=>{
     await Api.get(CATEGORIES_PAGE(page)).then((res)=>{
         setCategories(res.data.results)
-        setIsPage({
+        if(res.data.next_page_number!=null){
+          setNextMob(res.data.next_page_number)
+          }       
+          setIsPage({
           next:res.data.next_page_number,
           prev:res.data.prev_page_number,
           count:res.data.count
@@ -57,8 +59,25 @@ export default function CategoryList(props:listProps) {
 
   const handlePageChange=(num:number)=>()=>{
     setPage(num)
-    getCategories()
+    // getCategories()
   }
+ 
+  const getNextPages = () => {
+      if (isPage.next != null) {
+
+        Api.get(CATEGORIES_PAGE(nextmob)).then((res) => {
+          setCategories((prevcat: any) => [...prevcat, ...res.data.results]);
+          if(res.data.next_page_number!=null){
+          setNextMob(res.data.next_page_number)
+          }
+          setIsPage({
+            next:res.data.next_page_number,
+            prev:res.data.prev_page_number,
+            count:res.data.count
+          })
+        });
+      }
+  };
 
   useEffect(()=>{
     getCategories()
@@ -68,9 +87,15 @@ export default function CategoryList(props:listProps) {
 
    let modalElement = document.getElementById('delmodal') as HTMLDialogElement | null;
   
-    const handleShowDelete=(id:number)=>()=>{
-      setCat(id)
-     modalElement = document.getElementById('delmodal') as HTMLDialogElement | null;
+    const handleShowDelete=(item:any)=>()=>{
+      if(item!=null){
+        setCatId({
+          name:item.name,
+          english:item.english_name,
+          id:item.id
+        })
+      }
+      modalElement = document.getElementById('delmodal') as HTMLDialogElement | null;
       modalElement?.showModal();
     }
     const handleClose=()=>{
@@ -79,9 +104,9 @@ export default function CategoryList(props:listProps) {
     }
 
     const handleDelete=()=>{
-      Api.delete(CATEGORIES_ID(cat)).then((res)=>{
+      Api.delete(CATEGORIES_ID(catId.id)).then((res)=>{
                 getCategories()
-            })
+      })
       handleClose()
     }
 
@@ -144,19 +169,13 @@ export default function CategoryList(props:listProps) {
                         </button>
                         <button 
                           className='btn-red-outline rounded-xl btn-sm flex' 
-                          onClick={handleShowDelete(item.id)}
+                          onClick={handleShowDelete(item)}
                         >
                           <FaTrash/>
                           {t('delete')}
                         </button>
                   </td>
-                      <DeleteModal
-                        type="catetype" 
-                        name={item.name} 
-                        engname={item.english_name} 
-                        close={handleClose} 
-                        delete={handleDelete}
-                      />
+                   
                 </tr>
               ))}
               
@@ -164,21 +183,18 @@ export default function CategoryList(props:listProps) {
           </table>
           <div className="flex justify-center items-center bg-base-300  py-4 rounded-b-lg w-full">
           {isPage.count>5 &&<div className="join border border-blue-600 rounded-xl" dir='ltr'>
+              
+              
                 {isPage.prev!=null && <button className="join-item btn-page-blue btn-sm text-base"
                    onClick={handlePageChange(isPage.prev)}
-                  >{isPage.prev}</button>}
-                {isPage.count<4 ?
-                  <button className="join-item btn-ghost btn-sm text-base">1</button>
-                :
-                 <button className="join-item btn-ghost btn-sm text-base">{page}</button>
-                }
-                {isPage.next!=null && <button className="join-item btn-page-blue btn-sm text-base"
-                  onClick={handlePageChange(isPage.next)}
-                >{isPage.next}</button>}
+                  >{`<<`}</button>}
 
-                {/* <button className="join-item btn-page-blue btn-sm text-base">2</button>
-                <button className="join-item btn-page-blue btn-sm text-base">3</button> */}
-                {/* <button className="join-item btn-page-blue btn-sm text-base">4</button> */}
+                 <button className="join-item btn-ghost btn-sm text-base">{page}</button>  
+                 {isPage.next!=null &&<button className="join-item btn-page-blue btn-sm text-base"
+                  onClick={handlePageChange(isPage.next)}
+                >{`>>`}</button>}
+              
+              
               </div>}
           </div>
         </div>
@@ -205,26 +221,47 @@ export default function CategoryList(props:listProps) {
                         >
                           <FaPencil/>
                         </button>
-                        <button className='btn-red-outline rounded-xl' onClick={handleShowDelete(item.id)}>
+                        <button className='btn-red-outline rounded-xl' onClick={handleShowDelete(item)}>
                           <FaTrash/>
                         </button>
                    </div>
                 </div>
                 
               </div>
-                <DeleteModal
-                  type="catetype" 
-                  name={item.name} 
-                  engname={item.english_name} 
-                  close={handleClose} 
-                  delete={handleDelete}
-                />
+               
           </div>
       ))}
     </div>
+        {isPage.count>5 && isPage.count > categories.length && (
+                          <div className="flex justify-center py-10">
+                            <button
+                              className="btn-blue w-36 gap-3 rounded-2xl font-bold text-xl"
+                              onClick={getNextPages}
+                            >
+                              <TfiReload />
+                              {t("more")}
+                            </button>
+                          </div>
+               )}
+        </div>
+
+        <div className={`fixed bottom-5 ${lang=="fa" ?"right-8":"left-8"}`}>
+            <button 
+              className='btn rounded-3xl btn-success  shadow-lg border border-success'
+              onClick={handleOpenModal("add",null)}
+            >
+              <FaPlus fontSize={30} className='font-bold text-white'/>
+            </button>
         </div>
 
       <AddEditCategory  type={catType} reload={getCategories}/>
+        <DeleteModal
+          type="catetype" 
+          name={catId.name} 
+          engname={catId.english_name} 
+          close={handleClose} 
+          delete={handleDelete}
+        />
     </div>
   )
 }
