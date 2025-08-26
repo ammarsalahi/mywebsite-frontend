@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import AddEditCategory from './AddEditCategory';
 import DeleteModal from '../global/DeleteModal';
 import { TfiReload } from 'react-icons/tfi';
+import { Category } from '../types';
 
 
 interface listProps{
@@ -16,8 +17,9 @@ interface listProps{
 }
 export default function CategoryList(props:listProps) {
   const[catType,setCatType]=useState("");
-  const [categories,setCategories]=useState<any>([]);
+  const [categories,setCategories]=useState<Category[]>([]);
   const [catId,setCatId]=useRecoilState(categorySelector)
+  
   const {t} = useTranslation();
   const lang=useRecoilValue(langSelector)
   const [page,setPage]=useState(1);

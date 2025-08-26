@@ -10,44 +10,33 @@ import { tokenSelector } from '../states/Selectors'
 import { message } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { Image, Project, Technology } from '../types'
 
 interface formErrors{
   title?:string;
   header?:string;
 }
 
-interface ImageItem{
-  id:number 
-  img:string
-}
 
-interface TechItem{
-  id:number;
-  name:string
-}
 
 interface editProps{
   id:string;
   theme:string
 }
 
-interface ProjectItem{
-  title:string;
-  text:string;
-  is_active:boolean
-}
+
 
 export default function EditProject(props:editProps) {
   
-  const [images, setImages] = useState<ImageItem[]|null>(null);
-  const [teches,setTeches] = useState<TechItem[]|null>(null);
+  const [images, setImages] = useState<Image[]|null>(null);
+  const [teches,setTeches] = useState<Technology[]|null>(null);
   const [image,setImage]=useState<string|null>(null);
   const [file,setFile] = useState<File|null>(null);
 
   const imgRef=useRef<HTMLInputElement|null>(null);
   const imgsRef=useRef<HTMLInputElement|null>(null);
   const [techname,setTechname] = useState<string>("");
-  const [project,setProject]=useState<ProjectItem|null>(null);
+  const [project,setProject]=useState<Project|null>(null);
   const [isload,setIsLoad]=useState<boolean>(false)
 
   const getProject=()=>{
@@ -78,7 +67,7 @@ export default function EditProject(props:editProps) {
   const handleOpenImages=()=>{
     imgsRef.current?.click()
 }
-  const addImg = (newimg: ImageItem) => {
+  const addImg = (newimg: Image) => {
         setImages((prevs) => {
             if (prevs === null) {
                 return [newimg];
@@ -137,7 +126,7 @@ export default function EditProject(props:editProps) {
   })
   }
 
-  const addTech = (newtech: TechItem) => {
+  const addTech = (newtech: Technology) => {
     setTeches((prevs) => {
         if (prevs === null) {
             return [newtech];
@@ -207,10 +196,10 @@ const handleDeleteTech=(id:number)=>()=>{
                if(file){
                  formdata.append("header_image",file)
                }
-               images?.forEach((img:ImageItem)=>{
+               images?.forEach((img:Image)=>{
                  formdata.append('images',String(img.id))
                });
-               teches?.forEach((tech:TechItem)=>{
+               teches?.forEach((tech:Technology)=>{
                  formdata.append('teches',String(tech.id))
                });
 
@@ -298,7 +287,7 @@ const handleDeleteTech=(id:number)=>()=>{
                </div>
                <div className="grid grid-cols-3 md:grid-cols-6 justify-start gap-5 pb-5">
                  <input type="file" accept="image/*" className='hidden' onChange={handleImages} ref={imgsRef}/>
-                 {images?.map((imgs:ImageItem,idx:number)=>(
+                 {images?.map((imgs:Image,idx:number)=>(
                    
                      <div className='relative' key={idx}>
                        <img src={`${BASE_URL}${imgs.img}`} alt={imgs.img} className='w-[150px] h-full rounded-xl' />
@@ -340,7 +329,7 @@ const handleDeleteTech=(id:number)=>()=>{
                </button>
              </label>
              <div className='flex flex-wrap gap-3'>
-               {teches?.map((tch:TechItem,idx:number)=>(
+               {teches?.map((tch:Technology,idx:number)=>(
                      <button 
                        key={idx} type="button"
                        onClick={handleDeleteTech(tch.id)}

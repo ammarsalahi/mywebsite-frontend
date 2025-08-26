@@ -12,17 +12,9 @@ import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import AddSocialModal from './AddSocialModal';
+import { Skill, Social } from '../types';
 
 
-interface SocialItem{
-  id:number;
-  name:string;
-  url:string;
-}
-interface SkillItem{
-  id:number;
-  name:string;
-}
 interface FormikError{
   description?:string;
   skill?:string;
@@ -32,6 +24,7 @@ interface FormikError{
 interface aboutProps{
     theme:string;
 }
+
 export default function AddAbout(props:aboutProps) {
   let navigate = useNavigate();
   let modalElement = document.getElementById('socialmodal') as HTMLDialogElement | null;
@@ -41,10 +34,10 @@ export default function AddAbout(props:aboutProps) {
     name:"",
     url:""
   })
-  const [socials,setSocials]=useState<SocialItem[]>([]);
+  const [socials,setSocials]=useState<Social[]>([]);
 
   // const [skillname,setSkillName]=useState("");
-  const [skills,setSkills]=useState<SkillItem[]>([]);
+  const [skills,setSkills]=useState<Skill[]>([]);
 
   const {t} = useTranslation()
 
@@ -56,7 +49,7 @@ export default function AddAbout(props:aboutProps) {
     top: document.documentElement.clientHeight - 100,
   });
 
-    const addSocial = (newSocial: SocialItem) => {
+    const addSocial = (newSocial: Social) => {
         setSocials((prevSocials) => {
             if (prevSocials === null) {
                 return [newSocial];
@@ -114,7 +107,7 @@ export default function AddAbout(props:aboutProps) {
       })
   }
 
-  const addSkill = (newSkill: SocialItem) => {
+  const addSkill = (newSkill: Social) => {
     setSkills((prevSkills) => {
         if (prevSkills === null) {
             return [newSkill];
@@ -194,7 +187,7 @@ const handleDeleteSkill=(id:number)=>()=>{
                   formdata.append("skill",values.skill);
                   formdata.append("university_name",values.uni_name);
                   formdata.append("university_site",values.uni_site)
-                  socials?.forEach((social:SocialItem)=>{
+                  socials?.forEach((social:Social)=>{
                     formdata.append("socials",String(social.id))
                   })
                 Api.post(ABOUTS,formdata,{
@@ -279,7 +272,7 @@ const handleDeleteSkill=(id:number)=>()=>{
                             }
                         </label>
                         {skills.length> 0 && <div className="pt-5 px-4 flex flex-wrap gap-4">
-                        {skills?.map((item:SkillItem,idx:number)=>(
+                        {skills?.map((item:Skill,idx:number)=>(
                               <div key={idx}
                                   className='py-1 px-3 bg-blue-500 text-white rounded-full cursor-pointer flex items-center gap-4'>
                                   <button 
@@ -326,7 +319,7 @@ const handleDeleteSkill=(id:number)=>()=>{
 
                         </div>
                         <div className="pt-7 px-4 flex flex-wrap gap-4">
-                          {socials?.map((item:SocialItem,idx:number)=>(
+                          {socials?.map((item:Social,idx:number)=>(
                               <div key={idx}
                                   className='py-1 px-3 bg-blue-500 text-white rounded-full cursor-pointer flex items-center gap-2'>
                                   <button 

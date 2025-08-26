@@ -81,14 +81,14 @@ export interface Keyword {
 
 export interface Post {
   id: number; // from GeneralModel
-  post_id?: string | null;
+  post_id?: string ;
   title: string;
-  english_title?: string | null;
-  header?: string | null;
-  english_header?: string | null;
+  english_title?: string;
+  header?: string ;
+  english_header?: string ;
   header_image: string; // URL
-  text?: string | null;
-  english_text?: string | null;
+  text?: string ;
+  english_text?: string ;
   creator: User;
   view_count: number;
   keywords: Keyword[];
@@ -97,30 +97,33 @@ export interface Post {
   is_telegram_create: boolean;
   post_date: string; // computed property
   reading_time: string; // computed property
+  persian_date:string
 }
 
 export interface Technology {
   id: number; // from GeneralModel
   name: string;
-  english_name?: string | null;
+  english_name?: string;
 }
 
 
 
 export interface Project {
   id: number; // from GeneralModel
-  project_id?: string | null;
+  project_id?: string;
   title: string;
-  english_title?: string | null;
+  english_title?: string;
   header_image: string; // URL
   images: Image[];
-  text?: string | null;
-  english_text?: string | null;
+  text?: string;
+  english_text?: string;
   creator: User;
   technologies: Technology[];
   is_active: boolean;
   project_date: string; // computed property
   reading_time: string; // computed property
+  persian_date:string
+
 }
 
 export interface TelegramRobot {

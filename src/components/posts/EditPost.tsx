@@ -12,6 +12,7 @@ import { tokenSelector } from '../states/Selectors';
 import { message, Spin } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Post } from '../types';
 
 
 
@@ -81,7 +82,7 @@ interface postprops{
 }    
 
 export default function AddPost(props:postprops) {
-    const [news,setNews]=useState<PostItem|null>(null);
+    const [news,setNews]=useState<Post|null>(null);
 
     const [file, setfile] = useState<File|null>(null);
     const [image,setImage]=useState<string|null>(null);

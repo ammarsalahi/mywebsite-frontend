@@ -11,21 +11,12 @@ import { message, Spin } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { AuthConfigHeader } from '../api/Configs';
 import { useNavigate } from 'react-router-dom';
+import { Skill, Social, UserAbout } from '../types';
 
 
 interface aboutProps{
     theme:string;
     id:number
-}
-interface SocialItem{
-  id:number;
-  name:string;
-  url:string;
-}
-
-interface SkillItem{
-  id:number;
-  name:string;
 }
 
 interface FormikError{
@@ -38,11 +29,11 @@ interface FormikError{
 export default function EditAbout(props:aboutProps) {
   let navigate = useNavigate();
 
-  const [about,setAbout]=useState<any>(null);
+  const [about,setAbout]=useState<UserAbout|null>(null);
   const [isLoad,setisLoad]=useState(false);
   const token=useRecoilValue(tokenSelector) 
-  const [socials,setSocials]=useState<SocialItem[]|[]>([]);
-  const [skills,setSkills]=useState<SkillItem[]>([]);
+  const [socials,setSocials]=useState<Social[]>([]);
+  const [skills,setSkills]=useState<Skill[]>([]);
 
   const {t} = useTranslation()
 
@@ -67,7 +58,7 @@ export default function EditAbout(props:aboutProps) {
     }, [])
     
 
-    const addSkill = (newSkill: SocialItem) => {
+    const addSkill = (newSkill: Social) => {
       setSkills((prevSkills) => {
           if (prevSkills === null) {
               return [newSkill];
@@ -122,7 +113,7 @@ export default function EditAbout(props:aboutProps) {
             <Formik
              initialValues={{
                     description:about?.description||"",
-                    skill:about?.skill||"",
+                    skill:about?.skills||"",
                     uni_name:about?.university_name||"",
                     uni_site:about?.university_web||""
              }}
@@ -145,13 +136,13 @@ export default function EditAbout(props:aboutProps) {
              onSubmit={(values)=>{
                   const formdata=new FormData();
                   formdata.append("description",values.description);
-                  formdata.append("skill",values.skill);
+                  // formdata.append("skill",values.skills);
                   formdata.append("university_name",values.uni_name);
                   formdata.append("university_site",values.uni_site)
-                  socials?.forEach((social:SocialItem)=>{
+                  socials?.forEach((social:Social)=>{
                     formdata.append("socials",String(social.id))
                   })
-                  skills?.forEach((skill:SkillItem)=>{
+                  skills?.forEach((skill:Skill)=>{
                       formdata.append("skills",String(skill.id))
                   })
                 Api.post(ABOUTS_ID(props.id),formdata,{
@@ -224,13 +215,15 @@ export default function EditAbout(props:aboutProps) {
                         </div>
                         <label className='input input-bordered w-full rounded-2xl flex items-center gap-1'>
                             <input
-                              value={values.skill} onChange={handleChange} name="skill"
+                              // value={values.skill} 
+                              onChange={handleChange} name="skill"
                               className='grow'
                             />
                             {values.skill.length>0 &&
                               <button 
                                 className='btn btn-ghost text-blue-600 rounded-full text-base'
-                                type="button" onClick={handleAddSkill(values.skill)}
+                                type="button" 
+                                // onClick={handleAddSkill(values.skills)}
                               >
                                 <FaPlus/>
                                 {t('add')}
@@ -238,7 +231,7 @@ export default function EditAbout(props:aboutProps) {
                             }
                         </label>
                         <div className="pt-7 px-4 flex flex-wrap gap-4">
-                        {skills?.map((item:SkillItem,idx:number)=>(
+                        {skills?.map((item:Skill,idx:number)=>(
                               <div key={idx}
                                   className='py-1 px-3 bg-blue-500 text-white rounded-full cursor-pointer flex items-center gap-2'>
                                   <button 
@@ -272,7 +265,7 @@ export default function EditAbout(props:aboutProps) {
 
                         </div>
                         <div className="pt-7 px-4 flex flex-wrap gap-4">
-                          {socials?.map((item:SocialItem,idx:number)=>(
+                          {socials?.map((item:Social,idx:number)=>(
                               <div key={idx}
                                   className='py-1 px-3 bg-blue-500 text-white rounded-full cursor-pointer flex items-center gap-2'>
                                   <button 

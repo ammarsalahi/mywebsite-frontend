@@ -11,9 +11,10 @@ import { langSelector, tokenSelector } from '../states/Selectors';
 import { useTranslation } from 'react-i18next';
 import { PROJECTS_ID } from '../api/Endpoints';
 import DeleteModal from '../global/DeleteModal';
+import { Project } from '../types';
 
 interface projectProps{
-  project:any;
+  project:Project;
   reload:() => void;
   theme:string;
 }
@@ -78,12 +79,12 @@ export default function ProjectCard(props:projectProps) {
         </div>
         </Link>
        {token.access?.length>0 && <div className="card-actions flex justify-between px-5 pb-2">
-        <button 
+        {props.project.project_id!=undefined &&<button 
             className='btn btn-ghost btn-circle btn-sm text-base text-blue-500'
             onClick={handleEdit(props.project?.project_id)}
           >                  
             <BiPencil className='text-xl'/>
-          </button>
+          </button>}
           <button 
             className='btn btn-ghost btn-circle btn-sm text-base text-red-500'
             onClick={handleShowDelete}
@@ -91,13 +92,13 @@ export default function ProjectCard(props:projectProps) {
             <FaTrash className='text-xl'/>
           </button> 
         </div>}
-            <DeleteModal 
+            {props.project.english_title!=undefined &&<DeleteModal 
                     type="projtype" 
                     name={props.project.title} 
                     engname={props.project.english_title} 
                     close={handleClose} 
                     delete={handleDelete}
-            />
+            />}
       </div>
   )
 }

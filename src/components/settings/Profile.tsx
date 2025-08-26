@@ -14,9 +14,10 @@ import { useTranslation } from "react-i18next";
 import { useRecoilValue } from "recoil";
 import { langSelector } from "../states/Selectors";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import { User } from "../types";
 
 interface userProps {
-  user: any;
+  user: User;
   token: any;
   reload: () => void;
   theme: string;
@@ -79,7 +80,7 @@ export default function Profile(props: userProps) {
           formData.append("last_name", values.lastName);
           formData.append("username", values.userName);
           formData.append("email", values.email);
-          formData.append("is_otp", values.is_otp);
+          formData.append("is_otp", `${values.is_otp}`);
           if (imgFile != null) {
             formData.append("profile_image", imgFile);
           }
@@ -199,9 +200,9 @@ export default function Profile(props: userProps) {
                   type="checkbox"
                   className="toggle toggle-md checked:[--tglbg:#3b82f6] checked:border-white checked:text-white"
                   name="is_otp"
-                  value={values.is_otp}
+                  checked={values.is_otp}
                   onChange={handleChange}
-                  defaultChecked={values.is_otp == true}
+                  // defaultChecked={values.is_otp == true}
                 />
                 <span className="text-base">
                   {values.is_otp == true ? t("profopt1") : t("profopt2")}

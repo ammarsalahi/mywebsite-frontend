@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Navbar from '../global/Navbar'
-import userimg from '../../assets/Remove-bg.ai_1717403474388.png'
 import { FaUniversity } from "react-icons/fa";
 import { Api ,showImage} from '../api/Index';
 import { ABOUTS_ID } from '../api/Endpoints';
@@ -14,16 +12,18 @@ import { FaUser } from "react-icons/fa6";
 import { pageLoadSelector, themeSelector, tokenSelector } from '../states/Selectors';
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { MdEmail } from 'react-icons/md';
-import LoadMotion from '../global/LoadMotion';
 import { Spin } from 'antd';
 import { BiPencil } from 'react-icons/bi';
+import { UserAbout } from '../types';
+
+
 
 export default function AboutShow() {
-  const [about,setAbout]=useState<any>(null);
+  const [about,setAbout]=useState<UserAbout>();
   const [isLoad,setisLoad]=useState(false);
   const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
   const token=useRecoilValue(tokenSelector);
-  const theme=useRecoilValue(themeSelector) 
+  // const theme=useRecoilValue(themeSelector) 
   
   let navigate=useNavigate()
 
@@ -77,14 +77,14 @@ export default function AboutShow() {
   
   return (
   <div>
-    {isLoad?
+    {isLoad && about != undefined ?
     <>
     <div className="paddingtop">
         <div className={`about py-5 `}>
           <div className="about-grid">
                 <div className='flex justify-center pt-4'>
                   <div>
-                 <img src={showImage(about?.user_img)} className='rounded-full border-2 border-blue-500 shadow-2xl' width={300} alt="" />
+                 <img src={showImage(about.user_img)} className='rounded-full border-2 border-blue-500 shadow-2xl' width={300} alt="" />
                  <p className='xs:text-3xl xs:md:sm:text-4xl xs:xl:text-5xl py-5 text-center'>{about?.fullname}</p>
 
                 {token?.access.length>0&& <div className='flex justify-center pb-4 gap-5'>
@@ -114,7 +114,7 @@ export default function AboutShow() {
                     <FaComputer fontSize={30} />
                     <p className='text-xl'>مهارت و تخصص</p>
                   </div>
-                 <p className='text-xl pb-10 pt-5' > {about.skill}</p>
+                 {/* <p className='text-xl pb-10 pt-5' > {about.skills}</p> */}
                   <p className='text-lg'></p>
                 <div className="flex items-center gap-2 text-gray-500">
                   <FaUniversity fontSize={30}/>
@@ -124,7 +124,7 @@ export default function AboutShow() {
                   <p className='text-lg pb-3'>نام دانشگاه: {about.university_name}</p>
                   <div className="flex gap-3 items-center pb-3">
                   <p className='text-lg'>سایت دانشگاه: </p>
-                  <Link to={about.university_web} dir='ltr'>{about.university_web}</Link>
+                   {about.university_web && <Link to={about.university_web} dir='ltr'>{about.university_web}</Link>}
                   </div>
                 </div>
                 

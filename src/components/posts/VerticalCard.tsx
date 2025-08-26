@@ -11,9 +11,10 @@ import { useTranslation } from "react-i18next";
 import DeleteModal from "../global/DeleteModal";
 import { POSTS_ID } from "../api/Endpoints";
 import { message } from 'antd';
+import { Post } from "../types";
 
 interface postProps {
-  post: any;
+  post: Post;
   reload: () => void;
   theme: string;
 }
@@ -92,12 +93,12 @@ export default function VerticalCard(props: postProps) {
       </Link>
       {token.access?.length > 0 && (
         <div className="card-actions  flex justify-between py-4 px-5">
-          <button
+         {props.post?.post_id!=undefined && <button
             className="btn btn-ghost btn-circle btn-sm text-base text-blue-500"
             onClick={handleEdit(props.post?.post_id)}
           >
             <BiPencil className="text-xl" />
-          </button>
+          </button>}
           <button
             className="btn btn-ghost btn-circle btn-sm text-base text-red-500"
             onClick={handleShowDelete}
@@ -106,13 +107,13 @@ export default function VerticalCard(props: postProps) {
           </button>
         </div>
       )}
-        <DeleteModal 
+        {props.post?.english_title!=undefined &&<DeleteModal 
             type="posttype" 
             name={props.post.title} 
             engname={props.post.english_title} 
             close={handleClose} 
             delete={handleDelete}
-         />
+         />}
 
     </div>
   );

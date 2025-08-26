@@ -12,9 +12,10 @@ import { GoTrash } from 'react-icons/go'
 import { MdOutlineMore } from 'react-icons/md'
 import { Carousel } from 'antd'
 import { useTranslation } from 'react-i18next'
+import { Project } from '../types'
 
 interface detailprops{
-  project:any;
+  project:Project;
   others:any;
 }
 export default function DetailP(props:detailprops) {
@@ -161,7 +162,7 @@ export default function DetailP(props:detailprops) {
                 <div className='grid lg:xl:grid-cols-3 gap-2  py-10'>
                     {props.others?.map((item:any,idx:number)=>(
                       <>{item.project_id!==props.project.project_id && 
-                        <ProjectCard project={item} key={idx} theme={theme} deleteProject={()=>{}}/>
+                        <ProjectCard project={item} key={idx} theme={theme} reload={()=>{}}/>
                       }</>
                   ))}
                   

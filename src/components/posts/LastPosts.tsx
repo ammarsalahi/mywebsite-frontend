@@ -9,9 +9,10 @@ import { POSTS_ID } from '../api/Endpoints';
 import { Api } from '../api/Index';
 import { useTranslation } from 'react-i18next';
 import DeleteModal from '../global/DeleteModal';
+import { Post } from '../types';
 
 interface listprops{
-  posts:[]|any;
+  posts:Post[];
   reload:()=>void;
   theme:string
 }

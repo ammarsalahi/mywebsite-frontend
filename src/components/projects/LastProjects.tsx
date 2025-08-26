@@ -7,9 +7,10 @@ import { Api } from '../api/Index';
 import { useTranslation } from 'react-i18next';
 import { langSelector } from '../states/Selectors';
 import { useRecoilValue } from 'recoil';
+import { Project } from '../types';
 
 interface listprops{
-  projects:[]|any;
+  projects:Project[];
   reload:()=>void;
   theme:string
 }
@@ -48,8 +49,8 @@ export default function LastProjects(props:listprops) {
        {props.projects?.length>0?
         <>
             <div className="last-list" dir={t('dir')}>
-              {props.projects?.map((item:any,idx:number)=>(
-                <ProjectCard project={item} key={idx} theme={props.theme} deleteProject={handleDelete(item.project_id,item.title)}/>
+              {props.projects?.map((item:Project,idx:number)=>(
+                <ProjectCard project={item} key={idx} theme={props.theme} reload={props.reload}/>
               ))}
             </div>
            {props.projects?.length > 8 && <div className="flex justify-center py-3">
