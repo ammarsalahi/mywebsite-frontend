@@ -1,7 +1,8 @@
 import axios from "axios";
 
-const BASE_URL= import.meta.env.VITE_API_URL;
+const envurl= import.meta.env.VITE_API_URL;
 
+const BASE_URL = `${envurl}api/v1`
 const Api=axios.create({
     baseURL:BASE_URL
 })
@@ -9,7 +10,7 @@ const Api=axios.create({
     if(imgs.startsWith('http')){
         return imgs
     }else{
-       const urls=`${BASE_URL}${imgs}`
+       const urls=`${envurl}${imgs}`
        return urls
     }
   }

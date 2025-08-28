@@ -11,18 +11,22 @@ import { useTranslation } from "react-i18next";
 import { Api } from "../api/Index";
 import { ABOUTS_ID, FOOTER } from "../api/Endpoints";
 import { useRecoilValue } from "recoil";
-import { themeSelector, tokenSelector } from "../states/Selectors";
+import { langSelector, themeSelector, tokenSelector } from "../states/Selectors";
 import { MdEmail } from "react-icons/md";
 import { SiGmail } from "react-icons/si";
 import { TbWorldWww } from "react-icons/tb";
+import { Category, Social, UserAbout } from "../types";
 
 const Footer = () => {
     const { t } = useTranslation();
 	const location=useLocation()
-	const [categories,setCategories]=useState<any>([]);
-	const [socials,setSocials]=useState<any>([]);
+	const [categories,setCategories]=useState<Category[]>([]);
+	const [socials,setSocials]=useState<Social[]>([]);
 	const theme=useRecoilValue(themeSelector)
   	const token=useRecoilValue(tokenSelector)
+	const lang = useRecoilValue(langSelector)
+	const [about,setAbout] = useState<UserAbout|null>(null);
+
 	const menusFa = [
 		{
 		  url: "/posts",
@@ -51,7 +55,8 @@ const Footer = () => {
 
 	const getAbout=async()=>{
 		await Api.get(ABOUTS_ID(token.user)).then((res)=>{
-		  setSocials(res.data.socials)
+		  setSocials(res.data.socials);
+		  setAbout(res.data)
 		})
 	}
   const getIcon=(name:string)=>{
@@ -104,7 +109,7 @@ const Footer = () => {
 			}
 		  </h2>
           <p className="text-sm leading-relaxed">
-            یتنسیتبسینیب
+			{lang=="fa" ? about?.description:about?.english_description}
           </p>
         </div>
 
@@ -142,10 +147,12 @@ const Footer = () => {
 
         {/* Social Media */}
         {socials.length>0 && <div>
-          <h3 className="text-white font-semibold mb-4">شبکه های اجتماعی</h3>
+          <h3 className=" font-semibold mb-4">شبکه های اجتماعی</h3>
           <div className="flex justify-start gap-x-4 text-xl">
 			{socials.map((item:any,idx:number)=>(
-				<Link to={item.link} key={idx}>
+				<Link 
+					to={item.link} key={idx} 
+					className={`${location.pathname=="/"?(theme=="dark"?"hover:text-blue-600":""):"hover:text-blue-600"}`}>
 				  {getIcon(item.name)}
 				</Link>
 			))}

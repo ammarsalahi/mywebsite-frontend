@@ -7,7 +7,7 @@ import { ABOUTS_ID, SKILLS, SKILLS_ID } from '../api/Endpoints';
 import { useRecoilValue } from 'recoil';
 import { tokenSelector } from '../states/Selectors';
 import { Api } from '../api/Index';
-import { message, Spin } from 'antd';
+import { Descriptions, message, Spin } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { AuthConfigHeader } from '../api/Configs';
 import { useNavigate } from 'react-router-dom';
@@ -21,8 +21,10 @@ interface aboutProps{
 
 interface FormikError{
   description?:string;
+  description_en?:string;
   skill?:string;
   uni_name?:string;
+  uni_name_en?:string;
   uni_site?:string;
 }
 
@@ -113,8 +115,10 @@ export default function EditAbout(props:aboutProps) {
             <Formik
              initialValues={{
                     description:about?.description||"",
+                    description_en:about?.english_description||"",
                     skill:about?.skills||"",
                     uni_name:about?.university_name||"",
+                    uni_name_en:about?.english_university_name||"",
                     uni_site:about?.university_web||""
              }}
              validate={(values)=>{
@@ -122,11 +126,17 @@ export default function EditAbout(props:aboutProps) {
               if(!values.description){
                 errors.description=t('notempty')
               }
+              if(!values.description_en){
+                errors.description_en=t('notempty')
+              }
               if(!values.skill){
                 errors.skill=t('notempty')
               }
               if(!values.uni_name){
                 errors.uni_name=t('notempty')
+              }
+              if(!values.uni_name_en){
+                errors.uni_name_en=t('notempty')
               }
               if(!values.uni_site){
                 errors.uni_site=t('notempty')
@@ -136,8 +146,9 @@ export default function EditAbout(props:aboutProps) {
              onSubmit={(values)=>{
                   const formdata=new FormData();
                   formdata.append("description",values.description);
-                  // formdata.append("skill",values.skills);
+                  formdata.append("english_description",values.description_en);
                   formdata.append("university_name",values.uni_name);
+                  formdata.append("english_university_name",values.uni_name_en);
                   formdata.append("university_site",values.uni_site)
                   socials?.forEach((social:Social)=>{
                     formdata.append("socials",String(social.id))
@@ -145,7 +156,7 @@ export default function EditAbout(props:aboutProps) {
                   skills?.forEach((skill:Skill)=>{
                       formdata.append("skills",String(skill.id))
                   })
-                Api.post(ABOUTS_ID(props.id),formdata,{
+                Api.patch(ABOUTS_ID(props.id),formdata,{
                   headers:AuthConfigHeader(token.access)
                 }).then((res)=>{
                   message.success(t('accepted'))
@@ -166,36 +177,60 @@ export default function EditAbout(props:aboutProps) {
                                 </div>
                             
                         </div>
-                    <div>
-                      <div className="mb-4">
+                    <div className='space-y-5'>
+                      <div>
                         <div className="label mb-1">
                             <span className="label-text-alt text-base">{t('aboutdec')}</span>
                         </div>
                         <textarea
                             className="textarea textarea-bordered w-full rounded-2xl" rows={3}
-                            value={values.description} onChange={handleChange}
+                            value={values.description} onChange={handleChange} name="description"
                         />
                         {errors.description  &&<div className="label">
                             <span className="label-text-alt text-red-600 text-base">{errors.description?.toString()}</span>
                         </div>}
                                                                 
                         </div>
-                   
-                      <div className="mb-4">
+                       <div>
+                        <div className="label mb-1">
+                            <span className="label-text-alt text-base">{t('aboutdecen')}</span>
+                        </div>
+                        <textarea
+                            className="textarea textarea-bordered w-full rounded-2xl" rows={3}
+                            value={values.description_en} onChange={handleChange} name="description_en"
+                        />
+                        {errors.description_en  &&<div className="label">
+                            <span className="label-text-alt text-red-600 text-base">{errors.description_en?.toString()}</span>
+                        </div>}
+                                                                
+                        </div>                  
+                      <div>
                         <div className="label mb-1">
                             <span className="label-text-alt text-base">{t('univ')}</span>
                         </div>
                         <input
                             className="input input-bordered w-full rounded-2xl"
-                            value={values.uni_name} onChange={handleChange}
+                            value={values.uni_name} onChange={handleChange} name="uni_name"
                         />
                         {errors.uni_name  &&<div className="label">
                             <span className="label-text-alt text-red-600 text-base">{errors.uni_name?.toString()}</span>
                         </div>}
                                                                 
                       </div>
-
-                      <div className="mb-4">
+                      <div>
+                        <div className="label mb-1">
+                            <span className="label-text-alt text-base">{t('univen')}</span>
+                        </div>
+                        <input
+                            className="input input-bordered w-full rounded-2xl"
+                            value={values.uni_name_en} onChange={handleChange} name="uni_name_en"
+                        />
+                        {errors.uni_name_en  &&<div className="label">
+                            <span className="label-text-alt text-red-600 text-base">{errors.uni_name_en?.toString()}</span>
+                        </div>}
+                                                                
+                      </div>
+                      <div>
                         <div className="label mb-1">
                             <span className="label-text-alt text-base">{t('unisite')}</span>
                         </div>
@@ -209,7 +244,7 @@ export default function EditAbout(props:aboutProps) {
                                                                 
                       </div>
 
-                      <div className="mb-4">
+                      <div>
                         <div className="label mb-1">
                             <span className="label-text-alt text-base">{t('skills')}</span>
                         </div>
@@ -230,7 +265,7 @@ export default function EditAbout(props:aboutProps) {
                               </button> 
                             }
                         </label>
-                        <div className="pt-7 px-4 flex flex-wrap gap-4">
+                        <div className="pt-3 px-4 flex flex-wrap gap-4">
                         {skills?.map((item:Skill,idx:number)=>(
                               <div key={idx}
                                   className='py-1 px-3 bg-blue-500 text-white rounded-full cursor-pointer flex items-center gap-2'>
@@ -251,7 +286,7 @@ export default function EditAbout(props:aboutProps) {
                         </div>}
                                                                 
                       </div>
-                      <div className="mb-4">
+                      <div>
                       <div className="label mb-1">
                             <span className="label-text-alt text-base">{t('socials')}</span>
                         </div>

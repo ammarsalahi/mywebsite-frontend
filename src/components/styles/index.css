@@ -66,7 +66,9 @@
 .paddingtop-xl{
     @apply py-2 xs:py-10 xs:md:sm:py-16 xs:lg:py-24;
  }
-
+.paddingtop-chat{
+   @apply py-28 px-5 xs:lg:px-10 xl:px-20;
+}
  .footer-category{
     @apply  xs:md:sm:grid xs:md:sm:grid-cols-2 lg:grid-cols-3;
  }

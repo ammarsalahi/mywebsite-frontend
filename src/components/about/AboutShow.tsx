@@ -1,7 +1,8 @@
+
 import React, { useEffect, useState } from 'react'
 import { FaUniversity } from "react-icons/fa";
 import { Api ,showImage} from '../api/Index';
-import { ABOUTS_ID } from '../api/Endpoints';
+import { ABOUTS_ID,ABOUT_ME } from '../api/Endpoints';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaTelegram,FaLinkedin ,FaInstagram,FaGithub} from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
@@ -9,21 +10,22 @@ import { TbWorldWww } from "react-icons/tb";
 import { FaComputer,FaTrash,FaUsers } from "react-icons/fa6";
 import Footer from '../global/Footer';
 import { FaUser } from "react-icons/fa6";
-import { pageLoadSelector, themeSelector, tokenSelector } from '../states/Selectors';
+import { langSelector, pageLoadSelector, tokenSelector } from '../states/Selectors';
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { MdEmail } from 'react-icons/md';
 import { Spin } from 'antd';
 import { BiPencil } from 'react-icons/bi';
-import { UserAbout } from '../types';
-
-
+import { Skill, Social, UserAbout } from '../types';
+import { useTranslation } from 'react-i18next';
+import { motion } from "framer-motion";
 
 export default function AboutShow() {
   const [about,setAbout]=useState<UserAbout>();
   const [isLoad,setisLoad]=useState(false);
   const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
   const token=useRecoilValue(tokenSelector);
-  // const theme=useRecoilValue(themeSelector) 
+	const lang = useRecoilValue(langSelector)
+  const {t} = useTranslation()
   
   let navigate=useNavigate()
 
@@ -31,9 +33,8 @@ export default function AboutShow() {
       navigate(`/about/edit/${token.user}`);
   }
 
-
   const getAbout=async()=>{
-    await Api.get(ABOUTS_ID(token.user)).then((res)=>{
+    await Api.get(ABOUT_ME).then((res)=>{
       setAbout(res.data)
       setisLoad(true)
     })
@@ -43,117 +44,281 @@ export default function AboutShow() {
     let result:any;
     switch(name){
       case "telegram":
-        result=<FaTelegram fontSize={40}/>
+        result=<FaTelegram fontSize={25}/>
         break
       case "github":
-        result=<FaGithub fontSize={40}/>
+        result=<FaGithub fontSize={25}/>
         break
       case "linkedin":
-        result=<FaLinkedin fontSize={40}/>
+        result=<FaLinkedin fontSize={25}/>
         break
       case "instagram":
-        result=<FaInstagram fontSize={40}/>
+        result=<FaInstagram fontSize={25}/>
         break
       case "email":
-        result=<MdEmail fontSize={40}/>
+        result=<MdEmail fontSize={25}/>
         break
       case "gmail":
-        result=<SiGmail fontSize={40}/>
+        result=<SiGmail fontSize={25}/>
         break
       default:
-        result= <TbWorldWww fontSize={40}/>
+        result= <TbWorldWww fontSize={25}/>
         break			
     }
-  
     return result
-     }
-  useEffect(() => {
-    if(token?.user){
-        getAbout()
+  }
 
-    }
-    setpageLoad(true)
+  useEffect(() => {
+        getAbout()
+    // setpageLoad(true)
   }, [])
+
+  // ✅ Animations (from sides → center)
+  const leftVariant = {
+    hidden: { opacity: 0, x: 80 },
+    visible: { opacity: 1, x: 0 }
+  }
+
+  const rightVariant = {
+    hidden: { opacity: 0, x: -80 },
+    visible: { opacity: 1, x: 0 }
+  }
   
   return (
   <div>
     {isLoad && about != undefined ?
     <>
-    <div className="paddingtop">
-        <div className={`about py-5 `}>
-          <div className="about-grid">
-                <div className='flex justify-center pt-4'>
-                  <div>
-                 <img src={showImage(about.user_img)} className='rounded-full border-2 border-blue-500 shadow-2xl' width={300} alt="" />
-                 <p className='xs:text-3xl xs:md:sm:text-4xl xs:xl:text-5xl py-5 text-center'>{about?.fullname}</p>
+    <div className="paddingtop-chat ">
+        <div className={`about py-5`} dir={t('dir')}>
+          {/* Profile header */}
+          <div className="flex justify-center py-5">
+            <div className="text-center">
+                {/* <div className="flex justify-center">
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{
+                        opacity: 1,
+                        transition: {
+                          delay: 0.3,
+                          duration: 0.1,
+                          ease: "easeInOut",
+                        },
+                      }}
+                      className="w-[200px] h-[200px] absolute"
+                    >
+                      <img src={showImage(about.user_img)} className="w-[200px] h-[200px] rounded-full" />
+                    </motion.div>
+                    <motion.svg
+                      className="w-[220px] h-[220px]"
+                      fill="transparent"
+                      viewBox="0 0 506 506"
+                      xmlns={"https://www.w3.org/2000/svg"}
+                    >
+                      <motion.circle
+                        cx="253"
+                        cy="253"
+                        r="250"
+                        stroke="#fff"
+                        strokeWidth="4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        initial={{ strokeDasharray: "24 10 0 0" }}
+                        animate={{
+                          strokeDasharray: [
+                            "15 120 25 25",
+                            "16 25 92 72",
+                            "4 250 22 22",
+                          ],
+                          rotate: [120, 360],
+                        }}
+                        transition={{
+                          duration: 10,
+                          repeat: Infinity,
+                          repeatType: "reverse",
+                        }}
+                      />
+                    </motion.svg>
+                  </div>
+             */}
+             <div className="relative flex justify-center items-center w-[270px] h-[270px]">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{
+                  opacity: 1,
+                  transition: {
+                    delay: 0.3,
+                    duration: 0.2,
+                    ease: "easeInOut",
+                  },
+                }}
+                className="absolute w-[250px] h-[250px]"
+              >
+                <img
+                  src={showImage(about.user_img)}
+                  className="w-full h-full rounded-full object-cover"
+                />
+              </motion.div>
 
-                {token?.access.length>0&& <div className='flex justify-center pb-4 gap-5'>
-                <button className='btn-blue-outline btn-circle' onClick={handleGotoEdit}>
-                  <BiPencil className='text-3xl'/>
-                </button>
-                <button className='btn-red-outline btn-circle'>
-                  <FaTrash className='text-2xl'/>
-                </button>
-                </div>}
+              <motion.svg
+                className="absolute w-full h-full"
+                fill="transparent"
+                viewBox="0 0 506 506"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <motion.circle
+                  cx="253"
+                  cy="253"
+                  r="250"
+                  stroke="#fff"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  initial={{ strokeDasharray: "24 10 0 0" }}
+                  animate={{
+                    strokeDasharray: [
+                      "15 120 25 25",
+                      "16 25 92 72",
+                      "4 250 22 22",
+                    ],
+                    rotate: [120, 360],
+                  }}
+                  transition={{
+                    duration: 10,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                  }}
+                />
+              </motion.svg>
+            </div>
+
+              <p className='text-3xl font-bold py-4'>{about?.fullname}</p>
+
+              {token?.access.length>0 && (
+                <div className='flex justify-center gap-5 pb-4'>
+                  <button className='btn btn-outline btn-circle' onClick={handleGotoEdit}>
+                    <BiPencil className='text-xl'/>
+                  </button>
+                  <button className='btn btn-outline btn-error btn-circle'>
+                    <FaTrash className='text-lg'/>
+                  </button>
                 </div>
-              
-              </div>
+              )}
+            </div>
+          </div>
 
+          {/* Chat bubbles */}
+          <div className="max-w-4xl mx-auto space-y-6">
+            
+            {/* About */}
+            <motion.div 
+              className="chat chat-start"
+              variants={leftVariant}
+              initial="hidden"
+              animate="visible"
+              transition={{ type: "spring", stiffness: 100, damping: 15, duration: 0.6 }}
+            >
+              <div className="chat-bubble chat-bubble-primary p-3">{t('aboutdes')}</div>
+            </motion.div>
+            <motion.div 
+              className="chat chat-end"
+              variants={rightVariant}
+              initial="hidden"
+              animate="visible"
+              transition={{ type: "spring", stiffness: 100, damping: 15, duration: 0.6, delay: 0.3 }}
+            >
+              <div className="chat-bubble p-5 max-w-sm md:max-w-md">{lang=="fa"?about.description:about.english_description}</div>
+            </motion.div>
 
-              <div className="about-cols">
-                <div>
-               
-                  <div className="py-5 rounded-xl">
-                      <div className="flex gap-2 text-gray-500">
-                        <FaUser fontSize={27}/>
-                        <p className='text-xl '>توضیح کوتاه درباره من</p>
+            {/* Skills */}
+            <motion.div className="chat chat-start"
+              variants={leftVariant}
+              initial="hidden"
+              animate="visible"
+              transition={{ type: "spring", stiffness: 100, damping: 15, duration: 0.6, delay: 0.6 }}
+            >
+              <div className="chat-bubble chat-bubble-primary">{t('aboutski')}</div>
+            </motion.div>
+            <div className='space-y-2'>
+
+            {about.skills.map((item:Skill,idx:number)=>(
+                  <motion.div className="chat chat-end"
+                      variants={rightVariant}
+                      initial="hidden"
+                      animate="visible"
+                      transition={{ type: "spring", stiffness: 100, damping: 15, duration: 0.6, delay: 0.9 }}
+                      key={idx}
+                    >
+                      <div className="chat-bubble flex flex-wrap gap-2">
+                          {item.name}
                       </div>
-                      <p className='py-7  text-md'>{about.description}</p>
-                  </div>
-                  <div className="flex gap-2 items-center text-gray-500">
-                    <FaComputer fontSize={30} />
-                    <p className='text-xl'>مهارت و تخصص</p>
-                  </div>
-                 {/* <p className='text-xl pb-10 pt-5' > {about.skills}</p> */}
-                  <p className='text-lg'></p>
-                <div className="flex items-center gap-2 text-gray-500">
-                  <FaUniversity fontSize={30}/>
-                  <p className='text-xl'>دانشگاه</p>
-                </div>
-                <div className=" pb-10 pt-5 university-flex">
-                  <p className='text-lg pb-3'>نام دانشگاه: {about.university_name}</p>
-                  <div className="flex gap-3 items-center pb-3">
-                  <p className='text-lg'>سایت دانشگاه: </p>
-                   {about.university_web && <Link to={about.university_web} dir='ltr'>{about.university_web}</Link>}
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-2 text-gray-500">
-                  <FaUsers fontSize={30}/>
-                  <p className='text-xl'>راه‌های ارتباطی</p>
-                  </div>
-                <div className="flex gap-5 py-5">
-                 {about.socials?.map((item:any,idx:number)=>(
-                    <div key={idx} onClick={()=>window.open(item.link, '_blank')} className='cursor-pointer text-lg text-blue-600'>
-                      {getIcon(item.name)}
-                    </div>
-                 ))}
-                </div>
-              
-                </div>
-                
-              </div> 
+                    </motion.div>
+            ))}
+            </div>
+            
+
+            {/* University */}
+            <motion.div className="chat chat-start"
+              variants={leftVariant}
+              initial="hidden"
+              animate="visible"
+              transition={{ type: "spring", stiffness: 100, damping: 15, duration: 0.6, delay: 1.2 }}
+            >
+              <div className="chat-bubble chat-bubble-primary">{t('aboutuni')}</div>
+            </motion.div>
+            <motion.div className="chat chat-end"
+              variants={rightVariant}
+              initial="hidden"
+              animate="visible"
+              transition={{ type: "spring", stiffness: 100, damping: 15, duration: 0.6, delay: 1.5 }}
+            >
+              <div className="chat-bubble">
+                <Link 
+                  to={`${about.university_web}`} 
+                  className='underline text-blue-700'
+                >
+                  {lang=="fa"?about.university_name:about.english_university_name}
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Socials */}
+            <motion.div className="chat chat-start"
+              variants={leftVariant}
+              initial="hidden"
+              animate="visible"
+              transition={{ type: "spring", stiffness: 100, damping: 15, duration: 0.6, delay: 1.8 }}
+            >
+              <div className="chat-bubble chat-bubble-primary">{t('aboutso')}</div>
+            </motion.div>
+            <div className='space-y-2'>
+
+            {about.socials?.map((item:Social,idx:number)=>(
+                  <motion.div className="chat chat-end"
+                      variants={rightVariant}
+                      initial="hidden"
+                      animate="visible"
+                      transition={{ type: "spring", stiffness: 100, damping: 15, duration: 0.6, delay: 0.9 }}
+                      key={idx}
+                    >
+                      <div className="chat-bubble  " >
+                        <Link className="flex flex-wrap gap-2" to={`${item.link}`}>
+                               {item.name} {getIcon(item.name)}
+                        </Link>
+                      </div>
+                    </motion.div>
+            ))}
+            </div>
+            
           </div>
         </div>
-    
-       </div>
-      <Footer/>
-      </>
+    </div>
+    <Footer/>
+    </>
       :
-         <div className="h-screen w-screen grid place-items-center">
+      <div className="h-screen w-screen grid place-items-center">
         <Spin size='large'/>
-        </div>
-      }
+      </div>
+    }
     </div>
   )
 }

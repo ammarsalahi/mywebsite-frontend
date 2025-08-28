@@ -17,8 +17,10 @@ import { Skill, Social } from '../types';
 
 interface FormikError{
   description?:string;
+  description_en?:string;
   skill?:string;
   uni_name?:string;
+  uni_name_en?:string;
   uni_site?:string;
 }
 interface aboutProps{
@@ -161,8 +163,10 @@ const handleDeleteSkill=(id:number)=>()=>{
             <Formik
              initialValues={{
                     description:"",
+                    description_en:"",
                     skill:"",
                     uni_name:"",
+                    uni_name_en:"",
                     uni_site:""
              }}
              validate={(values)=>{
@@ -170,10 +174,16 @@ const handleDeleteSkill=(id:number)=>()=>{
                 if(!values.description){
                   errors.description=t('notempty')
                 }
+                if(!values.description_en){
+                  errors.description_en=t('notempty')
+                }
                 if(!values.skill){
                   errors.skill=t('notempty')
                 }
                 if(!values.uni_name){
+                  errors.uni_name=t('notempty')
+                }
+                if(!values.uni_name_en){
                   errors.uni_name=t('notempty')
                 }
                 if(!values.uni_site){
@@ -184,11 +194,15 @@ const handleDeleteSkill=(id:number)=>()=>{
              onSubmit={(values)=>{
                   const formdata=new FormData();
                   formdata.append("description",values.description);
-                  formdata.append("skill",values.skill);
+                  formdata.append("english_description",values.description_en);
                   formdata.append("university_name",values.uni_name);
+                  formdata.append("english_university_name",values.uni_name_en);
                   formdata.append("university_site",values.uni_site)
                   socials?.forEach((social:Social)=>{
                     formdata.append("socials",String(social.id))
+                  })
+                  skills.forEach((skill:Skill)=>{
+                    formdata.append("skills",String(skill.id))
                   })
                 Api.post(ABOUTS,formdata,{
                   headers:AuthConfigHeader(token.access)
@@ -211,7 +225,7 @@ const handleDeleteSkill=(id:number)=>()=>{
                                 </div>
                             
                         </div>
-                    <div className='space-y-4'>
+                    <div className='space-y-5'>
                       <div>
                         <div className="label mb-1">
                             <span className="label-text-alt text-base">{t('aboutdec')}</span>
@@ -224,8 +238,22 @@ const handleDeleteSkill=(id:number)=>()=>{
                             <span className="label-text-alt text-red-600 text-base">{errors.description?.toString()}</span>
                         </div>}
                                                                 
+                      </div>
+                      <div>
+                        <div className="label mb-1">
+                            <span className="label-text-alt text-base">{t('aboutdecen')}</span>
                         </div>
-                    
+                        <textarea
+                            className="textarea textarea-bordered w-full rounded-2xl" rows={3}
+                            value={values.description_en} onChange={handleChange} name="description_en"
+                        />
+                        {errors.description_en && touched.description_en  &&<div className="label">
+                            <span className="label-text-alt text-red-600 text-base">{errors.description_en?.toString()}</span>
+                        </div>}
+                                                                
+                      </div>
+
+
                       <div>
                         <div className="label mb-1">
                             <span className="label-text-alt text-base">{t('univ')}</span>
@@ -236,6 +264,19 @@ const handleDeleteSkill=(id:number)=>()=>{
                         />
                         {errors.uni_name && touched.uni_name &&<div className="label">
                             <span className="label-text-alt text-red-600 text-base">{errors.uni_name?.toString()}</span>
+                        </div>}
+                                                                
+                      </div>
+                        <div>
+                        <div className="label mb-1">
+                            <span className="label-text-alt text-base">{t('univen')}</span>
+                        </div>
+                        <input
+                            className="input input-bordered w-full rounded-2xl"
+                            value={values.uni_name_en} onChange={handleChange} name="uni_name_en"
+                        />
+                        {errors.uni_name_en && touched.uni_name_en &&<div className="label">
+                            <span className="label-text-alt text-red-600 text-base">{errors.uni_name_en?.toString()}</span>
                         </div>}
                                                                 
                       </div>
