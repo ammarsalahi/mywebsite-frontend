@@ -52,6 +52,7 @@ export default function AddAbout(props:aboutProps) {
   });
 
     const addSocial = (newSocial: Social) => {
+        console.log(newSocial)
         setSocials((prevSocials) => {
             if (prevSocials === null) {
                 return [newSocial];
@@ -197,7 +198,11 @@ const handleDeleteSkill=(id:number)=>()=>{
                   formdata.append("english_description",values.description_en);
                   formdata.append("university_name",values.uni_name);
                   formdata.append("english_university_name",values.uni_name_en);
-                  formdata.append("university_site",values.uni_site)
+                  if (values.uni_site && !/^https?:\/\//i.test(values.uni_site)) {
+                    formdata.append("university_site",`https://${values.uni_site}`)
+                  }else{
+                    formdata.append("university_site",values.uni_site)
+                  }            
                   socials?.forEach((social:Social)=>{
                     formdata.append("socials",String(social.id))
                   })
@@ -286,7 +291,19 @@ const handleDeleteSkill=(id:number)=>()=>{
                         </div>
                         <input
                             className="input input-bordered w-full rounded-2xl"
-                            value={values.uni_site} onChange={handleChange} name="uni_site"
+                            type="url"
+                            value={values.uni_site} 
+                            name="uni_site"
+                            onChange={(e) => {
+                              let val = e.target.value.trim();
+
+                              if (val && !/^https?:\/\//i.test(val)) {
+                                // مقدار اصلاح‌شده رو داخل event تزریق می‌کنیم
+                                e.target.value = `https://${val}`;
+                              }
+
+                              handleChange(e); // همون هندل خود Formik
+                            }}
                         />
                         {errors.uni_site && touched.uni_site  &&<div className="label">
                             <span className="label-text-alt text-red-600 text-base">{errors.uni_site?.toString()}</span>
@@ -382,10 +399,26 @@ const handleDeleteSkill=(id:number)=>()=>{
                         <div className="label mb-1">
                             <span className="label-text-alt text-base">{t('socials')}</span>
                         </div>
+                        {skills.length>0 &&
+                        <div className="py-5 px-4 flex flex-wrap gap-4">
+                          {socials?.map((item:Social,idx:number)=>(
+                              <div key={idx}
+                                  className='py-1 px-3 bg-blue-500 text-white rounded-full cursor-pointer flex items-center gap-2'>
+                                  <button 
+                                    className='btn btn-circle btn-ghost btn-sm text-xl hover:bg-red-500'
+                                    type="button"
+                                    onClick={handleDeleteSocial(item.id)}
+                                  >
+                                    <IoClose/>
+                                  </button>
+                                  <p>{item.name}</p>
+                                </div>
+                          ))}                         
+                        </div>}
                         <div className="flex justify-center items-center pt-4 px-10">
                             <button 
                               type='button'
-                              className='btn btn-outline btn-primary w-full rounded-2xl'
+                              className='btn btn-outline btn-success w-full rounded-2xl'
                               onClick={handleOpenModal}
                             >
                                {t('add')}

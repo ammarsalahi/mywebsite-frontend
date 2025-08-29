@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { BsEmojiSunglassesFill } from 'react-icons/bs';
 import { FaCheck ,FaPlus} from 'react-icons/fa6';
 import { IoClose } from "react-icons/io5";
-import { ABOUTS_ID, SKILLS, SKILLS_ID } from '../api/Endpoints';
+import { ABOUTS_ID, SKILLS, SKILLS_ID, SOCIALS, SOCIALS_ID } from '../api/Endpoints';
 import { useRecoilValue } from 'recoil';
 import { tokenSelector } from '../states/Selectors';
 import { Api } from '../api/Index';
@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { AuthConfigHeader } from '../api/Configs';
 import { useNavigate } from 'react-router-dom';
 import { Skill, Social, UserAbout } from '../types';
+import AddSocialModal from './AddSocialModal';
 
 
 interface aboutProps{
@@ -30,13 +31,17 @@ interface FormikError{
 
 export default function EditAbout(props:aboutProps) {
   let navigate = useNavigate();
+  let modalElement = document.getElementById('socialmodal') as HTMLDialogElement | null;
 
   const [about,setAbout]=useState<UserAbout|null>(null);
   const [isLoad,setisLoad]=useState(false);
   const token=useRecoilValue(tokenSelector) 
   const [socials,setSocials]=useState<Social[]>([]);
   const [skills,setSkills]=useState<Skill[]>([]);
-
+ const [social,setSocial]=useState({
+    name:"",
+    url:""
+  })
   const {t} = useTranslation()
 
 
@@ -58,8 +63,64 @@ export default function EditAbout(props:aboutProps) {
     useEffect(() => {
       getAbout()
     }, [])
-    
 
+      const handleOpenModal=()=>{
+    modalElement = document.getElementById('socialmodal') as HTMLDialogElement | null;
+    modalElement?.showModal();
+  } 
+  
+  const handleOpenClose=()=>{
+    modalElement?.close();
+  } 
+     const addSocial = (newSocial: Social) => {
+            console.log(newSocial)
+            setSocials((prevSocials) => {
+                if (prevSocials === null) {
+                    return [newSocial];
+                }
+                const exists = prevSocials.some((key) => key.id === newSocial.id);
+                if (exists) {
+                    return prevSocials;
+                }
+                return [...prevSocials, newSocial];
+            });
+        };
+    
+        const deleteSocial = (SocialId: number) => {
+          setSocials((prevSocials) => {
+            if (prevSocials === null) {
+                return prevSocials; // No keys to delete
+            }
+            // Filter out the key with the matching id
+            return prevSocials.filter((social) => social.id !== SocialId);
+        });
+        };
+    const handleAddSocial=()=>{
+      const formdata=new FormData();
+      formdata.append("name",social.name);
+      formdata.append("link",social.url)
+      formdata.append("status",`TO ADD ${token.user}`);
+      Api.post(SOCIALS,formdata).then((res)=>{
+          addSocial(res.data)
+          setSocial({name:"",url:""})
+      }).catch((err)=>{
+        console.log(err)
+        message.error(t('notaccepted'))
+  
+      })
+    }
+    
+    const handleDeleteSocial=(id:number)=>()=>{
+        Api.delete(SOCIALS_ID(id)).then((res)=>{
+           deleteSocial(id)
+             message.info(t('removed'))
+        }).catch((err)=>{
+          console.log(err)
+          message.error(t('noaccept'))
+    
+        })
+    }
+  
     const addSkill = (newSkill: Social) => {
       setSkills((prevSkills) => {
           if (prevSkills === null) {
@@ -73,13 +134,13 @@ export default function EditAbout(props:aboutProps) {
       });
   };
   
-  const deleteSkill = (SocialId: number) => {
-      setSocials((prevSocials) => {
-        if (prevSocials === null) {
-            return prevSocials; // No keys to delete
+  const deleteSkill = (SkillId: number) => {
+      setSkills((prevSkills) => {
+        if (prevSkills === null) {
+            return prevSkills; // No keys to delete
         }
         // Filter out the key with the matching id
-        return prevSocials.filter((social) => social.id !== SocialId);
+        return prevSkills.filter((skill) => skill.id !== SkillId);
     });
   };
   
@@ -99,14 +160,16 @@ export default function EditAbout(props:aboutProps) {
   
   const handleDeleteSkill=(id:number)=>()=>{
     Api.delete(SKILLS_ID(id)).then((res)=>{
-       deleteSkill(id)
-         message.info(t('removed'))
+        deleteSkill(id)
+        message.info(t('removed'))
     }).catch((err)=>{
       console.log(err)
       message.error(t('noaccept'))
   
     })
-  }
+  }  
+
+
   return (
     <div  dir={t('dir')}>
       {isLoad ?
@@ -116,7 +179,7 @@ export default function EditAbout(props:aboutProps) {
              initialValues={{
                     description:about?.description||"",
                     description_en:about?.english_description||"",
-                    skill:about?.skills||"",
+                    skill:"",
                     uni_name:about?.university_name||"",
                     uni_name_en:about?.english_university_name||"",
                     uni_site:about?.university_web||""
@@ -145,11 +208,17 @@ export default function EditAbout(props:aboutProps) {
            }}
              onSubmit={(values)=>{
                   const formdata=new FormData();
+
                   formdata.append("description",values.description);
                   formdata.append("english_description",values.description_en);
                   formdata.append("university_name",values.uni_name);
                   formdata.append("english_university_name",values.uni_name_en);
-                  formdata.append("university_site",values.uni_site)
+                  if (values.uni_site && !/^https?:\/\//i.test(values.uni_site)) {
+                    formdata.append("university_site",`https://${values.uni_site}`)
+                  }else{
+                    formdata.append("university_site",values.uni_site)
+                  }
+                  
                   socials?.forEach((social:Social)=>{
                     formdata.append("socials",String(social.id))
                   })
@@ -236,7 +305,9 @@ export default function EditAbout(props:aboutProps) {
                         </div>
                         <input
                             className="input input-bordered w-full rounded-2xl"
-                            value={values.uni_site} onChange={handleChange}
+                            value={values.uni_site} 
+                            name="uni_site"
+                            onChange={handleChange}
                         />
                         {errors.uni_site  &&<div className="label">
                             <span className="label-text-alt text-red-600 text-base">{errors.uni_site?.toString()}</span>
@@ -250,7 +321,7 @@ export default function EditAbout(props:aboutProps) {
                         </div>
                         <label className='input input-bordered w-full rounded-2xl flex items-center gap-1'>
                             <input
-                              // value={values.skill} 
+                              value={values.skill} 
                               onChange={handleChange} name="skill"
                               className='grow'
                             />
@@ -258,13 +329,14 @@ export default function EditAbout(props:aboutProps) {
                               <button 
                                 className='btn btn-ghost text-blue-600 rounded-full text-base'
                                 type="button" 
-                                // onClick={handleAddSkill(values.skills)}
+                                onClick={handleAddSkill(values.skill)}
                               >
                                 <FaPlus/>
                                 {t('add')}
                               </button> 
                             }
                         </label>
+                        {skills.length>0 &&
                         <div className="pt-3 px-4 flex flex-wrap gap-4">
                         {skills?.map((item:Skill,idx:number)=>(
                               <div key={idx}
@@ -279,21 +351,26 @@ export default function EditAbout(props:aboutProps) {
                                   <p>{item.name}</p>
                                 </div>
                           ))}
-                          </div>
+                          </div>}
                         
                         {errors.skill  &&<div className="label">
                             <span className="label-text-alt text-red-600 text-base">{errors.skill?.toString()}</span>
                         </div>}
                                                                 
                       </div>
-                      <div>
+                      <div className='hidden md:block'>
                       <div className="label mb-1">
                             <span className="label-text-alt text-base">{t('socials')}</span>
                         </div>
                         <div className="flex gap-0 w-full">
                           <input type="text" className="input input-bordered rounded-s-2xl w-52 rounded-e-none" />
                           <input type="text" className="input input-bordered rounded-none w-full" />
-                          <button className="btn-blue w-40 rounded-s-none rounded-e-2xl  font-semibold">
+                          <button 
+                            className="btn-blue w-40 rounded-s-none rounded-e-2xl  font-semibold"
+                            disabled={social.name.length==0 && social.url.length==0}
+
+                              onClick={handleAddSocial}
+                          >
                             <FaPlus/>
                             {t('add')}
                           </button>
@@ -306,6 +383,7 @@ export default function EditAbout(props:aboutProps) {
                                   <button 
                                     className='btn btn-circle btn-ghost btn-sm text-xl hover:bg-red-500'
                                     type="button"
+                                    onClick={handleDeleteSocial(item.id)}
                                   >
                                     <IoClose/>
                                   </button>
@@ -316,10 +394,38 @@ export default function EditAbout(props:aboutProps) {
                          
                         </div>
                       </div>
-
+<div className="md:hidden">
+                        <div className="label mb-1">
+                            <span className="label-text-alt text-base">{t('socials')}</span>
+                        </div>
+                        <div className="py-5 px-4 flex flex-wrap gap-4">
+                          {socials?.map((item:Social,idx:number)=>(
+                              <div key={idx}
+                                  className='py-1 px-3 bg-blue-500 text-white rounded-full cursor-pointer flex items-center gap-2'>
+                                  <button 
+                                    className='btn btn-circle btn-ghost btn-sm text-xl hover:bg-red-500'
+                                    type="button"
+                                    onClick={handleDeleteSocial(item.id)}
+                                  >
+                                    <IoClose/>
+                                  </button>
+                                  <p>{item.name}</p>
+                                </div>
+                          ))}                         
+                        </div>
+                        <div className="flex justify-center items-center pt-4 px-10">
+                            <button 
+                              type='button'
+                              className='btn btn-outline btn-success w-full rounded-2xl'
+                              onClick={handleOpenModal}
+                            >
+                               {t('add')}
+                            </button>
+                        </div>
+                      </div>
 
                         <button 
-                            className='btn-blue md:w-80 rounded-2xl text-lg font-semibold mt-4'
+                            className='btn-blue w-full md:w-80 rounded-2xl text-lg font-semibold mt-4'
                             type='submit'
                         >
                           <FaCheck/>
@@ -331,6 +437,8 @@ export default function EditAbout(props:aboutProps) {
             )}
             </Formik>
           </div>
+          <AddSocialModal  addsocial={addSocial} close={handleOpenClose}/>
+          
         </div>
       :
         <div className="h-screen w-screen grid place-items-center">

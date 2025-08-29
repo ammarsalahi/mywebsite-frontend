@@ -9,7 +9,7 @@ import { BsEmojiSunglassesFill } from "react-icons/bs";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Api } from "../api/Index";
-import { ABOUTS_ID, FOOTER } from "../api/Endpoints";
+import { ABOUT_ME, ABOUTS_ID, FOOTER } from "../api/Endpoints";
 import { useRecoilValue } from "recoil";
 import { langSelector, themeSelector, tokenSelector } from "../states/Selectors";
 import { MdEmail } from "react-icons/md";
@@ -23,7 +23,6 @@ const Footer = () => {
 	const [categories,setCategories]=useState<Category[]>([]);
 	const [socials,setSocials]=useState<Social[]>([]);
 	const theme=useRecoilValue(themeSelector)
-  	const token=useRecoilValue(tokenSelector)
 	const lang = useRecoilValue(langSelector)
 	const [about,setAbout] = useState<UserAbout|null>(null);
 
@@ -54,7 +53,7 @@ const Footer = () => {
    	}
 
 	const getAbout=async()=>{
-		await Api.get(ABOUTS_ID(token.user)).then((res)=>{
+		await Api.get(ABOUT_ME).then((res)=>{
 		  setSocials(res.data.socials);
 		  setAbout(res.data)
 		})

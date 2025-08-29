@@ -89,7 +89,7 @@ export default function AboutShow() {
     {isLoad && about != undefined ?
     <>
     <div className="paddingtop-chat ">
-        <div className={`about py-5`} dir={t('dir')}>
+        <div className={`about py-5`} >
           {/* Profile header */}
           <div className="flex justify-center py-5">
             <div className="text-center">
@@ -207,7 +207,7 @@ export default function AboutShow() {
           </div>
 
           {/* Chat bubbles */}
-          <div className="max-w-4xl mx-auto space-y-6">
+          <div className="max-w-3xl mx-auto space-y-6">
             
             {/* About */}
             <motion.div 
@@ -230,15 +230,15 @@ export default function AboutShow() {
             </motion.div>
 
             {/* Skills */}
-            <motion.div className="chat chat-start"
+           {about.skills.length>0 &&  <motion.div className="chat chat-start"
               variants={leftVariant}
               initial="hidden"
               animate="visible"
               transition={{ type: "spring", stiffness: 100, damping: 15, duration: 0.6, delay: 0.6 }}
             >
               <div className="chat-bubble chat-bubble-primary">{t('aboutski')}</div>
-            </motion.div>
-            <div className='space-y-2'>
+            </motion.div>}
+            {about.skills.length>0 && <div>
 
             {about.skills.map((item:Skill,idx:number)=>(
                   <motion.div className="chat chat-end"
@@ -253,7 +253,7 @@ export default function AboutShow() {
                       </div>
                     </motion.div>
             ))}
-            </div>
+            </div>}
             
 
             {/* University */}
@@ -282,15 +282,15 @@ export default function AboutShow() {
             </motion.div>
 
             {/* Socials */}
-            <motion.div className="chat chat-start"
+            {about.socials.length>0 && <motion.div className="chat chat-start"
               variants={leftVariant}
               initial="hidden"
               animate="visible"
               transition={{ type: "spring", stiffness: 100, damping: 15, duration: 0.6, delay: 1.8 }}
             >
               <div className="chat-bubble chat-bubble-primary">{t('aboutso')}</div>
-            </motion.div>
-            <div className='space-y-2'>
+            </motion.div>}
+            {about.socials.length>0 && <div className='space-y-2'>
 
             {about.socials?.map((item:Social,idx:number)=>(
                   <motion.div className="chat chat-end"
@@ -307,7 +307,7 @@ export default function AboutShow() {
                       </div>
                     </motion.div>
             ))}
-            </div>
+            </div>}
             
           </div>
         </div>

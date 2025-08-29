@@ -47,10 +47,10 @@ export default function AddSocialModal(props:modalProps) {
           Api.post(SOCIALS,formdata).then((res)=>{
               props.addsocial(res.data)
               HandleClear()
+              props.close();
           }).catch((err)=>{
             console.log(err)
             message.error(t('notaccepted'))
-      
           })
   }
  
