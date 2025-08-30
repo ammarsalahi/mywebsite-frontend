@@ -285,7 +285,7 @@ const handleDeleteTech=(id:number)=>()=>{
                <div className="label my-2">
                    <span className="label-text-alt text-base">{t('projimgs')}</span>
                </div>
-               <div className="grid grid-cols-3 md:grid-cols-6 justify-start gap-5 pb-5">
+               <div className="grid grid-cols-2 md:grid-cols-6 justify-start gap-5 pb-5">
                  <input type="file" accept="image/*" className='hidden' onChange={handleImages} ref={imgsRef}/>
                  {images?.map((imgs:Image,idx:number)=>(
                    
@@ -302,7 +302,7 @@ const handleDeleteTech=(id:number)=>()=>{
                      </div>
                ))}
                  <button 
-                   className="dashed-card-gray p-14 hover:bg-blue-50" 
+                   className="dashed-card-gray p-10 md:p-14 hover:bg-blue-50" 
                    onClick={handleOpenImages}
                    type="button"
                  >

@@ -2,7 +2,7 @@
 import { Button, message } from 'antd'
 import VerticalCard from './VerticalCard'
 import { useRecoilValue } from 'recoil';
-import { langSelector, themeSelector } from '../states/Selectors';
+import { langSelector, themeSelector, tokenSelector } from '../states/Selectors';
 import { TfiReload } from 'react-icons/tfi';
 import Swal from 'sweetalert2';
 import { POSTS_ID } from '../api/Endpoints';
@@ -10,6 +10,7 @@ import { Api } from '../api/Index';
 import { useTranslation } from 'react-i18next';
 import DeleteModal from '../global/DeleteModal';
 import { Post } from '../types';
+import { Link } from 'react-router-dom';
 
 interface listprops{
   posts:Post[];
@@ -18,7 +19,8 @@ interface listprops{
 }
 export default function LastPosts(props:listprops) {
   const {t} = useTranslation();
-  const lang=useRecoilValue(langSelector)
+  const lang=useRecoilValue(langSelector);
+  const token  = useRecoilValue(tokenSelector)
   
   return (
     <div className='lasts'>
@@ -45,10 +47,15 @@ export default function LastPosts(props:listprops) {
           </div>}
       </>
     :
-        <div className=' no-list'>
-          <div className=" p-2 lg:p-4  bg-red-300 text-center rounded-lg">
+        <div className=' no-list flex flex-col justify-center items-center p-4 gap-y-7'>
+          <div className=" p-2 md:p-4 md:w-80 bg-red-300 text-center rounded-xl">
             <p className='text-xl text-red-700'>هیچ پستی وجود ندارد!!!</p>
           </div>
+          {token.access.length>0 && 
+            <Link className='btn-blue-outline  w-full md:w-36' to={"/projects/add"}>
+              {t('user2')}
+            </Link>
+          }
         </div>
     }
 

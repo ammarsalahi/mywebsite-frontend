@@ -5,9 +5,10 @@ import Swal from 'sweetalert2';
 import { PROJECTS_ID } from '../api/Endpoints';
 import { Api } from '../api/Index';
 import { useTranslation } from 'react-i18next';
-import { langSelector } from '../states/Selectors';
+import { langSelector, tokenSelector } from '../states/Selectors';
 import { useRecoilValue } from 'recoil';
 import { Project } from '../types';
+import { Link } from 'react-router-dom';
 
 interface listprops{
   projects:Project[];
@@ -17,6 +18,7 @@ interface listprops{
 export default function LastProjects(props:listprops) {
   const {t} = useTranslation()
   const lang=useRecoilValue(langSelector)
+  const token  = useRecoilValue(tokenSelector)
 
   const handleDelete=(id:string,titles:string)=>()=>{
     Swal.fire({
@@ -61,10 +63,15 @@ export default function LastProjects(props:listprops) {
             </div>}
         </>
         :
-          <div className='no-list'>
-            <div className=" p-2 lg:p-4 bg-red-300 text-center rounded-lg">
+          <div className='no-list flex flex-col justify-center items-center p-4 gap-y-7'>
+            <div className=" p-2 md:p-4 md:w-80 bg-red-300 text-center rounded-xl">
               <p className='text-xl text-red-700'>هیچ پروژه‌ای وجود ندارد!!!</p>
             </div>
+            {token.access.length>0 && 
+            <Link className='btn-blue-outline  w-full md:w-36' to={"/projects/add"}>
+              {t('user3')}
+            </Link>
+          }
           </div>
        }
           
