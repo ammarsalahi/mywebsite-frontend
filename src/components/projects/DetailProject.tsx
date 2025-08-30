@@ -16,7 +16,9 @@ import { Project } from '../types'
 
 interface detailprops{
   project:Project;
-  others:any;
+  others:Project[];
+  reload:()=>void
+
 }
 export default function DetailP(props:detailprops) {
   const theme=useRecoilValue(themeSelector)

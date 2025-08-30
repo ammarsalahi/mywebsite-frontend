@@ -7,11 +7,15 @@ import Footer from '../global/Footer';
 import { Spin } from 'antd';
 import { SEARCH } from '../api/Endpoints';
 import { useParams } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { pageLoadSelector, themeSelector } from '../states/Selectors';
 
 export default function Search() {
     const [isLoad,setisLoad]=useState(false)
     const [searches,setSearches]=useState<any>([]);
     const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
+    const theme =useRecoilValue(themeSelector)
+    
     const {query}:any=useParams()
     const getSearch=async()=>{
         Api.get(SEARCH(query)).then((res)=>{
@@ -37,9 +41,9 @@ export default function Search() {
                 {searches?.map((item:any,idx:number)=>(
                     <>
                     {item.types=="post"?
-                     <VerticalCard post={item} key={idx}/>
+                     <VerticalCard post={item} key={idx} theme={theme} reload={getSearch}/>
                     :
-                     <ProjectCard project={item} key={idx}/>
+                     <ProjectCard project={item} key={idx} theme={theme} reload={getSearch}/>
                     }
                     </>
                 ))}

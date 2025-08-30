@@ -14,11 +14,13 @@ import { BiCategory } from "react-icons/bi";
 import { useTranslation } from 'react-i18next'
 import { FaXTwitter ,FaTelegram,FaDiscord} from "react-icons/fa6";
 import { IoCopy } from "react-icons/io5";
+import { Post } from '../types'
 
 
 interface detailprops{
-  post:any;
-  others:any;
+  post:Post;
+  others:Post[];
+  reload:()=>void
 }
 export default function Detail(props:detailprops) {
   const theme=useRecoilValue(themeSelector)
@@ -148,9 +150,9 @@ export default function Detail(props:detailprops) {
              
              <div className="py-10">
                 <p className='text-md'>{lang=="fa"?props.post?.header:props.post?.english_header}</p>
-                <div className="py-4">
+                {props.post.text!=undefined && props.post?.english_text !=undefined  && <div className="py-4">
                   <div dangerouslySetInnerHTML={lang=="fa"?{ __html: props.post?.text }:{__html: props.post?.english_text}} />
-                </div>
+                </div>}
              </div>
               
 
@@ -173,7 +175,7 @@ export default function Detail(props:detailprops) {
                 <div className='grid lg:grid-cols-3 gap-5  py-10' id='others'>
                     {props.others?.map((item:any,idx:number)=>(
                       
-                      idx <6 &&  <VerticalCard post={item} key={idx} theme={theme} deletePost={()=>{}}/>
+                      idx <6 &&  <VerticalCard post={item} key={idx} theme={theme} reload={props.reload}/>
                     ))}
                   
                 </div> 

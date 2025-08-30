@@ -10,10 +10,11 @@ import PostEmpty from '../global/PostEmpty'
 import LoadMotion from '../global/LoadMotion'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { pageLoadSelector, themeSelector } from '../states/Selectors'
+import { Post } from '../types'
 
 export default function Categories() {
 
-    const [posts,setPosts]=useState<any>([])
+    const [posts,setPosts]=useState<Post[]>([])
     const {name}:any =useParams();    
     const [isLoad,setisLoad]=useState(false);
     const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
@@ -47,7 +48,7 @@ export default function Categories() {
                 {posts.length>0?
                   <>
                   <div className='post-card'>
-                    {posts?.map((item:any,idx:number)=>(
+                    {posts?.map((item:Post,idx:number)=>(
                         <VerticalCard post={item} key={idx} reload={getFilters} theme={theme}/>
                     ))}
                   </div>

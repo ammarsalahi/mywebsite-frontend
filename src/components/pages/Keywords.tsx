@@ -7,14 +7,16 @@ import { Api } from '../api/Index'
 import { POST_KEYWORDS } from '../api/Endpoints'
 import { Spin } from 'antd';
 import EmptyList from '../global/EmptyList'
-import { useRecoilState } from 'recoil'
-import { pageLoadSelector } from '../states/Selectors'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { pageLoadSelector, themeSelector } from '../states/Selectors'
 import LoadMotion from '../global/LoadMotion'
+import { Post } from '../types'
 
 export default function Keywords() {
-    const [posts,setPosts]=useState<any>([])
+    const [posts,setPosts]=useState<Post[]>([])
     const {name}:any =useParams();
     const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
+    const theme = useRecoilValue(themeSelector)
 
     
     const [isLoad,setisLoad]=useState(false);
@@ -48,8 +50,8 @@ export default function Keywords() {
               
                 <>
                 <div className='post-card'>
-                  {posts?.map((item:any,idx:number)=>(
-                      <VerticalCard post={item} key={idx}/>
+                  {posts?.map((item:Post,idx:number)=>(
+                      <VerticalCard post={item} key={idx} reload={getFilters} theme={theme}/>
                   ))}
                 </div>
                

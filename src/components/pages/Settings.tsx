@@ -15,12 +15,13 @@ import { AuthConfigHeader } from "../api/Configs";
 import { Spin } from "antd";
 import { useTranslation } from "react-i18next";
 import SettingNavMobile from "../settings/SettingNavMobile";
+import { User } from "../types";
 
 export default function Settings() {
   const [settings, setSettings] = useRecoilState(settingsSelector);
   const theme = useRecoilValue(themeSelector);
   const token = useRecoilValue(tokenSelector);
-  const [userInfo, setUserInfo] = useState<any[] | []>([]);
+  const [userInfo, setUserInfo] = useState<User|null>(null);
   const [isLoad, setIsLoad] = useState(false);
   const [mobload,setMobLoad] = useState(false)
   const { t } = useTranslation();
@@ -54,7 +55,7 @@ export default function Settings() {
                   <SettingNav />
                 </div>
                 <div className="md:col-span-2 lg:col-span-3 p-5">
-                  {settings == "profile" && (
+                  {settings == "profile" && userInfo && (
                     <Profile
                       user={userInfo}
                       token={token}
@@ -78,7 +79,7 @@ export default function Settings() {
               </div>    
               :
                 <div>
-                  {settings == "profile" && (
+                  {settings == "profile" && userInfo && (
                     <Profile
                       user={userInfo}
                       token={token}

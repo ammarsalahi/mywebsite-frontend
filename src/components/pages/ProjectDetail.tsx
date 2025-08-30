@@ -8,10 +8,12 @@ import { Spin } from 'antd';
 import LoadMotion from '../global/LoadMotion';
 import { useRecoilState } from 'recoil';
 import { pageLoadSelector } from '../states/Selectors';
+import { Project } from '../types';
+import EmptyList from '../global/EmptyList';
 
 export default function ProjectDetail() {
   const {id}=useParams();
-  const [projects,setProjects]=useState<any>([]);
+  const [projects,setProjects]=useState<Project|null>(null);
   const [others,setOthers]=useState<any>([]);
   const [isLoad,setisLoad]=useState(false)
   const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
@@ -34,11 +36,10 @@ export default function ProjectDetail() {
   return (
     <div>
    {isLoad ? <> <div className='paddingtop'>
-      {isProject?
-        <DetailP project={projects} others={others}/>
+      {isProject && projects?
+        <DetailP project={projects} others={others} reload={getProject}/>
         :
-        <>
-        </>
+          <EmptyList name="پروژه‌ای"/>
         }
        </div>
      <Footer/>

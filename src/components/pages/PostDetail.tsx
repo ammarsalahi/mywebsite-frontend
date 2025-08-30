@@ -10,12 +10,13 @@ import LoadMotion from '../global/LoadMotion';
 import { useRecoilState } from 'recoil';
 import { pageLoadSelector } from '../states/Selectors';
 import EmptyList from '../global/EmptyList';
+import { Post } from '../types';
 
 
 export default function PostDetail() {
   const {id}=useParams();
-  const [post,setPost]=useState<any>([]);
-  const [others,setothers]=useState<any>([]);
+  const [post,setPost]=useState<Post|null>();
+  const [others,setothers]=useState<Post[]>([]);
   const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
   const [isPost,setIsPost]=useState(true)
   const [isLoad,setisLoad]=useState(false)
@@ -39,10 +40,10 @@ export default function PostDetail() {
   return (
     <>
        {isLoad ? <><div className='paddingtop'>
-        {isPost?
-        <Detail post={post} others={others}/>
+        {isPost && post?
+        <Detail post={post} others={others} reload={getPost}/>
         :
-        <EmptyList name='not'/>
+        <EmptyList name="پستی"/>
       }
        </div>
        <Footer/>
