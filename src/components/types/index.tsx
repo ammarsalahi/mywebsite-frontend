@@ -97,7 +97,9 @@ export interface Post {
   is_telegram_create: boolean;
   post_date: string; // computed property
   reading_time: string; // computed property
-  persian_date:string
+  persian_date:string;
+  created_at:Date;
+  updated_at:Date
 }
 
 export interface Technology {

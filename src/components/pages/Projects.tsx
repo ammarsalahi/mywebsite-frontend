@@ -166,6 +166,13 @@ export default function Projects() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // smooth scrolling
+    });
+  };
   return (
    <div>
       {isLoad?
@@ -191,6 +198,11 @@ export default function Projects() {
                             )}
                           </button>
                         </li>
+                          <li>
+                            <a className="text-xl" onClick={scrollToTop}>
+                              <FaArrowUp />
+                            </a>
+                          </li>
                       </ul>
                     </div>
                     <div
@@ -221,7 +233,7 @@ export default function Projects() {
                           </a>
                         </li>
                           <li>
-                            <a className="text-2xl" onClick={()=>setScrollY(0)}>
+                            <a className="text-2xl" onClick={scrollToTop}>
                               <FaArrowUp />
                             </a>
                           </li>

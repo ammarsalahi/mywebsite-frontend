@@ -60,9 +60,9 @@ export const POST_SEARCH_FILTER=(search:string,page:number)=>_(`/contents/posts/
 
 export const POST_SEARCH_FILTER_NEXT=(page_number:number)=>_(`/contents/posts/?page=${page_number}`)
 
-export const POST_CATEGORY=(name:string)=>_(`/contents/category-posts/${name}`)
+export const POST_CATEGORY=(name:string,page_number:number)=>_(`/contents/category-posts/${name}?page=${page_number}`)
 
-export const POST_KEYWORDS=(name:string)=>_(`/contents/keyword-posts/${name}`)
+export const POST_KEYWORDS=(name:string,page_number:number)=>_(`/contents/keyword-posts/${name}?page=${page_number}`)
 
 
 export const PROJECT_SEARCH_FILTER=(search:string,page:number)=>_(`/contents/projects/?page=${page}&q=${search}`)

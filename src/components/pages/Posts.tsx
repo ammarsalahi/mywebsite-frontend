@@ -30,11 +30,12 @@ import { CgClose } from "react-icons/cg";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { FaArrowUp } from "react-icons/fa6";
+import { Post } from "../types";
 
 
 export default function Posts() {
   let navigate = useNavigate();
-  const [posts, setPosts] = useState<any>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [categories, setCategories] = useState<any>([]);
   const [postsearch, setPostSearch] = useRecoilState(postSearchSelector);
   const [search, setSearch] = useState("");
@@ -183,6 +184,13 @@ export default function Posts() {
     };
   }, []);
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // smooth scrolling
+    });
+  };
+
   return (
     <div>
       {isLoad ? (
@@ -217,6 +225,11 @@ export default function Posts() {
                     )}
                   </button>
                 </li>
+                 <li>
+                    <a className="text-xl" onClick={scrollToTop}>
+                      <FaArrowUp />
+                    </a>
+                  </li>
               </ul>
             </div>
             <div
@@ -256,7 +269,7 @@ export default function Posts() {
                   </a>
                 </li>
                   <li>
-                    <a className="text-2xl" onClick={()=>setScrollY(0)}>
+                    <a className="text-2xl" onClick={scrollToTop}>
                       <FaArrowUp />
                     </a>
                   </li>
