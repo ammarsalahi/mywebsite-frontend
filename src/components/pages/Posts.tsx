@@ -78,7 +78,7 @@ export default function Posts() {
   };
   const getFilters = async () => {
     setisLoad(false);
-    await Api.get(POST_SEARCH_FILTER(postsearch, 1))
+    await Api.get(POST_SEARCH_FILTER(postsearch, next?next:1))
       .then((res) => {
         setPosts(res.data.results);
         setNext(res.data.next_page_number);
@@ -126,7 +126,8 @@ export default function Posts() {
   };
   const handleCategorySearch = (search: string) => () => {
     setisLoad(false);
-    Api.get(POST_SEARCH_FILTER(search, 1))
+    setNext(1)
+    Api.get(POST_SEARCH_FILTER(search, next?next:1))
       .then((res) => {
         setPosts(res.data.results);
         setNext(res.data.next_page_number);
@@ -196,7 +197,8 @@ export default function Posts() {
       {isLoad ? (
         <>
           <div className="paddingtop">
-            <div className={scrollY > 30 ? " hidden md:block fixed" : "hidden"}>
+            {posts.length>0
+            &&<div className={scrollY > 30 ? " hidden md:block fixed z-20" : "hidden"}>
               <ul className={`filter-${theme}-menu`}>
                 <li>
                   <button className="text-xl" onClick={handleOpenModal}>
@@ -231,14 +233,14 @@ export default function Posts() {
                     </a>
                   </li>
               </ul>
-            </div>
-            <div
+            </div>}
+           {posts.length>0&& <div
               className={
-                scrollY > 10
-                  ? "md:hidden  fixed bottom-3 right-3 left-3 w-100 shadow-lg"
+                scrollY > 10  && posts.length>0
+                  ? "md:hidden  fixed bottom-3 right-3 left-3 w-100 shadow-lg z-20"
                   : "hidden"
               }
-              style={{ zIndex: 9999 }}
+              
             >
               <ul className="menu menu-horizontal bg-base-300 border-2 border-blue-500 text-blue-500 rounded-box shadow-lg w-full px-2 flex justify-between items-center">
                 <li>
@@ -274,7 +276,7 @@ export default function Posts() {
                     </a>
                   </li>
               </ul>
-            </div>
+            </div>}
             <p className="text-center pb-8 text-4xl text-blue-600 font-bold flex justify-center items-center gap-2">
               {lang == "fa" && <PiNewspaperFill fontSize={40} />}
               {t("menu1")}

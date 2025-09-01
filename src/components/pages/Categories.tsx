@@ -14,6 +14,8 @@ import { Post } from '../types'
 import { AiOutlineSearch, AiOutlineSortAscending, AiOutlineSortDescending } from 'react-icons/ai'
 import { PiFireFill } from 'react-icons/pi'
 import { FaArrowUp } from 'react-icons/fa6'
+import { TfiReload } from 'react-icons/tfi'
+import { useTranslation } from 'react-i18next'
 
 export default function Categories() {
 
@@ -21,6 +23,7 @@ export default function Categories() {
     const {name}:any =useParams();    
     const [isLoad,setisLoad]=useState(false);
     const [next, setNext] = useState<number | null>(null);
+      const { t } = useTranslation();
     
     const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
     const theme =useRecoilValue(themeSelector)
@@ -93,6 +96,14 @@ export default function Categories() {
         });
       };
 
+       const getNextPages = () => {
+          if (next != null) {
+            Api.get(POST_CATEGORY(name, next)).then((res) => {
+              setPosts((prevPosts: any) => [...prevPosts, ...res.data.results]);
+              setNext(res.data.next_page_number);
+            });
+          }
+        };
 
     return (
         <div>
@@ -103,7 +114,7 @@ export default function Categories() {
                   <p className="text-3xl font-bold mx-2">{name}</p>
                 </div> 
 
-                <div className={scrollY > 30 ? " hidden md:block fixed" : "hidden"}>
+                {posts.length>0 &&<div className={scrollY > 30 ? " hidden md:block fixed z-20" : "hidden"}>
                               <ul className={`filter-${theme}-menu`}>
                                
                                 <li>
@@ -134,8 +145,8 @@ export default function Categories() {
                                     </a>
                                   </li>
                               </ul>
-                            </div>
-                            <div
+                            </div>}
+                  {posts.length>0 &&<div
                               className={
                                 scrollY > 10
                                   ? "md:hidden  fixed bottom-3 right-3 left-3 w-100 shadow-lg"
@@ -173,7 +184,7 @@ export default function Categories() {
                                     </a>
                                   </li>
                               </ul>
-                            </div>
+                 </div>}
             <div>  
                
                 {posts.length>0?
@@ -184,9 +195,17 @@ export default function Categories() {
                     ))}
                   </div>
                 
-                  {posts?.length > 4 &&  <div className="flex justify-center py-10">
-                    <Button size='large' type='primary' className=' text-lg rounded-full' iconPosition='end'>بیشتر</Button>
-                    </div>}
+                    {next != null && (
+                                        <div className="flex justify-center py-10">
+                                          <button
+                                            className="btn-blue w-36 gap-3 rounded-2xl font-bold text-xl"
+                                            onClick={getNextPages}
+                                          >
+                                            <TfiReload />
+                                            {t("more")}
+                                          </button>
+                               </div>
+                     )}
                   
                   
                   </>

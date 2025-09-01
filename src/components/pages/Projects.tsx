@@ -178,7 +178,7 @@ export default function Projects() {
       {isLoad?
       <div>
         <div className="paddingtop">
-                    <div className={scrollY > 30 ? " hidden md:block fixed" : "hidden"}>
+                    {projects.length>0 &&<div className={scrollY > 30? " hidden md:block fixed z-20" : "hidden"}>
                       <ul className={`filter-${theme}-menu`}>
                         <li>
                           <button className="text-xl" onClick={handleOpenModal}>
@@ -204,11 +204,11 @@ export default function Projects() {
                             </a>
                           </li>
                       </ul>
-                    </div>
-                    <div
+                    </div>}
+                    {projects.length>0 &&<div
                       className={
-                        scrollY > 10
-                          ? "md:hidden  fixed bottom-3 right-3 left-3 w-100 shadow-lg"
+                        scrollY > 10 && projects.length>0
+                          ? "md:hidden  fixed bottom-3 right-3 left-3 w-100 shadow-lg z-20"
                           : "hidden"
                       }
                       style={{ zIndex: 9999 }}
@@ -238,7 +238,7 @@ export default function Projects() {
                             </a>
                           </li>
                       </ul>
-                    </div>
+                    </div>}
                     <p className="text-center pb-8 text-4xl text-blue-600 font-bold flex justify-center items-center gap-2">
                       {lang == "fa" && <FaHammer fontSize={40} />}
                       {t("menu2")}

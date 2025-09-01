@@ -54,7 +54,7 @@ export default function DetailP(props:detailprops) {
 
   return (
  <div className='detail-show' dir={t('dir')}>
-      <div className="minicol pb-40">
+      <div className="hidden md:block minicol pb-40">
         <div className="ancher-show">
         <ul className="flex flex-col items-center ">
             <li>
@@ -149,7 +149,7 @@ export default function DetailP(props:detailprops) {
                         {props.project.technologies?.map((item:any,idx:number)=>(
 
                             <Link to={`/technologies/${item.english_name}`} key={idx}>
-                            <div className="mini-item">
+                            <div className={`mini-item ${item.name.length<5 || item.english_name.length<5 ? "px-10":""}`}>
                               {lang=="fa"?item.name:item.english_name}
                              </div> 
                             </Link>
@@ -158,11 +158,11 @@ export default function DetailP(props:detailprops) {
               </div>}
           </div>
      
-          {props.others.length>0 && <div className={theme=="dark"?"pb-16 pt-5 border-t ":"pb-16 pt-5 border-t border-gray-600"}>
+          {props.others.filter((item:Project)=>item.project_id != props.project.project_id).length>0 && <div className={theme=="dark"?"pb-16 pt-5 border-t ":"pb-16 pt-5 border-t border-gray-600"}>
                 <p className='text-xl'>{t('projothers')}</p>
                 
                 <div className='grid lg:xl:grid-cols-3 gap-2  py-10'>
-                    {props.others?.map((item:any,idx:number)=>(
+                    {props.others.filter((item:Project)=>item.project_id != props.project.project_id)?.map((item:any,idx:number)=>(
                       <>{item.project_id!==props.project.project_id && 
                         <ProjectCard project={item} key={idx} theme={theme} reload={()=>{}}/>
                       }</>

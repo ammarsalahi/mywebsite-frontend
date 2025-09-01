@@ -59,7 +59,7 @@ export default function Detail(props:detailprops) {
  
   return (
     <div className='detail-show '>
-      <div className="minicol pb-40">
+      <div className="hidden md:block minicol pb-40">
         <div className="ancher-show">
 
           <ul className="flex flex-col items-center ">
@@ -102,9 +102,7 @@ export default function Detail(props:detailprops) {
                   </li>
                 </ul>
               </div>
-              {/* <button className="btn btn-ghost text-2xl">
-                <PiShareNetwork />
-              </button> */}
+          
             </li>
             <li>
               <div className="flex justify-center items-center mt-20">
@@ -125,15 +123,24 @@ export default function Detail(props:detailprops) {
       <div className={theme=="dark"?'grid-col border-gray-600':'grid-col'}>
         <div className="py-6 ps-5 ">
         <p className='text-2xl font-semibold'>{lang=="fa"?props.post?.title:props.post?.english_title}</p>
-        <div className="flex justify-start gap-5 pt-10 px-4">
+        <div className="flex justify-start items-center py-7">
                 <Link 
                     to={`/categories/${props.post?.category.english_name}`} 
-                    className='border-2 border-blue-500 text-blue-500 hover:bg-blue-500 px-5 hover:text-white rounded-full flex items-center gap-2 text-xl'
+                    className='flex md:hidden border-2 border-blue-500 text-blue-500 hover:bg-blue-500 px-5 hover:text-white rounded-full items-center gap-2 text-xl'
                 >
                   <BiCategory fontSize={18}/>
                   <p className='text-lg'>{lang=="fa"?props.post?.category.name:props.post?.category.english_name}</p>
                 </Link>
-                  <div className='flex items-center text-base'>
+        </div>
+        <div className="flex  justify-start items-center gap-5 md:pt-10 px-4">
+                <Link 
+                    to={`/categories/${props.post?.category.english_name}`} 
+                    className='hidden md:flex border-2 border-blue-500 text-blue-500 hover:bg-blue-500 px-5 hover:text-white rounded-full items-center gap-2 text-xl'
+                >
+                  <BiCategory fontSize={18}/>
+                  <p className='text-lg'>{lang=="fa"?props.post?.category.name:props.post?.category.english_name}</p>
+                </Link>
+                  <div className='flex  justify-start items-center text-base'>
                     <PiClock />
                     <span>{props.post?.persian_date}</span>
                   </div>  
@@ -144,12 +151,12 @@ export default function Detail(props:detailprops) {
           </div>
         </div>
 
-          <img src={showImage(props.post?.header_image)} alt="" className='w-full h-96 lg:h-[450px] rounded-xl border border-base-300 bg-base-300 shadow-lg' />
+          <img src={showImage(props.post?.header_image)} alt="" className='w-full md:h-96 lg:h-[450px] rounded-xl border border-base-300 bg-base-300 shadow-lg' />
 
           <div className="py-5">
              
-             <div className="py-10">
-                <p className='text-md'>{lang=="fa"?props.post?.header:props.post?.english_header}</p>
+             <div className="py-10 max-w-sm md:w-full">
+                <p className='text-md '>{lang=="fa"?props.post?.header:props.post?.english_header}</p>
                 {props.post.text!=undefined && props.post?.english_text !=undefined  && <div className="py-4">
                   <div dangerouslySetInnerHTML={lang=="fa"?{ __html: props.post?.text }:{__html: props.post?.english_text}} />
                 </div>}
@@ -169,11 +176,11 @@ export default function Detail(props:detailprops) {
               </div>}
           </div>
           
-          {props.others.length>0 && <div className={theme=="light"?"pb-16 pt-5 border-t":"pb-16 pt-5 border-t border-gray-600"}>
+          {props.others.filter((item:Post)=> item.post_id !==props.post.post_id ).length>0 &&  <div className={theme=="light"?"pb-16 pt-5 border-t":"pb-16 pt-5 border-t border-gray-600"}>
                 <p className='text-xl'>{t('others')}</p>
                 
                 <div className='grid lg:grid-cols-3 gap-5  py-10' id='others'>
-                    {props.others?.map((item:any,idx:number)=>(
+                    {props.others?.filter((item:Post)=> item.post_id !==props.post.post_id ).map((item:Post,idx:number)=>(
                       
                       idx <6 &&  <VerticalCard post={item} key={idx} theme={theme} reload={props.reload}/>
                     ))}
