@@ -9,7 +9,7 @@ import { BsPen } from "react-icons/bs";
 import { GoTrash } from "react-icons/go";
 import { MdOutlineMore } from "react-icons/md";
 import { BiBookReader, BiPencil } from "react-icons/bi";
-import { FaFire, FaTrash } from 'react-icons/fa6';
+import { FaArrowUp, FaFire, FaTrash } from 'react-icons/fa6';
 import { BiCategory } from "react-icons/bi";
 import { useTranslation } from 'react-i18next'
 import { FaXTwitter ,FaTelegram,FaDiscord} from "react-icons/fa6";
@@ -54,7 +54,12 @@ export default function Detail(props:detailprops) {
       window.removeEventListener("scroll", handlePageScroll);
     };
   }, []);
-
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // smooth scrolling
+    });
+  };
 
  
   return (
@@ -121,6 +126,20 @@ export default function Detail(props:detailprops) {
         </div>
       </div>
       <div className={theme=="dark"?'grid-col border-gray-600':'grid-col'}>
+                    <div
+                      className={
+                        scrollY > 10
+                          ? "md:hidden  fixed bottom-3 right-3 w-100 shadow-lg z-20"
+                          : "hidden"
+                      }
+                      
+                    >
+                      
+                        <button className="btn-blue rounded-2xl text-3xl py-0 px-3 border border-blue-500" onClick={scrollToTop}>
+                              <FaArrowUp/>
+                        </button>
+                       
+                    </div>
         <div className="py-6 ps-5 ">
         <p className='text-2xl font-semibold'>{lang=="fa"?props.post?.title:props.post?.english_title}</p>
         <div className="flex justify-start items-center py-7">
@@ -132,7 +151,7 @@ export default function Detail(props:detailprops) {
                   <p className='text-lg'>{lang=="fa"?props.post?.category.name:props.post?.category.english_name}</p>
                 </Link>
         </div>
-        <div className="flex  justify-start items-center gap-5 md:pt-10 px-4">
+        <div className="flex justify-between md:justify-start items-center gap-5 md:pt-10 md:px-4">
                 <Link 
                     to={`/categories/${props.post?.category.english_name}`} 
                     className='hidden md:flex border-2 border-blue-500 text-blue-500 hover:bg-blue-500 px-5 hover:text-white rounded-full items-center gap-2 text-xl'
@@ -140,11 +159,11 @@ export default function Detail(props:detailprops) {
                   <BiCategory fontSize={18}/>
                   <p className='text-lg'>{lang=="fa"?props.post?.category.name:props.post?.category.english_name}</p>
                 </Link>
-                  <div className='flex  justify-start items-center text-base'>
-                    <PiClock />
+                  <div className='flex  justify-start items-center text-sm md:text-base'>
+                    <PiClock fontSize={18} />
                     <span>{props.post?.persian_date}</span>
                   </div>  
-                  <div className="flex gap-1 items-center text-sm">
+                  <div className="flex gap-1 items-center text-sm md:text-base">
                     <BiBookReader fontSize={18}/>
                   <span>{props.post?.reading_time}</span>
                 </div>

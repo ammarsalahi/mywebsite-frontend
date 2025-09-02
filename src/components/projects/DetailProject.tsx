@@ -13,6 +13,7 @@ import { MdOutlineMore } from 'react-icons/md'
 import { Carousel } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { Project } from '../types'
+import { FaArrowUp } from 'react-icons/fa6'
 
 interface detailprops{
   project:Project;
@@ -50,6 +51,13 @@ export default function DetailP(props:detailprops) {
       window.removeEventListener("scroll", handlePageScroll);
     };
   }, []);
+
+   const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // smooth scrolling
+    });
+  };
   let navigate=useNavigate()
 
   return (
@@ -94,15 +102,32 @@ export default function DetailP(props:detailprops) {
       </div>
 
       <div className='grid-col' >
+              <div
+                              className={
+                                scrollY > 10
+                                  ? "md:hidden  fixed bottom-3 right-3 w-100 shadow-lg z-20"
+                                  : "hidden"
+                              }
+                              
+                            >
+                              
+                                <button 
+                                  className="btn-blue rounded-2xl text-3xl py-0 px-3 border border-blue-500"
+                                  onClick={scrollToTop}
+                                >
+                                      <FaArrowUp/>
+                                </button>
+                               
+                            </div>
       <div className="py-6 ps-5 ">
         <p className='text-2xl font-semibold'>{lang=="fa"?props.project?.title:props.project?.english_title}</p>
-        <div className="flex justify-start gap-5 pt-10 px-4">
+        <div className="flex justify-between md:justify-start gap-5 pt-10 md:px-4">
                 
-                  <div className='flex items-center text-base'>
-                    <PiClock />
+                  <div className='flex items-center text-sm md:text-base'>
+                    <PiClock fontSize={18}/>
                     <span>{props.project?.persian_date}</span>
                   </div>  
-                  <div className="flex gap-1 items-center text-sm">
+                  <div className="flex gap-1 items-center text-sm md:text-base">
                     <BiBookReader fontSize={18}/>
                   <span>{props.project?.reading_time}</span>
                 </div>
