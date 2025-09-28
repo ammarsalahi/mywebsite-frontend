@@ -29,9 +29,9 @@ export default function VerticalCard(props: postProps) {
   const { t } = useTranslation();
   const lang = useRecoilValue(langSelector);
   message.config({
-      top: document.documentElement.clientHeight - 100,
+      top: 80,
     });
-  let modalElement = document.getElementById('delmodal') as HTMLDialogElement | null;
+    let modalElement = document.getElementById('delmodal') as HTMLDialogElement | null;
   
     const handleShowDelete=()=>{
      modalElement = document.getElementById('delmodal') as HTMLDialogElement | null;

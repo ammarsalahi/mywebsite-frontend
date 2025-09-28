@@ -1,20 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react'
 import VerticalCard from './VerticalCard'
-import { PiNewspaperClipping, PiClock, PiShareNetwork } from 'react-icons/pi'
-import { Link, useNavigate } from 'react-router-dom'
+import { PiClock, PiShareNetwork } from 'react-icons/pi'
+import { Link } from 'react-router-dom'
 import { showImage } from '../api/Index'
 import { useRecoilValue } from 'recoil'
 import { langSelector, themeSelector } from '../states/Selectors'
-import { BsPen } from "react-icons/bs";
+// import { BsPen } from "react-icons/bs";
 import { GoTrash } from "react-icons/go";
-import { MdOutlineMore } from "react-icons/md";
 import { BiBookReader, BiPencil } from "react-icons/bi";
-import { FaArrowUp, FaFire, FaTrash } from 'react-icons/fa6';
+import { FaArrowUp } from 'react-icons/fa6';
 import { BiCategory } from "react-icons/bi";
 import { useTranslation } from 'react-i18next'
-import { FaXTwitter ,FaTelegram,FaDiscord} from "react-icons/fa6";
-import { IoCopy } from "react-icons/io5";
 import { Post } from '../types'
+import ShareModal from '../global/ShareModal'
 
 
 interface detailprops{
@@ -28,9 +26,18 @@ export default function Detail(props:detailprops) {
  
   const [scrollValue, setScrollValue] = useState(0);
   const {t} = useTranslation();
-  const lang=useRecoilValue(langSelector);
-
-
+    const lang=useRecoilValue(langSelector);
+  
+    let modalElement = document.getElementById('sharemodal') as HTMLDialogElement | null;
+  
+    const handleShowShare=()=>{
+     modalElement = document.getElementById('sharemodal') as HTMLDialogElement | null;
+      modalElement?.showModal();
+    }
+    const handleClose=()=>{
+      props.reload()
+      modalElement?.close()
+    }
   const handlePageScroll = () => {
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     const currentScroll = window.scrollY;
@@ -79,34 +86,19 @@ export default function Detail(props:detailprops) {
               </button>
             </li>
             <li>
-              <button className="btn btn-ghost text-2xl">
-                <MdOutlineMore />
-              </button>
-            </li>
-            <li>
-              <div className="dropdown dropdown-right">
-                <div tabIndex={0} role="button" className="btn btn-ghost text-2xl">
+                <button className="btn btn-ghost text-2xl"
+                 onClick={handleShowShare}
+                >
                   <PiShareNetwork />
-                </div>
-                <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] p-0 shadow">
+                </button>
+                {/* <ul
+                  tabIndex={0}
+                  className="dropdown-content menu bg-base-100 rounded-box z-[1] p-0 shadow"
+                >
                   <li>
-                    <div className='flex justify-between'>
-                        <button className='btn btn-ghost btn-circle text-2xl'>
-                          <IoCopy/>
-                        </button>
-                        <button className='btn btn-ghost btn-circle text-2xl'>
-                          <FaXTwitter/>
-                        </button>
-                        <button className='btn btn-ghost btn-circle text-2xl'>
-                          <FaTelegram/>
-                        </button>
-                        <button className='btn btn-ghost btn-circle text-2xl'>
-                          <FaDiscord/>
-                        </button>
-                    </div>
+                    
                   </li>
-                </ul>
-              </div>
+                </ul> */}
           
             </li>
             <li>
@@ -209,6 +201,8 @@ export default function Detail(props:detailprops) {
 
 
       </div>
+
+      <ShareModal type='post' id={props.post.post_id?props.post.post_id:""} close={handleClose} />
     </div>
   )
 }
