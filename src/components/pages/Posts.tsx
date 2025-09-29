@@ -199,7 +199,7 @@ export default function Posts() {
           <div className="paddingtop">
             {posts.length>0
             &&<div className={scrollY > 30 ? " hidden md:block fixed z-20" : "hidden"}>
-              <ul className={`filter-${theme}-menu`}>
+              <ul className={`filter-${theme}-menu text-blue-500`}>
                 <li>
                   <button className="text-xl" onClick={handleOpenModal}>
                     <AiOutlineSearch />
@@ -242,19 +242,19 @@ export default function Posts() {
               }
               
             >
-              <ul className="menu menu-horizontal bg-base-300 border-2 border-blue-500 text-blue-500 rounded-box shadow-lg w-full px-2 flex justify-between items-center">
+              <ul className={`menu menu-horizontal ${theme=="dark"?"bg-gray-900":"bg-white"}  border border-blue-500 text-blue-500 rounded-2xl shadow-lg w-full px-2 flex justify-between items-center`}>
                 <li>
                   <a className="text-2xl" onClick={handleOpenModal}>
                     <AiOutlineSearch />
                   </a>
                 </li>
-                <li>
+                <li >
                   <a
                     className="text-2xl"
                     onClick={handleFilters("news", !filters.news)}
                   >
                     <PiFireFill
-                      className={filters.news ? "text-orange-500" : ""}
+                     className={filters.news ? "text-orange-600" : ""}
                     />
                   </a>
                 </li>
@@ -264,9 +264,9 @@ export default function Posts() {
                     onClick={handleFilters("assort", !filters.assort)}
                   >
                     {filters.assort ? (
-                      <AiOutlineSortAscending  className="text-green-500 " />
+                      <AiOutlineSortAscending className="font-bold text-success"/>
                     ) : (
-                      <AiOutlineSortDescending  className="text-red-500" />
+                      <AiOutlineSortDescending className="font-bold text-red-500" />
                     )}
                   </a>
                 </li>
@@ -428,7 +428,7 @@ export default function Posts() {
                 className={`h-auto
                   ${theme == "dark"
                     ? "modal-box py-5 bg-base-200"
-                    : "modal-box py-5 bg-gray-400"}`
+                    : "modal-box py-5  bg-white"}`
                 }
               >
                 <div className="flex justify-end ps-5 items-center">
