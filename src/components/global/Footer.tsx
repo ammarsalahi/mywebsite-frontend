@@ -36,13 +36,13 @@ const Footer = () => {
 		  icon: <FaHammer fontSize={22} />,
 		},
 		{
-		  url: "/about",
+		  url: "https://about.ammarsalahi.ir",
 		  icon: <BsEmojiSunglassesFill fontSize={22} />,
 		},
-		{
-		  url: "/collaboration",
-		  icon: <FaHandshake fontSize={22} />,
-		},
+		// {
+		//   url: "/collaboration",
+		//   icon: <FaHandshake fontSize={22} />,
+		// },
     ];
    
 	const getData=async()=>{

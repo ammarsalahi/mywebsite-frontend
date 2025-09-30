@@ -75,10 +75,10 @@ export default function MenuList() {
       url: "/about",
       icon: <BsEmojiSunglassesFill fontSize={22} />,
     },
-    {
-      url: "/collaboration",
-      icon: <FaHandshake fontSize={22} />,
-    },
+    // {
+    //   url: "/collaboration",
+    //   icon: <FaHandshake fontSize={22} />,
+    // },
   ];
 
   const Usermenus = [

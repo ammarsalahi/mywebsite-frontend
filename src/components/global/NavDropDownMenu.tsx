@@ -22,7 +22,7 @@ export default function NavDropDownMenu(props:navprops) {
              منو
         </div>
         <ul tabIndex={0} className={props.theme=="dark"?"drop-items bg-gray-900 text-white":
-            props.path!=="/"?"drop-items bg-white text-black":"drop-items bg-blue text-white"}>
+            props.path!=="/"?"drop-items bg-white text-black":"drop-items bg-blue-500 text-white"}>
             <li>
             <Link to="/posts" className='flex items-center gap-2'>
             <PiNewspaperFill fontSize={22} />
@@ -34,7 +34,7 @@ export default function NavDropDownMenu(props:navprops) {
             پروژه‌ها</Link>
             </li>
             <li>
-            <Link to="/about" className='flex items-center gap-2'>
+            <Link to="https://about.ammarsalahi.ir" className='flex items-center gap-2'>
             <BsEmojiSunglassesFill fontSize={22}  />
             درباره‌ی من </Link>
             </li>

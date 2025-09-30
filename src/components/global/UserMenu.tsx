@@ -47,10 +47,10 @@ export default function UserMenu(props:userProps) {
         url:"/category",
         icon:<BiCategory fontSize={22} />
       },
-      {
-        url:"/about/add",
-        icon:<BsEmojiSunglassesFill fontSize={22} />
-      },
+      // {
+      //   url:"/about/add",
+      //   icon:<BsEmojiSunglassesFill fontSize={22} />
+      // },
       {
         url:"",
         icon:<FiLogOut fontSize={22} />
@@ -83,65 +83,6 @@ export default function UserMenu(props:userProps) {
                   }
                </li>
             ))}
-            {/* // menusEn.map((item:any,idx)=>(
-            //   <li key={idx}>
-            //     {item.name!="sign out"?<Link to={item.url} className='flex justify-end items-center gap-3'>
-            //       {item.name} 
-            //       {item.icon}
-            //       </Link>
-            //       :
-            //       <button className='flex justify-end items-center gap-3' onClick={handleSignout}>
-            //         {item.name} 
-            //         {item.icon}
-            //       </button>
-            //       }
-            //   </li> */}
-            
-           
-            {/* <li>
-            {lang=="FA"?<Link to="/settings" className='flex items-center gap-3'>
-                  <IoSettings fontSize={22} />
-                  تنظیمات 
-                  </Link>
-             :
-              <Link to="/settings" className='flex items-center gap-3'>
-                <IoSettings fontSize={22} />
-                تنظیمات 
-              </Link>
-            }
-            </li>
-            <li>
-            <Link to="/posts/add" className='flex items-center gap-3'>
-              <PiNewspaperFill fontSize={22} />
-              {lang=="FA"?"افزودن پست":"add post"}
-            </Link>
-            </li>
-            <li>
-            <Link to="/projects/add" className='flex items-center gap-3'>
-              <FaHammer fontSize={22} />
-              {lang=="FA"?"افزودن پروژه":"add project"}
-            </Link>
-            </li>
-            <li>
-            <Link to="/category" className='flex items-center gap-3'>
-              <BiCategory fontSize={22} />
-              {lang=="FA"?"دسته‌بندی":"category"}
-             </Link>
-            </li>
-            
-            <li>
-            <Link to="/about/add" className='flex items-center gap-3'>
-            <BsEmojiSunglassesFill fontSize={22}  />
-              {lang=="FA"?"ساخت درباره‌ی من":"add about me"}
-            </Link>
-            </li>
-            <li>
-            <button className='flex items-center gap-3' onClick={handleSignout}>
-              <FiLogOut fontSize={22}  />
-              {lang=="FA"?"خروج":"logout"}
-            </button>
-            </li> */}
-          
         </ul>
         </div>
     </div>
