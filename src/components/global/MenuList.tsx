@@ -72,7 +72,7 @@ export default function MenuList() {
       icon: <FaHammer fontSize={22} />,
     },
     {
-      url: "/about",
+      url: "https://about.ammarsalahi.ir",
       icon: <BsEmojiSunglassesFill fontSize={22} />,
     },
     // {
@@ -98,10 +98,10 @@ export default function MenuList() {
       url: "/category",
       icon: <BiCategory fontSize={22} />,
     },
-    {
-      url: "/about/add",
-      icon: <BsEmojiSunglassesFill fontSize={22} />,
-    },
+    // {
+    //   url: "/about/add",
+    //   icon: <BsEmojiSunglassesFill fontSize={22} />,
+    // },
     {
       url: "",
       icon: <FiLogOut fontSize={22} />,

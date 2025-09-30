@@ -38,11 +38,11 @@ export default function NavDropDownMenu(props:navprops) {
             <BsEmojiSunglassesFill fontSize={22}  />
             درباره‌ی من </Link>
             </li>
-            <li>
+            {/* <li>
             <Link to="/cooperations" className='flex items-center gap-2'>
             <FaHandshake fontSize={23}/>
             درخواست همکاری </Link>
-            </li>
+            </li> */}
         </ul>
         </div>
     </div>
