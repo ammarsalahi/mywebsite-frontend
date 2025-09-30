@@ -20,8 +20,10 @@ import { CgClose } from 'react-icons/cg';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { useTranslation } from 'react-i18next';
 import { FaArrowRight } from 'react-icons/fa';
+import { LuMaximize2, LuMinimize2 } from 'react-icons/lu';
 
 export default function Projects() {
+
     const [projects,setProjects]=useState<any>([]);
     const [teches,setTeches]=useState<any>([]);
     const [isLoad,setisLoad]=useState(false)
@@ -31,9 +33,9 @@ export default function Projects() {
     const theme=useRecoilValue(themeSelector)
     const [next,setNext]=useState<number|null>(null)
     const [search,setSearch]=useState("");
-
     const {t}=useTranslation()
     const lang=useRecoilValue(langSelector)
+    const [ismin,setIsMin]  = useState(false)
 
    
     const getFilters=async()=>{
@@ -213,31 +215,53 @@ export default function Projects() {
                       }
                       style={{ zIndex: 9999 }}
                     >
-                      <ul className="menu menu-horizontal bg-base-300 text-blue-500 border-2 border-blue-500 rounded-box shadow-lg w-full px-2 flex justify-between items-center">
+                  {ismin?
+                      <ul className={`flex justify-center items-center w-14 cursor-pointer 
+                          ${theme=="dark"?"bg-gray-900":"bg-white"} 
+                           border-2 border-blue-500 text-blue-500 rounded-2xl shadow-lg`}
+                      >
                         <li>
-                          <a className="text-2xl" onClick={handleOpenModal}>
-                            <AiOutlineSearch />
+                        <a className="btn btn-ghost rounded-xl" onClick={()=>setIsMin(!ismin)}>
+                          <LuMaximize2 fontSize={25} />
+                        </a>
+                      </li>
+                      </ul>
+                      :              
+                      <ul className={`menu menu-horizontal menu-sm
+                            ${theme=="dark"?"bg-gray-900":"bg-white"}  
+                            border border-blue-500 text-blue-500 rounded-2xl shadow-lg 
+                            w-full flex justify-between items-center`}
+                      >
+                      <li>
+                        <a onClick={()=>setIsMin(!ismin)}>
+                         <LuMinimize2 fontSize={29}/>
+                        </a>
+                      </li>                     
+                        
+                        
+                        <li>
+                          <a onClick={handleOpenModal}>
+                            <AiOutlineSearch fontSize={28}/>
                           </a>
                         </li>
                         
                         <li>
                         <a
-                            className="text-2xl font-semibold"
                             onClick={handleFilters("assort", !filters.assort)}
                           >
                             {filters.assort ? (
-                              <AiOutlineSortAscending className="text-green-500" />
+                              <AiOutlineSortAscending fontSize={30} className="text-green-500" />
                             ) : (
-                              <AiOutlineSortDescending className="text-red-500" />
+                              <AiOutlineSortDescending fontSize={30} className="text-red-500" />
                             )}
                           </a>
                         </li>
                           <li>
-                            <a className="text-2xl" onClick={scrollToTop}>
-                              <FaArrowUp />
+                            <a  onClick={scrollToTop}>
+                              <FaArrowUp fontSize={27}/>
                             </a>
                           </li>
-                      </ul>
+                      </ul>}
                     </div>}
                     <p className="text-center pb-8 text-4xl text-blue-600 font-bold flex justify-center items-center gap-2">
                       {lang == "fa" && <FaHammer fontSize={40} />}
@@ -369,7 +393,7 @@ export default function Projects() {
                        className={`h-auto
                           ${theme == "dark"
                             ? "modal-box py-7 bg-base-200"
-                            : "modal-box py-7 bg-base-300"}`
+                            : "modal-box py-7 bg-white"}`
                         }
                       >
                         <div className="flex justify-end ps-5 items-center">

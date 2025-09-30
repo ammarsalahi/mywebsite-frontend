@@ -31,7 +31,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { FaArrowUp } from "react-icons/fa6";
 import { Post } from "../types";
-
+import { LuMinimize2,LuMaximize2 } from "react-icons/lu";
 
 export default function Posts() {
   let navigate = useNavigate();
@@ -41,14 +41,13 @@ export default function Posts() {
   const [search, setSearch] = useState("");
   const [pageload, setpageLoad] = useRecoilState(pageLoadSelector);
   const [next, setNext] = useState<number | null>(null);
-
   const { t } = useTranslation();
   const lang = useRecoilValue(langSelector);
-
   const [filters, setFilters] = useRecoilState(filterSelector);
-
   const [isLoad, setisLoad] = useState(false);
   const theme = useRecoilValue(themeSelector);
+  const [ismin,setIsMin]  = useState(false)
+
   const modalElement = document.getElementById(
     "searchmodal",
   ) as HTMLDialogElement | null;
@@ -242,40 +241,59 @@ export default function Posts() {
               }
               
             >
-              <ul className={`menu menu-horizontal ${theme=="dark"?"bg-gray-900":"bg-white"}  border border-blue-500 text-blue-500 rounded-2xl shadow-lg w-full px-2 flex justify-between items-center`}>
+              {ismin?
+                <ul className={`  flex justify-center items-center w-14 cursor-pointer 
+                    ${theme=="dark"?"bg-gray-900":"bg-white"} 
+                     border-2 border-blue-500 text-blue-500 rounded-2xl shadow-lg`}
+                >
+                  <li>
+                  <a className="btn btn-ghost rounded-xl" onClick={()=>setIsMin(!ismin)}>
+                    <LuMaximize2 fontSize={25} />
+                  </a>
+                </li>
+                </ul>
+              :<ul className={`menu menu-horizontal menu-sm
+                  ${theme=="dark"?"bg-gray-900":"bg-white"}  
+                  border border-blue-500 text-blue-500 rounded-2xl shadow-lg 
+                    w-full flex justify-between items-center`}
+                 >
                 <li>
-                  <a className="text-2xl" onClick={handleOpenModal}>
-                    <AiOutlineSearch />
+                  <a onClick={()=>setIsMin(!ismin)}>
+                    <LuMinimize2 fontSize={29}/>
+                  </a>
+                </li>
+                <li>
+                  <a onClick={handleOpenModal}>
+                    <AiOutlineSearch fontSize={28} />
                   </a>
                 </li>
                 <li >
                   <a
-                    className="text-2xl"
                     onClick={handleFilters("news", !filters.news)}
                   >
                     <PiFireFill
-                     className={filters.news ? "text-orange-600" : ""}
+                      fontSize={28}
+                      className={filters.news ? "text-orange-600" : ""}
                     />
                   </a>
                 </li>
                 <li>
                 <a
-                    className="text-2xl font-bold"
                     onClick={handleFilters("assort", !filters.assort)}
                   >
                     {filters.assort ? (
-                      <AiOutlineSortAscending className="font-bold text-success"/>
+                      <AiOutlineSortAscending fontSize={30} className="font-bold text-success"/>
                     ) : (
-                      <AiOutlineSortDescending className="font-bold text-red-500" />
+                      <AiOutlineSortDescending fontSize={30} className="font-bold text-red-500" />
                     )}
                   </a>
                 </li>
                   <li>
-                    <a className="text-2xl" onClick={scrollToTop}>
-                      <FaArrowUp />
+                    <a onClick={scrollToTop}>
+                      <FaArrowUp fontSize={27}/>
                     </a>
                   </li>
-              </ul>
+              </ul>}
             </div>}
             <p className="text-center pb-8 text-4xl text-blue-600 font-bold flex justify-center items-center gap-2">
               {lang == "fa" && <PiNewspaperFill fontSize={40} />}
