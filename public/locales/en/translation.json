@@ -136,8 +136,10 @@
     "posttype":"Post",
     "projtype":"Project",
     "catetype":"Category",
-    "socitype":"Social"
-
+    "socitype":"Social",
+    "sharepost":"Share This Post",
+    "shareproject":"Share This Post",
+    "copied":"Copy Done"
     
 
 
