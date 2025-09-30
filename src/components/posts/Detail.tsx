@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
-import VerticalCard from './VerticalCard'
 import { PiClock, PiShareNetwork } from 'react-icons/pi'
-import { Link } from 'react-router-dom'
-import { showImage } from '../api/Index'
+import { Link, useNavigate } from 'react-router-dom'
+import { Api, showImage } from '../api/Index'
 import { useRecoilValue } from 'recoil'
-import { langSelector, themeSelector } from '../states/Selectors'
+import { langSelector, themeSelector, tokenSelector } from '../states/Selectors'
 // import { BsPen } from "react-icons/bs";
 import { GoTrash } from "react-icons/go";
 import { BiBookReader, BiPencil } from "react-icons/bi";
@@ -13,6 +12,10 @@ import { BiCategory } from "react-icons/bi";
 import { useTranslation } from 'react-i18next'
 import { Post } from '../types'
 import ShareModal from '../global/ShareModal'
+import DeleteModal from '../global/DeleteModal'
+import { message } from 'antd'
+import { POSTS_ID } from '../api/Endpoints'
+import PostCard from './PostCard'
 
 
 interface detailprops{
@@ -24,12 +27,19 @@ export default function Detail(props:detailprops) {
   const theme=useRecoilValue(themeSelector)
  
  
-  const [scrollValue, setScrollValue] = useState(0);
-  const {t} = useTranslation();
+    const [scrollValue, setScrollValue] = useState(0);
+    const {t} = useTranslation();
     const lang=useRecoilValue(langSelector);
+    const token = useRecoilValue(tokenSelector)
+    let navigate=useNavigate();
   
+    message.config({
+      top: 80,
+    });
+
     let modalElement = document.getElementById('sharemodal') as HTMLDialogElement | null;
-  
+    let modalElementdel = document.getElementById('delmodal') as HTMLDialogElement | null;
+
     const handleShowShare=()=>{
      modalElement = document.getElementById('sharemodal') as HTMLDialogElement | null;
       modalElement?.showModal();
@@ -37,6 +47,16 @@ export default function Detail(props:detailprops) {
     const handleClose=()=>{
       props.reload()
       modalElement?.close()
+    }
+
+  
+    const handleShowDelete=()=>{
+     modalElementdel = document.getElementById('delmodal') as HTMLDialogElement | null;
+      modalElementdel?.showModal();
+    }
+    const handledelClose=()=>{
+      props.reload()
+      modalElementdel?.close()
     }
   const handlePageScroll = () => {
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
@@ -68,6 +88,20 @@ export default function Detail(props:detailprops) {
     });
   };
 
+  const handleGotoEdit=()=>{
+      navigate(`/posts/edit/${props.post.post_id}`);
+  }
+  const handleDelete=()=>{
+      Api.delete(POSTS_ID(props.post.post_id)).then(()=>{
+            message.success(t("removed"));
+            props.reload()
+          }).catch(()=>{
+            message.error(t("notaccepted"))
+      });
+      handleClose()
+  }
+
+
  
   return (
     <div className='detail-show '>
@@ -75,31 +109,22 @@ export default function Detail(props:detailprops) {
         <div className="ancher-show">
 
           <ul className="flex flex-col items-center ">
-            <li>
-              <button className="btn btn-ghost text-2xl">
+            {token.access?.length > 0 && <li>
+              <button className="btn btn-ghost text-2xl" onClick={handleGotoEdit}>
                 <BiPencil fontSize={30} />
               </button>
-            </li>
-            <li>
-              <button className="btn btn-ghost text-2xl">
+            </li>}
+            {token.access?.length > 0 && <li>
+              <button className="btn btn-ghost text-2xl" onClick={handleShowDelete}>
                 <GoTrash />
               </button>
-            </li>
+            </li>}
             <li>
-                <button className="btn btn-ghost text-2xl"
+              <button className="btn btn-ghost text-2xl"
                  onClick={handleShowShare}
-                >
+              >
                   <PiShareNetwork />
-                </button>
-                {/* <ul
-                  tabIndex={0}
-                  className="dropdown-content menu bg-base-100 rounded-box z-[1] p-0 shadow"
-                >
-                  <li>
-                    
-                  </li>
-                </ul> */}
-          
+              </button>          
             </li>
             <li>
               <div className="flex justify-center items-center mt-20">
@@ -193,7 +218,7 @@ export default function Detail(props:detailprops) {
                 <div className='grid lg:grid-cols-3 gap-5  py-10' id='others'>
                     {props.others?.filter((item:Post)=> item.post_id !==props.post.post_id ).map((item:Post,idx:number)=>(
                       
-                      idx <6 &&  <VerticalCard post={item} key={idx} theme={theme} reload={props.reload}/>
+                      idx <6 &&  <PostCard post={item} key={idx} theme={theme} reload={props.reload}/>
                     ))}
                   
                 </div> 
@@ -203,6 +228,13 @@ export default function Detail(props:detailprops) {
       </div>
 
       <ShareModal type='post' id={props.post.post_id?props.post.post_id:""} close={handleClose} />
+      {props.post?.english_title!=undefined &&<DeleteModal 
+          type="posttype" 
+          name={props.post.title} 
+          engname={props.post.english_title} 
+          close={handledelClose} 
+          delete={handleDelete}
+      />}
     </div>
   )
 }

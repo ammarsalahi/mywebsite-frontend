@@ -10,6 +10,7 @@ import { imgurlAtom } from '../states/Atoms'
 import { message, Spin } from 'antd'
 import { pageLoadSelector, themeSelector } from '../states/Selectors'
 import LoadMotion from '../global/LoadMotion'
+import { useTranslation } from 'react-i18next'
 
 export default function Home() {
   const [posts,setPosts]=useState<any>([])
@@ -17,6 +18,7 @@ export default function Home() {
   const [imgs,setimgs]=useRecoilState(imgurlAtom)
   const [loads,setLoads]=useRecoilState(pageLoadSelector)
   const theme=useRecoilValue(themeSelector)
+  const {t} = useTranslation()
 
   const getHome=()=>{
     Api.get(HOME).then((res)=>{
@@ -26,7 +28,7 @@ export default function Home() {
         setLoads(true)
 
     }).catch((err)=>{
-      message.error("متاسفانه مشکلی پیش آمده است!")
+      message.error(t("notaccepted"))
       setLoads(false)
     })
   }

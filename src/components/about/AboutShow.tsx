@@ -73,7 +73,6 @@ export default function AboutShow() {
     // setpageLoad(true)
   }, [])
 
-  // ✅ Animations (from sides → center)
   const leftVariant = {
     hidden: { opacity: 0, x: 80 },
     visible: { opacity: 1, x: 0 }
@@ -93,53 +92,7 @@ export default function AboutShow() {
           {/* Profile header */}
           <div className="flex justify-center py-5">
             <div className="text-center">
-                {/* <div className="flex justify-center">
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{
-                        opacity: 1,
-                        transition: {
-                          delay: 0.3,
-                          duration: 0.1,
-                          ease: "easeInOut",
-                        },
-                      }}
-                      className="w-[200px] h-[200px] absolute"
-                    >
-                      <img src={showImage(about.user_img)} className="w-[200px] h-[200px] rounded-full" />
-                    </motion.div>
-                    <motion.svg
-                      className="w-[220px] h-[220px]"
-                      fill="transparent"
-                      viewBox="0 0 506 506"
-                      xmlns={"https://www.w3.org/2000/svg"}
-                    >
-                      <motion.circle
-                        cx="253"
-                        cy="253"
-                        r="250"
-                        stroke="#fff"
-                        strokeWidth="4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        initial={{ strokeDasharray: "24 10 0 0" }}
-                        animate={{
-                          strokeDasharray: [
-                            "15 120 25 25",
-                            "16 25 92 72",
-                            "4 250 22 22",
-                          ],
-                          rotate: [120, 360],
-                        }}
-                        transition={{
-                          duration: 10,
-                          repeat: Infinity,
-                          repeatType: "reverse",
-                        }}
-                      />
-                    </motion.svg>
-                  </div>
-             */}
+              
              <div className="relative flex justify-center items-center w-[270px] h-[270px]">
               <motion.div
                 initial={{ opacity: 0 }}

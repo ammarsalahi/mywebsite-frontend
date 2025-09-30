@@ -68,22 +68,22 @@ export default function Routes() {
           path:"/projects/edit/:id",
           element:<PrivateRouteContainer><AddEditProject/></PrivateRouteContainer>
         },
-        {
-          path:'/about',
-          element:<RouteContainer><AboutMe/></RouteContainer>
-        },
-        {
-          path:"/about/add",
-          element:<PrivateRouteContainer><AddEditAbout/></PrivateRouteContainer>
-        },
-        {
-          path:"/about/edit/:username",
-          element:<PrivateRouteContainer><AddEditAbout/></PrivateRouteContainer>
-        },
-        {
-          path:'/collaboration',
-          element:<RouteContainer><Collaboration/></RouteContainer>
-        },
+        // {
+        //   path:'/about',
+        //   element:<RouteContainer><AboutMe/></RouteContainer>
+        // },
+        // {
+        //   path:"/about/add",
+        //   element:<PrivateRouteContainer><AddEditAbout/></PrivateRouteContainer>
+        // },
+        // {
+        //   path:"/about/edit/:username",
+        //   element:<PrivateRouteContainer><AddEditAbout/></PrivateRouteContainer>
+        // },
+        // {
+        //   path:'/collaboration',
+        //   element:<RouteContainer><Collaboration/></RouteContainer>
+        // },
         {
           path:'/categories/:name',
           element:<RouteContainer><Categories/></RouteContainer>

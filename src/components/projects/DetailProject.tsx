@@ -3,17 +3,20 @@ import { PiClock, PiShareNetwork} from 'react-icons/pi'
 import { Link, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import ProjectCard from './ProjectCard'
-import { showImage } from '../api/Index'
+import { Api, showImage } from '../api/Index'
 import ImageCarousel from './ImageCarousel'
 import { useRecoilValue } from 'recoil'
-import { langSelector, themeSelector } from '../states/Selectors'
+import { langSelector, themeSelector, tokenSelector } from '../states/Selectors'
 import { BiBookReader, BiPencil } from 'react-icons/bi'
 import { GoTrash } from 'react-icons/go'
 import { MdOutlineMore } from 'react-icons/md'
-import { Carousel } from 'antd'
+import { Carousel, message } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { Project } from '../types'
 import { FaArrowUp } from 'react-icons/fa6'
+import { PROJECTS_ID } from '../api/Endpoints'
+import ShareModal from '../global/ShareModal'
+import DeleteModal from '../global/DeleteModal'
 
 interface detailprops{
   project:Project;
@@ -25,9 +28,37 @@ export default function DetailP(props:detailprops) {
   const theme=useRecoilValue(themeSelector)
   const {t} = useTranslation();
   const lang=useRecoilValue(langSelector)
+  const token = useRecoilValue(tokenSelector)
   const [scrollValue, setScrollValue] = useState(0);
+  let navigate=useNavigate()
+  
+  message.config({
+      top: 80,
+  });
 
+  let modalElement = document.getElementById('sharemodal') as HTMLDialogElement | null;
+    let modalElementdel = document.getElementById('delmodal') as HTMLDialogElement | null;
 
+    const handleShowShare=()=>{
+     modalElement = document.getElementById('sharemodal') as HTMLDialogElement | null;
+      modalElement?.showModal();
+    }
+    const handleClose=()=>{
+      props.reload()
+      modalElement?.close()
+    }
+
+  
+    const handleShowDelete=()=>{
+     modalElementdel = document.getElementById('delmodal') as HTMLDialogElement | null;
+      modalElementdel?.showModal();
+    }
+    const handledelClose=()=>{
+      props.reload()
+      modalElementdel?.close()
+    }
+
+    
   const handlePageScroll = () => {
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     const currentScroll = window.scrollY;
@@ -58,30 +89,39 @@ export default function DetailP(props:detailprops) {
       behavior: "smooth", // smooth scrolling
     });
   };
-  let navigate=useNavigate()
+
+  const handleGotoEdit=()=>{
+      navigate(`/projects/edit/${props.project.project_id}`);
+  }
+  const handleDelete=()=>{
+      Api.delete(PROJECTS_ID(props.project.project_id)).then(()=>{
+            message.success(t("removed"));
+            props.reload()
+          }).catch(()=>{
+            message.error(t("notaccepted"))
+      });
+      handleClose()
+  }
+
 
   return (
  <div className='detail-show' dir={t('dir')}>
       <div className="hidden md:block minicol pb-40">
         <div className="ancher-show">
         <ul className="flex flex-col items-center ">
-            <li>
-              <button className="btn btn-ghost text-2xl">
+            {token.access?.length > 0 && <li>
+              <button className="btn btn-ghost text-2xl" onClick={handleGotoEdit}>
                 <BiPencil fontSize={30} />
               </button>
-            </li>
-            <li>
-              <button className="btn btn-ghost text-2xl">
+            </li>}
+            {token.access?.length > 0 && <li>
+              <button className="btn btn-ghost text-2xl" onClick={handleShowDelete}>
                 <GoTrash />
               </button>
-            </li>
+            </li>}
+            
             <li>
-              <button className="btn btn-ghost text-2xl">
-                <MdOutlineMore />
-              </button>
-            </li>
-            <li>
-              <button className="btn btn-ghost text-2xl">
+              <button className="btn btn-ghost text-2xl" onClick={handleShowShare}>
                 <PiShareNetwork />
               </button>
             </li>
@@ -196,7 +236,14 @@ export default function DetailP(props:detailprops) {
                 </div> 
           </div>}
 
-
+                   <ShareModal type='project' id={props.project.project_id?props.project.project_id:""} close={handleClose} />
+                        {props.project?.english_title!=undefined &&<DeleteModal
+                            type="projecttype" 
+                            name={props.project.title} 
+                            engname={props.project.english_title} 
+                            close={handledelClose} 
+                            delete={handleDelete}
+                        />}
       </div>
     </div>
   )

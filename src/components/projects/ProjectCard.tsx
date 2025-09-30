@@ -45,10 +45,10 @@ export default function ProjectCard(props:projectProps) {
   
     const handleDelete=()=>{
         Api.delete(PROJECTS_ID(props.project.project_id)).then(()=>{
-              message.success("با موفقیت حذف شد");
+              message.success(t("removed"));
               props.reload()
             }).catch(()=>{
-              message.error("متاسفانه مشکلی پیش آمد!")
+              message.error(t("notaccepted"))
         });
         handleClose()
     }

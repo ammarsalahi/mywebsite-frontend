@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { message } from "antd";
-import VerticalCard from "../posts/VerticalCard";
+import PostCard from "../posts/PostCard";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../global/Footer";
 import { Api } from "../api/Index";
@@ -101,28 +101,28 @@ export default function Posts() {
     }
   };
 
-  const handleDelete = (id: string, titles: string) => () => {
-    Swal.fire({
-      title: "آیا میخواهید پست موردنظر حذف شود؟!",
-      text: `${titles}`,
-      icon: "error",
-      confirmButtonText: "بله",
-      confirmButtonColor: "red",
-      cancelButtonText: "نه,بیخیال",
-      showCancelButton: true,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Api.delete(POSTS_ID(id))
-          .then(() => {
-            message.success("با موفقیت حذف شد");
-            getFilters();
-          })
-          .catch(() => {
-            message.error("متاسفانه مشکلی پیش آمد!");
-          });
-      }
-    });
-  };
+  // const handleDelete = (id: string, titles: string) => () => {
+  //   Swal.fire({
+  //     title: "آیا میخواهید پست موردنظر حذف شود؟!",
+  //     text: `${titles}`,
+  //     icon: "error",
+  //     confirmButtonText: "بله",
+  //     confirmButtonColor: "red",
+  //     cancelButtonText: "نه,بیخیال",
+  //     showCancelButton: true,
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       Api.delete(POSTS_ID(id))
+  //         .then(() => {
+  //           message.success("با موفقیت حذف شد");
+  //           getFilters();
+  //         })
+  //         .catch(() => {
+  //           message.error("متاسفانه مشکلی پیش آمد!");
+  //         });
+  //     }
+  //   });
+  // };
   const handleCategorySearch = (search: string) => () => {
     setisLoad(false);
     setNext(1)
@@ -416,7 +416,7 @@ export default function Posts() {
                     <div className="post-card  md:px-8 lg:px-20" dir={t("dir")}>
                       {posts?.map((item: any, idx: number) => (
                         <div className="py-2 z-0" key={idx}>
-                          <VerticalCard
+                          <PostCard
                             post={item}
                             reload={getFilters}
                             theme={theme}

@@ -108,27 +108,27 @@ export default function Projects() {
       }
     }, [projectsearch])
     
-    const handleDelete=(id:string,titles:string)=>()=>{
-      Swal.fire({
-        title:"آیا میخواهید پروژه موردنظر حذف شود؟!",
-        text:`${titles}`,
-        icon:"error",
-        confirmButtonText:"بله",
-        confirmButtonColor:"red",
-        cancelButtonText:"نه,بیخیال",
-        showCancelButton:true
+    // const handleDelete=(id:string,titles:string)=>()=>{
+    //   Swal.fire({
+    //     title:"آیا میخواهید پروژه موردنظر حذف شود؟!",
+    //     text:`${titles}`,
+    //     icon:"error",
+    //     confirmButtonText:"بله",
+    //     confirmButtonColor:"red",
+    //     cancelButtonText:"نه,بیخیال",
+    //     showCancelButton:true
 
-      }).then((result)=>{
-        if(result.isConfirmed){
-          Api.delete(PROJECTS_ID(id)).then(()=>{
-            message.success("با موفقیت حذف شد");
-            getFilters()
-          }).catch(()=>{
-            message.error("متاسفانه مشکلی پیش آمد!")
-          });
-        }
-      })
-    }
+    //   }).then((result)=>{
+    //     if(result.isConfirmed){
+    //       Api.delete(PROJECTS_ID(id)).then(()=>{
+    //         message.success("با موفقیت حذف شد");
+    //         getFilters()
+    //       }).catch(()=>{
+    //         message.error("متاسفانه مشکلی پیش آمد!")
+    //       });
+    //     }
+    //   })
+    // }
 
     const sortDataByCreatedAt = (ascending: boolean) => {
       const sortedData = [...projects].sort((a, b) => {

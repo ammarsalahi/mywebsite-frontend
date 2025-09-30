@@ -19,7 +19,7 @@ interface postProps {
   theme: string;
 }
 
-export default function VerticalCard(props: postProps) {
+export default function PostCard(props: postProps) {
   let navigate = useNavigate();
 
   const handleEdit = (id: string) => () => {
@@ -44,10 +44,10 @@ export default function VerticalCard(props: postProps) {
 
     const handleDelete=()=>{
       Api.delete(POSTS_ID(props.post.post_id)).then(()=>{
-            message.success("با موفقیت حذف شد");
+            message.success(t("removed"));
             props.reload()
           }).catch(()=>{
-            message.error("متاسفانه مشکلی پیش آمد!")
+            message.error(t('notaccepted'))
       });
       handleClose()
     }
@@ -67,9 +67,7 @@ export default function VerticalCard(props: postProps) {
                 ? props.post?.category.name
                 : props.post?.category.english_name}
             </button>
-            {/* <span className='absolute top-5 left-5'>
-                <FaFire className='text-2xl shadow-xl text-orange-500'/>
-              </span> */}
+          
           </figure>
         </div>
 

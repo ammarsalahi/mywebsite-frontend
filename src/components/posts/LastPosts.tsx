@@ -1,6 +1,6 @@
 
 import { Button, message } from 'antd'
-import VerticalCard from './VerticalCard'
+import PostCard from './PostCard'
 import { useRecoilValue } from 'recoil';
 import { langSelector, themeSelector, tokenSelector } from '../states/Selectors';
 import { TfiReload } from 'react-icons/tfi';
@@ -35,7 +35,7 @@ export default function LastPosts(props:listprops) {
           <div className='last-list' dir={t('dir')}>
           {props.posts?.map((item:any,idx:number)=>(
             <div key={idx} className='py-4'>
-            <VerticalCard post={item} theme={props.theme} reload={props.reload}/>
+            <PostCard post={item} theme={props.theme} reload={props.reload}/>
             </div>
           ))}
         </div>

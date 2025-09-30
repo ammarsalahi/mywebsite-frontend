@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Api } from '../api/Index';
-import VerticalCard from '../posts/VerticalCard';
+import PostCard from '../posts/PostCard';
 import ProjectCard from '../projects/ProjectCard';
 import EmptyList from '../global/EmptyList';
 import Footer from '../global/Footer';
@@ -41,7 +41,7 @@ export default function Search() {
                 {searches?.map((item:any,idx:number)=>(
                     <>
                     {item.types=="post"?
-                     <VerticalCard post={item} key={idx} theme={theme} reload={getSearch}/>
+                     <PostCard post={item} key={idx} theme={theme} reload={getSearch}/>
                     :
                      <ProjectCard project={item} key={idx} theme={theme} reload={getSearch}/>
                     }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button} from 'antd'
-import VerticalCard from '../posts/VerticalCard'
+import PostCard from '../posts/PostCard'
 import { useParams } from 'react-router-dom'
 import Footer from '../global/Footer'
 import { Api } from '../api/Index'
@@ -191,7 +191,7 @@ export default function Categories() {
                   <>
                   <div className='post-card'>
                     {posts?.map((item:Post,idx:number)=>(
-                        <VerticalCard post={item} key={idx} reload={getFilters} theme={theme}/>
+                        <PostCard post={item} key={idx} reload={getFilters} theme={theme}/>
                     ))}
                   </div>
                 
