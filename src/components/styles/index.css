@@ -106,7 +106,7 @@
 }
 
 .nav-menu{
-  @apply pb-1 hover:border-b;
+  @apply  hover:text-blue-500 p-1;
 }
 
 .card-move-up{

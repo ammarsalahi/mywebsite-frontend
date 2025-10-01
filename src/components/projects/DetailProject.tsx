@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { PiClock, PiShareNetwork} from 'react-icons/pi'
+import { PiClock, PiShareNetwork, PiShareNetworkFill} from 'react-icons/pi'
 import { Link, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import ProjectCard from './ProjectCard'
@@ -110,19 +110,19 @@ export default function DetailP(props:detailprops) {
         <div className="ancher-show">
         <ul className="flex flex-col items-center ">
             {token.access?.length > 0 && <li>
-              <button className="btn btn-ghost text-2xl" onClick={handleGotoEdit}>
+              <button className="btn btn-ghost text-blue-600 text-2xl" onClick={handleGotoEdit}>
                 <BiPencil fontSize={30} />
               </button>
             </li>}
             {token.access?.length > 0 && <li>
-              <button className="btn btn-ghost text-2xl" onClick={handleShowDelete}>
+              <button className="btn btn-ghost  text-red-500 text-2xl" onClick={handleShowDelete}>
                 <GoTrash />
               </button>
             </li>}
             
             <li>
-              <button className="btn btn-ghost text-2xl" onClick={handleShowShare}>
-                <PiShareNetwork />
+              <button className="btn btn-ghost text-blue-600 text-2xl" onClick={handleShowShare}>
+                <PiShareNetworkFill />
               </button>
             </li>
             <li>
@@ -159,6 +159,13 @@ export default function DetailP(props:detailprops) {
                                 </button>
                                
                             </div>
+                            <div className="md:hidden  fixed bottom-3 left-3 w-100 shadow-lg z-20">
+                                  <button className="btn-blue rounded-2xl font-bold py-0 px-2"
+                                      onClick={handleShowShare}
+                                    >
+                                        <PiShareNetworkFill fontSize={25}/>
+                                    </button>  
+                                </div>                
       <div className="py-6 ps-5 ">
         <p className='text-2xl font-semibold'>{lang=="fa"?props.project?.title:props.project?.english_title}</p>
         <div className="flex justify-between md:justify-start gap-5 pt-10 md:px-4">
@@ -236,7 +243,7 @@ export default function DetailP(props:detailprops) {
                 </div> 
           </div>}
 
-                   <ShareModal type='project' id={props.project.project_id?props.project.project_id:""} close={handleClose} />
+                   <ShareModal type='projects' id={props.project.project_id?props.project.project_id:""} close={handleClose} />
                         {props.project?.english_title!=undefined &&<DeleteModal
                             type="projecttype" 
                             name={props.project.title} 

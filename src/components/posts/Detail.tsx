@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { PiClock, PiShareNetwork } from 'react-icons/pi'
+import { PiClock, PiShareNetwork, PiShareNetworkFill } from 'react-icons/pi'
 import { Link, useNavigate } from 'react-router-dom'
 import { Api, showImage } from '../api/Index'
 import { useRecoilValue } from 'recoil'
@@ -120,10 +120,10 @@ export default function Detail(props:detailprops) {
               </button>
             </li>}
             <li>
-              <button className="btn btn-ghost text-2xl"
+              <button className="btn btn-ghost text-2xl text-blue-600"
                  onClick={handleShowShare}
               >
-                  <PiShareNetwork />
+                  <PiShareNetworkFill />
               </button>          
             </li>
             <li>
@@ -149,13 +149,19 @@ export default function Detail(props:detailprops) {
                           ? "md:hidden  fixed bottom-3 right-3 w-100 shadow-lg z-20"
                           : "hidden"
                       }
-                      
                     >
                       
-                        <button className="btn-blue rounded-2xl text-3xl py-0 px-3 border border-blue-500" onClick={scrollToTop}>
-                              <FaArrowUp/>
+                        <button className="btn-blue rounded-2xl py-0 px-2 border border-blue-500" onClick={scrollToTop}>
+                              <FaArrowUp fontSize={25}/>
                         </button>
                        
+                    </div>
+                    <div className="md:hidden  fixed bottom-3 left-3 w-100 shadow-lg z-20">
+                      <button className="btn-blue rounded-2xl font-bold py-0 px-2"
+                          onClick={handleShowShare}
+                        >
+                            <PiShareNetworkFill fontSize={25}/>
+                        </button>  
                     </div>
         <div className="py-6 ps-5 ">
         <p className='text-2xl font-semibold'>{lang=="fa"?props.post?.title:props.post?.english_title}</p>
@@ -227,7 +233,7 @@ export default function Detail(props:detailprops) {
 
       </div>
 
-      <ShareModal type='post' id={props.post.post_id?props.post.post_id:""} close={handleClose} />
+      <ShareModal type='posts' id={props.post.post_id?props.post.post_id:""} close={handleClose} />
       {props.post?.english_title!=undefined &&<DeleteModal 
           type="posttype" 
           name={props.post.title} 

@@ -49,7 +49,7 @@ export default function ShareModal(props:modalProps) {
     <dialog id={"sharemodal"} className="modal">
       <div className="modal-box py-3">
         <div className="flex justify-between ps-5 items-center">
-          <h3 className="font-bold text-lg text-center">{props.type=="post"?t('sharepost'):t('shareproject')}</h3>
+          <h3 className="font-bold text-lg text-center">{props.type=="posts"?t('sharepost'):t('shareproject')}</h3>
           <button className='btn btn-circle btn-ghost text-2xl' onClick={handleClose}>
             <CgClose/>
           </button>
