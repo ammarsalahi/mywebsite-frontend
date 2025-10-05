@@ -1,8 +1,6 @@
-import React from 'react'
-import imgs from '../../assets/bgs.jpg'
-import { PiChat, PiClock, PiEye } from 'react-icons/pi'
+import {  PiClock,  } from 'react-icons/pi'
 import { Link } from 'react-router-dom'
-import { BASE_URL ,showImage} from '../api/Index'
+import {showImage} from '../api/Index'
 import { BiBookReader, BiCategory } from "react-icons/bi";
 
 interface postProps{

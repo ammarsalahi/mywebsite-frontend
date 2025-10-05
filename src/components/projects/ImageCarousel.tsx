@@ -1,17 +1,15 @@
-import { showImage } from '../api/Index'
-import { Carousel } from 'antd';
 import React,{useState} from 'react'
-import { AiOutlineLeftCircle,AiOutlineRightCircle } from "react-icons/ai";
-import { FaCircleChevronLeft ,FaCircleChevronRight} from "react-icons/fa6";
 import { FaChevronLeft,FaChevronRight } from "react-icons/fa";
+
+
 interface CarouselProps {
   children: React.ReactNode[];
   interval?: number;
 }
- export default function ImageCarousel({ children, interval = 5000 }){
+ export default function ImageCarousel({ children }:CarouselProps){
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
+  // const [paused, setPaused] = useState(false);
 
   const handleNext = () => {
     setCurrentIndex((currentIndex + 1) % children.length);
@@ -21,9 +19,9 @@ interface CarouselProps {
     setCurrentIndex((currentIndex - 1 + children.length) % children.length);
   };
 
-  const handlePause = () => {
-    setPaused(!paused);
-  };
+  // const handlePause = () => {
+  //   setPaused(!paused);
+  // };
 
   return (
     <div className="carousel" dir="ltr">

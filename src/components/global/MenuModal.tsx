@@ -1,5 +1,4 @@
 import { Modal } from 'antd'
-import React from 'react'
 import '../../components/styles/modal.css'
 interface modalprops{
     isopen:boolean

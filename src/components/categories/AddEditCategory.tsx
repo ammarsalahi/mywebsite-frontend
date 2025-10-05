@@ -32,22 +32,22 @@ export default function AddEditCategory(props:modalProps) {
   }
 
   const handleAdd=()=>{
-      Api.post(CATEGORIES,{name:name,english_name:engname}).then((res)=>{
+      Api.post(CATEGORIES,{name:name,english_name:engname}).then((_)=>{
         props.reload()
         setName("");
         setEngName("")
         modalElement?.close()
-      }).catch((err)=>{
+      }).catch((_)=>{
         message.error(t('notaccepted'))
       })
   }
   const handleEdit=()=>{
-    Api.patch(CATEGORIES_ID(cat.id),{name:name,english_name:engname}).then((res)=>{
+    Api.patch(CATEGORIES_ID(cat.id),{name:name,english_name:engname}).then((_)=>{
       props.reload()
       setName("");
       setEngName("")
       modalElement?.close()
-    }).catch((err)=>{
+    }).catch((_)=>{
       message.error(t('notaccepted'))
     })
   }

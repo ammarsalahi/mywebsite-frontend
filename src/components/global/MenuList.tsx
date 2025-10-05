@@ -1,5 +1,4 @@
-import { Input } from "antd";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   AiOutlineSearch,
   AiFillSun,
@@ -7,11 +6,9 @@ import {
   AiOutlineMenu,
 } from "react-icons/ai";
 import { BsEmojiSunglassesFill } from "react-icons/bs";
-import { PiNewspaperClipping } from "react-icons/pi";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { menuAtom } from "../states/Atoms";
-import { FaHammer, FaHandshake } from "react-icons/fa";
+import { FaHammer } from "react-icons/fa";
 import { PiNewspaperFill } from "react-icons/pi";
 import { langSelector, themeSelector, menuSelector, tokenSelector } from "../states/Selectors";
 import { useTranslation } from "react-i18next";
@@ -22,19 +19,19 @@ import { FiLogOut } from "react-icons/fi";
 
 export default function MenuList() {
   const location = useLocation();
-  const [ismenu, setismenu] = useRecoilState(menuSelector);
+  const [_ismenu,setismenu] = useRecoilState(menuSelector);
   const [theme, setTheme] = useRecoilState<any>(themeSelector);
   const { t } = useTranslation();
   const [lang, setLang] = useRecoilState(langSelector);
   const [isUser, setIsUser] = useState(false);
-  const [token,setToken]=useRecoilState(tokenSelector);
+  const [_token,setToken]=useRecoilState(tokenSelector);
   let navigate=useNavigate()
 
-  const handleMenu = (e: React.MouseEvent<HTMLElement>) => {
+  const handleMenu = () => {
     setismenu(false);
   };
 
-  const handleUser = (e: React.MouseEvent<HTMLElement>) => {
+  const handleUser = () => {
     setIsUser(!isUser);
   };
   const handleTheme = () => {

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { Button} from 'antd'
+import {useEffect, useState } from 'react'
 import PostCard from '../posts/PostCard'
 import { useParams } from 'react-router-dom'
 import Footer from '../global/Footer'
@@ -9,7 +8,6 @@ import { Spin } from 'antd';
 import EmptyList from '../global/EmptyList'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { filterSelector, pageLoadSelector, themeSelector } from '../states/Selectors'
-import LoadMotion from '../global/LoadMotion'
 import { Post } from '../types'
 import { TfiReload } from 'react-icons/tfi'
 import { useTranslation } from 'react-i18next'
@@ -18,17 +16,15 @@ import { AiOutlineSortAscending, AiOutlineSortDescending } from 'react-icons/ai'
 import { FaArrowUp } from 'react-icons/fa'
 
 export default function Keywords() {
+  
     const [posts,setPosts]=useState<Post[]>([])
     const {name}:any =useParams();
-    const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
+    const [_pageload,setpageLoad]=useRecoilState(pageLoadSelector);
     const theme = useRecoilValue(themeSelector)
     const [next, setNext] = useState<number | null>(null);
-
     const { t } = useTranslation();
-    
     const [isLoad,setisLoad]=useState(false);
-
-        const [filters, setFilters] = useRecoilState(filterSelector);
+    const [filters, setFilters] = useRecoilState(filterSelector);
 
     const sortDataByCreatedAt = (ascending: boolean) => {
     const sortedData = [...posts].sort((a, b) => {

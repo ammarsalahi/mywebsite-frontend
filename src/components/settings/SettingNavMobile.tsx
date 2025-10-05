@@ -1,4 +1,3 @@
-import React from 'react'
 import { ImProfile } from "react-icons/im";
 import { FaCheckDouble } from "react-icons/fa";
 import { useRecoilState } from 'recoil';
@@ -12,7 +11,7 @@ interface Navprops{
     theme:string
 }
 export default function SettingNavMobile(props:Navprops) {
-    const [settings,setSettings]=useRecoilState<string>(settingsSelector);
+    const [_settings,setSettings]=useRecoilState<string>(settingsSelector);
     const handleSettingsChanges=(value:string)=>()=>{
       props.onLoad()  
       setSettings(value)

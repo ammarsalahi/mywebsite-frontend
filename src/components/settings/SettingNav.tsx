@@ -1,15 +1,11 @@
-import React from 'react'
-import { FaCheck,FaLock } from 'react-icons/fa6'
-import { Link } from 'react-router-dom'
+import {FaLock } from 'react-icons/fa6'
 import { ImProfile } from "react-icons/im";
 import { FaCheckDouble } from "react-icons/fa";
 import { useRecoilState } from 'recoil';
 import { settingsSelector } from '../states/Selectors';
 import { useTranslation } from 'react-i18next';
 
-interface themeProps{
-  theme:string;
-}
+
 export default function SettingNav() {
     
     const [settings,setSettings]=useRecoilState<string>(settingsSelector);

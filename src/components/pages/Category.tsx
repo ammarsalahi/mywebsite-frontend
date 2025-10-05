@@ -1,4 +1,3 @@
-import React from 'react'
 import { useRecoilValue } from 'recoil'
 import { themeSelector } from '../states/Selectors'
 import CategoryList from '../categories/CategoryList';

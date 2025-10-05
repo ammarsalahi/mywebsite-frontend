@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { CgClose } from 'react-icons/cg';
 import { Api } from '../api/Index';
-import { CATEGORIES, CATEGORIES_ID, SOCIALS } from '../api/Endpoints';
+import { SOCIALS } from '../api/Endpoints';
 import { message } from 'antd';
 import { useRecoilValue } from 'recoil';
-import { categorySelector, tokenSelector } from '../states/Selectors';
+import { tokenSelector } from '../states/Selectors';
 import { useTranslation } from 'react-i18next';
 
 interface modalProps{
@@ -14,7 +14,7 @@ interface modalProps{
 }
 export default function AddSocialModal(props:modalProps) {
   // const modalElement = document.getElementById('socialmodal') as HTMLDialogElement | null;
-  const cat=useRecoilValue(categorySelector)
+  // const cat=useRecoilValue(categorySelector)
   const token=useRecoilValue(tokenSelector)
 
   const [name,setName]=useState<string>("");

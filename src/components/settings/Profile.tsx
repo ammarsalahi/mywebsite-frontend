@@ -1,13 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {useRef, useState } from "react";
 import { FaCheck } from "react-icons/fa";
-import bgs from "../../assets/bgs.jpg";
-import { BiCheckCircle } from "react-icons/bi";
-import { BsFillCheckCircleFill } from "react-icons/bs";
 import { PiCameraPlusFill } from "react-icons/pi";
-import { TbCameraPlus } from "react-icons/tb";
 import { Api } from "../api/Index";
 import { USERS_ID } from "../api/Endpoints";
-import { AuthConfigHeader, AuthConfigHeaderFile } from "../api/Configs";
+import { AuthConfigHeaderFile } from "../api/Configs";
 import { message } from "antd";
 import { Formik } from "formik";
 import { useTranslation } from "react-i18next";
@@ -88,11 +84,11 @@ export default function Profile(props: userProps) {
           Api.patch(USERS_ID(props.token.user), formData, {
             headers: AuthConfigHeaderFile(props.token.access),
           })
-            .then((res) => {
+            .then((_) => {
               message.success(t("accepted"));
               props.reload();
             })
-            .catch((err) => {
+            .catch((_) => {
               message.error(t("notaccepted"));
             });
         }}

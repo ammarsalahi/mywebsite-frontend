@@ -1,13 +1,6 @@
-import { Button, Checkbox } from "antd";
-import { Formik } from "formik";
-import React from "react";
-import { ListGroup } from "react-bootstrap";
-import { FaPaintBrush } from "react-icons/fa";
-import { AiFillCode } from "react-icons/ai";
-import { PiCheck, PiCodeFill } from "react-icons/pi";
-import { BsEmojiNeutralFill } from "react-icons/bs";
+
 import { useRecoilState, useRecoilValue } from "recoil";
-import { langSelector, typeSelector } from "../states/Selectors";
+import { langSelector } from "../states/Selectors";
 import { FaCheck } from "react-icons/fa";
 import { FaChevronRight, FaChevronLeft, FaRobot } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";

@@ -1,9 +1,8 @@
-import React from "react";
 import { PiClock } from "react-icons/pi";
 import { Api, showImage } from "../api/Index";
 import { Link, useNavigate } from "react-router-dom";
 import { BiBookReader, BiPencil } from "react-icons/bi";
-import { FaFire, FaTrash } from "react-icons/fa6";
+import { FaTrash } from "react-icons/fa6";
 import { useRecoilValue } from "recoil";
 import { langSelector, tokenSelector } from "../states/Selectors";
 import { BiCategory } from "react-icons/bi";

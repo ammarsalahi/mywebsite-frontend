@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import StepOne from '../collaborations/StepOne'
 import StepTwo from '../collaborations/StepTwo'
 import StepThree from '../collaborations/StepThree'
-import { Steps } from 'antd';
 import Footer from '../global/Footer';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { pageLoadSelector, themeSelector } from '../states/Selectors';
@@ -12,7 +11,7 @@ import StepZero from '../collaborations/StepZero';
 export default function Collaboration() {
   const [current, setCurrent] = useState(0);
   const theme=useRecoilValue(themeSelector)
-    const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
+    const [_pageload,setpageLoad]=useRecoilState(pageLoadSelector);
 
   const {t}=useTranslation();
 
@@ -32,9 +31,6 @@ export default function Collaboration() {
   }
 
 
-  const handleCurrent=(value:number)=>{
-     setCurrent(value)
-  }
   const steps=[
     {
       title:'نوع پروژه',

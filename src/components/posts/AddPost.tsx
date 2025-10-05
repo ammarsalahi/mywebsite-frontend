@@ -173,7 +173,7 @@ export default function AddPost(props:postprops) {
         })
     }
     const deleteKeyword=(id:number)=>()=>{
-        Api.delete(KEYWORDS_ID(id)).then((res)=>{
+        Api.delete(KEYWORDS_ID(id)).then((_)=>{
             deleteKey(id)
         });
     }
@@ -229,7 +229,7 @@ export default function AddPost(props:postprops) {
                     //     formdata.append(`keywords[${idx}]`, String(key.id));
                     // });
 
-                    Api.post(POSTS,formdata,{headers:AuthConfigHeaderFile(token.access)}).then((res)=>{
+                    Api.post(POSTS,formdata,{headers:AuthConfigHeaderFile(token.access)}).then((_)=>{
                         message.success(t('accepted'));
                         sleep(3000)
                         navigate("/posts")
@@ -239,7 +239,7 @@ export default function AddPost(props:postprops) {
                     })
                 }}
             >
-                {({values,handleSubmit,handleChange,errors,setFieldValue,touched})=>(
+                {({values,handleSubmit,handleChange,errors,setFieldValue})=>(
                     <form onSubmit={handleSubmit}>
                             <div className="flex justify-center">
                                 <div className="flex gap-2">

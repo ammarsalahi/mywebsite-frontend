@@ -1,7 +1,7 @@
 
-import { Button, message } from 'antd'
+import { message } from 'antd'
 import { useNavigate } from 'react-router-dom';
-import { Api, BASE_URL ,showImage} from '../api/Index'
+import { Api ,showImage} from '../api/Index'
 import { PiClock } from 'react-icons/pi'
 import { Link } from 'react-router-dom'
 import { BiBookReader, BiPencil } from "react-icons/bi";

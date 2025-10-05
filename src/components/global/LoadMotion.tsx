@@ -1,4 +1,3 @@
-import React from 'react'
 import {motion} from 'framer-motion'
 import logo from '../../assets/icon-light.png'
 export default function LoadMotion() {

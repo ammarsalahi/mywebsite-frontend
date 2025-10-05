@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Api } from '../api/Index';
 import PostCard from '../posts/PostCard';
 import ProjectCard from '../projects/ProjectCard';
@@ -13,7 +13,7 @@ import { pageLoadSelector, themeSelector } from '../states/Selectors';
 export default function Search() {
     const [isLoad,setisLoad]=useState(false)
     const [searches,setSearches]=useState<any>([]);
-    const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
+    const [_pageload,setpageLoad]=useRecoilState(pageLoadSelector);
     const theme =useRecoilValue(themeSelector)
     
     const {query}:any=useParams()

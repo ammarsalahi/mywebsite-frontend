@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import ProjectCard from '../projects/ProjectCard'
 import { Api } from '../api/Index'
 import { PROJECT_TECHNOLOGIES} from '../api/Endpoints'
 import { Spin } from 'antd';
 import Footer from '../global/Footer'
-
 import { useParams } from 'react-router-dom'
 import EmptyList from '../global/EmptyList';
-import { useRecoilState } from 'recoil';
-import { pageLoadSelector } from '../states/Selectors';
-import LoadMotion from '../global/LoadMotion';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { pageLoadSelector, themeSelector } from '../states/Selectors';
 
 export default function Technologies() {
     const {name}:any=useParams()
     const [projects,setProjects]=useState<any>([]);
     const [isLoad,setisLoad]=useState(false)
-    const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
-    
+    const [_pageload,setpageLoad]=useRecoilState(pageLoadSelector);
+    const theme = useRecoilValue(themeSelector)
 
     const getProjects=async()=>{
       await Api.get(PROJECT_TECHNOLOGIES(name)).then((res)=>{
@@ -45,7 +43,7 @@ export default function Technologies() {
         <div>
             {projects.length>0 ? <div className='post-card'>
                {projects?.map((item:any,idx:number)=>(
-                   <ProjectCard project={item} key={idx}/>
+                   <ProjectCard project={item} key={idx} reload={getProjects} theme={theme}/>
                ))}
             </div>
             :

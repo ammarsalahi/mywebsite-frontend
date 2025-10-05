@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { Button} from 'antd'
+import { useEffect, useState } from 'react'
 import PostCard from '../posts/PostCard'
 import { useParams } from 'react-router-dom'
 import Footer from '../global/Footer'
@@ -7,11 +6,10 @@ import { Api } from '../api/Index'
 import { POST_CATEGORY } from '../api/Endpoints'
 import { Spin } from 'antd';
 import PostEmpty from '../global/PostEmpty'
-import LoadMotion from '../global/LoadMotion'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { filterSelector, pageLoadSelector, themeSelector } from '../states/Selectors'
 import { Post } from '../types'
-import { AiOutlineSearch, AiOutlineSortAscending, AiOutlineSortDescending } from 'react-icons/ai'
+import { AiOutlineSortAscending, AiOutlineSortDescending } from 'react-icons/ai'
 import { PiFireFill } from 'react-icons/pi'
 import { FaArrowUp } from 'react-icons/fa6'
 import { TfiReload } from 'react-icons/tfi'
@@ -25,7 +23,7 @@ export default function Categories() {
     const [next, setNext] = useState<number | null>(null);
       const { t } = useTranslation();
     
-    const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
+    const [_pageload,setpageLoad]=useRecoilState(pageLoadSelector);
     const theme =useRecoilValue(themeSelector)
     const [filters, setFilters] = useRecoilState(filterSelector);
 

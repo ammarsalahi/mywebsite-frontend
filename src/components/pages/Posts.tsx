@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { message } from "antd";
 import PostCard from "../posts/PostCard";
-import { Link, useNavigate } from "react-router-dom";
 import Footer from "../global/Footer";
 import { Api } from "../api/Index";
-import { CATEGORIES, POST_SEARCH_FILTER, POSTS_ID } from "../api/Endpoints";
+import { CATEGORIES, POST_SEARCH_FILTER } from "../api/Endpoints";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   filterSelector,
@@ -17,7 +15,6 @@ import { Spin } from "antd";
 import EmptyList from "../global/EmptyList";
 // import LoadMotion from '../global/LoadMotion'
 import { TfiReload } from "react-icons/tfi";
-import Swal from "sweetalert2";
 import { BiCategory } from "react-icons/bi";
 import {
   AiOutlineSearch,
@@ -34,12 +31,12 @@ import { Post } from "../types";
 import { LuMinimize2,LuMaximize2 } from "react-icons/lu";
 
 export default function Posts() {
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
   const [posts, setPosts] = useState<Post[]>([]);
   const [categories, setCategories] = useState<any>([]);
   const [postsearch, setPostSearch] = useRecoilState(postSearchSelector);
   const [search, setSearch] = useState("");
-  const [pageload, setpageLoad] = useRecoilState(pageLoadSelector);
+  const [_,setpageLoad] = useRecoilState(pageLoadSelector);
   const [next, setNext] = useState<number | null>(null);
   const { t } = useTranslation();
   const lang = useRecoilValue(langSelector);
@@ -101,28 +98,7 @@ export default function Posts() {
     }
   };
 
-  // const handleDelete = (id: string, titles: string) => () => {
-  //   Swal.fire({
-  //     title: "آیا میخواهید پست موردنظر حذف شود؟!",
-  //     text: `${titles}`,
-  //     icon: "error",
-  //     confirmButtonText: "بله",
-  //     confirmButtonColor: "red",
-  //     cancelButtonText: "نه,بیخیال",
-  //     showCancelButton: true,
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       Api.delete(POSTS_ID(id))
-  //         .then(() => {
-  //           message.success("با موفقیت حذف شد");
-  //           getFilters();
-  //         })
-  //         .catch(() => {
-  //           message.error("متاسفانه مشکلی پیش آمد!");
-  //         });
-  //     }
-  //   });
-  // };
+
   const handleCategorySearch = (search: string) => () => {
     setisLoad(false);
     setNext(1)

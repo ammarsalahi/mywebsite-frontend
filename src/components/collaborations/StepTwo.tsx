@@ -1,6 +1,4 @@
-import { Input, Button } from "antd";
 import { Formik } from "formik";
-import React from "react";
 import { FaUser, FaPhone, FaHammer } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa6";
@@ -16,7 +14,7 @@ interface stepprops {
 }
 
 export default function StepTwo(props: stepprops) {
-  const [userdata, setUserdata] = useRecoilState(userSelector);
+  const [_userdata, setUserdata] = useRecoilState(userSelector);
   const lang = useRecoilValue(langSelector);
   const types = useRecoilValue(generalTypeAtom);
   
@@ -63,7 +61,7 @@ export default function StepTwo(props: stepprops) {
           return errors;
         }}
       >
-        {({ handleSubmit, values, handleChange, errors, touched }) => (
+        {({ handleSubmit, values, handleChange, errors }) => (
           <form onSubmit={handleSubmit} dir={t("dir")}>
             <label className="input input-bordered w-full flex items-center gap-5 rounded-full">
               <FaUser />

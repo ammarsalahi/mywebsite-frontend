@@ -4,7 +4,7 @@ import { FaCheck, FaPlus } from 'react-icons/fa6'
 import {  PiCameraPlusFill, PiNewspaperFill } from 'react-icons/pi'
 import FroalaEditorComponent from 'react-froala-wysiwyg';
 import { Api } from '../api/Index';
-import { CATEGORIES, KEYWORD_ADD, KEYWORDS_ID, POSTS, POSTS_ID } from '../api/Endpoints';
+import { CATEGORIES, KEYWORD_ADD, KEYWORDS_ID,POSTS_ID } from '../api/Endpoints';
 import Select, { StylesConfig } from 'react-select';
 import { AuthConfigHeaderFile } from '../api/Configs';
 import { useRecoilValue } from 'recoil';
@@ -27,20 +27,6 @@ interface Keys{
     id:number 
     name:string
 }
-
-interface CategoryItem{
-    id:number;
-    name:string;
-}
-interface PostItem{
-    title:string;
-    text:string;
-    header:string;
-    is_active:boolean;
-    category:CategoryItem;
-}
-
-
 
 
 interface Option {
@@ -200,7 +186,7 @@ export default function AddPost(props:postprops) {
         })
     }
     const deleteKeyword=(id:number)=>()=>{
-        Api.delete(KEYWORDS_ID(id)).then((res)=>{
+        Api.delete(KEYWORDS_ID(id)).then((_)=>{
             deleteKey(id)
         });
     }
@@ -254,17 +240,17 @@ export default function AddPost(props:postprops) {
                     })
                     
 
-                    Api.patch(POSTS_ID(props.id),formdata,{headers:AuthConfigHeaderFile(token.access)}).then((res)=>{
+                    Api.patch(POSTS_ID(props.id),formdata,{headers:AuthConfigHeaderFile(token.access)}).then((_)=>{
                         message.success(t('accepted'));
                         sleep(3000)
                         navigate("/posts")
-                    }).catch((err)=>{
-                        console.log(err)
+                    }).catch((_)=>{
+                        // console.log(err)
                         message.error(t('notaccepted'))
                     })
                 }}
             >
-                {({values,handleSubmit,handleChange,errors,setFieldValue,touched})=>(
+                {({values,handleSubmit,handleChange,errors,setFieldValue})=>(
                     <form onSubmit={handleSubmit}>
                             <div className="flex justify-center">
                                 <div className="flex gap-2">

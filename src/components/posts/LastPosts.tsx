@@ -1,14 +1,9 @@
 
-import { Button, message } from 'antd'
 import PostCard from './PostCard'
 import { useRecoilValue } from 'recoil';
-import { langSelector, themeSelector, tokenSelector } from '../states/Selectors';
+import { langSelector, tokenSelector } from '../states/Selectors';
 import { TfiReload } from 'react-icons/tfi';
-import Swal from 'sweetalert2';
-import { POSTS_ID } from '../api/Endpoints';
-import { Api } from '../api/Index';
 import { useTranslation } from 'react-i18next';
-import DeleteModal from '../global/DeleteModal';
 import { Post } from '../types';
 import { Link } from 'react-router-dom';
 

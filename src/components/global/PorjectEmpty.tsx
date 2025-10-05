@@ -1,4 +1,3 @@
-import React from 'react'
 import Lottie from 'react-lottie-player'
 import nolist from '../../assets/lotties/box-empty.json'
 

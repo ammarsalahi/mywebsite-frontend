@@ -1,6 +1,6 @@
-import { Button, Input } from 'antd'
+import { Input } from 'antd'
 import React, { useState } from 'react'
-import { AiOutlineAppstore, AiOutlineClose, AiOutlineSearch, AiOutlineSortAscending, AiOutlineSortDescending, AiOutlineUnorderedList } from 'react-icons/ai'
+import { AiOutlineClose, AiOutlineSearch, AiOutlineSortAscending, AiOutlineSortDescending } from 'react-icons/ai'
 import { filterSelector, postSearchSelector } from '../states/Selectors'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { PiFireFill } from 'react-icons/pi'
@@ -17,16 +17,16 @@ export default function PostFilter() {
     const handleSearch=(e:React.ChangeEvent<HTMLInputElement>)=>{
         setSearch(e.target.value)
     }
-    const handleFilters=(name:string,status:boolean)=>(e:React.MouseEvent<HTMLElement>)=>{
+    const handleFilters=(name:string,status:boolean)=>()=>{
         setisload(false)
+        console.log(isload)
         setFilters({...filters,[name]:status})
     }
   return (
     <div>
 
     <div className="post-filter">
-
-                      <p className='pe-14 text-2xl font-bold'>پست‌ها</p>
+        <p className='pe-14 text-2xl font-bold'>پست‌ها</p>
                      <button className={filters.assort?'btn btn-ghost text-green-600':'btn btn-ghost'}
                       onClick={handleFilters('assort',true)}
                      >
@@ -42,20 +42,7 @@ export default function PostFilter() {
                         نزولی
                      </button>
 
-                       {/* <button 
-                     className={filters.list==false?'btn btn-ghost text-blue-600':'btn btn-ghost'}
-                      onClick={handleFilters('list',false)}
-                     >
-                        <AiOutlineAppstore fontSize={20}/>
-                        جدولی
-                     </button>
-                       <button 
-                     className={filters.list?'btn btn-ghost text-purple-600':'btn btn-ghost'}
-                      onClick={handleFilters('list',true)}
-                     >
-                        <AiOutlineUnorderedList fontSize={20}/>
-                        لیستی
-                     </button> */}
+            
                     <button 
                      className={filters.news?'btn btn-ghost text-orange-700':'btn btn-ghost'}
                       onClick={handleFilters('news',!filters.news)}

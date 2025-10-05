@@ -1,4 +1,3 @@
-import React from 'react'
 import imgs from '../../assets/imgs.png'
 import { Card } from 'antd'
 import { PiChat, PiClock, PiEye } from 'react-icons/pi'

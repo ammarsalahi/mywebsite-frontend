@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Profile from "../settings/Profile";
 import PasswordChange from "../settings/PasswordChange";
 import { useRecoilState, useRecoilValue } from "recoil";

@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import ProjectCard from '../projects/ProjectCard'
 import { Api } from '../api/Index'
-import { PROJECT_SEARCH_FILTER ,PROJECTS,PROJECTS_ID,TECHNOLOGIES} from '../api/Endpoints'
-import { message, Spin } from 'antd';
+import { PROJECT_SEARCH_FILTER,TECHNOLOGIES} from '../api/Endpoints'
+import { Spin } from 'antd';
 import Footer from '../global/Footer'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { langSelector, pageLoadSelector, projectSearchSelector, projfilterSelector, themeSelector } from '../states/Selectors'
-import PorjectEmpty from '../global/PorjectEmpty';
 import EmptyList from '../global/EmptyList';
-import LoadMotion from '../global/LoadMotion';
-import Swal from 'sweetalert2';
 import { SiSharp } from "react-icons/si";
 import { TfiReload } from 'react-icons/tfi';
 import { AiOutlineSearch, AiOutlineSortAscending, AiOutlineSortDescending } from 'react-icons/ai';
-import { PiFireFill } from 'react-icons/pi';
 import { FaArrowUp, FaHammer } from 'react-icons/fa6';
 import { MdFilterList } from 'react-icons/md';
 import { CgClose } from 'react-icons/cg';
@@ -29,7 +25,7 @@ export default function Projects() {
     const [isLoad,setisLoad]=useState(false)
     const [projectsearch,setProjectSearch]=useRecoilState(projectSearchSelector)
     const [filters,setFilters]=useRecoilState(projfilterSelector)
-    const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
+    const [_pageload,setpageLoad]=useRecoilState(pageLoadSelector);
     const theme=useRecoilValue(themeSelector)
     const [next,setNext]=useState<number|null>(null)
     const [search,setSearch]=useState("");
@@ -108,27 +104,7 @@ export default function Projects() {
       }
     }, [projectsearch])
     
-    // const handleDelete=(id:string,titles:string)=>()=>{
-    //   Swal.fire({
-    //     title:"آیا میخواهید پروژه موردنظر حذف شود؟!",
-    //     text:`${titles}`,
-    //     icon:"error",
-    //     confirmButtonText:"بله",
-    //     confirmButtonColor:"red",
-    //     cancelButtonText:"نه,بیخیال",
-    //     showCancelButton:true
-
-    //   }).then((result)=>{
-    //     if(result.isConfirmed){
-    //       Api.delete(PROJECTS_ID(id)).then(()=>{
-    //         message.success("با موفقیت حذف شد");
-    //         getFilters()
-    //       }).catch(()=>{
-    //         message.error("متاسفانه مشکلی پیش آمد!")
-    //       });
-    //     }
-    //   })
-    // }
+   
 
     const sortDataByCreatedAt = (ascending: boolean) => {
       const sortedData = [...projects].sort((a, b) => {

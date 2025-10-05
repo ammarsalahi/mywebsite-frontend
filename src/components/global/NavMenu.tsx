@@ -1,14 +1,13 @@
-import React from "react";
+// import React from "react";
 import { BsEmojiSunglassesFill } from "react-icons/bs";
-import { FaHammer, FaHandshake } from "react-icons/fa";
+import { FaHammer } from "react-icons/fa";
 import { PiNewspaperFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { langSelector } from "../states/Selectors";
+
 import { useTranslation } from "react-i18next";
 
 export default function NavMenu() {
-  const lang = useRecoilValue(langSelector);
+  // const lang = useRecoilValue(langSelector);
   const { t } = useTranslation();
 
   const menusFa = [
@@ -24,10 +23,7 @@ export default function NavMenu() {
       url: "https://about.ammarsalahi.ir",
       icon: <BsEmojiSunglassesFill fontSize={22} />,
     },
-    // {
-    //   url: "/collaboration",
-    //   icon: <FaHandshake fontSize={22} />,
-    // },
+  
   ];
 
   return (

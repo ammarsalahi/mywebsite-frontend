@@ -1,17 +1,17 @@
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import logoblack from "../../assets/logo-dark.png";
 import logolight from "../../assets/logo-light.png";
 import { PiNewspaperFill } from "react-icons/pi";
-import { FaGithub, FaHammer, FaHandshake, FaTelegram } from "react-icons/fa6";
+import { FaGithub, FaHammer, FaTelegram } from "react-icons/fa6";
 import { BsEmojiSunglassesFill } from "react-icons/bs";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Api } from "../api/Index";
-import { ABOUT_ME, ABOUTS_ID, FOOTER } from "../api/Endpoints";
+import { ABOUT_ME, FOOTER } from "../api/Endpoints";
 import { useRecoilValue } from "recoil";
-import { langSelector, themeSelector, tokenSelector } from "../states/Selectors";
+import { langSelector, themeSelector } from "../states/Selectors";
 import { MdEmail } from "react-icons/md";
 import { SiGmail } from "react-icons/si";
 import { TbWorldWww } from "react-icons/tb";

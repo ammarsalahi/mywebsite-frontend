@@ -1,16 +1,14 @@
-import React from 'react'
 import { BsEmojiSunglassesFill } from 'react-icons/bs'
-import { FaHammer, FaHandshake } from 'react-icons/fa'
+import { FaHammer } from 'react-icons/fa'
 import { PiNewspaperFill } from 'react-icons/pi'
 import { Link } from 'react-router-dom'
 import { FaAngleDown } from "react-icons/fa6";
-import { themeSelector } from '../states/Selectors';
-import { useRecoilState, useRecoilValue } from 'recoil'
 
 interface navprops{
     path:string
     theme:string
 }
+
 export default function NavDropDownMenu(props:navprops) {
 
   

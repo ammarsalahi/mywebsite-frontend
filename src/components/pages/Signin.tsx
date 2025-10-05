@@ -1,7 +1,6 @@
 import { Formik } from "formik";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaCheck, FaEye, FaLock, FaEyeSlash, FaUser } from "react-icons/fa6";
-import { PiSunFill } from "react-icons/pi";
 import { Api } from "../api/Index";
 import { SIGNIN } from "../api/Endpoints";
 import { message } from "antd";
@@ -13,11 +12,9 @@ import {
   tokenSelector,
 } from "../states/Selectors";
 import lightIcon from "../../assets/icon-light.png";
-import darkIcon from "../../assets/icon-blue2.png";
 import { motion } from "framer-motion";
 import { AiFillMoon, AiFillSun } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
-import { CgHome } from "react-icons/cg";
 import { BiHome } from "react-icons/bi";
 
 interface FormErrors {
@@ -28,7 +25,7 @@ interface FormErrors {
 export default function Signin() {
   let navigate = useNavigate();
   const [show, setShow] = useState(true);
-  const [token, setToken] = useRecoilState(tokenSelector);
+  const [_token, setToken] = useRecoilState(tokenSelector);
   const [theme, setTheme] = useRecoilState(themeSelector);
   const [lang, setLang] = useRecoilState(langSelector);
   const { t } = useTranslation();
@@ -119,7 +116,7 @@ export default function Signin() {
                             });
                             navigate("/");
                           })
-                          .catch((err) => {
+                          .catch((_) => {
                             message.error(t("signerror"));
                           });
                       }}

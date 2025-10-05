@@ -22,7 +22,7 @@ export default function Otp(props:optProps) {
    const [otp, setOtp] = useState<any|null>(null);
    const [password,setPassword]=useState("");
    const [isopt,setIsOtp]=useState(false);
-   const [settings,setSettings]=useRecoilState(settingsSelector)  
+   const [_settings,setSettings]=useRecoilState(settingsSelector)  
   const lang = useRecoilValue(langSelector);
 
     const {t} = useTranslation();
@@ -55,10 +55,10 @@ export default function Otp(props:optProps) {
     const handleVerify=()=>{
       Api.post(USERS_PASSWORD_VERIFY,{pass:password},{
         headers:AuthConfigHeader(props.token.access)
-      }).then((res)=>{
+      }).then((_)=>{
           handleOtp();
           handleClose()
-      }).catch((err)=>{
+      }).catch((_)=>{
         message.error(t('notaccepted'))
 
       })

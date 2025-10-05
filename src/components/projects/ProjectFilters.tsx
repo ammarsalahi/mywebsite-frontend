@@ -13,7 +13,7 @@ export default function ProjectFilters() {
     const handleSearch=(e:React.ChangeEvent<HTMLInputElement>)=>{
       setSearch(e.target.value)
     }
-    const handleProjectFilters=(name:string,status:boolean)=>(e:React.MouseEvent<HTMLElement>)=>{
+    const handleProjectFilters=(name:string,status:boolean)=>()=>{
         setprojFilters({...projfilters,[name]:status})
     }
   return (

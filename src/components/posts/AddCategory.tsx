@@ -1,5 +1,4 @@
-import { Button, Input, Modal } from 'antd'
-import React from 'react'
+import { Input, Modal } from 'antd'
 
  interface modalProps{
     isopen:boolean

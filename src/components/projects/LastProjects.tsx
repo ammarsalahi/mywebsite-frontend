@@ -1,9 +1,5 @@
-import { Button, message} from 'antd'
 import ProjectCard from './ProjectCard'
 import { TfiReload } from 'react-icons/tfi';
-import Swal from 'sweetalert2';
-import { PROJECTS_ID } from '../api/Endpoints';
-import { Api } from '../api/Index';
 import { useTranslation } from 'react-i18next';
 import { langSelector, tokenSelector } from '../states/Selectors';
 import { useRecoilValue } from 'recoil';
@@ -20,27 +16,27 @@ export default function LastProjects(props:listprops) {
   const lang=useRecoilValue(langSelector)
   const token  = useRecoilValue(tokenSelector)
 
-  const handleDelete=(id:string,titles:string)=>()=>{
-    Swal.fire({
-      title:"آیا میخواهید پروژه موردنظر حذف شود؟!",
-      text:`${titles}`,
-      icon:"error",
-      confirmButtonText:"بله",
-      confirmButtonColor:"red",
-      cancelButtonText:"نه,بیخیال",
-      showCancelButton:true
+  // const handleDelete=(id:string,titles:string)=>()=>{
+  //   Swal.fire({
+  //     title:"آیا میخواهید پروژه موردنظر حذف شود؟!",
+  //     text:`${titles}`,
+  //     icon:"error",
+  //     confirmButtonText:"بله",
+  //     confirmButtonColor:"red",
+  //     cancelButtonText:"نه,بیخیال",
+  //     showCancelButton:true
 
-    }).then((result)=>{
-      if(result.isConfirmed){
-        Api.delete(PROJECTS_ID(id)).then(()=>{
-          message.success("با موفقیت حذف شد");
-          props.reload()
-        }).catch(()=>{
-          message.error("متاسفانه مشکلی پیش آمد!")
-        });
-      }
-    })
-  }
+  //   }).then((result)=>{
+  //     if(result.isConfirmed){
+  //       Api.delete(PROJECTS_ID(id)).then(()=>{
+  //         message.success("با موفقیت حذف شد");
+  //         props.reload()
+  //       }).catch(()=>{
+  //         message.error("متاسفانه مشکلی پیش آمد!")
+  //       });
+  //     }
+  //   })
+  // }
   return (
     <div className='lasts'>
         <div className={lang=="fa"?'flex justify-start py-3 px-3 border-r-4 mb-5 border-blue-600':'flex justify-end py-3 px-3 border-l-4 mb-5 border-blue-600'}>

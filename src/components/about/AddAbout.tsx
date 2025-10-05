@@ -100,7 +100,7 @@ export default function AddAbout(props:aboutProps) {
   }
   
   const handleDeleteSocial=(id:number)=>()=>{
-      Api.delete(SOCIALS_ID(id)).then((res)=>{
+      Api.delete(SOCIALS_ID(id)).then((_)=>{
          deleteSocial(id)
            message.info(t('removed'))
       }).catch((err)=>{
@@ -148,7 +148,7 @@ const handleAddSkill=(name:string)=>()=>{
 }
 
 const handleDeleteSkill=(id:number)=>()=>{
-  Api.delete(SKILLS_ID(id)).then((res)=>{
+  Api.delete(SKILLS_ID(id)).then((_)=>{
       deleteSkill(id)
       message.info(t('removed'))
   }).catch((err)=>{
@@ -211,7 +211,7 @@ const handleDeleteSkill=(id:number)=>()=>{
                   })
                 Api.post(ABOUTS,formdata,{
                   headers:AuthConfigHeader(token.access)
-                }).then((res)=>{
+                }).then((_)=>{
                   message.success(t('accepted'))
                   navigate("/about")
                 }).catch((err)=>{

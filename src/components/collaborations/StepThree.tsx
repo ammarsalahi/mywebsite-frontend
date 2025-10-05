@@ -1,4 +1,3 @@
-import { Button, Input } from "antd";
 import { Formik } from "formik";
 import React, { useRef, useState } from "react";
 import { PiCameraPlus } from "react-icons/pi";
@@ -8,7 +7,6 @@ import { useRecoilValue } from "recoil";
 import { langSelector, typeSelector, userSelector } from "../states/Selectors";
 import { Api } from "../api/Index";
 import { COOPERATIONS } from "../api/Endpoints";
-import { FaCircleCheck } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import { useTranslation } from "react-i18next";
 
@@ -74,7 +72,7 @@ export default function StepThree(props: stepprops) {
               "Content-Type": "multipart/form-data",
             },
           })
-            .then((res) => {
+            .then((_) => {
               Swal.fire({
                 icon: "success",
                 text: t("accepted"),
@@ -91,7 +89,7 @@ export default function StepThree(props: stepprops) {
             });
         }}
       >
-        {({ handleSubmit, values, handleChange, errors, touched }) => (
+        {({ handleSubmit, values, handleChange, errors }) => (
           <form onSubmit={handleSubmit} dir={t("dir")}>
             <textarea
               className="textarea textarea-bordered w-full mb-5"

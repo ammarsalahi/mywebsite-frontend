@@ -1,5 +1,3 @@
-import React from 'react'
-import { BsEmojiSunglassesFill } from 'react-icons/bs'
 import { FaHammer, FaUser } from 'react-icons/fa6'
 import { FiLogOut } from 'react-icons/fi'
 import { IoSettings } from 'react-icons/io5'
@@ -16,7 +14,7 @@ interface userProps{
 }
 export default function UserMenu(props:userProps) {
 
-  const [token,setToken]=useRecoilState(tokenSelector);
+  const [_token,setToken]=useRecoilState(tokenSelector);
   const lang=useRecoilValue(langSelector);
   const { t } = useTranslation();
 

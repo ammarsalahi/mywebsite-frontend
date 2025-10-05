@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BsEmojiSunglassesFill } from 'react-icons/bs';
 import { FaCheck ,FaPlus} from 'react-icons/fa6';
 import { IoClose } from "react-icons/io5";
@@ -7,7 +7,7 @@ import { ABOUTS_ID, SKILLS, SKILLS_ID, SOCIALS, SOCIALS_ID } from '../api/Endpoi
 import { useRecoilValue } from 'recoil';
 import { tokenSelector } from '../states/Selectors';
 import { Api } from '../api/Index';
-import { Descriptions, message, Spin } from 'antd';
+import { message, Spin } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { AuthConfigHeader } from '../api/Configs';
 import { useNavigate } from 'react-router-dom';
@@ -111,7 +111,7 @@ export default function EditAbout(props:aboutProps) {
     }
     
     const handleDeleteSocial=(id:number)=>()=>{
-        Api.delete(SOCIALS_ID(id)).then((res)=>{
+        Api.delete(SOCIALS_ID(id)).then((_)=>{
            deleteSocial(id)
              message.info(t('removed'))
         }).catch((err)=>{
@@ -159,7 +159,7 @@ export default function EditAbout(props:aboutProps) {
   }
   
   const handleDeleteSkill=(id:number)=>()=>{
-    Api.delete(SKILLS_ID(id)).then((res)=>{
+    Api.delete(SKILLS_ID(id)).then((_)=>{
         deleteSkill(id)
         message.info(t('removed'))
     }).catch((err)=>{
@@ -227,7 +227,7 @@ export default function EditAbout(props:aboutProps) {
                   })
                 Api.patch(ABOUTS_ID(props.id),formdata,{
                   headers:AuthConfigHeader(token.access)
-                }).then((res)=>{
+                }).then((_)=>{
                   message.success(t('accepted'))
                   navigate("/about")
                 }).catch((err)=>{

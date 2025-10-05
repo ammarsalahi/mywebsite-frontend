@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { AiOutlineSearch  } from 'react-icons/ai'
-import { useNavigate,Link} from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 
 export default function SearchBar() {
   let navigate=useNavigate();
   const [search,setSearch]=useState("");
 
 
-  const handleSearch=(e:React.ChangeEvent<HTMLInputElement>)=>{
-       setSearch(e.target.value)
+  const handleSearch=(event:React.ChangeEvent<HTMLInputElement>)=>{
+       setSearch(event.target.value)
   }
   const handleSubmit = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter') {

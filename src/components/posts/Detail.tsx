@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { PiClock, PiShareNetwork, PiShareNetworkFill } from 'react-icons/pi'
+import React, { useEffect, useState } from 'react'
+import { PiClock, PiShareNetworkFill } from 'react-icons/pi'
 import { Link, useNavigate } from 'react-router-dom'
 import { Api, showImage } from '../api/Index'
 import { useRecoilValue } from 'recoil'
 import { langSelector, themeSelector, tokenSelector } from '../states/Selectors'
-// import { BsPen } from "react-icons/bs";
 import { GoTrash } from "react-icons/go";
 import { BiBookReader, BiPencil } from "react-icons/bi";
 import { FaArrowUp } from 'react-icons/fa6';

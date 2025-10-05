@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from 'react'
 import { CgClose } from 'react-icons/cg';
-import { Api } from '../api/Index';
-import { CATEGORIES, CATEGORIES_ID, SOCIALS } from '../api/Endpoints';
-import { message } from 'antd';
 import { useRecoilValue } from 'recoil';
-import { categorySelector, langSelector, tokenSelector } from '../states/Selectors';
+import { langSelector } from '../states/Selectors';
 import { useTranslation } from 'react-i18next';
 
 interface modalProps{
@@ -16,7 +12,7 @@ interface modalProps{
 
 }
 export default function DeleteModal(props:modalProps) {
-  const token=useRecoilValue(tokenSelector)
+  // const token=useRecoilValue(tokenSelector)
   const lang = useRecoilValue(langSelector)
   const {t} = useTranslation();
 

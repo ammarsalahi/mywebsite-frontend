@@ -1,7 +1,5 @@
-import React from 'react'
 import { CgClose } from 'react-icons/cg';
-// import { useRecoilValue } from 'recoil';
-// import { langSelector } from '../states/Selectors';
+
 import { useTranslation } from 'react-i18next';
 import { FaXTwitter ,FaTelegram,FaDiscord, FaLinkedin, FaReddit} from "react-icons/fa6";
 import { IoCopy } from "react-icons/io5";

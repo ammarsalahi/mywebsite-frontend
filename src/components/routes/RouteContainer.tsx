@@ -1,12 +1,8 @@
 import React from 'react'
-import { Navigate } from 'react-router-dom';
 import Navbar from '../global/Navbar';
 import { useRecoilValue } from 'recoil';
 import { menuSelector,pageLoadSelector,themeSelector } from '../states/Selectors';
 import MenuList from '../global/MenuList';
-import {motion} from 'framer-motion'
-import logo from '../../assets/icon-blue2.png'
-import logolight from '../../assets/icon-light.png'
 
 
 type props={

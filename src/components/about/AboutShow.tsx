@@ -1,17 +1,15 @@
 
-import React, { useEffect, useState } from 'react'
-import { FaUniversity } from "react-icons/fa";
+import { useEffect, useState } from 'react'
 import { Api ,showImage} from '../api/Index';
-import { ABOUTS_ID,ABOUT_ME } from '../api/Endpoints';
+import { ABOUT_ME } from '../api/Endpoints';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaTelegram,FaLinkedin ,FaInstagram,FaGithub} from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
 import { TbWorldWww } from "react-icons/tb";
-import { FaComputer,FaTrash,FaUsers } from "react-icons/fa6";
+import { FaTrash } from "react-icons/fa6";
 import Footer from '../global/Footer';
-import { FaUser } from "react-icons/fa6";
-import { langSelector, pageLoadSelector, tokenSelector } from '../states/Selectors';
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { langSelector, tokenSelector } from '../states/Selectors';
+import { useRecoilValue } from 'recoil'
 import { MdEmail } from 'react-icons/md';
 import { Spin } from 'antd';
 import { BiPencil } from 'react-icons/bi';
@@ -22,7 +20,7 @@ import { motion } from "framer-motion";
 export default function AboutShow() {
   const [about,setAbout]=useState<UserAbout>();
   const [isLoad,setisLoad]=useState(false);
-  const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
+  // const [pageload,setpageLoad]=useRecoilState(pageLoadSelector);
   const token=useRecoilValue(tokenSelector);
 	const lang = useRecoilValue(langSelector)
   const {t} = useTranslation()

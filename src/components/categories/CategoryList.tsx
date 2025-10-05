@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FaPencil, FaPlus, FaTrash } from 'react-icons/fa6';
 import { AiOutlineSearch,AiOutlineSortAscending } from 'react-icons/ai';
 import { Api } from '../api/Index';
@@ -106,7 +106,7 @@ export default function CategoryList(props:listProps) {
     }
 
     const handleDelete=()=>{
-      Api.delete(CATEGORIES_ID(catId.id)).then((res)=>{
+      Api.delete(CATEGORIES_ID(catId.id)).then((_)=>{
                 getCategories()
       })
       handleClose()

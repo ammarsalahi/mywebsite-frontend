@@ -1,5 +1,5 @@
 import { Formik } from 'formik'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { FaCheck, FaChevronLeft, FaChevronRight, FaEye, FaEyeSlash, FaLock } from 'react-icons/fa6'
 import { Api } from '../api/Index'
 import { USERS_PASSWORD_CHANGE } from '../api/Endpoints'
@@ -65,15 +65,16 @@ export default function PasswordChange(props:passProps) {
             
           }}
           onSubmit={(values,{resetForm})=>{
+            
                 const formData=new FormData()
                 formData.append("old_password",values.old)
                 formData.append("new_password",values.new);
                 Api.post(USERS_PASSWORD_CHANGE,formData,{
                     headers:AuthConfigHeader(props.token)
-                }).then((res)=>{
+                }).then((_)=>{
                     message.success(t('accepted'));
                     resetForm()
-                  }).catch((err)=>{
+                  }).catch((_)=>{
                     message.error(t('notaccepted'))
                 })
           }}
