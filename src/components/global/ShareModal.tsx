@@ -23,7 +23,7 @@ export default function ShareModal(props:modalProps) {
     props.close();
   }
 
-  const shareUrl = `https://ammarsalahi.ir/${props.type}/${props.id}`; // آدرس پست
+  const shareUrl = `https://blog.ammarsalahi.ir/${props.type}/${props.id}`; // آدرس پست
   const text = encodeURIComponent(`Check out this post: ${shareUrl}`);
 
   const links = {
